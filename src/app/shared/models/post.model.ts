@@ -16,4 +16,7 @@ export class Post {
   medias: Media[];
   event: Event;
   createdAt: Date;
+  likeCount: number;
+  shareCount: number;
+  commentCount: number;
 }
