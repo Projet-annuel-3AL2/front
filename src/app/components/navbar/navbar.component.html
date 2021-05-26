@@ -2,18 +2,26 @@
   <a href="#">
     <img alt="logo" height="75" src="../../../assets/images/logo.png">
   </a>
-  <a class="m-4" href="#">
-    <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
-  </a>
   <div>
-    <a class="m-4" href="#">
+    <a matRipple class="m-4" href="#">
+      <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
+    </a>
+  </div>
+  <div>
+    <a matRipple class="m-4" href="#">
       <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
     </a>
-    <a class="m-4" href="#">
+    <a matRipple class="m-4" href="#">
       <fa-icon [icon]="faComments" size="2x"></fa-icon>
     </a>
   </div>
   <span class="center"></span>
+  <div class="form-group search-bar">
+    <fa-icon [icon]="faSearch"></fa-icon>
+    <label>
+      <input type="text" class="rounded-pill form-control" placeholder="Search">
+    </label>
+  </div>
   <div>
   </div>
   <span class="spacer"></span>
