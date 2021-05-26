@@ -30,8 +30,10 @@
     <p class="card-text">
       {{post.text}}
     </p>
-    <div class="event-card" *ngIf="!post.event">
-      <img class="rounded" width="100%" src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg" alt="">
+    <div *ngIf="!post.event" class="event-card">
+      <img alt="" class="rounded"
+           src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
+           width="100%">
       <div class="event-card-infos">
         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
       </div>
