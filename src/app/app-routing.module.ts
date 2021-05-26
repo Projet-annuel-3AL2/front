@@ -1,9 +1,7 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 
-const appRoutes: Routes = [
-
-];
+const appRoutes: Routes = [];
 
 @NgModule({
   declarations: [],
@@ -11,4 +9,5 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

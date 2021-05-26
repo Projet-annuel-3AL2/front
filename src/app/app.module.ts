@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { PostComponent } from './post/post.component';
+import {AppComponent} from './app.component';
+import {PostComponent} from './post/post.component';
 import {RouterModule} from "@angular/router";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
@@ -38,4 +38,5 @@ import {AppRoutingModule} from "./app-routing.module";
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
