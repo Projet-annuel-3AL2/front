@@ -10,11 +10,15 @@ import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {CommonModule} from "@angular/common";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NavbarComponent} from './navbar/navbar.component';
+import {CollapseModule} from "ngx-bootstrap/collapse";
+import {MaterialModule} from "./material.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    PostComponent
+    PostComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +28,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    CollapseModule.forRoot(),
+    MaterialModule
   ],
-  exports: [BsDropdownModule, TooltipModule, ModalModule],
+  exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],
   bootstrap: [AppComponent]
 })
