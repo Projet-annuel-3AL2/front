@@ -21,9 +21,12 @@
             "aot": true,
             "assets": [
               "src/favicon.png",
-              "src/assets"
+              "src/assets",
+              "src/assets/images",
+              "src/assets/images/logo.png"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -87,6 +90,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
             "scripts": []
