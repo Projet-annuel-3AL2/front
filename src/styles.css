@@ -7,3 +7,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 fa-icon{
   color: #00643C;
 }
+button.mat-raised-button {
+  border-radius: 166px 166px 166px 166px;
+}
+button.mat-flat-button{
+  border-radius: 166px 166px 166px 166px;
+}

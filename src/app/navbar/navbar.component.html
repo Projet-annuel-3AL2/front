@@ -1,13 +1,35 @@
 <mat-toolbar>
   <img src="assets/images/logo.png" alt="logo" height="75">
-  <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
+  <fa-icon class="m-4" [icon]="faCalendarAlt" size="2x"></fa-icon>
+  <div>
+    <fa-icon class="m-4" [icon]="faUserFriends" size="2x"></fa-icon>
+    <fa-icon class="m-4" [icon]="faComments" size="2x"></fa-icon>
+  </div>
   <span class="center"></span>
   <div>
 
   </div>
   <span class="spacer"></span>
-  <div class="auth-buttons"><!-- Add if not connected -->
-    <button mat-flat-button color="#00643C">Connexion</button>
-    <button mat-raised-button color="#00643C">Inscription</button>
+  <div *ngIf="true" class="auth-buttons"><!-- Add if not connected -->
+    <button class="m-2" mat-flat-button>Connexion</button>
+    <button class="m-2 register-button" mat-raised-button>Inscription</button>
+  </div>
+  <div *ngIf="false">
+    <fa-icon [icon]="faBell" size="2x"></fa-icon>
+    <button mat-raised-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <fa-icon [icon]="faUserFriends"></fa-icon>
+      username
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <span>Profil</span>
+      </button>
+      <button mat-menu-item>
+        <span>Paramètres</span>
+      </button>
+      <button mat-menu-item>
+        <span>Déconnexion</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>
