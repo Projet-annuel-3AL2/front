@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NavbarComponent} from './navbar/navbar.component';
 import {CollapseModule} from "ngx-bootstrap/collapse";
 import {MaterialModule} from "./material.module";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {MaterialModule} from "./material.module";
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
-    MaterialModule
+    MaterialModule,
+    AppRoutingModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],
