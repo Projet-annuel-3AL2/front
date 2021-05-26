@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../shared/models/post.model";
-import {faCheckCircle, faComment, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faComment, faEllipsisH, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'post',
@@ -13,6 +13,7 @@ export class PostComponent implements OnInit {
   faComment = faComment;
   faShare = faShare;
   faCheckCircle = faCheckCircle;
+  faEllipsisH = faEllipsisH;
 
   constructor() {
   }
