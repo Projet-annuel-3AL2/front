@@ -1,13 +1,20 @@
 <mat-toolbar>
-  <img src="assets/images/logo.png" alt="logo" height="75">
-  <fa-icon class="m-4" [icon]="faCalendarAlt" size="2x"></fa-icon>
+  <a href="#">
+    <img src="assets/images/logo.png" alt="logo" height="75">
+  </a>
+  <a href="#" class="m-4">
+    <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
+  </a>
   <div>
-    <fa-icon class="m-4" [icon]="faUserFriends" size="2x"></fa-icon>
-    <fa-icon class="m-4" [icon]="faComments" size="2x"></fa-icon>
+    <a href="#" class="m-4">
+      <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
+    </a>
+    <a href="#" class="m-4">
+      <fa-icon [icon]="faComments" size="2x"></fa-icon>
+    </a>
   </div>
   <span class="center"></span>
   <div>
-
   </div>
   <span class="spacer"></span>
   <div *ngIf="true" class="auth-buttons"><!-- Add if not connected -->

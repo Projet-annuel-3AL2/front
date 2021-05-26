@@ -17,5 +17,6 @@ mat-toolbar {
   box-shadow: 0 5px 5px grey;
 }
 .register-button{
+  color: white;
   background-color: #00643C !important;
 }
