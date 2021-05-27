@@ -26,8 +26,8 @@
   </div>
   <span class="spacer"></span>
   <div *ngIf="true" class="auth-buttons"><!-- Add if not connected -->
-    <button class="m-2" mat-flat-button>Connexion</button>
-    <button class="m-2 register-button" mat-raised-button>Inscription</button>
+    <button class="m-2" mat-flat-button routerLink="login">Connexion</button>
+    <button class="m-2 register-button" mat-raised-button routerLink="register">Inscription</button>
   </div>
   <div *ngIf="false">
     <fa-icon [icon]="faBell" size="2x"></fa-icon>
