@@ -9,18 +9,18 @@
           <h2>Se connecter à<br>Agir pour tous</h2>
         </div>
       </div>
-      <form class="form-group">
+      <form class="form-group" [formGroup]="userForm">
         <div class="border p-3">
           <div class="m-2">
             <label>
               Identifiant
-              <input type="text" class="rounded-pill form-control">
+              <input type="text" id="username" formControlName="username" class="rounded-pill form-control">
             </label>
           </div>
           <div class="m-2">
             <label>
               Mot de passe
-              <input type="password" class="rounded-pill form-control">
+              <input type="password" id="password" formControlName="password" class="rounded-pill form-control">
             </label>
           </div>
           <div class="row">
@@ -37,10 +37,9 @@
           </div>
         </div>
         <div class="row-cols-1 my-3">
-          <button mat-raised-button>Se connecter</button>
+          <button mat-raised-button type="submit" (click)="onSubmitForm()">Se connecter</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-

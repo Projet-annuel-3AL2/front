@@ -20,6 +20,7 @@ import {EventSuggestionListComponent} from "./components/event-suggestion-list/e
 import {LoginComponent} from "./components/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import {RegisterComponent} from "./components/register/register.component";
     BrowserModule,
     RouterModule,
     CommonModule,
+    HttpClientModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),

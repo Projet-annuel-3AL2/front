@@ -18,7 +18,7 @@ export class AuthService {
   }
 
   public register(mail: string, username: string, password: string){
-    return this.http.post<User>(`${environment.baseUrl}/auth/register`, { username, password, mail })
+    return this.http.post<User>(`${environment.baseUrl}/auth/register`, { username, password, mail },{headers: {'Access-Control-Allow-Origin': '*'},withCredentials: true})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/auth/login`, { username, password })
+    return this.http.post<User>(`${environment.baseUrl}/auth/login`, { username, password }, {withCredentials: true})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
