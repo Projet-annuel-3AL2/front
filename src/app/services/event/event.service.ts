@@ -3,13 +3,15 @@ import {Event} from "../../shared/models/event.model";
 import {Category} from "../../shared/models/category.model";
 import {User} from "../../shared/models/user.model";
 import {Organisation} from "../../shared/models/organisation.model";
+import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   getEvent(id: String) {
     const event: Event = {
@@ -28,7 +30,12 @@ export class EventService {
       endDate: new Date(Date.now() + 1),
       latitude: 49.929118,
       longitude: 1.076918,
-      organisation: new Organisation('1', 'OrganisationName'),
+      organisation: new Organisation('1', 'OrganisationName', [
+        new OrganisationMembership(this.userService.getUser("1")),
+        new OrganisationMembership(this.userService.getUser("1")),
+        new OrganisationMembership(this.userService.getUser("1")),
+        new OrganisationMembership(this.userService.getUser("1"))
+      ]),
       participantsLimit: 15,
       picture: undefined,
       participants: []

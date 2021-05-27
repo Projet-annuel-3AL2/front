@@ -25,7 +25,7 @@ export class UserService {
     return users;
   }
 
-  private getUser(id: string) {
+   getUser(id: string) {
     const user: User = {
       bannerPicture: undefined,
       certification: undefined,

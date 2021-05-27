@@ -38,7 +38,7 @@ export class PostService {
       likeCount: 100,
       likes: [],
       medias: [],
-      organisation: new Organisation('1', 'organisationName'),
+      organisation: new Organisation('1', 'organisationName', []),
       postShares: undefined,
       shareCount: 8,
       sharedPost: undefined,
