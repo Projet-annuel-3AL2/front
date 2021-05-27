@@ -16,4 +16,5 @@ export class Event {
   organisation: Organisation;
   category: Category;
   picture: Media;
+  participants: User[];
 }

@@ -26,11 +26,12 @@ export class EventService {
       creator: new User(),
       startDate: new Date(Date.now()),
       endDate: new Date(Date.now() + 1),
-      latitude: 0,
-      longitude: 0,
+      latitude: 49.929118,
+      longitude: 1.076918,
       organisation: new Organisation('1', 'OrganisationName'),
-      participantsLimit: 0,
-      picture: undefined
+      participantsLimit: 15,
+      picture: undefined,
+      participants: []
 
     }
     return event;
