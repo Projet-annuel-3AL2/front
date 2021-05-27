@@ -3,9 +3,8 @@
     <div class="px-4">
       <h2>Événements du moment</h2>
     </div>
-    <app-event-suggestion></app-event-suggestion>
-    <app-event-suggestion></app-event-suggestion>
-    <app-event-suggestion></app-event-suggestion>
-    <app-event-suggestion></app-event-suggestion>
+    <div *ngFor="let event of event$">
+      <app-event-suggestion [event]="event"></app-event-suggestion>
+    </div>
   </div>
 </div>

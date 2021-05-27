@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {EventService} from "../../services/event/event.service";
+import {Event} from '../../shared/models/event.model';
 
 @Component({
   selector: 'app-event-suggestion',
@@ -7,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventSuggestionComponent implements OnInit {
 
+   @Input('event') event : Event = new Event();
   constructor() { }
 
   ngOnInit(): void {

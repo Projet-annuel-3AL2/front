@@ -17,6 +17,7 @@ import {AppRoutingModule} from "./app-routing.module";
 import {TimelineComponent} from "./components/timeline/timeline.component";
 import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
 import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
+import {EventComponent} from "./components/event/event.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {EventSuggestionListComponent} from "./components/event-suggestion-list/e
     NavbarComponent,
     TimelineComponent,
     EventSuggestionComponent,
-    EventSuggestionListComponent
+    EventSuggestionListComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,

@@ -14,4 +14,10 @@ export class Organisation {
   bannerPicture: Media;
   conversation: Conversation;
   posts: Post[];
+
+
+  constructor(id: string, name: string) {
+    this.id = id;
+    this.name = name;
+  }
 }

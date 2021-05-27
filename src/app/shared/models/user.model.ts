@@ -14,4 +14,5 @@ export class User {
   profilePicture: Media;
   bannerPicture: Media;
   certification: Certification;
+
 }
