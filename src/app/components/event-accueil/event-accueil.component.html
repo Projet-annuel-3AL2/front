@@ -1,1 +1,3 @@
-<p>event-accueil works!</p>
+<div class="display-related-post" *ngFor="let post of posts$;">
+  <post [post]="post"></post>
+</div>
