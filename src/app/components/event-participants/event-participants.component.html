@@ -1,1 +1,5 @@
-<p>event-participants works!</p>
+<div class="my-3">
+  <div class="display-participant" *ngFor="let user of users$;">
+    <app-user-card [user]="user" class="m-0"></app-user-card>
+  </div>
+</div>

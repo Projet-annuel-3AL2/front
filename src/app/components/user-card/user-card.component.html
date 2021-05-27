@@ -1,1 +1,10 @@
-<p>user-card works!</p>
+<div class="rounded-pill border d-flex p-2 event-suggestion my-3">
+  <div class="mr-2">
+    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle"
+         width="50">
+  </div>
+  <div class="spacer"></div>
+  <p class="my-3">{{user.username}}</p>
+  <div class="spacer"></div>
+  <button mat-raised-button class="ml-auto button-add-friend" [routerLink]="['/event/, event.id']" >Ajouter</button>
+</div>

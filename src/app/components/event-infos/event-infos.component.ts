@@ -9,7 +9,9 @@ import {Event} from "../../shared/models/event.model";
 export class EventInfosComponent implements OnInit {
 
   @Input('event') event : Event = new Event();
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(): void {
   }

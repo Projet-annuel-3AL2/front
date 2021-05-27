@@ -21,6 +21,8 @@ import {EventComponent} from "./components/event/event.component";
 import {EventAccueilComponent} from "./components/event-accueil/event-accueil.component";
 import {EventInfosComponent} from "./components/event-infos/event-infos.component";
 import {EventParticipantsComponent} from "./components/event-participants/event-participants.component";
+import {UserCardComponent} from "./components/user-card/user-card.component";
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {EventParticipantsComponent} from "./components/event-participants/event-
     EventComponent,
     EventInfosComponent,
     EventAccueilComponent,
-    EventParticipantsComponent
+    EventParticipantsComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import {EventParticipantsComponent} from "./components/event-participants/event-
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MDBBootstrapModule.forRoot()
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],
