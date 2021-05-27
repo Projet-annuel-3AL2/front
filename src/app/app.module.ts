@@ -17,13 +17,18 @@ import {AppRoutingModule} from "./app-routing.module";
 import {TimelineComponent} from "./components/timeline/timeline.component";
 import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
 import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
+import {LoginComponent} from "./components/login/login.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RegisterComponent} from "./components/register/register.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     PostComponent,
+    LoginComponent,
     NavbarComponent,
     TimelineComponent,
+    RegisterComponent,
     EventSuggestionComponent,
     EventSuggestionListComponent
   ],
@@ -38,7 +43,8 @@ import {EventSuggestionListComponent} from "./components/event-suggestion-list/e
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],
