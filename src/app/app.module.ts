@@ -18,6 +18,9 @@ import {TimelineComponent} from "./components/timeline/timeline.component";
 import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
 import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
 import {EventComponent} from "./components/event/event.component";
+import {EventAccueilComponent} from "./components/event-accueil/event-accueil.component";
+import {EventInfosComponent} from "./components/event-infos/event-infos.component";
+import {EventParticipantsComponent} from "./components/event-participants/event-participants.component";
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import {EventComponent} from "./components/event/event.component";
     TimelineComponent,
     EventSuggestionComponent,
     EventSuggestionListComponent,
-    EventComponent
+    EventComponent,
+    EventInfosComponent,
+    EventAccueilComponent,
+    EventParticipantsComponent
   ],
   imports: [
     BrowserModule,

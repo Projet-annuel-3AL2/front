@@ -1,1 +1,45 @@
-<p>event works!</p>
+<div class="row m-0">
+  <div class="col-md-4 my-3">
+    <div class="button-return">
+      <div class="position-fixed">
+        <button mat-fab class="button-retour" aria-label="Bouton Retour">
+          <mat-icon>home</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 my-3">
+    <div class="event-scroll">
+      <mat-card-header>
+        <mat-card-title>{{event.name}}</mat-card-title>
+      </mat-card-header>
+      <mat-card class="event-card-full">
+        <img alt="" class="rounded" style="object-fit: none"
+             src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
+             width="100%" height="300px">
+        <div class="event-card-infos">
+          <p>{{event.description | slice:0:300}}...</p>
+        </div>
+
+      </mat-card>
+    </div>
+    <div class="tab-event">
+      <mat-tab-group dynamicHeight mat-align-tabs="center">
+        <mat-tab label="Accueil">
+          <app-event-accueil [event]="event"></app-event-accueil>
+        </mat-tab>
+        <mat-tab label="Infos">
+          <app-event-infos [event]="event"></app-event-infos>
+        </mat-tab>
+        <mat-tab label="Participants">
+          <app-event-participants [event]="event"></app-event-participants>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+  <div class="col-md-4 my-3">
+    <div class="position-fixed">
+      <app-event-suggestion-list></app-event-suggestion-list>
+    </div>
+  </div>
+</div>
