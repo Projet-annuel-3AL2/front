@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   public logout() {
-    return this.http.delete(`${environment.baseUrl}/auth/logout`)
+    return this.http.delete(`${environment.baseUrl}/auth/logout`, {withCredentials: true})
       .subscribe(()=>{
         localStorage.removeItem('user');
         this.userSubject.next(null);
