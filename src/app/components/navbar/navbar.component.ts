@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faBell, faCalendarAlt, faComments, faUserFriends, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {AuthService} from "../../services/auth/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -13,10 +14,13 @@ export class NavbarComponent implements OnInit {
   faComments = faComments;
   faSearch = faSearch;
 
-  constructor() {
+  constructor(public authService: AuthService) {
   }
 
   ngOnInit(): void {
   }
 
+  public onDisconnect(){
+    this.authService.logout();
+  }
 }
