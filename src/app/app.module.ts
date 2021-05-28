@@ -26,6 +26,9 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {EventFilterComponent} from "./components/event-filter/event-filter.component";
 import {EventListComponent} from "./components/event-list/event-list.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {EventCardComponent} from "./components/event-card/event-card.component";
+import {EventListDisplayComponent} from "./components/event-list-display/event-list-display.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +45,9 @@ import {ReturnButtonComponent} from "./components/return-button/return-button.co
     UserCardComponent,
     EventFilterComponent,
     EventListComponent,
-    ReturnButtonComponent
+    ReturnButtonComponent,
+    EventCardComponent,
+    EventListDisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +61,9 @@ import {ReturnButtonComponent} from "./components/return-button/return-button.co
     CollapseModule.forRoot(),
     MaterialModule,
     AppRoutingModule,
-    MDBBootstrapModule.forRoot()
+    MDBBootstrapModule.forRoot(),
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],

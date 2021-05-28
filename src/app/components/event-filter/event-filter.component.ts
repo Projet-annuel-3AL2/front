@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-event-filter',
@@ -7,14 +8,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventFilterComponent implements OnInit {
   isLocated: boolean;
-
+  range: FormGroup;
   constructor() { }
 
   ngOnInit(): void {
     this.isLocated = false;
+    this.initFormDateRangePicker();
+
   }
 
   showModelMapsCollapse() {
 
   }
+
+  formatLabel(value: number) {
+    if (value >= 10) {
+      return Math.round(value / 10) ;
+    }
+
+    return value;
+  }
+
+  initFormDateRangePicker(){
+    this.range = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl()
+    });
+  }
+
 }
