@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 
@@ -12,6 +12,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted: boolean;
   error: boolean;
+
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private router: Router) {
@@ -19,30 +20,37 @@ export class RegisterComponent implements OnInit {
     this.submitted = false;
   }
 
-  ngOnInit(): void {
-    this.initForm();
+  get username() {
+    return this.registerForm.get('username');
   }
 
-  private initForm() {
-    this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
-      password: ['', [Validators.required, Validators.pattern("^(?=.+[0-9])(?=.+[a-z])(?=.+[A-Z])(?=.+[*.!@$%^&(){}[_\\]:;<>,.?/~_+\\-=|]).{8,32}$")]],
-      confirmPassword: ['', [Validators.required]],
-      mail: ['', [Validators.required, Validators.email]]
-    },{validators: this.samePasswordValidator});
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
+  get mail() {
+    return this.registerForm.get('mail');
+  }
+
+  ngOnInit(): void {
+    this.initForm();
   }
 
   onSubmitForm() {
     this.submitted = true;
     const formValue = this.registerForm.value;
     this.authService.register(formValue.mail, formValue.username, formValue.password)
-      .subscribe(()=> {
-      },error => {
+      .subscribe(() => {
+      }, error => {
         this.submitted = false;
         if (error.status === 401) {
           this.error = true;
         }
-      },()=>{
+      }, () => {
         this.router.navigate(['/']);
       });
   }
@@ -52,11 +60,15 @@ export class RegisterComponent implements OnInit {
     const confirmPassword = group.get('confirmPassword');
     console.log(password)
     console.log(confirmPassword)
-    return password.value === confirmPassword.value ?  null : { notSame: true }  ;
+    return password.value === confirmPassword.value ? null : {notSame: true};
   }
 
-  get username() { return this.registerForm.get('username'); }
-  get password() { return this.registerForm.get('password'); }
-  get confirmPassword() { return this.registerForm.get('confirmPassword'); }
-  get mail() { return this.registerForm.get('mail'); }
+  private initForm() {
+    this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.pattern("^(?=.+[0-9])(?=.+[a-z])(?=.+[A-Z])(?=.+[*.!@$%^&(){}[_\\]:;<>,.?/~_+\\-=|]).{8,32}$")]],
+      confirmPassword: ['', [Validators.required]],
+      mail: ['', [Validators.required, Validators.email]]
+    }, {validators: this.samePasswordValidator});
+  }
 }

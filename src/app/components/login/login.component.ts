@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
   submitted: boolean;
   error: boolean;
+
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private router: Router) {
@@ -20,7 +21,22 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  this.initForm();
+    this.initForm();
+  }
+
+  onSubmitForm() {
+    this.submitted = true;
+    const formValue = this.userForm.value;
+    this.authService.login(formValue.username, formValue.password)
+      .subscribe(() => {
+      }, error => {
+        this.submitted = false;
+        if (error.status === 401) {
+          this.error = true;
+        }
+      }, () => {
+        this.router.navigate(['/']);
+      });
   }
 
   private initForm() {
@@ -28,20 +44,5 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.min(8)]]
     });
-  }
-
-  onSubmitForm() {
-    this.submitted = true;
-    const formValue = this.userForm.value;
-    this.authService.login(formValue.username, formValue.password)
-      .subscribe(()=> {
-      },error => {
-        this.submitted = false;
-      if (error.status === 401) {
-        this.error = true;
-      }
-    },()=>{
-        this.router.navigate(['/']);
-      });
   }
 }

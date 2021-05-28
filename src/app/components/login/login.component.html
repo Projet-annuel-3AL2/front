@@ -4,8 +4,8 @@
       <div class="container ">
         <div class="row justify-content-center">
           <div class="col-auto">
-            <a routerLink="/" class="d-inline-block">
-              <img class="user-select-none" src="assets/images/logo.png" height="140" alt="">
+            <a class="d-inline-block" routerLink="/">
+              <img alt="" class="user-select-none" height="140" src="assets/images/logo.png">
             </a>
           </div>
         </div>
@@ -17,21 +17,22 @@
           </div>
         </div>
       </div>
-      <form class="form-group" [formGroup]="userForm">
+      <form [formGroup]="userForm" class="form-group">
         <div class="border p-3">
-          <div class="border p-2 alert-warning rounded-3" *ngIf="error">
-            <p class="text-wrap m-0" >Authentification impossible, l'identifiant et le mot de passe fournis sont introuvable</p>
+          <div *ngIf="error" class="border p-2 alert-warning rounded-3">
+            <p class="text-wrap m-0">Authentification impossible, l'identifiant et le mot de passe fournis sont
+              introuvable</p>
           </div>
           <div class="m-2">
             <label class="d-inline">
               Identifiant
-              <input type="text" id="username" formControlName="username" class="rounded-pill form-control">
+              <input class="rounded-pill form-control" formControlName="username" id="username" type="text">
             </label>
           </div>
           <div class="m-2">
             <label class="d-inline">
               Mot de passe
-              <input type="password" id="password" formControlName="password" class="rounded-pill form-control">
+              <input class="rounded-pill form-control" formControlName="password" id="password" type="password">
             </label>
           </div>
           <div class="row">
@@ -48,7 +49,7 @@
           </div>
         </div>
         <div class="row-cols-1 my-3">
-          <button mat-raised-button type="submit" (click)="onSubmitForm()" [disabled]="submitted">Se connecter</button>
+          <button (click)="onSubmitForm()" [disabled]="submitted" mat-raised-button type="submit">Se connecter</button>
         </div>
       </form>
     </div>
