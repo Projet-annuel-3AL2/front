@@ -10,9 +10,14 @@ import {AuthService} from "../../services/auth/auth.service";
 })
 export class LoginComponent implements OnInit {
   userForm: FormGroup;
+  submitted: boolean;
+  error: boolean;
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
-              private router: Router) { }
+              private router: Router) {
+    this.error = false;
+    this.submitted = false;
+  }
 
   ngOnInit(): void {
   this.initForm();
@@ -25,7 +30,17 @@ export class LoginComponent implements OnInit {
     });
   }
   onSubmitForm() {
+    this.submitted = true;
     const formValue = this.userForm.value;
-    this.authService.login(formValue.username, formValue.password).subscribe(()=> this.router.navigate(['/']));
+    this.authService.login(formValue.username, formValue.password)
+      .subscribe(()=> {
+      },error => {
+      if (error.status === 401) {
+        this.submitted = false;
+        this.error = true;
+      }
+    },()=>{
+        this.router.navigate(['/']);
+      });
   }
 }

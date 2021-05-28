@@ -19,7 +19,7 @@
       </div>
       <form class="form-group" [formGroup]="userForm">
         <div class="border p-3">
-          <div class="border p-2 alert-warning rounded-3">
+          <div class="border p-2 alert-warning rounded-3" *ngIf="error">
             <p class="text-wrap m-0" >Authentification impossible, l'identifiant et le mot de passe fournis sont introuvable</p>
           </div>
           <div class="m-2">
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="row-cols-1 my-3">
-          <button mat-raised-button type="submit" (click)="onSubmitForm()">Se connecter</button>
+          <button mat-raised-button type="submit" (click)="onSubmitForm()" [disabled]="submitted">Se connecter</button>
         </div>
       </form>
     </div>
