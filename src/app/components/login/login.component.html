@@ -1,24 +1,35 @@
 <div class="container my-3">
   <div class="row justify-content-center">
-    <div class="col-auto">
-      <div class="container">
-        <div class="row-auto justify-content-center">
-          <a routerLink="/">
-            <img class="user-select-none" src="assets/images/logo.png" height="140" alt="">
-          </a>
-          <h2>Se connecter à<br>Agir pour tous</h2>
+    <div class="col-3">
+      <div class="container ">
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <a routerLink="/" class="d-inline-block">
+              <img class="user-select-none" src="assets/images/logo.png" height="140" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="container ">
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <h1>Se connecter</h1>
+          </div>
         </div>
       </div>
       <form class="form-group" [formGroup]="userForm">
         <div class="border p-3">
+          <div class="border p-2 alert-warning rounded-3">
+            <p class="text-wrap m-0" >Authentification impossible, l'identifiant et le mot de passe fournis sont introuvable</p>
+          </div>
           <div class="m-2">
-            <label>
+            <label class="d-inline">
               Identifiant
               <input type="text" id="username" formControlName="username" class="rounded-pill form-control">
             </label>
           </div>
           <div class="m-2">
-            <label>
+            <label class="d-inline">
               Mot de passe
               <input type="password" id="password" formControlName="password" class="rounded-pill form-control">
             </label>
