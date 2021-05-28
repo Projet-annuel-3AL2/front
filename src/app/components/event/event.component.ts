@@ -23,4 +23,7 @@ export class EventComponent implements OnInit {
 
   }
 
+  joinEvent(id: string) {
+
+  }
 }

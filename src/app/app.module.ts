@@ -23,6 +23,9 @@ import {EventInfosComponent} from "./components/event-infos/event-infos.componen
 import {EventParticipantsComponent} from "./components/event-participants/event-participants.component";
 import {UserCardComponent} from "./components/user-card/user-card.component";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import {EventFilterComponent} from "./components/event-filter/event-filter.component";
+import {EventListComponent} from "./components/event-list/event-list.component";
+import {ReturnButtonComponent} from "./components/return-button/return-button.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     EventInfosComponent,
     EventAccueilComponent,
     EventParticipantsComponent,
-    UserCardComponent
+    UserCardComponent,
+    EventFilterComponent,
+    EventListComponent,
+    ReturnButtonComponent
   ],
   imports: [
     BrowserModule,

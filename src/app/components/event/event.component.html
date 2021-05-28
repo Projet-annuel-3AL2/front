@@ -1,12 +1,6 @@
 <div class="row m-0">
   <div class="col-md-4 my-3">
-    <div class="button-return">
-      <div class="position-fixed">
-        <button mat-fab class="button-retour" aria-label="Bouton Retour">
-          <i class="fas fa-arrow-circle-left fa-2x"></i>
-        </button>
-      </div>
-    </div>
+    <app-return-button></app-return-button>
   </div>
   <div class="col-md-4 my-3">
     <div class="event-scroll">
@@ -19,6 +13,10 @@
              width="100%" height="300px">
         <div class="event-card-infos">
           <p>{{event.description | slice:0:300}}...</p>
+          <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}}</p>
+          <p><i class="fas fa-clock"></i> {{event.endDate.getDate()}}/{{event.endDate.getMonth() + 1}}/{{event.endDate.getFullYear()}}</p>
+          <button mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" >Rejoindre</button>
+
         </div>
 
       </mat-card>
