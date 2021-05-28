@@ -1,9 +1,9 @@
 <mat-toolbar>
-  <a href="#">
+  <a [routerLink]="['/timeline']">
     <img alt="logo" height="75" src="../../../assets/images/logo.png">
   </a>
   <div>
-    <a matRipple class="m-4" href="#">
+    <a matRipple class="m-4" [routerLink]="['/events']" >
       <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
     </a>
   </div>

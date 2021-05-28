@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faBell, faCalendarAlt, faComments, faUserFriends, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,8 @@ export class NavbarComponent implements OnInit {
   faComments = faComments;
   faSearch = faSearch;
 
-  constructor() {
+  constructor(private _activatedRoute:ActivatedRoute,
+              private _router:Router) {
   }
 
   ngOnInit(): void {
