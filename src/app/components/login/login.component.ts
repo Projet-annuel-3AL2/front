@@ -25,18 +25,19 @@ export class LoginComponent implements OnInit {
 
   private initForm() {
     this.userForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.min(8)]]
     });
   }
+
   onSubmitForm() {
     this.submitted = true;
     const formValue = this.userForm.value;
     this.authService.login(formValue.username, formValue.password)
       .subscribe(()=> {
       },error => {
-      if (error.status === 401) {
         this.submitted = false;
+      if (error.status === 401) {
         this.error = true;
       }
     },()=>{

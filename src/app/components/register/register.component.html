@@ -17,38 +17,49 @@
           </div>
         </div>
       </div>
-      <form class="form-group">
+      <form class="form-group" [formGroup]="registerForm">
         <div class="rounded-3 border p-3">
           <div class="m-2">
             <label>
               Identifiant
-              <input type="text" class="rounded-pill form-control">
+              <input type="text" class="rounded-pill form-control" id="username" formControlName="username">
             </label>
+            <div *ngIf="username.invalid && (username.dirty||username.touched)">
+              <p class="text-wrap m-0 text-danger">L'identifiant doit contenir:<br>- Entre 4 et 20 charactère</p>
+            </div>
           </div>
           <div class="m-2">
             <label>
               email
-              <input type="email" class="rounded-pill form-control">
+              <input type="email" class="rounded-pill form-control" id="mail" formControlName="mail">
             </label>
+            <div *ngIf="mail.invalid && (mail.dirty||mail.touched)">
+              <p class="text-wrap m-0 text-danger">Le format du mail est invalide.</p>
+            </div>
           </div>
           <div class="m-2">
             <label>
               Mot de passe
-              <input type="password" class="rounded-pill form-control">
+              <input type="password" class="rounded-pill form-control" id="password" formControlName="password">
             </label>
+            <div *ngIf="password.invalid && (password.dirty||password.touched)">
+              <p class="text-wrap m-0 text-danger">Le mot de passe doit contenir:<br>- Entre 8 et 30 charactère<br>- Une majuscule<br>- Une minuscule<br>- Un charactère spécial</p>
+            </div>
           </div>
           <div class="m-2">
             <label>
               Confirmer
-              <input type="password" class="rounded-pill form-control">
+              <input type="password" class="rounded-pill form-control" id="confirmPassword" formControlName="confirmPassword">
             </label>
+            <div *ngIf="registerForm.hasError('notSame') || confirmPassword.invalid && (confirmPassword.dirty||confirmPassword.touched)">
+              <p class="text-wrap m-0 text-danger">Le mot de passe doit correspondre</p>
+            </div>
           </div>
         </div>
         <div class="row-cols-1 my-3">
-          <button mat-raised-button>S'inscrire</button>
+          <button mat-raised-button (click)="onSubmitForm()" [disabled]="submitted">S'inscrire</button>
         </div>
       </form>
     </div>
   </div>
 </div>
-
