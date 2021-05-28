@@ -35,12 +35,12 @@ export class AuthService {
       }));
   }
 
-  public logout() {
+  public logout(): Observable<unknown> {
     return this.http.delete(`${environment.baseUrl}/auth/logout`, {withCredentials: true})
-      .subscribe(()=>{
+      .pipe(map(()=>{
         localStorage.removeItem('user');
         this.userSubject.next(null);
-      });
+      }));
   }
 
   public isAuthenticated(): boolean {
