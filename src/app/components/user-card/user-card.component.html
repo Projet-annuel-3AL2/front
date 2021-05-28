@@ -4,7 +4,7 @@
          width="50">
   </div>
   <div class="spacer"></div>
-  <p class="my-3">{{user.username}}</p>
+  <p class="my-3"><a [routerLink]="['/addFriend/, user.id']">{{user.username}}</a></p>
   <div class="spacer"></div>
-  <button mat-raised-button class="ml-auto button-add-friend" [routerLink]="['/addFriend/, user.id']" >Ajouter</button>
+  <button mat-raised-button class="ml-auto button-add-friend" (click)="this.addFriend(user.id)">Ajouter</button>
 </div>

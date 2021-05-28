@@ -14,4 +14,7 @@ export class UserCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addFriend(id: string) {
+
+  }
 }
