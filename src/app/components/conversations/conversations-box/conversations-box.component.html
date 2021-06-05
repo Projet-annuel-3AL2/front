@@ -1,1 +1,8 @@
-<p>conversations-box works!</p>
+<div class="conversation-box" fxFlex fxLayout="row">
+  <div fxFlex fxLayoutAlign="start center">
+    <fa-icon class="m-1" [icon]="faUserCircle" size="3x"></fa-icon>
+    <h2 class="user-select-none m-2 mx-2">Messages</h2>
+  </div>
+  <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleUp" *ngIf="!opened" size="2x"></fa-icon>
+  <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleDown" *ngIf="opened" size="2x"></fa-icon>
+</div>
