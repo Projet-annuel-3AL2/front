@@ -28,6 +28,7 @@ import {ConversationComponent} from "./components/conversations/conversation/con
 import {ConversationsBoxComponent} from "./components/conversations/conversations-box/conversations-box.component";
 import {MessageComponent} from "./components/conversations/message/message.component";
 import {ConversationCardComponent} from "./components/conversations/conversation-card/conversation-card.component";
+import {TimeagoModule} from "ngx-timeago";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,9 @@ import {ConversationCardComponent} from "./components/conversations/conversation
     CollapseModule.forRoot(),
     MaterialModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TimeagoModule.forRoot()
+
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService],

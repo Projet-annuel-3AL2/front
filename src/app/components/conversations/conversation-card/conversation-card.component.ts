@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Conversation} from "../../../shared/models/conversation.model";
 
 @Component({
   selector: 'app-conversation-card',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./conversation-card.component.css']
 })
 export class ConversationCardComponent implements OnInit {
+ @Input()
+ conversation: Conversation;
 
   constructor() { }
 

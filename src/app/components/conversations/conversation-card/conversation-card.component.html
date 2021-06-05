@@ -1,1 +1,14 @@
-<p>conversation-card works!</p>
+<div class="conversation-card container " fxFlex fxLayout="row">
+  <div fxFlex fxLayoutAlign="start center">
+    <img [src]=" 'https://picsum.photos/50/50'" alt="" class="rounded-circle" width="50">
+    <div fxFlex fxLayout="row">
+      <div fxFlex fxLayout="column" fxLayoutAlign="center start">
+        <p class="m-0">{{conversation.messages[0].user.username || "username"}}</p>
+        <p class="m-0">{{conversation.messages[0].text || "rnd text iuehsguhseuighi"}}</p>
+      </div>
+      <div fxFlex fxLayoutAlign="end start">
+        <p class="m-0">{{conversation.messages[0].createdAt | timeago}}</p>
+      </div>
+    </div>
+  </div>
+</div>
