@@ -24,6 +24,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {ConversationComponent} from "./components/conversations/conversation/conversation.component";
+import {ConversationsBoxComponent} from "./components/conversations/conversations-box/conversations-box.component";
+import {MessageComponent} from "./components/conversations/message/message.component";
 
 @NgModule({
   declarations: [
@@ -31,10 +34,13 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     PostComponent,
     LoginComponent,
     NavbarComponent,
+    MessageComponent,
     TimelineComponent,
     RegisterComponent,
+    ConversationComponent,
     EventSuggestionComponent,
-    EventSuggestionListComponent
+    ConversationsBoxComponent,
+    EventSuggestionListComponent,
   ],
   imports: [
     BrowserModule,
