@@ -34,7 +34,7 @@ export class ConversationsBoxComponent implements OnInit, OnDestroy {
   conversations: Conversation[];
   private destroySubject = new Subject();
 
-  constructor(private conversationBoxService: ConversationBoxService) { }
+  constructor(public conversationBoxService: ConversationBoxService) { }
 
   ngOnInit(): void {
     const viewContainerRef = this.conversationBoxDirective.viewContainerRef;

@@ -1,33 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Conversation} from "../../../shared/models/conversation.model";
+import {ConversationBoxService} from "../../../services/conversation-box/conversation-box.service";
 
 @Component({
   selector: 'app-conversations-list',
   templateUrl: './conversations-list.component.html',
-  styleUrls: ['./conversations-list.component.css'],
-  animations:[
-    trigger('openClose', [
-      state('open',style({
-        transform: 'translateY(0%)'
-      })),
-      state('closed',style({
-        transform: 'translateY(0%)'
-      })),
-      transition('closed => open', [
-        animate('300ms ease-out', style({transform: 'translateY(0%)'}))
-      ]),
-      transition('open => closed', [
-        animate('300ms ease-in', style({transform: 'translateY(0%)'}))
-      ])
-    ])
-  ]
+  styleUrls: ['./conversations-list.component.css']
 })
 export class ConversationsListComponent implements OnInit {
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
-  opened: boolean;
   conversations: Conversation[] = [
     {
       messages:[
@@ -40,10 +23,23 @@ export class ConversationsListComponent implements OnInit {
           text:"aaaaaaaaaaaaaaaa",
           updatedAt: new Date()
         }
-      ]
+      ],
+      friendship:{
+        friendTwo:{
+        username:"aaaa",
+        id:"aaa"
+        },
+        friendOne:{
+        username:"aaaa",
+        id:"bbb"
+      },
+        conversation:null
+      }
     }
   ];
-  constructor() { }
+
+  constructor(public conversationBoxService: ConversationBoxService) {
+  }
 
   ngOnInit(): void {
   }

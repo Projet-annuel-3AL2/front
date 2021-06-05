@@ -1,12 +1,12 @@
-<div [@openClose]="opened ? 'open' : 'closed'" class="conversations-box col">
-  <div class="conversations-box-header" (click)="opened=!opened">
+<div class="conversations-box col">
+  <div class="conversations-box-header" (click)="conversationBoxService.opened=!conversationBoxService.opened">
     <div fxFlex fxLayoutAlign="start center">
       <h2 class="user-select-none m-2 mx-4 ">Messages</h2>
     </div>
-    <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleUp" *ngIf="!opened" size="2x"></fa-icon>
-    <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleDown" *ngIf="opened" size="2x"></fa-icon>
+    <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleUp" *ngIf="!conversationBoxService.opened" size="2x"></fa-icon>
+    <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleDown" *ngIf="conversationBoxService.opened" size="2x"></fa-icon>
   </div>
-  <div *ngIf="opened" class="conversations-list">
+  <div *ngIf="conversationBoxService.opened" class="conversations-list">
     <div *ngFor="let conversation of conversations">
       <app-conversation-card [conversation]="conversation"></app-conversation-card>
     </div>

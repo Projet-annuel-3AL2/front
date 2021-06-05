@@ -1,1 +1,3 @@
-<ng-template appConversationBox></ng-template>
+<div class="conversations-box" [@openClose]="conversationBoxService.opened ? 'open' : 'closed'" >
+  <ng-template appConversationBox></ng-template>
+</div>

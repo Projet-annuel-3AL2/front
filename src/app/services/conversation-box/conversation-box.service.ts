@@ -11,6 +11,7 @@ export class ConversationBoxService {
   private isConversationSelected= new BehaviorSubject(false);
   isConversationSelected$ = this.isConversationSelected.asObservable();
   selectedConversation: Conversation;
+  opened: boolean = false;
 
   constructor(private cfr: ComponentFactoryResolver) {}
 
