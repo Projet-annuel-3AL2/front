@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {faUserCircle, faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Conversation} from "../../../shared/models/conversation.model";
+import {ConversationBoxService} from "../../../services/conversation-box/conversation-box.service";
+import {ConversationBoxDirective} from "../../../directives/conversation-box/conversation-box.directive";
+import {mergeMap, takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-conversations-box',
@@ -24,15 +27,26 @@ import {Conversation} from "../../../shared/models/conversation.model";
     ])
   ]
 })
-export class ConversationsBoxComponent implements OnInit {
-  faUserCircle = faUserCircle;
-  faAngleDown = faAngleDown;
-  faAngleUp = faAngleUp;
+export class ConversationsBoxComponent implements OnInit, OnDestroy {
+  @ViewChild(ConversationBoxDirective, { static: true })
+  conversationBoxDirective: ConversationBoxDirective;
   opened: boolean;
   conversations: Conversation[];
-  constructor() { }
+  private destroySubject = new Subject();
+
+  constructor(private conversationBoxService: ConversationBoxService) { }
 
   ngOnInit(): void {
+    const viewContainerRef = this.conversationBoxDirective.viewContainerRef;
+    this.conversationBoxService.isConversationSelected$
+      .pipe(
+        takeUntil(this.destroySubject),
+        mergeMap(isConversationSelected => this.conversationBoxService.loadComponent(viewContainerRef, isConversationSelected)))
+      .subscribe();
   }
 
+  ngOnDestroy(): void {
+    this.destroySubject.next();
+    this.destroySubject.complete();
+  }
 }

@@ -1,4 +1,4 @@
-<div class="conversation-card container " fxFlex fxLayout="row">
+<div class="conversation-card container " fxFlex fxLayout="row"(click)="onConversationSelect()">
   <div fxFlex fxLayoutAlign="start center">
     <img [src]="conversation.organisation.profilePicture || conversation.messages[conversation.messages.length-1].user.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle" width="50">
     <div fxFlex fxLayout="row">

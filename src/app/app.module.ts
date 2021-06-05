@@ -29,6 +29,9 @@ import {ConversationsBoxComponent} from "./components/conversations/conversation
 import {MessageComponent} from "./components/conversations/message/message.component";
 import {ConversationCardComponent} from "./components/conversations/conversation-card/conversation-card.component";
 import {TimeagoModule} from "ngx-timeago";
+import {ConversationBoxDirective} from "./directives/conversation-box/conversation-box.directive";
+import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
+import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
 
 @NgModule({
   declarations: [
@@ -41,8 +44,10 @@ import {TimeagoModule} from "ngx-timeago";
     RegisterComponent,
     ConversationComponent,
     EventSuggestionComponent,
+    ConversationBoxDirective,
     ConversationsBoxComponent,
     ConversationCardComponent,
+    ConversationsListComponent,
     EventSuggestionListComponent,
   ],
   imports: [
@@ -64,7 +69,7 @@ import {TimeagoModule} from "ngx-timeago";
 
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [AuthGuardService, NegateAuthGuardService],
+  providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
