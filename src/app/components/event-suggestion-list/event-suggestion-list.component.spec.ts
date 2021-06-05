@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EventSuggestionListComponent } from './event-suggestion-list.component';
+import {EventSuggestionListComponent} from './event-suggestion-list.component';
 
 describe('EventSuggestionListComponent', () => {
   let component: EventSuggestionListComponent;
@@ -8,9 +8,9 @@ describe('EventSuggestionListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventSuggestionListComponent ]
+      declarations: [EventSuggestionListComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

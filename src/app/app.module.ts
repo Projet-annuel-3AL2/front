@@ -20,6 +20,10 @@ import {EventSuggestionListComponent} from "./components/event-suggestion-list/e
 import {LoginComponent} from "./components/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
+import {HttpClientModule} from "@angular/common/http";
+import {AuthGuardService} from "./services/auth/auth-guard.service";
+import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -36,6 +40,8 @@ import {RegisterComponent} from "./components/register/register.component";
     BrowserModule,
     RouterModule,
     CommonModule,
+    FlexLayoutModule,
+    HttpClientModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
@@ -47,7 +53,7 @@ import {RegisterComponent} from "./components/register/register.component";
     ReactiveFormsModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [],
+  providers: [AuthGuardService, NegateAuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
