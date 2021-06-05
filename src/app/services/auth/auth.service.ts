@@ -52,7 +52,7 @@ export class AuthService {
     return user !== null && user !== undefined && user !== "";
   }
 
-  public getUser(): User{
+  public getUser(): User {
     return JSON.parse(localStorage.getItem('user'));
   }
 }

@@ -7,9 +7,11 @@ import {Message} from "../../../shared/models/message.model";
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
-@Input()
-message:Message;
-  constructor() { }
+  @Input()
+  message: Message;
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

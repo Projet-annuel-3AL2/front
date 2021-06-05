@@ -8,15 +8,16 @@ import {ConversationBoxService} from "../../../services/conversation-box/convers
   styleUrls: ['./conversation-card.component.css']
 })
 export class ConversationCardComponent implements OnInit {
- @Input()
- conversation: Conversation;
+  @Input()
+  conversation: Conversation;
 
-  constructor(private conversationBoxService:ConversationBoxService) { }
+  constructor(private conversationBoxService: ConversationBoxService) {
+  }
 
   ngOnInit(): void {
   }
 
-  onConversationSelect(){
+  onConversationSelect() {
     this.conversationBoxService.selectConversation(this.conversation);
   }
 }

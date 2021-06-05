@@ -8,30 +8,31 @@ import {ConversationsListComponent} from "../../components/conversations/convers
   providedIn: 'root'
 })
 export class ConversationBoxService {
-  private isConversationSelected= new BehaviorSubject(false);
-  isConversationSelected$ = this.isConversationSelected.asObservable();
   selectedConversation: Conversation;
   opened: boolean = false;
+  private isConversationSelected = new BehaviorSubject(false);
+  isConversationSelected$ = this.isConversationSelected.asObservable();
 
-  constructor(private cfr: ComponentFactoryResolver) {}
+  constructor(private cfr: ComponentFactoryResolver) {
+  }
 
   async loadComponent(vcr: ViewContainerRef, isConversationSelected: boolean) {
     vcr.clear();
-    const { ConversationComponent } = await import('../../components/conversations/conversation/conversation.component');
+    const {ConversationComponent} = await import('../../components/conversations/conversation/conversation.component');
 
-    const { ConversationsListComponent } = await import('../../components/conversations/conversations-list/conversations-list.component');
+    const {ConversationsListComponent} = await import('../../components/conversations/conversations-list/conversations-list.component');
     console.log(isConversationSelected)
-    let component : any = isConversationSelected ? ConversationComponent : ConversationsListComponent;
+    let component: any = isConversationSelected ? ConversationComponent : ConversationsListComponent;
     return vcr.createComponent(
       this.cfr.resolveComponentFactory(component))
   }
 
-  selectConversation(conversation: Conversation){
+  selectConversation(conversation: Conversation) {
     this.selectedConversation = conversation;
     this.isConversationSelected.next(true);
   }
 
-  unselectConversation(){
+  unselectConversation() {
     this.selectedConversation = undefined;
     this.isConversationSelected.next(false);
   }

@@ -1,13 +1,17 @@
-<div class="conversation-card container " fxFlex fxLayout="row"(click)="onConversationSelect()">
+<div (click)="onConversationSelect()" class="conversation-card container " fxFlex fxLayout="row">
   <div fxFlex fxLayoutAlign="start center">
-    <img [src]="conversation.organisation.profilePicture || conversation.messages[conversation.messages.length-1].user.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle" width="50">
+    <img
+      [src]="conversation.organisation.profilePicture || conversation.messages[conversation.messages.length-1].user.profilePicture || 'https://picsum.photos/50/50'"
+      alt="" class="rounded-circle" width="50">
     <div fxFlex fxLayout="row">
       <div fxFlex fxLayout="column" fxLayoutAlign="center start">
-        <p class="m-0">{{conversation.organisation.name || conversation.messages[conversation.messages.length-1].user.username || "username"}}</p>
-        <p class="m-0">{{conversation.messages[conversation.messages.length-1].text || "rnd text iuehsguhseuighi"}}</p>
+        <p
+          class="m-0">{{conversation.organisation.name || conversation.messages[conversation.messages.length - 1].user.username || "username"}}</p>
+        <p
+          class="m-0">{{conversation.messages[conversation.messages.length - 1].text || "rnd text iuehsguhseuighi"}}</p>
       </div>
       <div fxFlex fxLayoutAlign="end start">
-        <p class="m-0">{{conversation.messages[conversation.messages.length-1].createdAt | timeago}}</p>
+        <p class="m-0">{{conversation.messages[conversation.messages.length - 1].createdAt | timeago}}</p>
       </div>
     </div>
   </div>

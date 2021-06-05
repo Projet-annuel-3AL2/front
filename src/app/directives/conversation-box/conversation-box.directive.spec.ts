@@ -1,4 +1,4 @@
-import { ConversationBoxDirective } from './conversation-box.directive';
+import {ConversationBoxDirective} from './conversation-box.directive';
 
 describe('ConversationBoxDirective', () => {
   it('should create an instance', () => {

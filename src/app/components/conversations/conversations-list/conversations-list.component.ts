@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import {Conversation} from "../../../shared/models/conversation.model";
 import {ConversationBoxService} from "../../../services/conversation-box/conversation-box.service";
@@ -13,27 +13,27 @@ export class ConversationsListComponent implements OnInit {
   faAngleUp = faAngleUp;
   conversations: Conversation[] = [
     {
-      messages:[
+      messages: [
         {
-          user:{
-            username:"aaaa",
-            id:"aaa"
-          },id:"aaaa",
+          user: {
+            username: "aaaa",
+            id: "aaa"
+          }, id: "aaaa",
           createdAt: new Date(),
-          text:"aaaaaaaaaaaaaaaa",
+          text: "aaaaaaaaaaaaaaaa",
           updatedAt: new Date()
         }
       ],
-      friendship:{
-        friendTwo:{
-        username:"aaaa",
-        id:"aaa"
+      friendship: {
+        friendTwo: {
+          username: "aaaa",
+          id: "aaa"
         },
-        friendOne:{
-        username:"aaaa",
-        id:"bbb"
-      },
-        conversation:null
+        friendOne: {
+          username: "aaaa",
+          id: "bbb"
+        },
+        conversation: null
       }
     }
   ];

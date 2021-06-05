@@ -10,12 +10,12 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   selector: 'app-conversations-box',
   templateUrl: './conversations-box.component.html',
   styleUrls: ['./conversations-box.component.css'],
-  animations:[
+  animations: [
     trigger('openClose', [
-      state('open',style({
+      state('open', style({
         transform: 'translateY(00%)'
       })),
-      state('closed',style({
+      state('closed', style({
         transform: 'translateY(0%)'
       })),
       transition('closed => open', [
@@ -28,13 +28,14 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ]
 })
 export class ConversationsBoxComponent implements OnInit, OnDestroy {
-  @ViewChild(ConversationBoxDirective, { static: true })
+  @ViewChild(ConversationBoxDirective, {static: true})
   conversationBoxDirective: ConversationBoxDirective;
   opened: boolean;
   conversations: Conversation[];
   private destroySubject = new Subject();
 
-  constructor(public conversationBoxService: ConversationBoxService) { }
+  constructor(public conversationBoxService: ConversationBoxService) {
+  }
 
   ngOnInit(): void {
     const viewContainerRef = this.conversationBoxDirective.viewContainerRef;

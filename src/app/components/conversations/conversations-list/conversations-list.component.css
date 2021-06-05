@@ -5,10 +5,10 @@
   border-bottom: 1px solid #ADADAD;
 }
 
-.conversations-list{
+.conversations-list {
   overflow: scroll;
-  overflow-y:auto;
-  overflow-x:hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 400px;
   width: 100%;
   background-color: #E5E5E5;

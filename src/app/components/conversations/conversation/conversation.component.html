@@ -1,11 +1,13 @@
 <div class="conversations-box col">
-  <div class="conversations-box-header" (click)="conversationBoxService.opened=!conversationBoxService.opened">
-    <fa-icon [icon]="faTimes" size="2x" class="m-2 mx-3" (click)="leaveConversation()"></fa-icon>
+  <div (click)="conversationBoxService.opened=!conversationBoxService.opened" class="conversations-box-header">
+    <fa-icon (click)="leaveConversation()" [icon]="faTimes" class="m-2 mx-3" size="2x"></fa-icon>
     <div fxFlex fxLayoutAlign="start center">
       <h2 class="user-select-none m-2 mx-4 ">{{getConversationName()}}</h2>
     </div>
-    <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleUp" *ngIf="!conversationBoxService.opened" size="2x"></fa-icon>
-    <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleDown" *ngIf="conversationBoxService.opened" size="2x"></fa-icon>
+    <fa-icon *ngIf="!conversationBoxService.opened" [icon]="faAngleUp" class="my-2 mx-4" fxFlex
+             fxLayoutAlign="end center" size="2x"></fa-icon>
+    <fa-icon *ngIf="conversationBoxService.opened" [icon]="faAngleDown" class="my-2 mx-4" fxFlex
+             fxLayoutAlign="end center" size="2x"></fa-icon>
   </div>
   <div *ngIf="conversationBoxService.opened">
     <div class="message-list">
@@ -15,7 +17,9 @@
     </div>
     <div class="message-input">
       <textarea></textarea>
-      <button type="submit"><fa-icon [icon]="faPaperPlane"></fa-icon></button>
+      <button type="submit">
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
+      </button>
     </div>
   </div>
 </div>
