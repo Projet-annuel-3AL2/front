@@ -1,10 +1,23 @@
-.conversation-box {
+.conversations-box-header {
+  cursor: pointer;
+  height: 50px;
+  width: 300px;
+}
+
+.conversations-list{
+  overflow: scroll;
+  overflow-y:auto;
+  height: 400px;
+  width: 100%;
+  background-color: #E5E5E5;
+}
+
+.conversations-box{
   position:fixed;
+  width: 300px;
   bottom:0;
   right: 100px;
   border: 1px solid #ADADAD;
   border-radius: 20px 20px 0 0;
   background-color: #E5E5E5;
-  height: 50px;
-  width: 300px;
 }
