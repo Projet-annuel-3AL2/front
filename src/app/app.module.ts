@@ -23,6 +23,7 @@ import {RegisterComponent} from "./components/register/register.component";
 import {HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
     BrowserModule,
     RouterModule,
     CommonModule,
+    FlexLayoutModule,
     HttpClientModule,
     FontAwesomeModule,
     BrowserAnimationsModule,

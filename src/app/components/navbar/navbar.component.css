@@ -1,12 +1,3 @@
-.spacer {
-  flex: 1 1 auto;
-}
-
-.center {
-  flex: 1 1 auto;
-  text-align: center;
-}
-
 .auth-buttons {
   display: table-cell;
 }
@@ -32,7 +23,6 @@ mat-toolbar {
 .search-bar fa-icon {
   position: absolute;
   z-index: 2;
-  display: block;
   width: 2.375rem;
   height: 2.375rem;
   line-height: 2.375rem;
