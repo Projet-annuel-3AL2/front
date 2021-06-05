@@ -27,6 +27,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import {ConversationComponent} from "./components/conversations/conversation/conversation.component";
 import {ConversationsBoxComponent} from "./components/conversations/conversations-box/conversations-box.component";
 import {MessageComponent} from "./components/conversations/message/message.component";
+import {ConversationCardComponent} from "./components/conversations/conversation-card/conversation-card.component";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {MessageComponent} from "./components/conversations/message/message.compo
     ConversationComponent,
     EventSuggestionComponent,
     ConversationsBoxComponent,
+    ConversationCardComponent,
     EventSuggestionListComponent,
   ],
   imports: [

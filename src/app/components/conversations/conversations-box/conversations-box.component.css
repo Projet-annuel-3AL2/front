@@ -1,7 +1,8 @@
 .conversations-box-header {
   cursor: pointer;
   height: 50px;
-  width: 300px;
+  width: 100%;
+  border-bottom: 1px solid #ADADAD;
 }
 
 .conversations-list{

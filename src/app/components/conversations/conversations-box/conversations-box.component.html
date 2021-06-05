@@ -8,5 +8,7 @@
     <fa-icon fxFlex fxLayoutAlign="end center" class="my-2 mx-4" [icon]="faAngleDown" *ngIf="opened" size="2x"></fa-icon>
   </div>
   <div *ngIf="opened" class="conversations-list">
+    <div *ngFor="let conversation of conversations"></div>
+    <app-conversation-card></app-conversation-card>
   </div>
 </div>
