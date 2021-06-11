@@ -1,5 +1,5 @@
-<mat-list>
-  <mat-list-item *ngFor="let event of events$;">
-    <app-event-card [event]="event" class="my-3"></app-event-card>
-  </mat-list-item>
-</mat-list>
+<div *ngFor="let event of events$;">
+  <div class="event-list-item m-2">
+    <app-event-card [event]="event"></app-event-card>
+  </div>
+</div>

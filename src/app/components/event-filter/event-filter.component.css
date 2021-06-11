@@ -1,0 +1,16 @@
+.event-list-filter{
+  position: absolute;
+  top: 100px;
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+.mat-checkbox-item {
+  height: 400px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}

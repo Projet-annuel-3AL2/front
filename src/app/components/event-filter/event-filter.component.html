@@ -30,10 +30,16 @@
             max="5000"
             aria-label="units"></mat-slider>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item class="mat-checkbox-item">
           <h3>Type d'évènement</h3>
           <mat-divider></mat-divider>
-          <p>metre checkBox</p>
+          <section class="section-checkbox">
+            <ul>
+              <li  *ngFor="let typeEvent of listTypeEvent">
+                <mat-checkbox class="mat-checkbox">{{typeEvent}}</mat-checkbox>
+              </li>
+            </ul>
+          </section>
         </mat-list-item>
       </mat-list>
     </div>

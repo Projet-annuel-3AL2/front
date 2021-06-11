@@ -9,6 +9,12 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class EventFilterComponent implements OnInit {
   isLocated: boolean;
   range: FormGroup;
+  listTypeEvent: any = [
+    'Nettoyage plage',
+    'Collecte',
+    'manifestation',
+    'découverte'
+  ];
   constructor() { }
 
   ngOnInit(): void {
