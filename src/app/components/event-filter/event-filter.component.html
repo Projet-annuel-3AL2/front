@@ -1,10 +1,10 @@
 <div class="border rounded-3 d-flex flex-column p-2 event-list-filter">
   <div class="mb-3 my-3">
-    <div class="px-4">
-      <h2>Filtre</h2>
-      <mat-divider></mat-divider>
-      <mat-list>
-        <mat-list-item>
+    <div formControl>
+      <div class="px-4">
+        <h2>Filtre</h2>
+        <mat-divider></mat-divider>
+        <div class="row m-0">
           <h3>Localisation</h3>
           <mat-divider></mat-divider>
           <button mat-flat-button (click)="showModelMapsCollapse()">
@@ -12,13 +12,13 @@
           </button>
           <p *ngIf="isLocated == false"> Vous n'êtes pas localisé</p>
           <p *ngIf="isLocated == true">Je sais pas ou trouver l'info</p>
-        </mat-list-item>
-        <mat-list-item>
+        </div>
+        <div class="row m-1">
           <h3>Période</h3>
           <mat-divider></mat-divider>
           <p> mettre un mat-date-range-picker</p>
-        </mat-list-item>
-        <mat-list-item>
+        </div>
+        <div class="row m-2">
           <h3>Distance (km)</h3>
           <mat-divider></mat-divider>
           <mat-slider
@@ -29,8 +29,8 @@
             min="0"
             max="5000"
             aria-label="units"></mat-slider>
-        </mat-list-item>
-        <mat-list-item class="mat-checkbox-item">
+        </div>
+        <div class="row m-3">
           <h3>Type d'évènement</h3>
           <mat-divider></mat-divider>
           <section class="section-checkbox">
@@ -40,9 +40,9 @@
               </li>
             </ul>
           </section>
-        </mat-list-item>
-      </mat-list>
+        </div>
+      </div>
+      <button mat-flat-button (click)="filterRecherche()">Rechercher</button>
     </div>
-
   </div>
 </div>

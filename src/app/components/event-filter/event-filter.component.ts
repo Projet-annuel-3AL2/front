@@ -42,4 +42,7 @@ export class EventFilterComponent implements OnInit {
     });
   }
 
+  filterRecherche() {
+
+  }
 }
