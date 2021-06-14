@@ -22,5 +22,8 @@
   font-weight: bold;
   font-size: medium;
   align-content: start;
-  grid: auto-flow;
+}
+
+.tab-event {
+
 }

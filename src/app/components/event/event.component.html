@@ -1,8 +1,8 @@
 <div class="row m-0">
-  <div class="col-md-4 my-3">
+  <div class="col-lg-2 my-3">
     <app-return-button></app-return-button>
   </div>
-  <div class="col-md-4 my-3">
+  <div class="col-md-7 my-3">
     <div class="event-scroll">
       <div>
         <h1>{{event.name}}</h1>
@@ -20,26 +20,24 @@
             <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}} -- <i class="fas fa-clock"></i> {{event.endDate.getDate()}}/{{event.endDate.getMonth() + 1}}/{{event.endDate.getFullYear()}}</p>
           </div>
           <button mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" >Rejoindre</button>
-
         </div>
       </div>
-      <div class="tab-event">
-        <mat-tab-group dynamicHeight mat-align-tabs="center">
-          <mat-tab label="Accueil">
-            <app-event-accueil [event]="event"></app-event-accueil>
-          </mat-tab>
-          <mat-tab label="Infos">
-            <app-event-infos [event]="event"></app-event-infos>
-          </mat-tab>
-          <mat-tab label="Participants">
-            <app-event-participants [event]="event"></app-event-participants>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
-
+          <div class="tab-event  ">
+            <mat-tab-group dynamicHeight mat-align-tabs="center">
+              <mat-tab label="Accueil">
+                <app-event-accueil [event]="event"></app-event-accueil>
+              </mat-tab>
+              <mat-tab label="Infos">
+                <app-event-infos [event]="event"></app-event-infos>
+              </mat-tab>
+              <mat-tab label="Participants">
+                <app-event-participants [event]="event"></app-event-participants>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
     </div>
   </div>
-  <div class="col-md-4 my-3">
+  <div class="col-md-2 my-3">
     <div class="position-fixed">
       <app-event-suggestion-list></app-event-suggestion-list>
     </div>
