@@ -29,6 +29,7 @@ import {ReturnButtonComponent} from "./components/return-button/return-button.co
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EventCardComponent} from "./components/event-card/event-card.component";
 import {EventListDisplayComponent} from "./components/event-list-display/event-list-display.component";
+import {EventDialogMapsComponent} from "./components/event-dialog-maps/event-dialog-maps.component";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {EventListDisplayComponent} from "./components/event-list-display/event-l
     EventListComponent,
     ReturnButtonComponent,
     EventCardComponent,
-    EventListDisplayComponent
+    EventListDisplayComponent,
+    EventDialogMapsComponent
   ],
   imports: [
     BrowserModule,
