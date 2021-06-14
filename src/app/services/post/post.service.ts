@@ -46,4 +46,8 @@ export class PostService {
     }
     return post;
   }
+
+  getUserRelatedPost(username: any) {
+    return this.getRelatedPost(username);
+  }
 }

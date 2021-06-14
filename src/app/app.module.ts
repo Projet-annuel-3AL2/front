@@ -18,7 +18,7 @@ import {TimelineComponent} from "./components/timeline/timeline.component";
 import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
 import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
 import {EventComponent} from "./components/event/event.component";
-import {EventAccueilComponent} from "./components/event-accueil/event-accueil.component";
+import {PostListComponent} from "./components/post-list/post-list.component";
 import {EventInfosComponent} from "./components/event-infos/event-infos.component";
 import {EventParticipantsComponent} from "./components/event-participants/event-participants.component";
 import {UserCardComponent} from "./components/user-card/user-card.component";
@@ -30,6 +30,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EventCardComponent} from "./components/event-card/event-card.component";
 import {EventListDisplayComponent} from "./components/event-list-display/event-list-display.component";
 import {EventDialogMapsComponent} from "./components/event-dialog-maps/event-dialog-maps.component";
+import {ProfilUserComponent} from "./components/profil-user/profil-user.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import {EventDialogMapsComponent} from "./components/event-dialog-maps/event-dia
     EventSuggestionListComponent,
     EventComponent,
     EventInfosComponent,
-    EventAccueilComponent,
+    PostListComponent,
     EventParticipantsComponent,
     UserCardComponent,
     EventFilterComponent,
@@ -49,7 +50,8 @@ import {EventDialogMapsComponent} from "./components/event-dialog-maps/event-dia
     ReturnButtonComponent,
     EventCardComponent,
     EventListDisplayComponent,
-    EventDialogMapsComponent
+    EventDialogMapsComponent,
+    ProfilUserComponent
   ],
   imports: [
     BrowserModule,

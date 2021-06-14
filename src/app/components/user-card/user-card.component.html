@@ -1,10 +1,10 @@
 <div class="rounded-pill border d-flex p-2 event-suggestion my-3">
   <div class="mr-2">
-    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle"
-         width="50">
+    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'"  [routerLink]="['/user/, user.username']" class="rounded-circle"
+         width="50" alt="">
   </div>
   <div class="spacer"></div>
-  <p class="my-3"><a [routerLink]="['/addFriend/, user.id']">{{user.username}}</a></p>
+  <p class="my-3"><a [routerLink]="['/user/, user.username']">{{user.username}}</a></p>
   <div class="spacer"></div>
   <button mat-raised-button class="ml-auto button-add-friend" (click)="this.addFriend(user.id)">Ajouter</button>
 </div>

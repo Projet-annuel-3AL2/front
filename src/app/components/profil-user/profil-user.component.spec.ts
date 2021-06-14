@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventAccueilComponent } from './event-accueil.component';
+import { ProfilUserComponent } from './profil-user.component';
 
-describe('EventAccueilComponent', () => {
-  let component: EventAccueilComponent;
-  let fixture: ComponentFixture<EventAccueilComponent>;
+describe('ProfilUserComponent', () => {
+  let component: ProfilUserComponent;
+  let fixture: ComponentFixture<ProfilUserComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventAccueilComponent ]
+      declarations: [ ProfilUserComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventAccueilComponent);
+    fixture = TestBed.createComponent(ProfilUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
