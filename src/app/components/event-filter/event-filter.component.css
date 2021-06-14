@@ -14,7 +14,12 @@
 
 ul {
   list-style-type: none;
-  margin-top: 4px;
+  text-align: left;
+  padding-left:125px;
+}
+
+li {
+
 }
 
 .mat-list-item {
@@ -24,3 +29,4 @@ ul {
 .mat-checkbox {
   position: relative;
 }
+
