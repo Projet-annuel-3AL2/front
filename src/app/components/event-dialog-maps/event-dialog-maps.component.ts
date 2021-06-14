@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {EventDialogData} from "../event-filter/event-filter.component";
 
 @Component({
   selector: 'app-event-dialog-maps',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventDialogMapsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<EventDialogMapsComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: EventDialogData) { }
 
   ngOnInit(): void {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

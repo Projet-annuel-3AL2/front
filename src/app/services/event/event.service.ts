@@ -53,4 +53,12 @@ export class EventService {
     ]
     return events;
   }
+
+  getEventFilter() {
+    let events = [
+      this.getEvent("3"),
+      this.getEvent("4")
+    ]
+    return events;
+  }
 }

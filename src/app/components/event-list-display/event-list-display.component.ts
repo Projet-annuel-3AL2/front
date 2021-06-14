@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {Event} from '../../shared/models/event.model';
 import {EventService} from "../../services/event/event.service";
 
@@ -8,15 +8,11 @@ import {EventService} from "../../services/event/event.service";
   styleUrls: ['./event-list-display.component.css']
 })
 export class EventListDisplayComponent implements OnInit {
-  events$: Event[];
+  @Input("events") events$: Event[] = [];
 
-  constructor(private eventService: EventService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.getEvents();
   }
 
-  private getEvents() {
-    this.events$ = this.eventService.getEvents();
-  }
 }
