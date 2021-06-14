@@ -1,3 +1,6 @@
-.display-infos{
-
+.display-related-post{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
 }
