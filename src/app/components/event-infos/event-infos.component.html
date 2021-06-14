@@ -5,8 +5,8 @@
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
 
-<div class="row m-0">
-  <div class="col-md-4">
+<div class="grid-container">
+  <div class="grid-item item1">
     <div class="border rounded-3 d-flex flex-column p-2 event-infos-infos">
       <div class="mb-3">
         <div class="px-4">
@@ -18,27 +18,29 @@
       </div>
     </div>
   </div>
-
-  <div class="border rounded-3 d-flex flex-column p-2 event-infos-map">
-    <div class="m-3">
-      <div class="px-4">
-        <!-- TODO // trouver un moyen de le rendre dynamique -->
-        <h2><i class="fas fa-map-marker-alt"></i> <strong>Dieppe</strong> (76200)</h2>
-          <div id="eventInfoMap"></div>
-        <button mat-raised-button class="ml-auto button-add-friend" (click)="this.getMap()" >Montrer la carte</button>
+  <div class="grid-item item2">
+    <div class="border rounded-3 d-flex flex-column p-2 event-infos-map">
+      <div class="m-3">
+        <div class="px-4">
+          <!-- TODO // trouver un moyen de le rendre dynamique -->
+          <h2><i class="fas fa-map-marker-alt"></i> <strong>Dieppe</strong> (76200)</h2>
+            <div id="eventInfoMap"></div>
+          <button mat-raised-button class="ml-auto button-add-friend" (click)="this.getMap()" >Montrer la carte</button>
+        </div>
       </div>
     </div>
   </div>
-  <div class="border rounded-3 d-flex flex-column p-2 event-infos-infos">
-    <div class="m-3">
-      <div class="px-4">
-        <mat-list>
-          <h2>Organisateur</h2>
-          <mat-List-item *ngFor="let organisateur of event.organisation.members">
-            <app-user-card [user]="organisateur.user"></app-user-card>
-          </mat-List-item>
-        </mat-list>
-
+  <div class="grid-item item3">
+    <div class="border rounded-3 d-flex flex-column p-2 event-infos-infos">
+      <div class="m-3">
+        <div class="px-4">
+          <mat-list>
+            <h2>Organisateur</h2>
+            <mat-List-item *ngFor="let organisateur of event.organisation.members">
+              <app-user-card [user]="organisateur.user"></app-user-card>
+            </mat-List-item>
+          </mat-list>
+        </div>
       </div>
     </div>
   </div>

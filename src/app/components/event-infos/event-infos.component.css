@@ -6,3 +6,25 @@
 #eventInfoMap{
   height: 180px;
 }
+
+.grid-container {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: auto auto auto auto auto auto;
+  padding: 10px;
+}
+
+.item1 {
+  grid-column: 1 / 4;
+  grid-row: 1;
+}
+
+.item2 {
+  grid-column: 4 / 7;
+  grid-row: 1 / span 2;
+}
+
+.item3 {
+  grid-column: 1 / 4;
+  grid-row: 2;
+}
