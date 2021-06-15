@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventParticipantsComponent } from './event-participants.component';
+import { ListPostComponent } from './list-post.component';
 
-describe('EventParticipantsComponent', () => {
-  let component: EventParticipantsComponent;
-  let fixture: ComponentFixture<EventParticipantsComponent>;
+describe('EventListPostComponent', () => {
+  let component: ListPostComponent;
+  let fixture: ComponentFixture<ListPostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventParticipantsComponent ]
+      declarations: [ ListPostComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventParticipantsComponent);
+    fixture = TestBed.createComponent(ListPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
