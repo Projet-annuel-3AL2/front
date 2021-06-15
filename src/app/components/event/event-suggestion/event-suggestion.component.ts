@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EventService} from "../../services/event/event.service";
-import {Event} from '../../shared/models/event.model';
+import {EventService} from "../../../services/event/event.service";
+import {Event} from '../../../shared/models/event.model';
 
 @Component({
   selector: 'app-event-suggestion',

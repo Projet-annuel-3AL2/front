@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Event} from "../../shared/models/event.model";
+import {Event} from "../../../shared/models/event.model";
 import * as L from 'leaflet';
 import {LeafletMouseEvent} from "leaflet";
 @Component({

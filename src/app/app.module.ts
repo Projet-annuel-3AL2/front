@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -15,22 +15,24 @@ import {CollapseModule} from "ngx-bootstrap/collapse";
 import {MaterialModule} from "./material.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {TimelineComponent} from "./components/timeline/timeline.component";
-import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
-import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
-import {EventComponent} from "./components/event/event.component";
-import {PostListComponent} from "./components/post-list/post-list.component";
-import {EventInfosComponent} from "./components/event-infos/event-infos.component";
-import {EventParticipantsComponent} from "./components/event-participants/event-participants.component";
+import {EventSuggestionComponent} from "./components/event/event-suggestion/event-suggestion.component";
+import {EventSuggestionListComponent} from "./components/event/event-suggestion-list/event-suggestion-list.component";
+import {EventComponent} from "./components/event/event/event.component";
+import {EventInfosComponent} from "./components/event/event-infos/event-infos.component";
 import {UserCardComponent} from "./components/user-card/user-card.component";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import {EventFilterComponent} from "./components/event-filter/event-filter.component";
-import {EventListComponent} from "./components/event-list/event-list.component";
+import {EventFilterComponent} from "./components/event/event-filter/event-filter.component";
+import {EventListComponent} from "./components/event/event-list/event-list.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {EventCardComponent} from "./components/event-card/event-card.component";
-import {EventListDisplayComponent} from "./components/event-list-display/event-list-display.component";
-import {EventDialogMapsComponent} from "./components/event-dialog-maps/event-dialog-maps.component";
-import {ProfilUserComponent} from "./components/profil-user/profil-user.component";
+import {EventCardComponent} from "./components/event/event-card/event-card.component";
+import {EventListDisplayComponent} from "./components/event/event-list-display/event-list-display.component";
+import {EventDialogMapsComponent} from "./components/event/event-dialog-maps/event-dialog-maps.component";
+import {ProfilUserComponent} from "./components/profil/profil-user/profil-user.component";
+import {ListPostComponent} from "./components/list-post/list-post.component";
+import {ProfilListEventComponent} from "./components/profil/profil-list-event/profil-list-event.component";
+import {ListUserComponent} from "./components/list-user/list-user.component";
+import {ProfilOrganisationComponent} from "./components/profil/profil-organisation/profil-organisation.component";
 
 @NgModule({
   declarations: [
@@ -42,8 +44,6 @@ import {ProfilUserComponent} from "./components/profil-user/profil-user.componen
     EventSuggestionListComponent,
     EventComponent,
     EventInfosComponent,
-    PostListComponent,
-    EventParticipantsComponent,
     UserCardComponent,
     EventFilterComponent,
     EventListComponent,
@@ -51,7 +51,11 @@ import {ProfilUserComponent} from "./components/profil-user/profil-user.componen
     EventCardComponent,
     EventListDisplayComponent,
     EventDialogMapsComponent,
-    ProfilUserComponent
+    ProfilUserComponent,
+    ListPostComponent,
+    ListUserComponent,
+    ProfilOrganisationComponent,
+    ProfilListEventComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,10 @@ import {ProfilUserComponent} from "./components/profil-user/profil-user.componen
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class AppModule {
 }

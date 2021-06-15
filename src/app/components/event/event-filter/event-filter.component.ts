@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {EventDialogMapsComponent} from "../event-dialog-maps/event-dialog-maps.component";
-import {User} from "../../shared/models/user.model";
-import {Event} from "../../shared/models/event.model";
-import {EventService} from "../../services/event/event.service";
+import {User} from "../../../shared/models/user.model";
+import {Event} from "../../../shared/models/event.model";
+import {EventService} from "../../../services/event/event.service";
 
 export interface EventDialogData {
   userLocalisation: string;

@@ -25,13 +25,13 @@
           <div class="tab-event  ">
             <mat-tab-group dynamicHeight mat-align-tabs="center">
               <mat-tab label="Accueil">
-                <app-post-list [listPost]="listPost"></app-post-list>
+                <app-list-post [listPost]="listPost$"></app-list-post>
               </mat-tab>
               <mat-tab label="Infos">
                 <app-event-infos [event]="event"></app-event-infos>
               </mat-tab>
               <mat-tab label="Participants">
-                <app-event-participants [event]="event"></app-event-participants>
+                <app-list-user [listUser]="event.participants" ></app-list-user>
               </mat-tab>
             </mat-tab-group>
           </div>

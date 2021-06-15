@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Event} from "../../shared/models/event.model";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-event-card',
@@ -14,6 +14,6 @@ export class EventCardComponent implements OnInit {
   }
 
   joinEvent(id: string) {
-    
+
   }
 }
