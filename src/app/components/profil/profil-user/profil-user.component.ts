@@ -40,7 +40,7 @@ export class ProfilUserComponent implements OnInit {
   }
 
   isNotAlreadyFriend() {
-    return false;
+    return true;
   }
 
   private getRelatedPost(username: any) {
