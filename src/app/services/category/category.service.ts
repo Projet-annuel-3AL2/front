@@ -12,7 +12,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   postCategory(category: Category){
-    this.http.post<Category>(`${environment.baseUrl}/category/`, JSON.stringify(category)).subscribe({
+    this.http.post<Category>(`${environment.baseUrl}/category/`, JSON.stringify(category), {withCredentials: true}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }
@@ -32,7 +32,7 @@ export class CategoryService {
   }
 
   deleteCategory(categoryId: string){
-    this.http.delete(`${environment.baseUrl}/category/${categoryId}`).subscribe({
+    this.http.delete(`${environment.baseUrl}/category/${categoryId}`, {withCredentials: true}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -42,7 +42,7 @@ export class CategoryService {
   }
 
   putCategory(categoryName: string, category: Category){
-    this.http.put<Category>(`${environment.baseUrl}/category/${categoryName}`, JSON.stringify(category)).subscribe({
+    this.http.put<Category>(`${environment.baseUrl}/category/${categoryName}`, JSON.stringify(category), {withCredentials: true}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }

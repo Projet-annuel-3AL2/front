@@ -17,7 +17,7 @@ export class PostService {
   }
 
   getPostById(postId: string): Observable<Post>{
-    return this.http.get<Post>(`${environment.baseUrl}/post/` + postId);
+    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`);
   }
 
   getAllPost(): Observable<Post[]>{
@@ -25,15 +25,15 @@ export class PostService {
   }
 
   getLikePostById(postId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/` + postId + `/likes`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/${postId}/likes`);
   }
 
   deletePost(postId: string) {
-    this.http.delete(`${environment.baseUrl}/`+ postId);
+    this.http.delete(`${environment.baseUrl}/${postId}`, {withCredentials: true});
   }
 
   postPost(newPost: Post) {
-    this.http.post<Post>(`${environment.baseUrl}/post/`, JSON.stringify(newPost)).subscribe({
+    this.http.post<Post>(`${environment.baseUrl}/post/`, JSON.stringify(newPost), {withCredentials: true}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }
@@ -41,7 +41,7 @@ export class PostService {
   }
 
   updatePost(post: Post){
-    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post)).subscribe({
+    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post), {withCredentials: true}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }

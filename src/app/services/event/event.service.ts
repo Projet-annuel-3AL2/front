@@ -14,7 +14,7 @@ export class EventService {
               private http: HttpClient) { }
 
   postEvent(newEvent: Event) {
-    this.http.post<Event>(`${environment.baseUrl}/event/`, JSON.stringify(newEvent)).subscribe({
+    this.http.post<Event>(`${environment.baseUrl}/event/`, JSON.stringify(newEvent), {withCredentials: true}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -24,7 +24,7 @@ export class EventService {
   }
 
   postAddParticipant(userId: string, eventId: string) {
-    this.http.post<any>(`${environment.baseUrl}/event/addParticipant`, {userId, eventId}).subscribe({
+    this.http.post<any>(`${environment.baseUrl}/event/addParticipant`, {userId, eventId}, {withCredentials: true}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -50,7 +50,7 @@ export class EventService {
     const bodyContent = {      userLocationX,
       userLocationY,
       range,}
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation`, {withCredentials: true});
   }
 
   // TODO : Problème avec Body en paramètre
@@ -58,7 +58,7 @@ export class EventService {
     const bodyContent = {      userLocationX,
       userLocationY,
       range,}
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd`, {withCredentials: true});
   }
 
   getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
@@ -66,7 +66,7 @@ export class EventService {
   }
 
   deleteEvent(eventId: string) {
-    this.http.delete(`${environment.baseUrl}/event/${eventId}`).subscribe({
+    this.http.delete(`${environment.baseUrl}/event/${eventId}`, {withCredentials: true}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -77,7 +77,7 @@ export class EventService {
 
   // TODO : Problème avec Body en paramètre
   deleteParticipantEvent(eventId: string, userId: string) {
-    this.http.delete(`${environment.baseUrl}/event/${eventId}`).subscribe({
+    this.http.delete(`${environment.baseUrl}/event/${eventId}`, {withCredentials: true}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -87,7 +87,7 @@ export class EventService {
   }
 
   putEvent(event: Event){
-    this.http.put(`${environment.baseUrl}/event/`, JSON.stringify(event)).subscribe({
+    this.http.put(`${environment.baseUrl}/event/`, JSON.stringify(event), {withCredentials: true}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }
