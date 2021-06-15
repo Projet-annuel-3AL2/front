@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Event} from "../../shared/models/event.model";
 import {UserService} from "../user/user.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 
@@ -44,21 +44,21 @@ export class EventService {
   getEventById(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`);
   }
-
-  // TODO : Problème avec Body en paramètre
+  
   getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    const bodyContent = {      userLocationX,
-      userLocationY,
-      range,}
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation`, {withCredentials: true});
+    const params = new HttpParams().set('userLocationX', userLocationX).set('userLocationY', userLocationY).set('range', range.toString());
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation`, {
+      params:params,
+      withCredentials: true
+    });
   }
 
-  // TODO : Problème avec Body en paramètre
   getEventWithUserLocationNotEnd(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    const bodyContent = {      userLocationX,
-      userLocationY,
-      range,}
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd`, {withCredentials: true});
+    const params = new HttpParams().set('userLocationX', userLocationX).set('userLocationY', userLocationY).set('range', range.toString());
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd`, {
+      params:params,
+      withCredentials: true
+    });
   }
 
   getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
