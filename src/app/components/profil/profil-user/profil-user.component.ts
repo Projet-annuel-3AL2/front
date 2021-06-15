@@ -6,6 +6,7 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {Event} from '../../../shared/models/event.model';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-profil-user',
@@ -15,7 +16,7 @@ import {Event} from '../../../shared/models/event.model';
 export class ProfilUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   user: User;
-  listPost: Post[];
+  listPost$: Post[];
   listEvent$: Event[];
   listUser$: User[];
 
@@ -32,7 +33,7 @@ export class ProfilUserComponent implements OnInit {
   }
 
   private getUser(username: string) {
-    this.user = this.userService.getUser(username)
+    this.user = this.userService.getUser('1');
   }
 
   askFriend(id: string) {
@@ -44,7 +45,16 @@ export class ProfilUserComponent implements OnInit {
   }
 
   private getRelatedPost(username: any) {
-    this.listPost = this.postService.getUserRelatedPost(username);
+    this.postService.getPostByUsername(username).subscribe({
+      next: posts => {
+        this.listPost$ = posts
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
   }
 
   private getRelatedEvent(user: User) {
