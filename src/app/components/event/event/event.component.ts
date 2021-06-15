@@ -17,7 +17,7 @@ export class EventComponent implements OnInit {
 
   listPost$: Post[];
   event: Event;
-  id: String;
+  eventId: string;
 
   constructor(private _activatedRoute:ActivatedRoute,
               private _router:Router,
@@ -25,8 +25,8 @@ export class EventComponent implements OnInit {
               private _postService:PostService) { }
 
   ngOnInit(): void {
-    this.id=this._activatedRoute.snapshot.paramMap.get("id");
-    this.event=this._eventService.getEvent(this.id);
+    this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
+    this.getEvents();
     this.getPosts();
   }
 
@@ -43,7 +43,23 @@ export class EventComponent implements OnInit {
     });
   }
 
-  joinEvent(id: string) {
 
+  joinEvent(id: string) {
+    // TODO : Récupéré Id de l'user actuel
+    const userId = '1'
+    this._eventService.postAddParticipant(userId, this.eventId);
+  }
+
+  private getEvents() {
+    this._eventService.getEventById(this.eventId).subscribe({
+      next: data => {
+        this.event = data;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
   }
 }

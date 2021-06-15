@@ -5,6 +5,8 @@ import {EventDialogMapsComponent} from "../event-dialog-maps/event-dialog-maps.c
 import {User} from "../../../shared/models/user.model";
 import {Event} from "../../../shared/models/event.model";
 import {EventService} from "../../../services/event/event.service";
+import {Observable} from "rxjs";
+import {environment} from "../../../../environments/environment";
 
 export interface EventDialogData {
   userLocalisation: string;
@@ -26,7 +28,6 @@ export class EventFilterComponent implements OnInit {
   ];
   userLocalisation: string;
   listFilterEvent$: Event[];
-  pi
   constructor(public dialog: MatDialog,
               private eventService: EventService) { }
 
@@ -44,7 +45,16 @@ export class EventFilterComponent implements OnInit {
   }
 
   filterRecherche() {
-    this.listFilterEvent$ = this.eventService.getEventFilter();
+    this.eventService.getEventWithFilter().subscribe({
+      next: data => {
+        this.listFilterEvent$ = data;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
   }
 
   showDialogMapsCollapse(): void {
