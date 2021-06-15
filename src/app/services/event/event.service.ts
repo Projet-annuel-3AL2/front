@@ -44,19 +44,15 @@ export class EventService {
   getEventById(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`);
   }
-  
+
   getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    const params = new HttpParams().set('userLocationX', userLocationX).set('userLocationY', userLocationY).set('range', range.toString());
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation`, {
-      params:params,
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {
       withCredentials: true
     });
   }
 
   getEventWithUserLocationNotEnd(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    const params = new HttpParams().set('userLocationX', userLocationX).set('userLocationY', userLocationY).set('range', range.toString());
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd`, {
-      params:params,
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd/${userLocationX}/${userLocationY}/${range}`, {
       withCredentials: true
     });
   }
@@ -75,9 +71,8 @@ export class EventService {
     })
   }
 
-  // TODO : Problème avec Body en paramètre
   deleteParticipantEvent(eventId: string, userId: string) {
-    this.http.delete(`${environment.baseUrl}/event/${eventId}`, {withCredentials: true}).subscribe({
+    this.http.delete(`${environment.baseUrl}/event/${eventId}/${userId}`, {withCredentials: true}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
