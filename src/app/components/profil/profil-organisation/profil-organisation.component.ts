@@ -25,7 +25,7 @@ export class ProfilOrganisationComponent implements OnInit {
   }
 
   isNotAlreadyMember() {
-    return false;
+    return true;
   }
 
   askJoin(id: string) {
