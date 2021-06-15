@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex justify-content-between align-items-center">
         <div class="mr-2">
-          <a  [routerLink]="['/user/, user.username']">
+          <a  [routerLink]="['/user/', post.creator.username]">
             <img [src]="post.creator.profilePicture || 'https://picsum.photos/50/50'"  class="rounded-circle"
                width="50" alt="">
           </a>

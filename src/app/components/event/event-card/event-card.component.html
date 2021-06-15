@@ -2,12 +2,16 @@
 <mat-card class="event-card-list">
   <div class="row m-0">
     <div class="col-md-4">
-      <img alt="" class="rounded" style="object-fit: none"
-           src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
-           width="100%" height="300px">
+      <a [routerLink]="['/event/', event.id]">
+        <img alt="" class="rounded" style="object-fit: none"
+             src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
+             width="100%" height="300px">
+      </a>
     </div>
     <div class="col-md-4">
-      <h1>{{event.name}}</h1>
+      <a [routerLink]="['/event/', event.id]">
+        <h1>{{event.name}}</h1>
+      </a>
       <p>{{event.organisation.name}}</p>
       <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}}</p>
       <p><i class="fas fa-tags"></i> {{event.category.name}}</p>

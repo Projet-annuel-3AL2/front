@@ -4,9 +4,6 @@
   display: inline-block;
   position: relative;
   background: linear-gradient(0deg, gray,white);
-}
-
-.event-card-full {
   width: 100%;
 }
 
