@@ -6,6 +6,7 @@ import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-event',
@@ -30,9 +31,16 @@ export class EventComponent implements OnInit {
   }
 
   private getPosts() {
-    this._postService.getAllPost().subscribe(data => {
-      this.listPost$ = data;
-    })
+    this._postService.getPostByEventId(this.event.id).subscribe({
+      next: data => {
+        this.listPost$ = data;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
   }
 
   joinEvent(id: string) {
