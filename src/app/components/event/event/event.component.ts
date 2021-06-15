@@ -4,6 +4,8 @@ import {EventService} from "../../../services/event/event.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
+import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-event',
@@ -24,7 +26,13 @@ export class EventComponent implements OnInit {
   ngOnInit(): void {
     this.id=this._activatedRoute.snapshot.paramMap.get("id");
     this.event=this._eventService.getEvent(this.id);
-    this.listPost$=this._postService.getRelatedEventPost(this.event);
+    this.getPosts();
+  }
+
+  private getPosts() {
+    this._postService.getAllPost().subscribe(data => {
+      this.listPost$ = data;
+    })
   }
 
   joinEvent(id: string) {

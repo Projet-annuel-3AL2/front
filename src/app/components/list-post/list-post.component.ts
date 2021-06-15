@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../shared/models/post.model";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-list-post',
@@ -8,7 +9,7 @@ import {Post} from "../../shared/models/post.model";
 })
 export class ListPostComponent implements OnInit {
 
-  @Input('listPost') listPost : Post[] = [];
+  @Input('listPost') listPost : Post[];
 
   constructor() { }
 
