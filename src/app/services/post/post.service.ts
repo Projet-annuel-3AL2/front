@@ -44,58 +44,13 @@ export class PostService {
     })
   }
 
-
-
-
-
-
-
-  // TODO : FIXTURE A SUPPRIMER
-  getRelatedPost(id: string) {
-    let posts: Post[];
-
-    posts = [
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id)
-    ]
-    return posts;
+  //TODO : getPostByUserId()
+  getPostByUsername(username: string): Observable<Post[]> {
+    return this.getAllPost();
   }
 
-  private getPost(id: string) {
-    const post: Post = {
-      commentCount: 10,
-      comments: [],
-      createdAt: undefined,
-      creator: new User(),
-      event: new Event(),
-      group: undefined,
-      id: "1",
-      likeCount: 100,
-      likes: [],
-      medias: [],
-      organisation: new Organisation('1', 'organisationName', []),
-      postShares: undefined,
-      shareCount: 8,
-      sharedPost: undefined,
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed placerat felis porta nulla auctor, elementum pellentesque sapien aliquam. Maecenas pulvinar dictum mauris, vel commod"
-    }
-    return post;
-  }
-
-  getUserRelatedPost(username: string) {
-    return this.getRelatedPost(username);
-  }
-
-  getRelatedEventPost(event: Event): Post[] {
-    return this.getRelatedPost('as');
-  }
-
-  getRelatedUserPost(user: User) {
-    return this.getRelatedPost('1');
+  // TODO : getPostByEventId()
+  getPostByEventId(eventId: string): Observable<Post[]> {
+    return this.getAllPost();
   }
 }
