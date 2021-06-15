@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../shared/models/user.model";
+import {FriendshipService} from "../../services/friendship/friendship.service";
 
 @Component({
   selector: 'app-user-card',
@@ -9,12 +10,12 @@ import {User} from "../../shared/models/user.model";
 export class UserCardComponent implements OnInit {
 
   @Input('user') user: User = new User()
-  constructor() { }
+  constructor(private friendshipService: FriendshipService) { }
 
   ngOnInit(): void {
   }
 
-  addFriend(id: string) {
-
+  addFriend(username: string) {
+    this.friendshipService.postFriendship(username);
   }
 }

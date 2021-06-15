@@ -7,6 +7,7 @@ import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {Event} from '../../../shared/models/event.model';
 import {environment} from "../../../../environments/environment";
+import {FriendshipService} from "../../../services/friendship/friendship.service";
 
 @Component({
   selector: 'app-profil-user',
@@ -22,7 +23,8 @@ export class ProfilUserComponent implements OnInit {
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
-              private postService: PostService) { }
+              private postService: PostService,
+              private friendshipService: FriendshipService) { }
 
   ngOnInit(): void {
     const username = this.route.snapshot.params['username']
@@ -36,12 +38,13 @@ export class ProfilUserComponent implements OnInit {
     this.user = this.userService.getUser('1');
   }
 
-  askFriend(id: string) {
-
+  askFriend(username: string) {
+    this.friendshipService.postFriendship(username);
   }
 
+  // TODO : isNotAlreadyFriend() A faire (trouver comment récupérer les amis)
   isNotAlreadyFriend() {
-    return true;
+    return false;
   }
 
   private getRelatedPost(username: any) {
@@ -62,6 +65,6 @@ export class ProfilUserComponent implements OnInit {
   }
 
   private getUserFriends(user: User) {
-    this.listUser$ = this.userService.getUserRelatedUser(user)    ;
+    this.listUser$ = this.userService.getUserRelatedUser(user);
   }
 }

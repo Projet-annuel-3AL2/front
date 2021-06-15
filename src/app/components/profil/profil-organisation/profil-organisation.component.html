@@ -19,10 +19,10 @@
             <a [routerLink]="['/user/', organisation$.owner.id]"><p>{{organisation$.owner.username}}</p></a>
           </div>
           <div>
-            <div *ngIf="isNotAlreadyMember()">
+            <div *ngIf="!isAlreadyMember()">
               <button mat-raised-button class="ml-auto button-join-event" (click)="this.askJoin(organisation$.id)" >Suivre</button>
             </div>
-            <div *ngIf="!isNotAlreadyMember()">
+            <div *ngIf="isAlreadyMember()">
               <button mat-raised-button class="ml-auto mat-button-disabled">Already Menber</button>
             </div>
           </div>

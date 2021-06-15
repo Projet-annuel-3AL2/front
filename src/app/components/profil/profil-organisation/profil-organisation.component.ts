@@ -29,10 +29,12 @@ export class ProfilOrganisationComponent implements OnInit {
     this.getListMember();
   }
 
-  isNotAlreadyMember() {
+
+  isAlreadyMember() {
     return true;
   }
 
+  // TODO : askJoin() Organisation
   askJoin(id: string) {
 
   }
