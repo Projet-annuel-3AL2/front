@@ -47,7 +47,15 @@ export class PostService {
     return post;
   }
 
-  getUserRelatedPost(username: any) {
+  getUserRelatedPost(username: string) {
     return this.getRelatedPost(username);
+  }
+
+  getRelatedEventPost(event: Event): Post[] {
+    return this.getRelatedPost('as');
+  }
+
+  getRelatedUserPost(user: User) {
+    return this.getRelatedPost('1');
   }
 }

@@ -38,7 +38,7 @@ export class EventService {
       ]),
       participantsLimit: 15,
       picture: undefined,
-      participants: []
+      participants: this.getParticipants('1')
 
     }
     return event;
@@ -61,4 +61,39 @@ export class EventService {
     ]
     return events;
   }
+
+  getParticipants(id: string) {
+    let users: User[];
+    users = [
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id),
+      this.getUser(id)
+    ]
+    return users;
+  }
+
+  getUser(id: string) {
+    const user: User = {
+      bannerPicture: undefined,
+      certification: undefined,
+      createdEvents: [],
+      createdPosts: [],
+      firstname: "firstName",
+      id: "1",
+      lastname: "lastname",
+      likedPosts: [],
+      profilePicture: undefined,
+      username: "username"
+    }
+    return user;
+  }
+
+
 }
