@@ -11,7 +11,7 @@ const appRoutes: Routes = [
   { path: 'events', component: EventListComponent},
   { path: 'event/:id', component: EventComponent },
   { path: 'user/:username', component: ProfilUserComponent },
-  { path: 'organisation/:organisationId', component: ProfilOrganisationComponent },
+  { path: 'organisation/:organisationName', component: ProfilOrganisationComponent },
   { path: '',   redirectTo: '/timeline', pathMatch: 'full' }
 ];
 

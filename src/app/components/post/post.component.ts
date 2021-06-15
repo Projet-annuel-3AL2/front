@@ -16,7 +16,7 @@ export class PostComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
 
-  constructor(private postService: PostService) {
+  constructor() {
   }
 
   ngOnInit(): void {
