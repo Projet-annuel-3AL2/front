@@ -12,12 +12,8 @@ import {environment} from "../../../environments/environment";
 })
 export class PostService {
 
-  public user: Observable<User>;
-  private userSubject: BehaviorSubject<User>;
 
   constructor(private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.user = this.userSubject.asObservable();
   }
 
   getPostById(postId: string): Observable<Post>{
@@ -25,7 +21,7 @@ export class PostService {
   }
 
   getAllPost(): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/`)
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/`);
   }
 
   getLikePostById(postId: string): Observable<Post[]> {
@@ -38,6 +34,14 @@ export class PostService {
 
   postPost(newPost: Post) {
     this.http.post<Post>(`${environment.baseUrl}/post/`, JSON.stringify(newPost)).subscribe({
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
+  }
+
+  updatePost(post: Post){
+    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post)).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }
