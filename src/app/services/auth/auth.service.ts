@@ -22,7 +22,7 @@ export class AuthService {
       username,
       password,
       mail
-    }, {headers: {'Access-Control-Allow-Origin': '*'}, withCredentials: true})
+    }, {headers: {'Access-Control-Allow-Origin': '*'}})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.id));
         this.userSubject.next(user);
@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {username, password}, {withCredentials: true})
+    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {username, password})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.id));
         this.userSubject.next(user);
@@ -40,11 +40,9 @@ export class AuthService {
   }
 
   public logout(): Observable<unknown> {
-    return this.http.delete(`${environment.baseUrl}/auth/logout`, {withCredentials: true})
-      .pipe(map(() => {
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-      }));
+    this.userSubject.next(null);
+    localStorage.removeItem('user');
+    return this.http.delete(`${environment.baseUrl}/auth/logout`);
   }
 
   public isAuthenticated(): boolean {

@@ -20,10 +20,11 @@ import {EventSuggestionListComponent} from "./components/event-suggestion-list/e
 import {LoginComponent} from "./components/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,12 @@ import {FlexLayoutModule} from "@angular/flex-layout";
     ReactiveFormsModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [AuthGuardService, NegateAuthGuardService],
+  providers: [AuthGuardService, NegateAuthGuardService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
