@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Message} from "../../../shared/models/message.model";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-message',
@@ -10,7 +11,7 @@ export class MessageComponent implements OnInit {
   @Input()
   message: Message;
 
-  constructor() {
+  constructor(public authService: AuthService) {
   }
 
   ngOnInit(): void {
