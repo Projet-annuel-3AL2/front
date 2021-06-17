@@ -24,8 +24,10 @@ export class ConversationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.conversation = this.conversationBoxService.selectedConversation;
     this.conversationService.getMessages(this.conversation.id)
       .subscribe(messages=>this.conversation.messages = messages);
+    console.log(this.conversation)
   }
 
   getConversationName(): string {
@@ -33,9 +35,10 @@ export class ConversationComponent implements OnInit {
       return this.conversation.group.name;
     } else if (this.conversation.organisation !== undefined) {
       return this.conversation.organisation.name;
-    } else {
+    } else if(this.conversation.friendship) {
       return this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId() ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;
     }
+    return undefined;
   }
 
   leaveConversation() {

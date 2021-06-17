@@ -3,21 +3,20 @@ import {Observable} from "rxjs";
 import {Message} from "../../shared/models/message.model";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getMessages(conversationId: string): Observable<Message[]>{
     return this.http.get<Message[]>(`${environment.baseUrl}/conversation/${conversationId}/messages`);
   }
 
-  getLastMessage(conversationId: string): Observable<Message[]>{
-    return this.http.get<Message[]>(`${environment.baseUrl}/conversation/${conversationId}/last-message`);
+  getLastMessage(conversationId: string): Observable<Message>{
+    return this.http.get<Message>(`${environment.baseUrl}/conversation/${conversationId}/last-message`);
   }
 
   sendMessage(conversationId: string, message: Message): Observable<void>{
