@@ -20,7 +20,7 @@ import {EventSuggestionListComponent} from "./components/event-suggestion-list/e
 import {LoginComponent} from "./components/login/login.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -32,6 +32,7 @@ import {TimeagoModule} from "ngx-timeago";
 import {ConversationBoxDirective} from "./directives/conversation-box/conversation-box.directive";
 import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
 import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
+import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -69,7 +70,12 @@ import {ConversationsListComponent} from "./components/conversations/conversatio
 
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService],
+  providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
