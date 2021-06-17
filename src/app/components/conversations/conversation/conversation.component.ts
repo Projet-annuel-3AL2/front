@@ -5,6 +5,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {ConversationBoxService} from "../../../services/conversation-box/conversation-box.service";
 import {User} from "../../../shared/models/user.model";
 import {ConversationService} from "../../../services/conversation/conversation.service";
+import {Message} from "../../../shared/models/message.model";
 
 @Component({
   selector: 'app-conversation',
@@ -14,6 +15,7 @@ import {ConversationService} from "../../../services/conversation/conversation.s
 export class ConversationComponent implements OnInit {
   @Input()
   conversation: Conversation;
+  message: string;
   faPaperPlane = faPaperPlane;
   faTimes = faTimes;
   faAngleUp = faAngleUp;
@@ -43,5 +45,11 @@ export class ConversationComponent implements OnInit {
 
   leaveConversation() {
     this.conversationBoxService.unselectConversation();
+  }
+
+  sendMessage() {
+    let message: Message = new Message();
+    message.text= this.message;
+    this.conversationService.sendMessage(this.conversation.id, message).subscribe();
   }
 }

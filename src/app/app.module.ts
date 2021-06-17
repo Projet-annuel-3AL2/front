@@ -18,7 +18,7 @@ import {TimelineComponent} from "./components/timeline/timeline.component";
 import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
 import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
 import {LoginComponent} from "./components/login/login.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
@@ -66,7 +66,8 @@ import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-intercept
     MaterialModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    TimeagoModule.forRoot()
+    TimeagoModule.forRoot(),
+    FormsModule
 
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],

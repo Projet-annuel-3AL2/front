@@ -16,8 +16,8 @@
       </div>
     </div>
     <div class="message-input w-100 d-inline-flex">
-      <textarea class="w-100"></textarea>
-      <button type="submit">
+      <textarea [(ngModel)]="message" class="w-100"></textarea>
+      <button type="submit" (click)="sendMessage()">
         <fa-icon [icon]="faPaperPlane"></fa-icon>
         Envoyer
       </button>
