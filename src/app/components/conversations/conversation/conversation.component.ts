@@ -6,6 +6,7 @@ import {ConversationBoxService} from "../../../services/conversation-box/convers
 import {User} from "../../../shared/models/user.model";
 import {ConversationService} from "../../../services/conversation/conversation.service";
 import {Message} from "../../../shared/models/message.model";
+import {delay, repeat} from "rxjs/operators";
 
 @Component({
   selector: 'app-conversation',
@@ -28,6 +29,9 @@ export class ConversationComponent implements OnInit {
   ngOnInit(): void {
     this.conversation = this.conversationBoxService.selectedConversation;
     this.conversationService.getMessages(this.conversation.id)
+      .subscribe(messages=>this.conversation.messages = messages);
+    this.conversationService.getMessages(this.conversation.id)
+      .pipe(delay(3000),repeat())
       .subscribe(messages=>this.conversation.messages = messages);
     console.log(this.conversation)
   }
