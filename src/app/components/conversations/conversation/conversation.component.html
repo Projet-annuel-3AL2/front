@@ -10,7 +10,7 @@
              fxLayoutAlign="end center" size="2x"></fa-icon>
   </div>
   <div *ngIf="conversationBoxService.opened">
-    <div class="message-list">
+    <div class="message-list" #scroll>
       <div *ngFor="let message of conversation.messages">
         <app-message [message]="message"></app-message>
       </div>

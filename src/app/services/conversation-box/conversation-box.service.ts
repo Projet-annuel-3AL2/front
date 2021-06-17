@@ -21,10 +21,8 @@ export class ConversationBoxService {
     const {ConversationComponent} = await import('../../components/conversations/conversation/conversation.component');
 
     const {ConversationsListComponent} = await import('../../components/conversations/conversations-list/conversations-list.component');
-    console.log(isConversationSelected)
     let component: any = isConversationSelected ? ConversationComponent : ConversationsListComponent;
-    return vcr.createComponent(
-      this.cfr.resolveComponentFactory(component))
+    return vcr.createComponent(this.cfr.resolveComponentFactory(component));
   }
 
   selectConversation(conversation: Conversation) {

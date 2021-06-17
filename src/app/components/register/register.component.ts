@@ -58,8 +58,6 @@ export class RegisterComponent implements OnInit {
   samePasswordValidator(group: FormGroup): ValidationErrors | null {
     const password = group.get('password');
     const confirmPassword = group.get('confirmPassword');
-    console.log(password)
-    console.log(confirmPassword)
     return password.value === confirmPassword.value ? null : {notSame: true};
   }
 

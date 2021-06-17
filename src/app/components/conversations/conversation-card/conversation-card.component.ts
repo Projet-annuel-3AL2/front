@@ -18,15 +18,16 @@ export class ConversationCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.conversationService.getLastMessage(this.authService.getCurrentUserId())
-        .subscribe(message=> {
+    this.conversationService.getLastMessage(this.conversation.id)
+        .subscribe(message => {
           if(message) {
             this.conversation.messages = [message]
           }
           else {
-            this.conversation.messages= [];
+            this.conversation.messages = [];
           }
         });
+    console.log(this.conversation)
   }
 
   onConversationSelect() {
