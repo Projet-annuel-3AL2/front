@@ -3,6 +3,7 @@ import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import {Conversation} from "../../../shared/models/conversation.model";
 import {ConversationBoxService} from "../../../services/conversation-box/conversation-box.service";
 import {ConversationService} from "../../../services/conversation/conversation.service";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-conversations-list',
@@ -14,11 +15,11 @@ export class ConversationsListComponent implements OnInit {
   faAngleUp = faAngleUp;
   conversations: Conversation[];
 
-  constructor(public conversationBoxService: ConversationBoxService, private conversationService: ConversationService) {
+  constructor(public conversationBoxService: ConversationBoxService, private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.conversationService.getConversations()
+    this.userService.getConversations()
       .subscribe(conversations=>this.conversations=conversations);
   }
 }

@@ -34,7 +34,7 @@ export class ConversationComponent implements OnInit {
     } else if (this.conversation.organisation !== undefined) {
       return this.conversation.organisation.name;
     } else {
-      return this.conversation.friendship.friendOne.id !== this.authService.getUser().id ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;
+      return this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId() ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;
     }
   }
 

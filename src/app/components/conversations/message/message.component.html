@@ -1,5 +1,5 @@
 <div class="container d-inline-block">
-  <div class="float-start w-75" *ngIf="message.user.id !== authService.getUser().id; else currentUser">
+  <div class="float-start w-75" *ngIf="message.user.id !== authService.getCurrentUserId(); else currentUser">
     <img class="rounded-circle d-inline-block" [src]="message.user.profilePicture || 'https://picsum.photos/50/50'" size="10px" [alt]="message.user.username">
     <div class="bg-light rounded-3 d-inline-block mx-2 p-2 w-75">
       <p class="m-0 text-break">{{message.text}}</p>

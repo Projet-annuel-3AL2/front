@@ -28,7 +28,7 @@ export class ConversationCardComponent implements OnInit {
       return this.conversation.organisation.profilePicture;
     }
     else if(this.conversation.friendship){
-      if(this.conversation.friendship.friendOne.id !== this.authService.getUser().id){
+      if(this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId()){
         return this.conversation.friendship.friendOne.profilePicture;
       }
       return this.conversation.friendship.friendTwo.profilePicture;
@@ -41,7 +41,7 @@ export class ConversationCardComponent implements OnInit {
       return this.conversation.organisation.name;
     }
     else if(this.conversation.friendship){
-      if(this.conversation.friendship.friendOne.id !== this.authService.getUser().id){
+      if(this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId()){
         return this.conversation.friendship.friendOne.username;
       }
       return this.conversation.friendship.friendTwo.username;
