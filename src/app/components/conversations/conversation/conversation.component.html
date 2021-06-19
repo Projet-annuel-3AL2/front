@@ -10,14 +10,14 @@
              fxLayoutAlign="end center" size="2x"></fa-icon>
   </div>
   <div *ngIf="conversationBoxService.opened">
-    <div class="message-list" #scroll>
+    <div #scroll class="message-list">
       <div *ngFor="let message of conversation.messages">
         <app-message [message]="message"></app-message>
       </div>
     </div>
     <div class="message-input w-100 d-inline-flex">
       <textarea [(ngModel)]="message" class="w-100"></textarea>
-      <button type="submit" (click)="sendMessage()">
+      <button (click)="sendMessage()" type="submit">
         <fa-icon [icon]="faPaperPlane"></fa-icon>
         Envoyer
       </button>

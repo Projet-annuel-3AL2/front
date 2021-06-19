@@ -32,15 +32,16 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.conversation = this.conversationBoxService.selectedConversation;
     this.conversationService.getMessages(this.conversation.id)
-      .subscribe(messages=> {
+      .subscribe(messages => {
         this.conversation.messages = messages;
       });
   }
+
   ngAfterViewInit() {
     this.scroll = this.scrollFrame.nativeElement;
     this.conversationService.getMessages(this.conversation.id)
-      .pipe(delay(3000),repeat())
-      .subscribe(messages=> {
+      .pipe(delay(3000), repeat())
+      .subscribe(messages => {
         this.conversation.messages = messages;
         this.isNearBottom = this.isUserNearBottom();
         if (this.isNearBottom) {
@@ -53,19 +54,12 @@ export class ConversationComponent implements OnInit, AfterViewInit {
       });
   }
 
-  private isUserNearBottom(): boolean {
-    const threshold = 5;
-    const position = this.scroll.scrollTop + this.scroll.offsetHeight;
-    const height = this.scroll.scrollHeight;
-    return position > height - threshold;
-  }
-
   getConversationName(): string {
     if (this.conversation.group !== undefined) {
       return this.conversation.group.name;
     } else if (this.conversation.organisation !== undefined) {
       return this.conversation.organisation.name;
-    } else if(this.conversation.friendship) {
+    } else if (this.conversation.friendship) {
       return this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId() ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;
     }
     return undefined;
@@ -77,8 +71,15 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   sendMessage() {
     let message: Message = new Message();
-    message.text= this.message;
+    message.text = this.message;
     this.conversationService.sendMessage(this.conversation.id, message).subscribe();
-    this.message="";
+    this.message = "";
+  }
+
+  private isUserNearBottom(): boolean {
+    const threshold = 5;
+    const position = this.scroll.scrollTop + this.scroll.offsetHeight;
+    const height = this.scroll.scrollHeight;
+    return position > height - threshold;
   }
 }

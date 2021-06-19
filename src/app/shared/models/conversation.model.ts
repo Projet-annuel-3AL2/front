@@ -4,7 +4,7 @@ import {Group} from "./group.model";
 import {Friendship} from "./friendship.model";
 
 export class Conversation {
-  id:string;
+  id: string;
   messages: Message[];
   group?: Group;
   organisation?: Organisation;

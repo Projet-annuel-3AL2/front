@@ -19,14 +19,13 @@ export class ConversationCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationService.getLastMessage(this.conversation.id)
-        .subscribe(message => {
-          if(message) {
-            this.conversation.messages = [message]
-          }
-          else {
-            this.conversation.messages = [];
-          }
-        });
+      .subscribe(message => {
+        if (message) {
+          this.conversation.messages = [message]
+        } else {
+          this.conversation.messages = [];
+        }
+      });
     console.log(this.conversation)
   }
 
@@ -35,11 +34,10 @@ export class ConversationCardComponent implements OnInit {
   }
 
   getPicture(): Media | undefined {
-    if(this.conversation.organisation){
+    if (this.conversation.organisation) {
       return this.conversation.organisation?.profilePicture;
-    }
-    else if(this.conversation.friendship){
-      if(this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId()){
+    } else if (this.conversation.friendship) {
+      if (this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId()) {
         return this.conversation.friendship.friendOne?.profilePicture;
       }
       return this.conversation.friendship.friendTwo?.profilePicture;
@@ -47,12 +45,11 @@ export class ConversationCardComponent implements OnInit {
     return undefined;
   }
 
-  getName(): string | undefined{
-    if(this.conversation.organisation){
+  getName(): string | undefined {
+    if (this.conversation.organisation) {
       return this.conversation.organisation.name;
-    }
-    else if(this.conversation.friendship){
-      if(this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId()){
+    } else if (this.conversation.friendship) {
+      if (this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId()) {
         return this.conversation.friendship.friendOne.username;
       }
       return this.conversation.friendship.friendTwo.username;

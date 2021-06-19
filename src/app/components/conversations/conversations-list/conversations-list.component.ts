@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {faAngleDown, faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import {Conversation} from "../../../shared/models/conversation.model";
 import {ConversationBoxService} from "../../../services/conversation-box/conversation-box.service";
-import {ConversationService} from "../../../services/conversation/conversation.service";
 import {UserService} from "../../../services/user/user.service";
 
 @Component({
@@ -20,6 +19,6 @@ export class ConversationsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getConversations()
-      .subscribe(conversations=>this.conversations=conversations);
+      .subscribe(conversations => this.conversations = conversations);
   }
 }
