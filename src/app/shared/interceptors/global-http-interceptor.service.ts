@@ -24,7 +24,6 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
-            console.log("401 intercept")
             this.authService.logout();
             this.router.navigateByUrl("/login")
           }
