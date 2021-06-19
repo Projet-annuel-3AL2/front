@@ -5,12 +5,13 @@ import {AuthService} from "../../services/auth/auth.service";
 import {UserService} from "../../services/user/user.service";
 
 @Component({
-  selector: 'app-create-post-button',
+  selector: 'app-create-post',
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
   showPopup:boolean = false;
+  showEmojiPicker: boolean = false;
   faTimes = faTimes;
   faImage = faImage;
   faSmile = faSmile;
@@ -34,10 +35,12 @@ export class CreatePostComponent implements OnInit {
   openPopup() {
     this.text = "";
     this.showPopup = true;
+    document.querySelector("body").classList.add("no-scroll");
   }
 
   closePopup() {
     this.text = "";
     this.showPopup = false;
+    document.querySelector("body").classList.remove("no-scroll");
   }
 }
