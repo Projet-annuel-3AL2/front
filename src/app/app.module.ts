@@ -33,6 +33,7 @@ import {ListPostComponent} from "./components/list-post/list-post.component";
 import {ProfilListEventComponent} from "./components/profil/profil-list-event/profil-list-event.component";
 import {ListUserComponent} from "./components/list-user/list-user.component";
 import {ProfilOrganisationComponent} from "./components/profil/profil-organisation/profil-organisation.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import {ProfilOrganisationComponent} from "./components/profil/profil-organisati
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [],
