@@ -33,6 +33,8 @@ import {ConversationBoxDirective} from "./directives/conversation-box/conversati
 import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
 import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
+import {CreatePostComponent} from "./components/create-post/create-post.component";
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-intercept
     ConversationComponent,
     EventSuggestionComponent,
     ConversationBoxDirective,
+    CreatePostComponent,
     ConversationsBoxComponent,
     ConversationCardComponent,
     ConversationsListComponent,
@@ -67,8 +70,8 @@ import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-intercept
     AppRoutingModule,
     ReactiveFormsModule,
     TimeagoModule.forRoot(),
-    FormsModule
-
+    FormsModule,
+    PickerModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,

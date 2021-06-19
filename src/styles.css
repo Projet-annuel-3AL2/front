@@ -22,3 +22,10 @@ button.mat-raised-button {
 button.mat-flat-button {
   border-radius: 166px 166px 166px 166px;
 }
+
+[contenteditable][placeholder]:empty:before {
+  content: attr(placeholder);
+  position: absolute;
+  color: gray;
+  background-color: transparent;
+}
