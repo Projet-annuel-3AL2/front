@@ -13,7 +13,7 @@
             <div flflex="60" class="titre-event">
               <p>{{event.name}}</p>
             </div>
-            <div flflex="20" class="button-join">
+            <div flflex="20" class="button-join" *ngIf="canJoin()">
               <button mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" >Rejoindre</button>
             </div>
             <div class="dropdown-event" flflex="20">
