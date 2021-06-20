@@ -21,6 +21,7 @@ export class EventComponent implements OnInit {
   event: Event;
   eventId: string;
   faEllipsisH = faEllipsisH;
+  actualDate: Date;
 
   constructor(private _activatedRoute:ActivatedRoute,
               private _router:Router,
@@ -31,6 +32,7 @@ export class EventComponent implements OnInit {
     this.event = this._eventService.getEvent('a');
     this.listPost$ = this._postService.getRelatedPost('a');
     this.eventId = '1';
+    this.actualDate = new Date(Date.now());
     // this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
     // this.getEvents();
     // this.getPosts();
@@ -67,5 +69,22 @@ export class EventComponent implements OnInit {
         }
       }
     })
+  }
+
+  canJoin() {
+    return this.event.endDate < this.actualDate || this.event.participants.length < this.event.participantsLimit || !this.isAlreadyParticipating()
+  }
+
+  // TODO : Récuperer l'utilisateur actuel
+  isAlreadyParticipating() {
+    let validation: boolean = false;
+
+    this.event.participants.forEach(user => {
+      if (user.username == undefined){
+        validation = true;
+      }
+    })
+    // return validation;
+    return false;
   }
 }
