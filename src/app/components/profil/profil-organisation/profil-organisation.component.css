@@ -1,20 +1,108 @@
 .orga-card-full {
   display: inline-block;
   position: relative;
-  background: linear-gradient(0deg, gray,white);
   width: 100%;
 }
-
-.orga-card-infos {
+.orga-card-display {
   position: absolute;
   left: 0;
   bottom: 0;
-  color: #00643C !important;
-  padding: 40px;
+  background: linear-gradient(180deg, rgba(229, 229,229, 0.08) 0%, #E5E5E5 63.02%);
+  color: #fff;
+  padding: 10px;
   width: 100%;
-  height: 80%;
-  text-align: justify;
+  height: 50%;
+  border-radius: 5px;
+}
+.orga-card-div {
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  display: flex;
+}
+.orga-card-img-profil {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 15%;
+  padding-left: 10px;
+}
+.orga-card-name {
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  max-width: 38%;
+  text-align: start;
+  font-size: 30px;
+  font-family: Roboto, serif;
+  color: black;
   font-weight: bold;
-  font-size: medium;
-  align-content: start;
+  padding-top: 25px;
+}
+.orga-card-certification {
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  max-width: 5%;
+  padding-top: 25px;
+}
+.orga-card-empty {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 20%;
+}
+.orga-card-button {
+  flex: 1 2 80%;
+  box-sizing: border-box;
+  max-width: 15%;
+  padding-top: 25px;
+}
+.orga-card-menu {
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  max-width: 5%;
+  padding-top: 25px;
+  color: #00643C;
+}
+.dropdown-toggle::after {
+  content: initial
+}
+
+.orga-card-div2 {
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  display: flex;
+}
+.orga-card-empty2{
+  text-decoration: none;
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  max-width: 15%;
+  color: black;
+  text-align: end;
+  padding-top: 15px;
+  padding-right: 10px;
+}
+.orga-card-owner-img {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 5%;
+}
+.orga-card-owner {
+  text-decoration: none;
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  max-width: 35%;
+  padding-top: 15px;
+  padding-left: 20px;
+  font-size: 16px;
+  font-family: Roboto, serif;
+  color: black;
+}
+.orga-card-owner a {
+  text-decoration: none;
+  color: black;
+}
+.orga-card-infos {
+  flex: 1 1 50%;
+  box-sizing: border-box;
+  max-width: 45%;
+  padding-top: 15px;
+  color: black;
 }

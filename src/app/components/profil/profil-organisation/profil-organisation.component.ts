@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import {Organisation} from "../../../shared/models/organisation.model";
 import {Post} from "../../../shared/models/post.model";
 import {Event} from '../../../shared/models/event.model';
@@ -7,6 +7,7 @@ import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-profil-organisation',
@@ -19,19 +20,22 @@ export class ProfilOrganisationComponent implements OnInit {
   organisation$: Organisation = new Organisation('a','b',undefined);
   listMember: User[] = [];
   organisationName: string;
-
+  faEllipsisH = faEllipsisH;
   constructor(private organisationService: OrganisationService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.organisationName = this.route.snapshot.params['organisationName']
-    this.getOrganisation();
-    this.getListMember();
+    this.organisation$ = this.organisationService.getOrganisation();
+    this.listMember = this.userService.getParticipants("a");
+    // this.getOrganisation();
+    // this.getListMember();
   }
 
 
   isAlreadyMember() {
-    return true;
+    return false;
   }
 
   // TODO : askJoin() Organisation
