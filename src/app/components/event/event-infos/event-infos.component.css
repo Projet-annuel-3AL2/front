@@ -22,9 +22,14 @@
 .item2 {
   grid-column: 4 / 7;
   grid-row: 1 / span 2;
+  max-width: 450px;
 }
 
 .item3 {
   grid-column: 1 / 4;
   grid-row: 2;
+}
+
+.image-event-infos {
+  max-width: 375px;
 }
