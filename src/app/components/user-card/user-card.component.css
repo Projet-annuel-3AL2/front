@@ -11,3 +11,11 @@
   flex: 1 1 auto;
   text-align: center;
 }
+
+p {
+
+}
+p a {
+  text-decoration: none;
+  color: black;
+}

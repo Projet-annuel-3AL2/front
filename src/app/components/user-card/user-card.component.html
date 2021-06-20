@@ -6,5 +6,6 @@
   <div class="spacer"></div>
   <p class="my-3"><a [routerLink]="['/user/', user.username]">{{user.username}}</a></p>
   <div class="spacer"></div>
-  <button mat-raised-button class="ml-auto button-add-friend" (click)="this.addFriend(user.username)">Ajouter</button>
+  <button *ngIf="canAdd()" mat-raised-button class="ml-auto button-add-friend" (click)="this.addFriend(user.username)"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+  <button *ngIf="!canAdd()" mat-raised-button class="ml-auto button-add-friend" (click)="this.addFriend(user.username)"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
 </div>

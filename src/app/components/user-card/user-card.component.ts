@@ -18,4 +18,8 @@ export class UserCardComponent implements OnInit {
   addFriend(username: string) {
     this.friendshipService.postFriendship(username);
   }
+
+  canAdd() {
+    return false;
+  }
 }
