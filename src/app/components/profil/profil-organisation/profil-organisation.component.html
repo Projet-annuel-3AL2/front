@@ -41,21 +41,6 @@
               </div>
             </div>
           </div>
-          <div class="orga-card-div2">
-            <div class="orga-card-empty2">
-              <p>Créateur :</p>
-            </div>
-            <div class="orga-card-owner-img">
-              <img [src]="organisation$.owner.profilePicture || 'https://picsum.photos/50/50'" class="rounded-circle"
-                   width="50" alt="">
-            </div>
-            <div class="orga-card-owner">
-              <a [routerLink]="['/user/' + organisation$.owner.id]"><p>{{organisation$.owner.username}}</p></a>
-            </div>
-            <div class="orga-card-infos">
-              <p>Nombre d'Événements créé: {{organisation$.events.length }} -- Nombre de membres: {{listMember.length}}</p>
-            </div>
-          </div>
         </div>
       </div>
       <div class="tab-event  ">
