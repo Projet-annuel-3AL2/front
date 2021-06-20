@@ -16,4 +16,8 @@ export class EventCardComponent implements OnInit {
   joinEvent(id: string) {
 
   }
+
+  getLocalisation() {
+    return "6 boulevard Maréchal Foch, 76200 Dieppe"
+  }
 }

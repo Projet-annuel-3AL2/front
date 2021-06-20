@@ -1,21 +1,29 @@
 
 <mat-card class="event-card-list">
-  <div class="row m-0">
-    <div class="col-md-4">
+    <div class="img-card-event" >
       <a [routerLink]="['/event/', event.id]">
         <img alt="" class="rounded" style="object-fit: none"
-             src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
-             width="100%" height="300px">
+             src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg">
       </a>
     </div>
-    <div class="col-md-4">
+    <div class="titre-card-event">
       <a [routerLink]="['/event/', event.id]">
-        <h1>{{event.name}}</h1>
+        <p>{{event.name}}</p>
       </a>
-      <p>{{event.organisation.name}}</p>
-      <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}}</p>
+    </div>
+    <div class="orga-card-event" >
+      <p><i class="fa fa-user" aria-hidden="true"></i>  {{event.organisation.name}}</p>
+    </div>
+    <div class="date-card-event" >
+      <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}} {{event.startDate.getHours()}}H{{event.startDate.getMinutes()}} -- {{event.endDate.getHours()}}H{{event.endDate.getMinutes()}}</p>
+    </div>
+    <div class="category-card-event">
       <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
+    </div>
+    <div class="localisation-card-event">
+      <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
+    </div>
+    <div class="button-join">
       <button mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" >Rejoindre</button>
     </div>
-  </div>
 </mat-card>

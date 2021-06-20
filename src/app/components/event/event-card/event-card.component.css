@@ -1,3 +1,59 @@
 .event-card-list{
+  display: grid;
+  grid-template-columns:  repeat(3, [col] auto);
+  padding: 5px;
+  grid-template-rows: repeat(4, [row] auto);
+  width: 550px;
+  margin-bottom: 30px;
+  background: #F6F6F6;
+}
 
+.img-card-event {
+  grid-area: 1 / 1 / span 4 / 1;
+}
+
+.img-card-event img{
+  padding: 5px;
+  width: 160px;
+  height: 120px;
+}
+
+.titre-card-event{
+  grid-area: 1 / 2 / 1 / span 3;
+  font-size: 20px;
+  font-family: Roboto, serif;
+  color: #00643C;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.orga-card-event {
+  grid-area: 2/2/2/2;
+  font-family: Roboto, serif;
+}
+
+.date-card-event {
+  grid-area: 2 / 3 / 2 / span 3;
+  font-family: Roboto, serif;
+}
+
+.localisation-card-event{
+  grid-area: 3 / 2 / 3 / span 3;
+  font-family: Roboto, serif;
+}
+
+.category-card-event {
+  grid-area: 4 / 2 / 4 / 2;
+  font-family: Roboto, serif;
+}
+.button-join {
+  grid-area: 4 / 3 / 4 / 3;
+  margin-left: 60px;
+
+}
+.titre-card-event a {
+  text-decoration: none;
+  font-family: Roboto, serif;
+  color: #00643C;
+  font-weight: bold;
 }
