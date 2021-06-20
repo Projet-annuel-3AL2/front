@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Event} from '../../../shared/models/event.model';
 import {EventService} from "../../../services/event/event.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -7,17 +7,20 @@ import {PostService} from "../../../services/post/post.service";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  styleUrls: ['./event.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EventComponent implements OnInit {
 
   listPost$: Post[];
   event: Event;
   eventId: string;
+  faEllipsisH = faEllipsisH;
 
   constructor(private _activatedRoute:ActivatedRoute,
               private _router:Router,
@@ -25,9 +28,12 @@ export class EventComponent implements OnInit {
               private _postService:PostService) { }
 
   ngOnInit(): void {
-    this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
-    this.getEvents();
-    this.getPosts();
+    this.event = this._eventService.getEvent('a');
+    this.listPost$ = this._postService.getRelatedPost('a');
+    this.eventId = '1';
+    // this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
+    // this.getEvents();
+    // this.getPosts();
   }
 
   private getPosts() {
