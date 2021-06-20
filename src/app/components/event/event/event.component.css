@@ -2,7 +2,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 100, 60, 1) 0%, rgba(0, 100, 60, 0) 100%);
+  background: linear-gradient(180deg, rgba(229, 229,229, 0.08) 0%, #E5E5E5 63.02%);
   color: #fff;
   padding: 10px;
   width: 100%;
@@ -34,13 +34,14 @@
   box-sizing: border-box;
   max-width: 5%;
   padding-top: 5px;
-  color: gray;
+  color: #00643C;
 }
 
 .dates-event {
   flex: 1 1 0%;
   box-sizing: border-box;
   max-width: 30%;
+  color: black;
 }
 .description-event {
   flex: 1 1 100%;
@@ -49,10 +50,11 @@
   font-size: 15px;
   font-family: Roboto, serif;
   text-align: justify;
+  color: black;
 }
 
 .fa-chevron-circle-down {
-  color: white;
+  color: #00643C;
   border: hidden;
 }
 
@@ -66,22 +68,7 @@
 .event-card-full {
   display: inline-block;
   position: relative;
-  background: linear-gradient(0deg, gray,white);
   width: 100%;
-}
-
-.event-infos {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  color: #00643C !important;
-  padding: 40px;
-  width: 100%;
-  height: 80%;
-  text-align: justify;
-  font-weight: bold;
-  font-size: medium;
-  align-content: start;
 }
 
 .dropdown-toggle::after {
@@ -99,19 +86,19 @@
   box-sizing: border-box;
   display: flex;
 }
+
 .tab-event {
 }
 
-
 /* Styles for tab labels */
-.mat-tab-label {
+.tab-group-user-profil.mat-tab-label {
   min-width: 250px !important;
   background-color: transparent;
   font-weight: 700;
 }
 
 /* Styles for the active tab label */
-.mat-tab-label.mat-tab-label-active {
+.tab-group-user-profil.mat-tab-label.mat-tab-label-active {
   min-width: 250px !important;
   background-color: transparent;
   font-weight: 700;
@@ -119,5 +106,5 @@
 
 /* Styles for the ink bar */
 .mat-ink-bar {
-  background-color: #00643C;;
+  background-color: #00643C;
 }

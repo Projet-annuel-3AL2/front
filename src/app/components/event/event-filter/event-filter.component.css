@@ -1,8 +1,9 @@
 .event-list-filter{
   position: absolute;
   top: 100px;
+  margin-left: 75px;
   text-align: center;
-  width: 500px;
+  width: 300px;
   height: auto;
   background: #F6F6F6;
   border-color: #ADADAD;
@@ -15,7 +16,6 @@
 ul {
   list-style-type: none;
   text-align: left;
-  padding-left:125px;
 }
 
 li {
@@ -30,3 +30,19 @@ li {
   position: relative;
 }
 
+.localisation-filter {
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  display: flex;
+}
+.button-maps {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 40%;
+}
+.localisation-text {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 60%;
+  text-align: center;
+}

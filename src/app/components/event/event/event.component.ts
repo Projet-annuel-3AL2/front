@@ -7,7 +7,7 @@ import {PostService} from "../../../services/post/post.service";
 import {map} from "rxjs/operators";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisH, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-event',
@@ -21,6 +21,7 @@ export class EventComponent implements OnInit {
   event: Event;
   eventId: string;
   faEllipsisH = faEllipsisH;
+  faCheckCircle = faCheckCircle;
   actualDate: Date;
 
   constructor(private _activatedRoute:ActivatedRoute,
@@ -76,6 +77,7 @@ export class EventComponent implements OnInit {
   }
 
   // TODO : Récuperer l'utilisateur actuel
+
   isAlreadyParticipating() {
     let validation: boolean = false;
 

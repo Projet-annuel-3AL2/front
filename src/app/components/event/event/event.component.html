@@ -13,14 +13,16 @@
             <div flflex="60" class="titre-event">
               <p>{{event.name}}</p>
             </div>
-            <div flflex="20" class="button-join" *ngIf="canJoin()">
-              <button mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" >Rejoindre</button>
+            <div flflex="20" class="button-join" >
+              <button *ngIf="canJoin()" mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" ><i class="fa fa-user-plus" aria-hidden="true"></i>  Rejoindre</button>
+              <button *ngIf="!canJoin()" mat-raised-button class="ml-auto button-join-event" ><fa-icon [icon]="faCheckCircle" ></fa-icon> Rejoindre</button>
             </div>
+
             <div class="dropdown-event" flflex="20">
               <div  class="dropdown" dropdown>
                 <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
                         dropdownToggle type="button">
-                  <i class="fa fa-chevron-circle-down"  aria-hidden="true"></i>
+                  <fa-icon [icon]="faEllipsisH"></fa-icon>
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                   <a class="dropdown-item" href="#">Signaler</a>

@@ -7,13 +7,19 @@
         <div class="row m-0">
           <mat-divider></mat-divider>
           <h3>Localisation</h3>
-          <button mat-flat-button (click)="showDialogMapsCollapse()">
-            <i class="fas fa-map-marked"></i>
-          </button>
-          <p *ngIf="isLocated == false"> Vous n'êtes pas localisé</p>
-          <p *ngIf="isLocated == true">{{userLocalisation}}</p>
+          <div class="localisation-filter">
+            <div class="button-maps">
+              <button mat-flat-button (click)="showDialogMapsCollapse()">
+                <i class="fas fa-map-marked"></i>
+              </button>
+            </div>
+            <div class="localisation-text">
+              <p *ngIf="isLocated == false"> Vous n'êtes pas localisé</p>
+              <p *ngIf="isLocated == true">{{userLocalisation}}</p>
+            </div>
+          </div>
         </div>
-        <div class="row m-1">
+        <div class="row m-1" style="padding-top: 15px">
           <mat-divider></mat-divider>
           <h3>Période</h3>
           <mat-form-field appearance="fill">
@@ -31,6 +37,7 @@
           <h3>Distance (km)</h3>
           <mat-slider
             thumbLabel
+            class="range-picker"
             [displayWith]="formatLabel"
             tickInterval="10"
             step="10"
