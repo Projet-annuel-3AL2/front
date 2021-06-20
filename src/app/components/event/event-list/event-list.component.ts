@@ -17,7 +17,8 @@ export class EventListComponent implements OnInit, AfterViewInit {
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
-    this.getSelectionEvents();
+    this.events$ = this.eventService.getEvents();
+    //this.getSelectionEvents();
   }
 
   private getSelectionEvents() {
