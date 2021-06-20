@@ -1,13 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
 import {ActivatedRoute} from "@angular/router";
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {Event} from '../../../shared/models/event.model';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
+import {EventService} from "../../../services/event/event.service";
 
 @Component({
   selector: 'app-profil-user',
@@ -24,14 +25,19 @@ export class ProfilUserComponent implements OnInit {
   constructor(private userService: UserService,
               private route: ActivatedRoute,
               private postService: PostService,
-              private friendshipService: FriendshipService) { }
+              private friendshipService: FriendshipService,
+              private eventService: EventService) { }
 
   ngOnInit(): void {
-    const username = this.route.snapshot.params['username']
-    this.getUser(username);
-    this.getRelatedPost(username);
-    this.getRelatedEvent(this.user);
-    this.getUserFriends(this.user);
+    this.user = this.userService.getUser('a');
+    this.listPost$ = this.postService.getRelatedPost('a');
+    this.listEvent$ = this.eventService.getEvents();
+    this.listUser$ = this.userService.getParticipants('a');
+    // const username = this.route.snapshot.params['username']
+    // this.getUser(username);
+    // this.getRelatedPost(username);
+    // this.getRelatedEvent(this.user);
+    // this.getUserFriends(this.user);
   }
 
   private getUser(username: string) {
@@ -43,8 +49,9 @@ export class ProfilUserComponent implements OnInit {
   }
 
   // TODO : isNotAlreadyFriend() A faire (trouver comment récupérer les amis)
+  faEllipsisH = faEllipsisH;
   isNotAlreadyFriend() {
-    return false;
+    return true;
   }
 
   private getRelatedPost(username: any) {
