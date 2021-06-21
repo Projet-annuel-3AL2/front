@@ -14,6 +14,7 @@
           <p><i class="fas fa-user-check"></i> {{event.participants.length}} / {{event.participantsLimit}} participants</p>
           <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}}</p>
           <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
+          <p><a [routerLink]="['/organisation/' + event.organisation.name]"><i class="fa fa-building" aria-hidden="true">  {{event.organisation.name}}</i></a></p>
         </div>
       </div>
     </div>

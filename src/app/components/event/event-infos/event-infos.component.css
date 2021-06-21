@@ -33,3 +33,10 @@
 .image-event-infos {
   max-width: 375px;
 }
+
+.event-infos-infos a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  font-family: Roboto, serif;
+}
