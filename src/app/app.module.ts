@@ -20,7 +20,6 @@ import {EventSuggestionListComponent} from "./components/event/event-suggestion-
 import {EventComponent} from "./components/event/event/event.component";
 import {EventInfosComponent} from "./components/event/event-infos/event-infos.component";
 import {UserCardComponent} from "./components/user-card/user-card.component";
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import {EventFilterComponent} from "./components/event/event-filter/event-filter.component";
 import {EventListComponent} from "./components/event/event-list/event-list.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
@@ -34,6 +33,8 @@ import {ProfilListEventComponent} from "./components/profil/profil-list-event/pr
 import {ListUserComponent} from "./components/list-user/list-user.component";
 import {ProfilOrganisationComponent} from "./components/profil/profil-organisation/profil-organisation.component";
 import {HttpClientModule} from "@angular/common/http";
+import {OrgaSuggestionListComponent} from "./components/orga-suggestion-list/orga-suggestion-list.component";
+import {OrganisationCardComponent} from "./components/organisation-card/organisation-card.component";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import {HttpClientModule} from "@angular/common/http";
     ListPostComponent,
     ListUserComponent,
     ProfilOrganisationComponent,
-    ProfilListEventComponent
+    ProfilListEventComponent,
+    OrgaSuggestionListComponent,
+    OrganisationCardComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,6 @@ import {HttpClientModule} from "@angular/common/http";
     CollapseModule.forRoot(),
     MaterialModule,
     AppRoutingModule,
-    MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule

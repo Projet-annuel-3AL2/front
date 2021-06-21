@@ -42,7 +42,8 @@ export class EventService {
   }
 
   getNotEndEvent(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
+    return this.getAllEvent();
+    // return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
   }
 
   getEventById(eventId: string): Observable<Event> {

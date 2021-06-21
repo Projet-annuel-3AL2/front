@@ -5,6 +5,7 @@ import {Event} from "../../shared/models/event.model";
 import {Category} from "../../shared/models/category.model";
 import {Organisation} from "../../shared/models/organisation.model";
 import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
+import {Certification} from "../../shared/models/certification.model";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class UserService {
    getUser(id: string) {
     const user: User = {
       bannerPicture: undefined,
-      certification: undefined,
+      certification: new Certification(),
       createdEvents: [],
       createdPosts: [],
       firstname: "firstName",
@@ -41,7 +42,7 @@ export class UserService {
       lastname: "lastname",
       likedPosts: [],
       profilePicture: undefined,
-      username: "username"
+      username: "Username"
     }
     return user;
   }
