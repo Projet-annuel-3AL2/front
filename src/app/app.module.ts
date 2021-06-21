@@ -2,7 +2,7 @@ import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
-import {PostComponent} from './components/post/post.component';
+import {PostComponent} from './components/card_/post/post.component';
 import {RouterModule} from "@angular/router";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
@@ -14,27 +14,27 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {CollapseModule} from "ngx-bootstrap/collapse";
 import {MaterialModule} from "./material.module";
 import {AppRoutingModule} from "./app-routing.module";
-import {TimelineComponent} from "./components/timeline/timeline.component";
-import {EventSuggestionComponent} from "./components/event/event-suggestion/event-suggestion.component";
-import {EventSuggestionListComponent} from "./components/event/event-suggestion-list/event-suggestion-list.component";
-import {EventComponent} from "./components/event/event/event.component";
-import {EventInfosComponent} from "./components/event/event-infos/event-infos.component";
-import {UserCardComponent} from "./components/user-card/user-card.component";
-import {EventFilterComponent} from "./components/event/event-filter/event-filter.component";
-import {EventListComponent} from "./components/event/event-list/event-list.component";
+import {TimelineComponent} from "./components/page_/timeline/timeline.component";
+import {EventSuggestionComponent} from "./components/event_/event-suggestion/event-suggestion.component";
+import {ListEventSuggestionComponent} from "./components/list_/list-event-suggestion/list-event-suggestion.component";
+import {PageEventComponent} from "./components/page_/page-event/page-event.component";
+import {EventInfosComponent} from "./components/event_/event-infos/event-infos.component";
+import {UserCardComponent} from "./components/card_/user-card/user-card.component";
+import {EventFilterComponent} from "./components/event_/event-filter/event-filter.component";
+import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {EventCardComponent} from "./components/event/event-card/event-card.component";
-import {EventListDisplayComponent} from "./components/event/event-list-display/event-list-display.component";
-import {EventDialogMapsComponent} from "./components/event/event-dialog-maps/event-dialog-maps.component";
-import {ProfilUserComponent} from "./components/profil/profil-user/profil-user.component";
-import {ListPostComponent} from "./components/list-post/list-post.component";
-import {ProfilListEventComponent} from "./components/profil/profil-list-event/profil-list-event.component";
-import {ListUserComponent} from "./components/list-user/list-user.component";
-import {ProfilOrganisationComponent} from "./components/profil/profil-organisation/profil-organisation.component";
+import {CardEventComponent} from "./components/card_/card-event/card-event.component";
+import {EventListDisplayComponent} from "./components/event_/event-list-display/event-list-display.component";
+import {EventDialogMapsComponent} from "./components/event_/event-dialog-maps/event-dialog-maps.component";
+import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
+import {ListPostComponent} from "./components/list_/list-post/list-post.component";
+import {ProfilListEventComponent} from "./components/profil_/profil-list-event/profil-list-event.component";
+import {ListUserComponent} from "./components/list_/list-user/list-user.component";
+import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
 import {HttpClientModule} from "@angular/common/http";
-import {OrgaSuggestionListComponent} from "./components/orga-suggestion-list/orga-suggestion-list.component";
-import {OrganisationCardComponent} from "./components/organisation-card/organisation-card.component";
+import {ListOrganisationSuggestionComponent} from "./components/list_/list-organisation-suggestion/list-organisation-suggestion..component";
+import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 
 @NgModule({
   declarations: [
@@ -43,14 +43,14 @@ import {OrganisationCardComponent} from "./components/organisation-card/organisa
     NavbarComponent,
     TimelineComponent,
     EventSuggestionComponent,
-    EventSuggestionListComponent,
-    EventComponent,
+    ListEventSuggestionComponent,
+    PageEventComponent,
     EventInfosComponent,
     UserCardComponent,
     EventFilterComponent,
-    EventListComponent,
+    PageListEventComponent,
     ReturnButtonComponent,
-    EventCardComponent,
+    CardEventComponent,
     EventListDisplayComponent,
     EventDialogMapsComponent,
     ProfilUserComponent,
@@ -58,8 +58,8 @@ import {OrganisationCardComponent} from "./components/organisation-card/organisa
     ListUserComponent,
     ProfilOrganisationComponent,
     ProfilListEventComponent,
-    OrgaSuggestionListComponent,
-    OrganisationCardComponent
+    ListOrganisationSuggestionComponent,
+    CardOrganisationComponent
   ],
   imports: [
     BrowserModule,
