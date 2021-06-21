@@ -1,0 +1,26 @@
+.organisation-card {
+  width: 110%;
+  margin-left: -8px;
+}
+
+.fa-building{
+  padding-top: 10px;
+  padding-left: 10px;
+  color: #00643C;
+}
+p a{
+  text-decoration: none;
+  color: black;
+}
+
+.button-follow-orga {
+  margin-top: 9px;
+  height: 30px;
+  background-color: #00643C !important;
+}
+.button-follow-orga-disable {
+  color: grey;
+  margin-top: 9px;
+  height: 30px;
+  width: 90px;
+}
