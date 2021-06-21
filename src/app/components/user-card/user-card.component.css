@@ -1,8 +1,12 @@
 .button-add-friend{
-  color: white;
   margin-top: 9px;
   height: 35px;
   background-color: #00643C !important;
+}
+.button-add-friend-disable {
+  color: grey;
+  margin-top: 9px;
+  height: 35px;
 }
 
 .spacer {
