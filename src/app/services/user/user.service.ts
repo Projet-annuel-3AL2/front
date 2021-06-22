@@ -15,7 +15,7 @@ export class UserService {
   constructor() { }
 
 
-  getParticipants(id: string) {
+  fakeGetParticipants(id: string) {
     let users: User[];
     users = [
       this.fakeGetUser(id),
@@ -49,7 +49,7 @@ export class UserService {
   }
 
   getUserRelatedUser(user: User) {
-    return this.getParticipants('1');
+    return this.fakeGetParticipants('1');
   }
 
   getUserRelatedEvent(user: User): Event[] {

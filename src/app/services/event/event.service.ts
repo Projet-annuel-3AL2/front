@@ -100,16 +100,15 @@ export class EventService {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
 
-
-
-
-
-
-
+  // TODO : getNotEndEvent avec limit de 4 item max
   getNotEndEvent(): Observable<Event[]> {
     return this.getAllEvent();
     // return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
   }
+
+
+
+
 
   fakeGetEvent(id: String) {
     const event: Event = {

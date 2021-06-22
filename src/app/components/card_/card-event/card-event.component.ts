@@ -17,7 +17,7 @@ export class CardEventComponent implements OnInit {
   constructor(
     private userService: UserService,
     private eventService: EventService
-    // private
+    // private authService: AuthService
   ) { }
 
   ngOnInit(): void {

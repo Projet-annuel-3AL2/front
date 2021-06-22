@@ -44,10 +44,6 @@ export class OrganisationService {
   }
 
   // TODO: A faire coté api
-  getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
-  }
-
   putOrganisation(originalName: string, organisation:Organisation){
     this.http.put(`${environment.baseUrl}/organisation/${originalName}`, JSON.stringify(organisation),{withCredentials: true}).subscribe({
         error: err => {
@@ -68,6 +64,10 @@ export class OrganisationService {
         }
       }
     )
+  }
+
+  getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
   }
 
 
