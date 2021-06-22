@@ -1,6 +1,9 @@
 .organisation-card {
   width: 110%;
-  margin-left: -8px;
+  margin-left: -10px;
+  background: #E5E5E5;
+  border-color: #ADADAD;
+  box-shadow: 0 3px 5px grey;
 }
 
 .fa-building{
@@ -16,7 +19,6 @@ p a{
 .button-follow-orga {
   margin-top: 9px;
   height: 30px;
-  background-color: #00643C !important;
 }
 .button-follow-orga-disable {
   color: grey;

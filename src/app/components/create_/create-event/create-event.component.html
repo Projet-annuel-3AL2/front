@@ -1,0 +1,7 @@
+<div fxFlex fxlayout="column" class="create-event-popup rounded-3" *ngIf="showPopup">
+
+</div>
+<div class="popup-blur" (click)="closePopup()" *ngIf="showPopup"></div>
+<div class="create-event-button">
+  <button mat-raised-button class="rounded-pill" (click)="openPopup()" [disabled]="showPopup">Créer un event</button>
+</div>

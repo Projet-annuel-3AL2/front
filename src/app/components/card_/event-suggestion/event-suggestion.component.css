@@ -11,3 +11,17 @@
   border-color: #ADADAD;
   box-shadow: 0 3px 5px grey;
 }
+
+.button-show-event {
+  margin: auto;
+  height: 30px;
+  width: 20px;
+  font-size: 15px;
+
+}
+
+.button-show-event button{
+  height: 30px;
+  width: 20px;
+
+}
