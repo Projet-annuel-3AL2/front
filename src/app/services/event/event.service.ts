@@ -8,6 +8,7 @@ import {Category} from "../../shared/models/category.model";
 import {User} from "../../shared/models/user.model";
 import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
 import {Organisation} from "../../shared/models/organisation.model";
+import {RechercheEventModel} from "../../shared/models/rechercheEvent.model";
 
 @Injectable({
   providedIn: 'root'
@@ -94,22 +95,21 @@ export class EventService {
     return this.http.get<User[]>(`${environment.baseUrl}/event/getMembers/${eventId}`, {headers: {"Access-Control-Allow-Origin": "*"}})
   }
 
-  //TODO : getEventWithFilter()
-  getEventWithFilter(): Observable<Event[]>{
-    return this.getAllEvent();
+  //TODO : getEventWithRecherche()
+  getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
+
+
+
+
+
 
 
   getNotEndEvent(): Observable<Event[]> {
     return this.getAllEvent();
     // return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
   }
-
-
-
-
-
-
 
   getEvent(id: String) {
     const event: Event = {
@@ -154,7 +154,6 @@ export class EventService {
     ]
     return events;
   }
-
   getParticipants(id: string) {
     let users: User[];
     users = [
@@ -171,6 +170,7 @@ export class EventService {
     ]
     return users;
   }
+
   getUser(id: string) {
     const user: User = {
       bannerPicture: undefined,
@@ -190,7 +190,6 @@ export class EventService {
   private getFakeOrgaMini() {
     let organisation: Organisation = new Organisation();
     organisation.id = '1';
-    organisation.events = this.getEvents();
     organisation.name = 'OrganisationDeBilly';
     organisation.owner = this.getUser('1');
     organisation.bannerPicture = undefined;

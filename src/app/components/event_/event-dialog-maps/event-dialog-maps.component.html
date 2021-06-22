@@ -4,10 +4,11 @@
        src="../../../../assets/images/img-maps.png"
        width="auto" height="400px">
   <mat-form-field>
-    <input matInput [(ngModel)]="data.userLocalisation">
+    <input matInput [(ngModel)]="data.longitude">
+    <input matInput [(ngModel)]="data.latitude">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Quitter</button>
-  <button mat-button [mat-dialog-close]="data.userLocalisation" cdkFocusInitial>Valider</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Valider</button>
 </div>
