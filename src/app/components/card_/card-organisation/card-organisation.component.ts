@@ -14,11 +14,16 @@ export class CardOrganisationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // TODO : Implémenter la fonctionnalité de follow
+  canFollow() {
+    return false;
+  }
+
   followOrganisation(name: string) {
 
   }
 
-  canFollow() {
-    return false;
+  unfollowOrganisation(name: string) {
+
   }
 }

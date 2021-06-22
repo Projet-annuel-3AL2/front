@@ -44,7 +44,7 @@ export class CardEventComponent implements OnInit {
   // TODO: J'ai pas la logique pour un truc propre -> Vérifier que this.user n'est pas dans UserList
   canJoin(eventId: string) {
     return this.eventService.getEventMembers(eventId).subscribe(userList => {
-
+      return false;
     })
   }
 

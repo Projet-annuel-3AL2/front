@@ -16,11 +16,16 @@ export class UserCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
+  canAdd(userId: string) {
+    return false;
+  }
+
   addFriend(username: string) {
     this.friendshipService.postFriendship(username);
   }
 
-  canAdd() {
-    return false;
+  dellFriend(username: string) {
+    this.friendshipService.removeFriendship(username)
   }
 }
