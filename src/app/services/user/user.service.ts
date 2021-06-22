@@ -18,21 +18,21 @@ export class UserService {
   getParticipants(id: string) {
     let users: User[];
     users = [
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id)
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id),
+      this.fakeGetUser(id)
     ]
     return users;
   }
 
-   getUser(id: string) {
+   fakeGetUser(id: string) {
     const user: User = {
       bannerPicture: undefined,
       certification: new Certification(),
@@ -96,7 +96,7 @@ export class UserService {
     let organisation: Organisation = new Organisation();
     organisation.id = '1';
     organisation.name = 'OrganisationDeBilly';
-    organisation.owner = this.getUser('1');
+    organisation.owner = this.fakeGetUser('1');
     organisation.bannerPicture = undefined;
 
 

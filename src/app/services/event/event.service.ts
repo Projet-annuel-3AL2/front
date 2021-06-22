@@ -111,7 +111,7 @@ export class EventService {
     // return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
   }
 
-  getEvent(id: String) {
+  fakeGetEvent(id: String) {
     const event: Event = {
       id: "1",
       name: "Nettoyage de la plage de Diepe",
@@ -139,18 +139,18 @@ export class EventService {
 
   getEvents() {
     let events = [
-      this.getEvent("1"),
-      this.getEvent("2"),
-      this.getEvent("3"),
-      this.getEvent("4")
+      this.fakeGetEvent("1"),
+      this.fakeGetEvent("2"),
+      this.fakeGetEvent("3"),
+      this.fakeGetEvent("4")
     ]
     return events;
   }
 
   getEventFilter() {
     let events = [
-      this.getEvent("3"),
-      this.getEvent("4")
+      this.fakeGetEvent("3"),
+      this.fakeGetEvent("4")
     ]
     return events;
   }

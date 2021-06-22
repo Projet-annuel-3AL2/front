@@ -14,8 +14,8 @@
               <p>{{event.name}}</p>
             </div>
             <div flflex="20" class="button-join" >
-              <button *ngIf="canJoin()" mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" ><i class="fa fa-user-plus" aria-hidden="true"></i>  Rejoindre</button>
-              <button *ngIf="!canJoin()" mat-raised-button class="ml-auto button-join-event" ><fa-icon [icon]="faCheckCircle" ></fa-icon> Rejoindre</button>
+              <button *ngIf="canJoin(event.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" ><i class="fa fa-user-plus" aria-hidden="true"></i>  Rejoindre</button>
+              <button *ngIf="!canJoin(event.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.leaveEvent(event.id)"> Quittez</button>
             </div>
 
             <div class="dropdown-event" flflex="20">

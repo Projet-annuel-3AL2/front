@@ -9,7 +9,7 @@ import {ProfilOrganisationComponent} from "./components/profil_/profil-organisat
 const appRoutes: Routes = [
   { path: 'timeline', component: TimelineComponent },
   { path: 'events', component: PageListEventComponent},
-  { path: 'event_/:id', component: PageEventComponent },
+  { path: 'event/:id', component: PageEventComponent },
   { path: 'user/:username', component: ProfilUserComponent },
   { path: 'organisation/:organisationName', component: ProfilOrganisationComponent },
   { path: '',   redirectTo: '/timeline', pathMatch: 'full' }

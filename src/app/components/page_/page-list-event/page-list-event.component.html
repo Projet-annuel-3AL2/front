@@ -4,6 +4,7 @@
       <app-return-button></app-return-button>
       <div class="event-list-filter mb-3 my-5">
         <app-event-filter></app-event-filter>
+        <app-create-event *ngIf="canCreateEvent()"></app-create-event>
       </div>
     </div>
   </div>

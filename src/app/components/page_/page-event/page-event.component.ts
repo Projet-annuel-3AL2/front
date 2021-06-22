@@ -4,10 +4,10 @@ import {EventService} from "../../../services/event/event.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import { faEllipsisH, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {User} from "../../../shared/models/user.model";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-page-event',
@@ -23,18 +23,25 @@ export class PageEventComponent implements OnInit {
   faEllipsisH = faEllipsisH;
   faCheckCircle = faCheckCircle;
   actualDate: Date;
+  user: User;
 
   constructor(private _activatedRoute:ActivatedRoute,
               private _router:Router,
               private _eventService:EventService,
-              private _postService:PostService) { }
+              private _postService:PostService,
+              private _userService: UserService,
+              // private authService: AuthService
+              ) { }
 
   ngOnInit(): void {
-    this.event = this._eventService.getEvent('a');
+    this.event = this._eventService.fakeGetEvent('a');
     this.listPost$ = this._postService.fakeGetRelatedPost('a');
-    this.eventId = '1';
+    this.user = this._userService.fakeGetUser('a');
     this.actualDate = new Date(Date.now());
-    // this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
+    this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
+    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
+    //   this.user=user;
+    // });
     // this.getEvents();
     // this.getPosts();
   }
@@ -54,9 +61,11 @@ export class PageEventComponent implements OnInit {
 
 
   joinEvent(id: string) {
-    // TODO : Récupéré Id de l'user actuel
-    const userId = '1'
-    this._eventService.postAddParticipant(userId, this.eventId);
+    this._eventService.postAddParticipant(this.user.id,id);
+  }
+
+  leaveEvent(id: string) {
+    this._eventService.deleteParticipantEvent(id,this.user.id);
   }
 
   private getEvents() {
@@ -72,21 +81,11 @@ export class PageEventComponent implements OnInit {
     })
   }
 
-  canJoin() {
-    return this.event.endDate < this.actualDate || this.event.participants.length < this.event.participantsLimit || !this.isAlreadyParticipating()
-  }
-
-  // TODO : Récuperer l'utilisateur actuel
-
-  isAlreadyParticipating() {
-    let validation: boolean = false;
-
-    this.event.participants.forEach(user => {
-      if (user.username == undefined){
-        validation = true;
-      }
+  // TODO: J'ai pas la logique pour un truc propre -> Vérifier que this.user n'est pas dans UserList
+  canJoin(eventId: string) {
+    return this._eventService.getEventMembers(eventId).subscribe(userList => {
+      return false;
     })
-    // return validation;
-    return false;
   }
+
 }
