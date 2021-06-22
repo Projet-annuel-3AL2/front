@@ -1,13 +1,15 @@
 <div class="row m-0">
   <div class="col-md-4">
     <app-create-event></app-create-event>
+    <app-create-organisation></app-create-organisation>
   </div>
-  <div class="col-md-4" *ngFor="let post of listPost$">
-    <post [post]="post"></post>
+  <div class="col-md-4 " >
+    <app-list-post [listPost]="listPost$"></app-list-post>
   </div>
   <div class="col-md-4 my-3">
     <div class="position-fixed">
       <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
     </div>
   </div>
 </div>

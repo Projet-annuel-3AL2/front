@@ -30,7 +30,7 @@ export class ProfilUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getUser('a');
-    this.listPost$ = this.postService.getRelatedPost('a');
+    this.listPost$ = this.postService.fakeGetRelatedPost('a');
     this.listEvent$ = this.eventService.getEvents();
     this.listUser$ = this.userService.getParticipants('a');
     // const username = this.route.snapshot.params['username']

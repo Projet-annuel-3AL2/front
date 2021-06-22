@@ -31,7 +31,7 @@ export class PageEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.event = this._eventService.getEvent('a');
-    this.listPost$ = this._postService.getRelatedPost('a');
+    this.listPost$ = this._postService.fakeGetRelatedPost('a');
     this.eventId = '1';
     this.actualDate = new Date(Date.now());
     // this.eventId=this._activatedRoute.snapshot.paramMap.get("id");

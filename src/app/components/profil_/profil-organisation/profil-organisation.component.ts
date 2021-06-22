@@ -17,7 +17,7 @@ import {UserService} from "../../../services/user/user.service";
 export class ProfilOrganisationComponent implements OnInit {
 
   faCheckCircle = faCheckCircle;
-  organisation$: Organisation = new Organisation('a','b',undefined);
+  organisation$: Organisation = new Organisation();
   listMember: User[] = [];
   organisationName: string;
   faEllipsisH = faEllipsisH;
@@ -27,7 +27,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   ngOnInit(): void {
     this.organisationName = this.route.snapshot.params['organisationName']
-    this.organisation$ = this.organisationService.getOrganisation();
+    this.organisation$ = this.organisationService.fakeGetOrganisation();
     this.listMember = this.userService.getParticipants("a");
     // this.getOrganisation();
     // this.getListMember();

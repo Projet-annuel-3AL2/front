@@ -15,7 +15,8 @@ export class TimelineComponent implements OnInit {
   constructor(private postService: PostService) { }
 
   ngOnInit(): void {
-    this.getPosts();
+    this.listPost$ = this.postService.fakeGetRelatedPost('a')
+    // this.getPosts();
   }
 
   private getPosts() {
