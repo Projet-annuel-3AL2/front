@@ -1,13 +1,13 @@
 
 <mat-card class="event-card-list">
     <div class="img-card-event" >
-      <a [routerLink]="['/event_/', event.id]">
+      <a [routerLink]="['/event/' + event.id]">
         <img alt="" class="rounded" style="object-fit: none"
              src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg">
       </a>
     </div>
     <div class="titre-card-event">
-      <a [routerLink]="['/event_/', event.id]">
+      <a [routerLink]="['/event/' + event.id]">
         <p>{{event.name}}</p>
       </a>
     </div>

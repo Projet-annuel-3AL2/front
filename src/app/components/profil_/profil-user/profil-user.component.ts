@@ -29,7 +29,7 @@ export class ProfilUserComponent implements OnInit {
               private eventService: EventService) { }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser('a');
+    this.user = this.userService.fakeGetUser('a');
     this.listPost$ = this.postService.fakeGetRelatedPost('a');
     this.listEvent$ = this.eventService.getEvents();
     this.listUser$ = this.userService.getParticipants('a');
@@ -41,7 +41,7 @@ export class ProfilUserComponent implements OnInit {
   }
 
   private getUser(username: string) {
-    this.user = this.userService.getUser('1');
+    this.user = this.userService.fakeGetUser('1');
   }
 
   askFriend(username: string) {

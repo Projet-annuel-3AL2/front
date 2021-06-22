@@ -40,14 +40,14 @@ export class CreateEventComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.user = this.userService.getUser('fakeData');
+    this.user = this.userService.fakeGetUser('fakeData');
     this.listCategory = this.categoryService.fakeGetAllCategories();
     this.initialiseFormGroup();
     this.listOrganisation$ = [this.organisationService.fakeGetOrganisation(), this.organisationService.fakeGetOrganisation()];
     // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
     //   this.user=user;
     // });
-    //this.getAllCategories();
+    // this.getAllCategories();
     // this.getListOrganisation();
   }
 

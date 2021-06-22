@@ -1,5 +1,5 @@
 <div class="rounded-pill border d-flex p-2 event-suggestion my-3">
   <p class="my-2">{{event.name |  slice:0:29}}</p>
   <div class="spacer"></div>
-  <button mat-raised-button class="ml-auto button-show-event" [routerLink]="['/event_/', event.id]" >Voir</button>
+  <button mat-raised-button class="ml-auto button-show-event" [routerLink]="['/event/' + event.id]" >Voir</button>
 </div>

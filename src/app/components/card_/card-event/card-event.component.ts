@@ -21,7 +21,7 @@ export class CardEventComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user = this.userService.getUser('fakeData');
+    this.user = this.userService.fakeGetUser('fakeData');
     // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
     //   this.user=user;
     // });
