@@ -21,26 +21,23 @@ export class ProfilOrganisationComponent implements OnInit {
   listMember: User[] = [];
   organisationName: string;
   faEllipsisH = faEllipsisH;
+  user: User;
   constructor(private organisationService: OrganisationService,
               private route: ActivatedRoute,
-              private userService: UserService) { }
+              private userService: UserService,
+              // private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.organisationName = this.route.snapshot.params['organisationName']
     this.organisation$ = this.organisationService.fakeGetOrganisation();
-    this.listMember = this.userService.getParticipants("a");
+    this.listMember = this.userService.fakeGetParticipants("a");
+    this.user = this.userService.fakeGetUser("a");
+    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
+    //   this.user=user;
+    // });
     // this.getOrganisation();
     // this.getListMember();
-  }
-
-
-  isAlreadyMember() {
-    return false;
-  }
-
-  // TODO : askJoin() Organisation
-  askJoin(id: string) {
-
   }
 
   private getOrganisation() {
@@ -60,5 +57,18 @@ export class ProfilOrganisationComponent implements OnInit {
     this.organisation$.members.forEach(membership => {
       this.listMember.push(membership.user);
     })
+  }
+
+  // TODO : Implémenter la fonctionnalité de follow
+  canFollow() {
+    return false;
+  }
+
+  followOrganisation(name: string) {
+
+  }
+
+  unFollowOrganisation(name: string) {
+
   }
 }

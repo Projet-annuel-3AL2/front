@@ -15,19 +15,15 @@
                    width="75" alt="">
             </div>
             <div class="user-card-username">
-                <p>{{user.username  }}</p>
+                <p>{{user.username}}</p>
             </div>
             <div class="user-card-certification">
               <fa-icon *ngIf="user.certification" [icon]="faCheckCircle" ></fa-icon>
             </div>
             <div class="user-card-empty"></div>
             <div class="user-card-button-add">
-              <div *ngIf="isNotAlreadyFriend()">
-                <button mat-raised-button class="ml-auto button-join-event" (click)="this.askFriend(user.username)" ><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-              </div>
-              <div *ngIf="!isNotAlreadyFriend()">
-                <button mat-raised-button class="ml-auto button-join-event"> Ajouter</button>
-              </div>
+                <button *ngIf="canAdd(user.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.askFriend(user.username)" ><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+                <button *ngIf="!canAdd(user.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.dellFriend(user.username)"> Enlever</button>
             </div>
             <div class="user-card-menu">
               <div  class="dropdown" dropdown>
@@ -43,6 +39,7 @@
           </div>
           <div class="user-card-div-row-2">
             <div class="user-card-infos">
+              <!-- TODO : Remplacer par un text de description de User-->
               <p>Nombre de post: {{user.createdPosts.length }} -- A Participer à {{listEvent$.length}} Événements</p>
             </div>
           </div>

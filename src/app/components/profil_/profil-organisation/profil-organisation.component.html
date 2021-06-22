@@ -22,12 +22,8 @@
             </div>
             <div class="orga-card-empty"></div>
             <div class="orga-card-button">
-              <div *ngIf="!isAlreadyMember()">
-                <button mat-raised-button class="ml-auto button-join-event" (click)="this.askJoin(organisation$.id)"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
-              </div>
-              <div *ngIf="isAlreadyMember()">
-                <button mat-raised-button class="ml-auto mat-button-event"><fa-icon [icon]="faCheckCircle"></fa-icon> Suivre</button>
-              </div>
+                <button *ngIf="canFollow()" mat-raised-button class="ml-auto button-join-event" (click)="this.followOrganisation(organisation$.name)"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
+                <button *ngIf="canFollow()" mat-raised-button class="ml-auto mat-button-event" (click)="this.unFollowOrganisation(organisation$.name)">Arrêter de suivre</button>
             </div>
             <div class="orga-card-menu">
               <div  class="dropdown" dropdown>

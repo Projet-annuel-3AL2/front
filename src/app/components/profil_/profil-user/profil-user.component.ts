@@ -17,6 +17,7 @@ import {EventService} from "../../../services/event/event.service";
 })
 export class ProfilUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
+  faEllipsisH = faEllipsisH;
   user: User;
   listPost$: Post[];
   listEvent$: Event[];
@@ -26,14 +27,19 @@ export class ProfilUserComponent implements OnInit {
               private route: ActivatedRoute,
               private postService: PostService,
               private friendshipService: FriendshipService,
-              private eventService: EventService) { }
+              private eventService: EventService,
+              // private authService: AuthService
+              ) { }
 
   ngOnInit(): void {
     this.user = this.userService.fakeGetUser('a');
     this.listPost$ = this.postService.fakeGetRelatedPost('a');
     this.listEvent$ = this.eventService.getEvents();
-    this.listUser$ = this.userService.getParticipants('a');
+    this.listUser$ = this.userService.fakeGetParticipants('a');
     // const username = this.route.snapshot.params['username']
+    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
+    //   this.user=user;
+    // });
     // this.getUser(username);
     // this.getRelatedPost(username);
     // this.getRelatedEvent(this.user);
@@ -42,16 +48,6 @@ export class ProfilUserComponent implements OnInit {
 
   private getUser(username: string) {
     this.user = this.userService.fakeGetUser('1');
-  }
-
-  askFriend(username: string) {
-    this.friendshipService.postFriendship(username);
-  }
-
-  // TODO : isNotAlreadyFriend() A faire (trouver comment récupérer les amis)
-  faEllipsisH = faEllipsisH;
-  isNotAlreadyFriend() {
-    return true;
   }
 
   private getRelatedPost(username: any) {
@@ -73,5 +69,18 @@ export class ProfilUserComponent implements OnInit {
 
   private getUserFriends(user: User) {
     this.listUser$ = this.userService.getUserRelatedUser(user);
+  }
+
+  // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
+
+  canAdd(id: string) {
+    return false;
+  }
+  dellFriend(username: string) {
+    this.friendshipService.removeFriendship(username);
+  }
+
+  askFriend(username: string) {
+    this.friendshipService.postFriendship(username);
   }
 }
