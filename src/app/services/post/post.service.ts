@@ -60,7 +60,7 @@ export class PostService {
 
 
 
-  getRelatedPost(id: string) {
+  fakeGetRelatedPost(id: string) {
     let posts: Post[];
 
     posts = [
@@ -87,7 +87,7 @@ export class PostService {
       likeCount: 100,
       likes: [],
       medias: [],
-      organisation: new Organisation('1', 'organisationName', []),
+      organisation: new Organisation(),
       postShares: undefined,
       shareCount: 8,
       sharedPost: undefined,
@@ -97,14 +97,14 @@ export class PostService {
   }
 
   getUserRelatedPost(username: string) {
-    return this.getRelatedPost(username);
+    return this.fakeGetRelatedPost(username);
   }
 
   getRelatedEventPost(event: Event): Post[] {
-    return this.getRelatedPost('as');
+    return this.fakeGetRelatedPost('as');
   }
 
   getRelatedUserPost(user: User) {
-    return this.getRelatedPost('1');
+    return this.fakeGetRelatedPost('1');
   }
 }

@@ -16,9 +16,6 @@ export class Organisation {
   posts: Post[];
 
 
-  constructor(id: string, name: string, members: OrganisationMembership[]) {
-    this.id = id;
-    this.name = name;
-    this.members = members;
+  constructor() {
   }
 }

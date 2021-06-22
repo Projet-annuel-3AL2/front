@@ -107,12 +107,7 @@ export class OrganisationService {
       endDate: new Date(Date.now() + 1),
       latitude: 49.929118,
       longitude: 1.076918,
-      organisation: new Organisation('1', 'OrganisationName', [
-        new OrganisationMembership(this.getUser("1")),
-        new OrganisationMembership(this.getUser("1")),
-        new OrganisationMembership(this.getUser("1")),
-        new OrganisationMembership(this.getUser("1"))
-      ]),
+      organisation: new Organisation(),
       participantsLimit: 15,
       picture: undefined,
       participants: this.getParticipants('1')
