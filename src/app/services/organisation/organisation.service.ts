@@ -43,15 +43,9 @@ export class OrganisationService {
     return this.http.get<Organisation[]>(`${environment.baseUrl}/suggestion-organisation`);
   }
 
-  deleteOrganisation(organisationName: string){
-    this.http.delete(`${environment.baseUrl}/organisation/${organisationName}`, {withCredentials: true}).subscribe({
-        error: err => {
-          if (!environment.production){
-            console.log(err);
-          }
-        }
-      }
-    )
+  // TODO: A faire coté api
+  getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
   }
 
   putOrganisation(originalName: string, organisation:Organisation){
@@ -65,6 +59,16 @@ export class OrganisationService {
     )
   }
 
+  deleteOrganisation(organisationName: string){
+    this.http.delete(`${environment.baseUrl}/organisation/${organisationName}`, {withCredentials: true}).subscribe({
+        error: err => {
+          if (!environment.production){
+            console.log(err);
+          }
+        }
+      }
+    )
+  }
 
 
 
@@ -75,10 +79,8 @@ export class OrganisationService {
 
 
 
-
-
-  getOrganisation(): Organisation {
-    let organisation: Organisation = new Organisation('a', 'b', undefined);
+  fakeGetOrganisation(): Organisation {
+    let organisation: Organisation = new Organisation();
     organisation.id = '1';
     organisation.events = this.getEvents();
     organisation.name = 'OrganisationDeBilly';
@@ -107,7 +109,7 @@ export class OrganisationService {
       endDate: new Date(Date.now() + 1),
       latitude: 49.929118,
       longitude: 1.076918,
-      organisation: new Organisation(),
+      organisation: this.getFakeOrgaMini(),
       participantsLimit: 15,
       picture: undefined,
       participants: this.getParticipants('1')
@@ -227,7 +229,7 @@ export class OrganisationService {
       likeCount: 100,
       likes: [],
       medias: [],
-      organisation: new Organisation('1', 'organisationName', []),
+      organisation: this.getFakeOrgaMini(),
       postShares: undefined,
       shareCount: 8,
       sharedPost: undefined,
@@ -238,9 +240,19 @@ export class OrganisationService {
 
   getListOrganisation() {
     return [
-      this.getOrganisation(),
-      this.getOrganisation(),
-      this.getOrganisation()
+      this.fakeGetOrganisation(),
+      this.fakeGetOrganisation(),
+      this.fakeGetOrganisation()
     ];
+  }
+
+  private getFakeOrgaMini() {
+    let organisation: Organisation = new Organisation();
+    organisation.id = '1';
+    organisation.name = 'OrganisationDeBilly';
+    organisation.owner = this.getUser('1');
+    organisation.bannerPicture = undefined;
+
+    return organisation;
   }
 }

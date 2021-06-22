@@ -6,6 +6,7 @@ import {Organisation} from "../../shared/models/organisation.model";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {Certification} from "../../shared/models/certification.model";
 
 @Injectable({
   providedIn: 'root'
@@ -80,14 +81,14 @@ export class PostService {
       commentCount: 10,
       comments: [],
       createdAt: undefined,
-      creator: new User(),
+      creator: this.getUser("1"),
       event: new Event(),
       group: undefined,
       id: "1",
       likeCount: 100,
       likes: [],
       medias: [],
-      organisation: new Organisation(),
+      organisation: this.getFakeOrgaMini(),
       postShares: undefined,
       shareCount: 8,
       sharedPost: undefined,
@@ -106,5 +107,30 @@ export class PostService {
 
   getRelatedUserPost(user: User) {
     return this.fakeGetRelatedPost('1');
+  }
+  private getFakeOrgaMini() {
+    let organisation: Organisation = new Organisation();
+    organisation.id = '1';
+    organisation.name = 'OrganisationDeBilly';
+    organisation.owner = this.getUser('1');
+    organisation.bannerPicture = undefined;
+
+    return organisation;
+  }
+
+  getUser(id: string) {
+    const user: User = {
+      bannerPicture: undefined,
+      certification: new Certification(),
+      createdEvents: [],
+      createdPosts: [],
+      firstname: "firstName",
+      id: "1",
+      lastname: "lastname",
+      likedPosts: [],
+      profilePicture: undefined,
+      username: "Username"
+    }
+    return user;
   }
 }

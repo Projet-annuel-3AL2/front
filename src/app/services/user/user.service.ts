@@ -73,7 +73,7 @@ export class UserService {
       endDate: new Date(Date.now() + 1),
       latitude: 49.929118,
       longitude: 1.076918,
-      organisation: new Organisation(),
+      organisation: this.fakeGetOrganisation(),
       participantsLimit: 15,
       picture: undefined,
       participants: []
@@ -90,5 +90,16 @@ export class UserService {
       this.getEvent("4")
     ]
     return events;
+  }
+
+  fakeGetOrganisation(): Organisation {
+    let organisation: Organisation = new Organisation();
+    organisation.id = '1';
+    organisation.name = 'OrganisationDeBilly';
+    organisation.owner = this.getUser('1');
+    organisation.bannerPicture = undefined;
+
+
+    return organisation;
   }
 }

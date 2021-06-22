@@ -99,6 +99,12 @@ export class EventService {
     return this.getAllEvent();
   }
 
+
+
+
+
+
+
   getEvent(id: String) {
     const event: Event = {
       id: "1",
@@ -116,12 +122,7 @@ export class EventService {
       endDate: new Date(Date.now() + 1),
       latitude: 49.929118,
       longitude: 1.076918,
-      organisation: new Organisation('1', 'OrganisationName', [
-        new OrganisationMembership(this.userService.getUser("1")),
-        new OrganisationMembership(this.userService.getUser("1")),
-        new OrganisationMembership(this.userService.getUser("1")),
-        new OrganisationMembership(this.userService.getUser("1"))
-      ]),
+      organisation: this.getFakeOrgaMini(),
       participantsLimit: 15,
       picture: undefined,
       participants: this.getParticipants('1')
@@ -179,5 +180,15 @@ export class EventService {
       username: "username"
     }
     return user;
+  }
+  private getFakeOrgaMini() {
+    let organisation: Organisation = new Organisation();
+    organisation.id = '1';
+    organisation.events = this.getEvents();
+    organisation.name = 'OrganisationDeBilly';
+    organisation.owner = this.getUser('1');
+    organisation.bannerPicture = undefined;
+
+    return organisation;
   }
 }
