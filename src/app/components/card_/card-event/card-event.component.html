@@ -24,6 +24,7 @@
       <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
     </div>
     <div class="button-join">
-      <button mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" >Rejoindre</button>
+      <button mat-raised-button class="ml-auto button-join-event" *ngIf="canJoin(event.id)" (click)="this.joinEvent(event.id)" >Rejoindre</button>
+      <button mat-raised-button class="ml-auto button-join-event" *ngIf="!canJoin(event.id)" (click)="this.leaveEvent(event.id)">Quitter</button>
     </div>
 </mat-card>

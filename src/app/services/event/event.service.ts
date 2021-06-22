@@ -41,11 +41,6 @@ export class EventService {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
 
-  getNotEndEvent(): Observable<Event[]> {
-    return this.getAllEvent();
-    // return this.http.get<Event[]>(`${environment.baseUrl}/event_/notEndEvent`);
-  }
-
   getEventById(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`);
   }
@@ -94,9 +89,20 @@ export class EventService {
     })
   }
 
+  // TODO: Pas implémenter dans l'API
+  getEventMembers(eventId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/event/getMembers/${eventId}`, {headers: {"Access-Control-Allow-Origin": "*"}})
+  }
+
   //TODO : getEventWithFilter()
   getEventWithFilter(): Observable<Event[]>{
     return this.getAllEvent();
+  }
+
+
+  getNotEndEvent(): Observable<Event[]> {
+    return this.getAllEvent();
+    // return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
   }
 
 
@@ -165,7 +171,6 @@ export class EventService {
     ]
     return users;
   }
-
   getUser(id: string) {
     const user: User = {
       bannerPicture: undefined,
@@ -181,6 +186,7 @@ export class EventService {
     }
     return user;
   }
+
   private getFakeOrgaMini() {
     let organisation: Organisation = new Organisation();
     organisation.id = '1';
