@@ -3,6 +3,7 @@ import {User} from "../../../shared/models/user.model";
 import {UserService} from "../../../services/user/user.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Organisation} from "../../../shared/models/organisation.model";
+import {OrganisationService} from "../../../services/organisation/organisation.service";
 
 @Component({
   selector: 'app-create-organisation',
@@ -16,6 +17,7 @@ export class CreateOrganisationComponent implements OnInit {
   formData: FormGroup;
 
   constructor(private userService: UserService,
+              private organisationService: OrganisationService,
               // private authService: AuthService
   ) { }
 
@@ -54,5 +56,6 @@ export class CreateOrganisationComponent implements OnInit {
     newOrganisation.profilePicture = data.profilPicture;
     newOrganisation.bannerPicture = data.bannerPicture;
     console.log(newOrganisation);
+    // this.organisationService.postOrganisation(newOrganisation);
   }
 }

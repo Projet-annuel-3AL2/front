@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../shared/models/event.model";
 import * as L from 'leaflet';
 import {LeafletMouseEvent} from "leaflet";
+import {Organisation} from "../../../shared/models/organisation.model";
+import {OrganisationService} from "../../../services/organisation/organisation.service";
 @Component({
   selector: 'app-event-infos',
   templateUrl: './event-infos.component.html',
@@ -10,12 +12,16 @@ import {LeafletMouseEvent} from "leaflet";
 export class EventInfosComponent implements OnInit {
 
   @Input('event') event : Event = new Event();
+  organisation: Organisation;
 
-  constructor() {
+  constructor(private organisationService: OrganisationService) {
 
   }
 
   ngOnInit(): void {
+    this.organisation = this.organisationService.fakeGetOrganisation();
+    console.log(this.organisation);
+    this.getOrganisationMembers();
   }
 
 
@@ -30,4 +36,7 @@ export class EventInfosComponent implements OnInit {
    //     accessToken: 'your.mapbox.access.token'
    //   }).addTo(map);
   // }
+  private getOrganisationMembers() {
+
+  }
 }

@@ -3,7 +3,8 @@ import {Category} from "./category.model";
 export class RechercheEventModel {
   longitude: number;
   latitude: number;
-  dateStart: Date;
-  dateEnd: Date;
+  startDate: Date;
+  endDate: Date;
   category: Category;
+  range: number;
 }

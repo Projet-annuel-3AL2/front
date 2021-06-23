@@ -36,8 +36,8 @@
       <div class="m-3">
         <div class="px-4">
           <mat-list>
-            <h2>Organisateur</h2>
-            <mat-List-item *ngFor="let organisateur of event.organisation.members">
+            <h2>Organisateurs</h2>
+            <mat-List-item *ngFor="let organisateur of organisation.members">
               <app-user-card [user]="organisateur.user"></app-user-card>
             </mat-List-item>
           </mat-list>
