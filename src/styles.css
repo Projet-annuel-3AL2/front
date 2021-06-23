@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@ctrl/ngx-emoji-mart/picker.css';
 
 html, body {
   height: 100%;
@@ -21,4 +22,8 @@ button.mat-raised-button {
 
 button.mat-flat-button {
   border-radius: 166px 166px 166px 166px;
+}
+
+.no-scroll{
+  overflow: hidden;
 }
