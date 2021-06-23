@@ -60,14 +60,6 @@ export class PageEventComponent implements OnInit {
   }
 
 
-  joinEvent(id: string) {
-    this._eventService.postAddParticipant(this.user.id,id);
-  }
-
-  leaveEvent(id: string) {
-    this._eventService.deleteParticipantEvent(id,this.user.id);
-  }
-
   private getEvents() {
     this._eventService.getEventById(this.eventId).subscribe({
       next: data => {
@@ -82,10 +74,19 @@ export class PageEventComponent implements OnInit {
   }
 
   // TODO: J'ai pas la logique pour un truc propre -> Vérifier que this.user n'est pas dans UserList
+
   canJoin(eventId: string) {
-    return this._eventService.getEventMembers(eventId).subscribe(userList => {
-      return false;
-    })
+    // return this._eventService.getEventMembers(eventId).subscribe(userList => {
+    //   return false;
+    // })
+    return true;
+  }
+  joinEvent(id: string) {
+    // this._eventService.postAddParticipant(this.user.id,id);
+  }
+
+  leaveEvent(id: string) {
+    // this._eventService.deleteParticipantEvent(id,this.user.id);
   }
 
 }

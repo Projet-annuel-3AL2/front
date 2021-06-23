@@ -23,7 +23,7 @@
             <div class="user-card-empty"></div>
             <div class="user-card-button-add">
                 <button *ngIf="canAdd(user.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.askFriend(user.username)" ><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-                <button *ngIf="!canAdd(user.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.dellFriend(user.username)"> Enlever</button>
+                <button *ngIf="!canAdd(user.id)" mat-raised-button class="ml-auto button-join-event" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)"> Enlever</button>
             </div>
             <div class="user-card-menu">
               <div  class="dropdown" dropdown>

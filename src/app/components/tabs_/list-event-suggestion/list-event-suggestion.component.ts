@@ -16,7 +16,7 @@ export class ListEventSuggestionComponent implements OnInit {
   constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
-    this.event$ = this.eventService.getEvents();
+    this.event$ = this.eventService.fakeGetEvents();
     // this.getSuggestionEvent();
   }
 

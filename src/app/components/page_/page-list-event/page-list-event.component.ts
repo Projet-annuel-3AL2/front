@@ -23,7 +23,7 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
               ) {}
 
   ngOnInit(): void {
-    this.events$ = this.eventService.getEvents();
+    this.events$ = this.eventService.fakeGetEvents();
     this.user = this.userService.fakeGetUser('a')
     //this.getSelectionEvents();
     // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{

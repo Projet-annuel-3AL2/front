@@ -136,7 +136,7 @@ export class EventService {
     return event;
   }
 
-  getEvents() {
+  fakeGetEvents() {
     let events = [
       this.fakeGetEvent("1"),
       this.fakeGetEvent("2"),

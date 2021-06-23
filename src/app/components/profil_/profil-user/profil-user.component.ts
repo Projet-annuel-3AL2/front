@@ -34,7 +34,7 @@ export class ProfilUserComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.fakeGetUser('a');
     this.listPost$ = this.postService.fakeGetRelatedPost('a');
-    this.listEvent$ = this.eventService.getEvents();
+    this.listEvent$ = this.eventService.fakeGetEvents();
     this.listUser$ = this.userService.fakeGetParticipants('a');
     // const username = this.route.snapshot.params['username']
     // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
@@ -77,10 +77,10 @@ export class ProfilUserComponent implements OnInit {
     return false;
   }
   dellFriend(username: string) {
-    this.friendshipService.removeFriendship(username);
+    // this.friendshipService.removeFriendship(username);
   }
 
   askFriend(username: string) {
-    this.friendshipService.postFriendship(username);
+    // this.friendshipService.postFriendship(username);
   }
 }

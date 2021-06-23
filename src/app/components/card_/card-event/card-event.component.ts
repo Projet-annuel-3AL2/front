@@ -34,18 +34,19 @@ export class CardEventComponent implements OnInit {
   }
 
   joinEvent(id: string) {
-      this.eventService.postAddParticipant(this.user.id, id);
+      // this.eventService.postAddParticipant(this.user.id, id);
   }
 
   leaveEvent(id: string) {
-    this.eventService.deleteParticipantEvent(id, this.user.id);
+    // this.eventService.deleteParticipantEvent(id, this.user.id);
   }
 
   // TODO: J'ai pas la logique pour un truc propre -> Vérifier que this.user n'est pas dans UserList
   canJoin(eventId: string) {
-    return this.eventService.getEventMembers(eventId).subscribe(userList => {
-      return false;
-    })
+    // return this.eventService.getEventMembers(eventId).subscribe(userList => {
+    //   return false;
+    // })
+    return true;
   }
 
 }

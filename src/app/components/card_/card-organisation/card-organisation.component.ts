@@ -16,7 +16,7 @@ export class CardOrganisationComponent implements OnInit {
 
   // TODO : Implémenter la fonctionnalité de follow
   canFollow() {
-    return false;
+    return true;
   }
 
   followOrganisation(name: string) {
