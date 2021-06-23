@@ -41,6 +41,7 @@ export class CreatePostComponent implements OnInit {
   closePopup() {
     this.text = "";
     this.showPopup = false;
+    this.showEmojiPicker = false;
     document.querySelector("body").classList.remove("no-scroll");
   }
 }

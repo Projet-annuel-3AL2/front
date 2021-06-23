@@ -52,7 +52,7 @@
 .emoji-picker{
   z-index: 11;
   top: 50%;
-  left: 50%;
+  left: 28%;
   position: fixed;
   transform: translate(-50%,-50%);
 }
