@@ -52,5 +52,6 @@ export class CreatePostComponent implements OnInit {
     post.text = this.text;
     this.postService.createPost(post)
       .subscribe(console.log);
+    this.closePopup();
   }
 }
