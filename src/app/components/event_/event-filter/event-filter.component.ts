@@ -38,6 +38,8 @@ export class EventFilterComponent implements OnInit {
     this.listCategories$ = this.categoryService.fakeGetAllCategories();
 
     this.isLocated = false;
+    this.initializeFormGroup();
+
     // this.getAllCategories()
   }
 
@@ -73,8 +75,9 @@ export class EventFilterComponent implements OnInit {
     rechercheEvent.latitude = data.latitude;
     rechercheEvent.longitude = data.longitude;
     rechercheEvent.category = data.category;
-    rechercheEvent.dateEnd = data.dateEnd;
-    rechercheEvent.dateStart = data.dateStart;
+    rechercheEvent.endDate = data.endDate;
+    rechercheEvent.startDate = data.startDate;
+    rechercheEvent.range = data.range;
     console.log(rechercheEvent);
     // this.getEventWithRecherche(rechercheEvent);
   }
@@ -83,5 +86,16 @@ export class EventFilterComponent implements OnInit {
      this.eventService.getEventWithRecherche(rechercheEvent).subscribe(events => {
        this.listEventRecherche = events;
      });
+  }
+
+  private initializeFormGroup() {
+    this.formData = new FormGroup( {
+      latitude: new FormControl(),
+      longitude: new FormControl(),
+      category: new FormControl(),
+      endDate: new FormControl(),
+      startDate: new FormControl(),
+      range: new FormControl()
+    })
   }
 }

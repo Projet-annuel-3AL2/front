@@ -89,4 +89,8 @@ export class PageEventComponent implements OnInit {
     // this._eventService.deleteParticipantEvent(id,this.user.id);
   }
 
+  isOwner() {
+    return true;
+    // return this.event.creator.id == this.user.id;
+  }
 }

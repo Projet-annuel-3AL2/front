@@ -1,6 +1,9 @@
 <div class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
+    <div class="page-vent-button-owner" *ngIf="isOwner()">
+      <app-update-event [event]="event"></app-update-event>
+    </div>
   </div>
   <div class="col-md-6 my-3">
     <div class="event-scroll">

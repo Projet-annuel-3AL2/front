@@ -109,3 +109,14 @@
   background-color: #00643C;
 }
 
+.dropdown-toggle::after {
+  content: initial
+}
+
+.dropdown-toggle {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+}
+
+
