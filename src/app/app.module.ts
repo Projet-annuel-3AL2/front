@@ -35,6 +35,7 @@ import {ConversationsListComponent} from "./components/conversations/conversatio
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 import {CreatePostComponent} from "./components/create-post/create-post.component";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {PostListComponent} from "./components/post-list/post-list.component";
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     ConversationCardComponent,
     ConversationsListComponent,
     EventSuggestionListComponent,
+    PostListComponent,
   ],
   imports: [
     BrowserModule,
