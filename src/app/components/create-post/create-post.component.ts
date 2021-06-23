@@ -3,6 +3,8 @@ import {faTimes, faImage, faSmile, faCalendarAlt, faUserFriends} from '@fortawes
 import {User} from "../../shared/models/user.model";
 import {AuthService} from "../../services/auth/auth.service";
 import {UserService} from "../../services/user/user.service";
+import {PostService} from "../../services/post/post.service";
+import {Post} from "../../shared/models/post.model";
 
 @Component({
   selector: 'app-create-post',
@@ -20,7 +22,7 @@ export class CreatePostComponent implements OnInit {
   user: User;
   text: string;
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService, private userService: UserService, private postService: PostService) { }
 
   ngOnInit(): void {
     this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
@@ -43,5 +45,12 @@ export class CreatePostComponent implements OnInit {
     this.showPopup = false;
     this.showEmojiPicker = false;
     document.querySelector("body").classList.remove("no-scroll");
+  }
+
+  sendPost() {
+    let post: Post= new Post();
+    post.text = this.text;
+    this.postService.createPost(post)
+      .subscribe(console.log);
   }
 }
