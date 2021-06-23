@@ -38,6 +38,8 @@ import {CardOrganisationComponent} from "./components/card_/card-organisation/ca
 import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
+import {UpdateEventComponent} from "./components/update_/update-event/update-event.component";
+import {UpdateOrganisationComponent} from "./components/update_/update-organisation/update-organisation.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import {A11yModule} from "@angular/cdk/a11y";
     ListOrganisationSuggestionComponent,
     CardOrganisationComponent,
     CreateEventComponent,
-    CreateOrganisationComponent
+    CreateOrganisationComponent,
+    UpdateEventComponent,
+    UpdateOrganisationComponent
   ],
   imports: [
     BrowserModule,
