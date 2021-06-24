@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   faSearch = faSearch;
 
   constructor(private _activatedRoute:ActivatedRoute,
-              private _authService: AuthService,
+              public _authService: AuthService,
               private _router:Router) {
   }
 
@@ -24,6 +24,6 @@ export class NavbarComponent implements OnInit {
   }
 
   public onDisconnect() {
-    this.authService.logout().subscribe(() => this.router.navigate(['../login']));
+    this._authService.logout().subscribe(() => this._router.navigate(['../login']));
   }
 }

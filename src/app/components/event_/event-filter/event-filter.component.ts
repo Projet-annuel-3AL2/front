@@ -4,7 +4,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {EventDialogMapsComponent} from "../event-dialog-maps/event-dialog-maps.component";
 import {Event} from "../../../shared/models/event.model";
 import {EventService} from "../../../services/event/event.service";
-import {environment} from "../../../../environments/environment";
 import {CategoryService} from "../../../services/category/category.service";
 import {Category} from "../../../shared/models/category.model";
 import {RechercheEventModel} from "../../../shared/models/rechercheEvent.model";
@@ -30,12 +29,12 @@ export class EventFilterComponent implements OnInit {
   longitude: number;
   latitude: number;
   formData: FormGroup;
+
   constructor(public dialog: MatDialog,
-              private eventService: EventService,
-              private categoryService: CategoryService) { }
+              private _eventService: EventService,
+              private _categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.listCategories$ = this.categoryService.fakeGetAllCategories();
 
     this.isLocated = false;
     this.initializeFormGroup();
@@ -65,8 +64,19 @@ export class EventFilterComponent implements OnInit {
   }
 
   private getAllCategories() {
-    this.categoryService.getAllCategory().subscribe(data => {
+    this._categoryService.getAllCategory().subscribe(data => {
       this.listCategories$ = data;
+    })
+  }
+
+  private initializeFormGroup() {
+    this.formData = new FormGroup( {
+      latitude: new FormControl(),
+      longitude: new FormControl(),
+      category: new FormControl(),
+      endDate: new FormControl(),
+      startDate: new FormControl(),
+      range: new FormControl()
     })
   }
 
@@ -82,20 +92,10 @@ export class EventFilterComponent implements OnInit {
     // this.getEventWithRecherche(rechercheEvent);
   }
 
+  // TODO : Revoir la fonctionnalité du filter pour envoyer le résultat de la recherche dans une un autre component
   private getEventWithRecherche(rechercheEvent: RechercheEventModel) {
-     this.eventService.getEventWithRecherche(rechercheEvent).subscribe(events => {
-       this.listEventRecherche = events;
-     });
-  }
-
-  private initializeFormGroup() {
-    this.formData = new FormGroup( {
-      latitude: new FormControl(),
-      longitude: new FormControl(),
-      category: new FormControl(),
-      endDate: new FormControl(),
-      startDate: new FormControl(),
-      range: new FormControl()
-    })
+    this._eventService.getEventWithRecherche(rechercheEvent).subscribe(events => {
+      this.listEventRecherche = events;
+    });
   }
 }

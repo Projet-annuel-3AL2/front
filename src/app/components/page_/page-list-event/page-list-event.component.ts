@@ -5,6 +5,8 @@ import {EventFilterComponent} from "../../event_/event-filter/event-filter.compo
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
+import {AuthService} from "../../../services/auth/auth.service";
+
 @Component({
   selector: 'app-page-list-event',
   templateUrl: './page-list-event.component.html',
@@ -17,22 +19,21 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
   user: User;
   @ViewChild(EventFilterComponent) eventFilterComponent;
 
-  constructor(private eventService: EventService,
-              private userService: UserService,
-              // private authService: AuthService
+  constructor(private _eventService: EventService,
+              private _userService: UserService,
+              private _authService: AuthService
               ) {}
 
   ngOnInit(): void {
-    this.events$ = this.eventService.fakeGetEvents();
-    this.user = this.userService.fakeGetUser('a')
-    //this.getSelectionEvents();
-    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-    //   this.user=user;
-    // });
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user=user;
+    });
+    // TODO: en lien avec event-filter, faut réfléchir a la logique derriere
+    // this.getNotEndEvents();
   }
 
-  private getSelectionEvents() {
-    this.eventService.getNotEndEvent().subscribe({
+  private getNotEndEvents() {
+    this._eventService.getNotEndEvent().subscribe({
       next: data => {
         this.events$ = data;
       },
@@ -46,12 +47,5 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit()  {
     this.eventsFilter$ = this.eventFilterComponent.listFilterEvent$;
-  }
-
-  canCreateEvent() {
-    if (this.user != undefined){
-      return this.user.certification !== undefined;
-    }
-    return false;
   }
 }

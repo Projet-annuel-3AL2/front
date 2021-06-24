@@ -12,7 +12,7 @@
         <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
       </a>
     </div>
-    <div *ngIf="authService.isAuthenticated()">
+    <div *ngIf="_authService.isAuthenticated()">
       <a class="m-4" href="#" matRipple>
         <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
       </a>
@@ -29,11 +29,11 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!authService.isAuthenticated()" class="auth-buttons">
+  <div *ngIf="!_authService.isAuthenticated()" class="auth-buttons">
     <button class="m-2" mat-flat-button routerLink="/login">Connexion</button>
     <button class="m-2 register-button" mat-raised-button routerLink="/register">Inscription</button>
   </div>
-  <div *ngIf="authService.isAuthenticated()">
+  <div *ngIf="_authService.isAuthenticated()">
     <fa-icon [icon]="faBell" size="2x"></fa-icon>
     <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="m-2" mat-raised-button>
       <fa-icon [icon]="faUserFriends"></fa-icon>

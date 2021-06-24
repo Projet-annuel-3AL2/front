@@ -8,7 +8,7 @@ import {Event} from '../../../shared/models/event.model';
   styleUrls: ['./event-list-display.component.css']
 })
 export class EventListDisplayComponent implements OnInit {
-  @Input("events") events$: Event[] = [];
+  @Input("events") events: Event[] = [];
 
   constructor() { }
 
