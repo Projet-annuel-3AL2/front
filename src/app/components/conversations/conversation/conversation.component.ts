@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {faAngleDown, faAngleUp, faPaperPlane, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Conversation} from "../../../shared/models/conversation.model";
 import {AuthService} from "../../../services/auth/auth.service";
@@ -6,14 +6,14 @@ import {ConversationBoxService} from "../../../services/conversation-box/convers
 import {User} from "../../../shared/models/user.model";
 import {ConversationService} from "../../../services/conversation/conversation.service";
 import {Message} from "../../../shared/models/message.model";
-import {timer} from "rxjs";
+import {Subscription, timer} from "rxjs";
 
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.css']
 })
-export class ConversationComponent implements OnInit, AfterViewInit {
+export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('scroll', {static: false}) scrollFrame: ElementRef;
   @Input()
   conversation: Conversation;
@@ -25,8 +25,13 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   user: User;
   private isNearBottom = true;
   private scroll: any;
+  private timeSubscription: Subscription;
 
   constructor(private authService: AuthService, public conversationBoxService: ConversationBoxService, private conversationService: ConversationService) {
+  }
+
+  ngOnDestroy(): void {
+    this.timeSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -39,7 +44,7 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.scroll = this.scrollFrame.nativeElement;
-    timer(0,3000)
+    this.timeSubscription = timer(0,3000)
       .subscribe(()=> this.updateConversation());
   }
 
