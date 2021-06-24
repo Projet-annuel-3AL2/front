@@ -13,17 +13,17 @@ import {AuthService} from "../../../services/auth/auth.service";
 export class CardEventComponent implements OnInit {
 
   @Input("event") event : Event = new Event()
-  user: User;
+  user$: User;
 
   constructor(
-    private userService: UserService,
-    private eventService: EventService,
-    private authService: AuthService
+    private _userService: UserService,
+    private _eventService: EventService,
+    private _authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-      this.user=user;
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user$=user;
     });
   }
 

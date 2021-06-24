@@ -57,6 +57,6 @@ export class CreateOrganisationComponent implements OnInit {
     newOrganisation.bannerPicture = data.bannerPicture;
     console.log(newOrganisation);
     // TODO : create-organisation onClickSubmit() pas activé
-    // this.organisationService.postOrganisation(newOrganisation);
+    // this._organisationService.postOrganisation(newOrganisation);
   }
 }

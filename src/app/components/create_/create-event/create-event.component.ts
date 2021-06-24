@@ -103,6 +103,6 @@ export class CreateEventComponent implements OnInit {
     newEvent.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(newEvent);
     // TODO : Create-Event on submit pas activé
-    // this.eventService.postEvent(newEvent);
+    // this._eventService.postEvent(newEvent);
   }
 }

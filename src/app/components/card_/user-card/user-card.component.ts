@@ -10,7 +10,7 @@ import {FriendshipService} from "../../../services/friendship/friendship.service
 export class UserCardComponent implements OnInit {
 
   @Input('user') user: User = new User()
-  constructor(private friendshipService: FriendshipService) { }
+  constructor(private _friendshipService: FriendshipService) { }
 
   ngOnInit(): void {
   }
@@ -21,10 +21,10 @@ export class UserCardComponent implements OnInit {
   }
 
   askFriend(username: string) {
-    // this.friendshipService.postFriendship(username);
+    // this._friendshipService.postFriendship(username);
   }
 
   dellFriend(username: string) {
-    // this.friendshipService.removeFriendship(username)
+    // this._friendshipService.removeFriendship(username)
   }
 }
