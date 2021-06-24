@@ -4,6 +4,7 @@ import {Organisation} from "../../../shared/models/organisation.model";
 import {User} from "../../../shared/models/user.model";
 import {UserService} from "../../../services/user/user.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-update-organisation',
@@ -15,22 +16,21 @@ export class UpdateOrganisationComponent implements OnInit {
   @Input('organisation') organisation: Organisation;
   showPopup: boolean;
   formData: FormGroup;
-  user: User;
+  user$: User;
   orgaOldName: string;
 
-  constructor(private userService: UserService,
-              // private authService: AuthService,
-              private organisationService: OrganisationService) { }
+  constructor(private _userService: UserService,
+              private _authService: AuthService,
+              private _organisationService: OrganisationService) { }
 
   ngOnInit(): void {
 
     this.orgaOldName = this.organisation.name;
-    this.user = this.userService.fakeGetUser('fakeData')
-    this.initialiseFormGroup();
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user$ =user;
+    });
 
-    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-    //   this.user=user;
-    // });
+    this.initialiseFormGroup();
   }
 
   openPopup() {
@@ -53,10 +53,11 @@ export class UpdateOrganisationComponent implements OnInit {
 
   onClickSubmit(data) {
     this.organisation.name = data.name;
-    this.organisation.owner = this.user;
+    this.organisation.owner = this.user$;
     this.organisation.profilePicture = data.profilPicture;
     this.organisation.bannerPicture = data.bannerPicture;
     console.log(this.organisation);
-    // this.organisationService.putOrganisation(this.orgaOldName, this.organisation);
+    // TODO: update-organisation pas activé
+    // this._organisationService.putOrganisation(this.orgaOldName, this.organisation);
   }
 }

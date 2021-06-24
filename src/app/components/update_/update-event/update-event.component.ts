@@ -8,6 +8,7 @@ import {Category} from "../../../shared/models/category.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../../../shared/models/event.model";
 import {EventService} from "../../../services/event/event.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-update-event',
@@ -24,23 +25,34 @@ export class UpdateEventComponent implements OnInit {
   showPopup: boolean;
   limitParticipant =  new FormControl(2, Validators.min(2));
 
-  constructor(private userService: UserService,
-              private categoryService: CategoryService,
-              private organisationService: OrganisationService,
-              private eventService: EventService,
-              // private authService: AuthService
+  constructor(private _userService: UserService,
+              private _categoryService: CategoryService,
+              private _organisationService: OrganisationService,
+              private _eventService: EventService,
+              private _authService: AuthService
               ) { }
 
   ngOnInit(): void {
-    this.user$ = this.userService.fakeGetUser('fakeData');
-    this.listCategory$ = this.categoryService.fakeGetAllCategories();
-    this.initialiseFormGroup();
-    this.listOrganisation$ = [this.organisationService.fakeGetOrganisation(), this.organisationService.fakeGetOrganisation()];
-    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-    //   this.user=user;
-    // });
+
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user$=user;
+    });
+    // TODO : getAllCategories && getListOrganisation pas activé
     // this.getAllCategories();
     // this.getListOrganisation();
+    this.initialiseFormGroup();
+  }
+
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe(categories => {
+      this.listCategory$ = categories
+    })
+  }
+
+  private getListOrganisation() {
+    this._organisationService.getAllOrgaWhereUserCanCreateEvent(this.user$.id).subscribe(organisations => {
+      this.listOrganisation$ = organisations
+    })
   }
 
   openPopup() {
@@ -69,18 +81,6 @@ export class UpdateEventComponent implements OnInit {
 
   }
 
-  private getAllCategories() {
-    this.categoryService.getAllCategory().subscribe(categories => {
-      this.listCategory$ = categories
-    })
-  }
-
-  private getListOrganisation() {
-    this.organisationService.getAllOrgaWhereUserCanCreateEvent(this.user$.id).subscribe(organisations => {
-      this.listOrganisation$ = organisations
-    })
-  }
-
   // TODO : J'ai peur qu'il y ait un problème sur le principe que this.event à des relation genre members et que ça cause des problèmes avec l'update
   onClickSubmit(data) {
     this.event.name = data.nameEvent;
@@ -95,6 +95,7 @@ export class UpdateEventComponent implements OnInit {
     this.event.picture = data.pictureFile;
     this.event.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(this.event);
-    // this.eventService.putEvent(this.event);
+    // TODO : Update-Event pas activé
+    // this._eventService.putEvent(this.event);
   }
 }
