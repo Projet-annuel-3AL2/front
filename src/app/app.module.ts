@@ -1,6 +1,5 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
 import {PostComponent} from './components/card_/post/post.component';
 import {RouterModule} from "@angular/router";
@@ -23,7 +22,6 @@ import {UserCardComponent} from "./components/card_/user-card/user-card.componen
 import {EventFilterComponent} from "./components/event_/event-filter/event-filter.component";
 import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CardEventComponent} from "./components/card_/card-event/card-event.component";
 import {EventListDisplayComponent} from "./components/event_/event-list-display/event-list-display.component";
 import {EventDialogMapsComponent} from "./components/event_/event-dialog-maps/event-dialog-maps.component";
@@ -32,7 +30,6 @@ import {ListPostComponent} from "./components/tabs_/list-post/list-post.componen
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
 import {ListUserComponent} from "./components/tabs_/list-user/list-user.component";
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
-import {HttpClientModule} from "@angular/common/http";
 import {ListOrganisationSuggestionComponent} from "./components/tabs_/list-organisation-suggestion/list-organisation-suggestion..component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
@@ -40,9 +37,6 @@ import {CreateOrganisationComponent} from "./components/create_/create-organisat
 import {A11yModule} from "@angular/cdk/a11y";
 import {UpdateEventComponent} from "./components/update_/update-event/update-event.component";
 import {UpdateOrganisationComponent} from "./components/update_/update-organisation/update-organisation.component";
-import {TimelineComponent} from "./components/timeline/timeline.component";
-import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
-import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
 import {LoginComponent} from "./components/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
@@ -59,7 +53,7 @@ import {ConversationBoxDirective} from "./directives/conversation-box/conversati
 import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
 import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
-import {CreatePostComponent} from "./components/create-post/create-post.component";
+import {CreatePostComponent} from "./components/create_/create-post/create-post.component";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
@@ -94,12 +88,11 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     CreateEventComponent,
     CreateOrganisationComponent,
     UpdateEventComponent,
-    UpdateOrganisationComponent
+    UpdateOrganisationComponent,
     ConversationBoxDirective,
     ConversationsBoxComponent,
     ConversationCardComponent,
-    ConversationsListComponent,
-    EventSuggestionListComponent,
+    ConversationsListComponent
   ],
   imports: [
     BrowserModule,
@@ -118,7 +111,7 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    A11yModule
+    A11yModule,
     AppRoutingModule,
     ReactiveFormsModule,
     TimeagoModule.forRoot(),
@@ -132,7 +125,7 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
       useClass: GlobalHttpInterceptor,
       multi: true
     }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
