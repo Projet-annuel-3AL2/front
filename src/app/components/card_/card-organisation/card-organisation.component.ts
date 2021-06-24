@@ -14,7 +14,7 @@ export class CardOrganisationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // TODO : Implémenter la fonctionnalité de follow
+  // TODO : Implémenter la fonctionnalité de follow une Organisation
   canFollow() {
     return true;
   }

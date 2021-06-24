@@ -3,6 +3,7 @@ import {Event} from "../../../shared/models/event.model";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-card-event',
@@ -16,15 +17,14 @@ export class CardEventComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private eventService: EventService
-    // private authService: AuthService
+    private eventService: EventService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.user = this.userService.fakeGetUser('fakeData');
-    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-    //   this.user=user;
-    // });
+    this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
+      this.user=user;
+    });
   }
 
 
@@ -33,10 +33,12 @@ export class CardEventComponent implements OnInit {
     return "6 boulevard Maréchal Foch, 76200 Dieppe"
   }
 
+  // TODO : JoinEvent()
   joinEvent(id: string) {
       // this.eventService.postAddParticipant(this.user.id, id);
   }
 
+  // TODO : leaveEvent()
   leaveEvent(id: string) {
     // this.eventService.deleteParticipantEvent(id, this.user.id);
   }
