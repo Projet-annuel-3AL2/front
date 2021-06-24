@@ -1,7 +1,9 @@
 <div class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
-    <app-update-organisation [organisation]="organisation$"></app-update-organisation>
+    <div *ngIf="isOwner()">
+      <app-update-organisation [organisation]="organisation$"></app-update-organisation>
+    </div>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">

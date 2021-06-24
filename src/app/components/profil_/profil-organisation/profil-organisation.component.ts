@@ -71,4 +71,9 @@ export class ProfilOrganisationComponent implements OnInit {
   unFollowOrganisation(name: string) {
 
   }
+
+  isOwner() {
+    return true;
+    // return this.organisation$.owner.id == this.user.id;
+  }
 }
