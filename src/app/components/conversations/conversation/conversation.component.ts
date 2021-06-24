@@ -44,11 +44,11 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.scroll = this.scrollFrame.nativeElement;
-    this.timeSubscription = timer(0,3000)
-      .subscribe(()=> this.updateConversation());
+    this.timeSubscription = timer(0, 3000)
+      .subscribe(() => this.updateConversation());
   }
 
-  updateConversation(){
+  updateConversation() {
     this.conversationService.getMessages(this.conversation.id)
       .subscribe(messages => {
         this.conversation.messages = messages;
@@ -82,7 +82,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     let message: Message = new Message();
     message.text = this.message;
     this.conversationService.sendMessage(this.conversation.id, message)
-      .subscribe(()=> this.updateConversation());
+      .subscribe(() => this.updateConversation());
     this.message = "";
   }
 

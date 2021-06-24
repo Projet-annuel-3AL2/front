@@ -30,6 +30,6 @@ mat-toolbar {
   pointer-events: none;
 }
 
-.search-bar{
+.search-bar {
   transform: translatex(-50%);
 }

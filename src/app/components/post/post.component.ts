@@ -27,24 +27,24 @@ export class PostComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updatePost();
-    this.timeSubscription = timer(0,3000)
-      .subscribe(()=> this.updatePost());
+    this.timeSubscription = timer(0, 3000)
+      .subscribe(() => this.updatePost());
   }
 
-  updatePost(): void{
+  updatePost(): void {
     this.postService.getPostLikes(this.post.id)
-      .subscribe(likes=> this.post.likes = likes);
+      .subscribe(likes => this.post.likes = likes);
     this.postService.isPostLiked(this.post.id)
-      .subscribe(isLiked=> this.post.isLiked = isLiked);
+      .subscribe(isLiked => this.post.isLiked = isLiked);
   }
 
   likePost() {
     this.postService.likePost(this.post.id)
-      .subscribe(()=>this.updatePost());
+      .subscribe(() => this.updatePost());
   }
 
-  dislikePost(){
+  dislikePost() {
     this.postService.dislikePost(this.post.id)
-      .subscribe(()=>this.updatePost());
+      .subscribe(() => this.updatePost());
   }
 }

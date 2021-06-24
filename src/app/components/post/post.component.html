@@ -40,11 +40,11 @@
     </div>
   </div>
   <div class="card-footer d-flex justify-content-between">
-    <div class="card-link text-decoration-none" (click)="likePost()" *ngIf="!post.isLiked">
+    <div (click)="likePost()" *ngIf="!post.isLiked" class="card-link text-decoration-none">
       <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
       {{post.likes?.length || 0}} Aimer
     </div>
-    <div class="card-link text-decoration-none" (click)="dislikePost()" *ngIf="post.isLiked">
+    <div (click)="dislikePost()" *ngIf="post.isLiked" class="card-link text-decoration-none">
       <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
       {{post.likes?.length || 0}} Ne plus aimer
     </div>
