@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {faTimes, faImage, faSmile, faCalendarAlt, faUserFriends} from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faCalendarAlt, faImage, faSmile, faTimes, faUserFriends} from '@fortawesome/free-solid-svg-icons';
 import {User} from "../../shared/models/user.model";
 import {AuthService} from "../../services/auth/auth.service";
 import {UserService} from "../../services/user/user.service";
@@ -12,7 +12,7 @@ import {Post} from "../../shared/models/post.model";
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent implements OnInit {
-  showPopup:boolean = false;
+  showPopup: boolean = false;
   showEmojiPicker: boolean = false;
   faTimes = faTimes;
   faImage = faImage;
@@ -22,11 +22,12 @@ export class CreatePostComponent implements OnInit {
   user: User;
   text: string;
 
-  constructor(private authService: AuthService, private userService: UserService, private postService: PostService) { }
+  constructor(private authService: AuthService, private userService: UserService, private postService: PostService) {
+  }
 
   ngOnInit(): void {
-    this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-      this.user=user;
+    this.userService.getById(this.authService.getCurrentUserId()).subscribe(user => {
+      this.user = user;
     });
   }
 
@@ -48,7 +49,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   sendPost() {
-    let post: Post= new Post();
+    let post: Post = new Post();
     post.text = this.text;
     this.postService.createPost(post)
       .subscribe(console.log);

@@ -35,6 +35,9 @@ import {ConversationsListComponent} from "./components/conversations/conversatio
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 import {CreatePostComponent} from "./components/create-post/create-post.component";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {PostListComponent} from "./components/post-list/post-list.component";
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     ConversationCardComponent,
     ConversationsListComponent,
     EventSuggestionListComponent,
+    PostListComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +75,9 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     ReactiveFormsModule,
     TimeagoModule.forRoot(),
     FormsModule,
-    PickerModule
+    PickerModule,
+    ScrollingModule,
+    ExperimentalScrollingModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,

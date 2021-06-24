@@ -30,7 +30,7 @@
     <p class="card-text">
       {{post.text}}
     </p>
-    <div *ngIf="!post.event" class="event-card">
+    <div *ngIf="post.event" class="event-card">
       <img alt="" class="rounded" height="300px"
            src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
            style="object-fit: none" width="100%">
@@ -40,14 +40,21 @@
     </div>
   </div>
   <div class="card-footer d-flex justify-content-between">
-    <a class="card-link text-decoration-none" href="#">
+    <div (click)="likePost()" *ngIf="!post.isLiked" class="card-link text-decoration-none">
       <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
-      {{post.likeCount || 0}} Aimer</a>
+      {{post.likes?.length || 0}} Aimer
+    </div>
+    <div (click)="dislikePost()" *ngIf="post.isLiked" class="card-link text-decoration-none">
+      <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
+      {{post.likes?.length || 0}} Ne plus aimer
+    </div>
     <a class="card-link text-decoration-none" href="#">
       <fa-icon [icon]="faComment" flip="horizontal"></fa-icon>
-      {{post.commentCount || 0}} Commenter</a>
+      {{post.commentCount || 0}} Commenter
+    </a>
     <a class="card-link text-decoration-none pull-right" href="#">
       <fa-icon [icon]="faShare" flip="horizontal"></fa-icon>
-      {{post.shareCount || 0}} Partager</a>
+      {{post.shareCount || 0}} Partager
+    </a>
   </div>
 </div>

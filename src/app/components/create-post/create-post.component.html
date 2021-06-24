@@ -1,27 +1,30 @@
-<div fxFlex fxLayout="column" class="create-post-popup rounded-3" *ngIf="showPopup">
+<div *ngIf="showPopup" class="create-post-popup rounded-3" fxFlex fxLayout="column">
   <div class="create-post-text m-2" fxFlex fxLayout="row">
     <div class="create-post-picture">
-      <img class="rounded-circle profile-picture" [src]="user.profilePicture || 'https://picsum.photos/50/50'" [alt]="user.username">
+      <img [alt]="user.username" [src]="user.profilePicture || 'https://picsum.photos/50/50'"
+           class="rounded-circle profile-picture">
     </div>
-    <div class="create-post-textarea mx-2" placeholder="Quoi de neuf ?" [textContent]="text"  ondragenter="return false;" ondragover="return false;" (input)="text=$event.target.textContent" spellcheck="true" contenteditable="true"></div>
-   </div>
+    <div (input)="text=$event.target.textContent" [textContent]="text" class="create-post-textarea mx-2" contenteditable="true"
+         ondragenter="return false;" ondragover="return false;" placeholder="Quoi de neuf ?"
+         spellcheck="true"></div>
+  </div>
   <hr class="my-0">
   <div class="create-post-options m-2" fxFlex fxLayout="row">
     <div fxFlex fxLayoutAlign="start center">
-      <fa-icon class="mx-1" [icon]="faImage" size="2x"></fa-icon>
-      <fa-icon class="mx-1" [icon]="faSmile" (click)="showEmojiPicker = !showEmojiPicker" size="2x"></fa-icon>
-      <fa-icon class="mx-1" [icon]="faCalendarAlt" size="2x"></fa-icon>
-      <fa-icon class="mx-1" [icon]="faUserFriends" size="2x"></fa-icon>
+      <fa-icon [icon]="faImage" class="mx-1" size="2x"></fa-icon>
+      <fa-icon (click)="showEmojiPicker = !showEmojiPicker" [icon]="faSmile" class="mx-1" size="2x"></fa-icon>
+      <fa-icon [icon]="faCalendarAlt" class="mx-1" size="2x"></fa-icon>
+      <fa-icon [icon]="faUserFriends" class="mx-1" size="2x"></fa-icon>
     </div>
     <div fxFlex fxLayoutAlign="end center">
-      <button mat-raised-button class="rounded-pill" (click)="sendPost()">Envoyer</button>
+      <button (click)="sendPost()" class="rounded-pill" mat-raised-button>Envoyer</button>
     </div>
   </div>
 </div>
-<emoji-mart class="emoji-picker" *ngIf="showEmojiPicker" (emojiSelect)="addEmoji($event)"></emoji-mart>
+<emoji-mart (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker" class="emoji-picker"></emoji-mart>
 
-<div class="popup-blur" (click)="closePopup()" *ngIf="showPopup">
+<div (click)="closePopup()" *ngIf="showPopup" class="popup-blur">
 </div>
 <div class="create-post-button">
-    <button mat-raised-button class="rounded-pill" (click)="openPopup()" [disabled]="showPopup">Créer un post</button>
+  <button (click)="openPopup()" [disabled]="showPopup" class="rounded-pill" mat-raised-button>Créer un post</button>
 </div>
