@@ -4,6 +4,7 @@ import {UserService} from "../../../services/user/user.service";
 import {FormControl, FormGroup} from "@angular/forms";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-create-organisation',
@@ -13,21 +14,20 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 export class CreateOrganisationComponent implements OnInit {
 
   showPopup: boolean = false;
-  user: User;
+  user$: User;
   formData: FormGroup;
 
-  constructor(private userService: UserService,
-              private organisationService: OrganisationService,
-              // private authService: AuthService
+  constructor(private _userService: UserService,
+              private _organisationService: OrganisationService,
+              private _authService: AuthService
   ) { }
 
   ngOnInit(): void {
 
-    this.user = this.userService.fakeGetUser('fakeData')
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user$=user;
+    });
     this.initialiseFormGroup();
-    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-    //   this.user=user;
-    // });
   }
 
 
@@ -52,10 +52,11 @@ export class CreateOrganisationComponent implements OnInit {
   onClickSubmit(data) {
     let newOrganisation: Organisation = new Organisation();
     newOrganisation.name = data.name;
-    newOrganisation.owner = this.user;
+    newOrganisation.owner = this.user$;
     newOrganisation.profilePicture = data.profilPicture;
     newOrganisation.bannerPicture = data.bannerPicture;
     console.log(newOrganisation);
+    // TODO : create-organisation onClickSubmit() pas activé
     // this.organisationService.postOrganisation(newOrganisation);
   }
 }

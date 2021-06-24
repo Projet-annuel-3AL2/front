@@ -9,6 +9,7 @@ import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Event} from "../../../shared/models/event.model";
 import {EventService} from "../../../services/event/event.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-create-event',
@@ -18,35 +19,32 @@ import {EventService} from "../../../services/event/event.service";
 export class CreateEventComponent implements OnInit {
 
   showPopup: boolean = false;
-  user: User;
+  user$: User;
   listOrganisation$: Organisation[];
+  listCategory$: Category[];
 
+  formData: FormGroup;
   hideRequiredControl = new FormControl(false);
   floatLabelControl = new FormControl('auto');
   limitParticipant =  new FormControl(2, Validators.min(2));
-  formData: FormGroup;
-
-  listCategory: Category[];
 
 
 
-  constructor(private userService: UserService,
-              // private authService: AuthService,
-              private categoryService: CategoryService,
-              private organisationService: OrganisationService,
-              private eventService: EventService
+  constructor(private _userService: UserService,
+              private _authService: AuthService,
+              private _categoryService: CategoryService,
+              private _organisationService: OrganisationService,
+              private _eventService: EventService
               ) {
   }
 
   ngOnInit(): void {
 
-    this.user = this.userService.fakeGetUser('fakeData');
-    this.listCategory = this.categoryService.fakeGetAllCategories();
     this.initialiseFormGroup();
-    this.listOrganisation$ = [this.organisationService.fakeGetOrganisation(), this.organisationService.fakeGetOrganisation()];
-    // this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-    //   this.user=user;
-    // });
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user$=user;
+    });
+    // TODO: Récupération via base pas activé
     // this.getAllCategories();
     // this.getListOrganisation();
   }
@@ -63,13 +61,13 @@ export class CreateEventComponent implements OnInit {
   }
 
   private getAllCategories() {
-    this.categoryService.getAllCategory().subscribe(categories => {
-      this.listCategory = categories
+    this._categoryService.getAllCategory().subscribe(categories => {
+      this.listCategory$ = categories
     })
   }
 
   private getListOrganisation() {
-    this.organisationService.getAllOrgaWhereUserCanCreateEvent(this.user.id).subscribe(organisations => {
+    this._organisationService.getAllOrgaWhereUserCanCreateEvent(this.user$.id).subscribe(organisations => {
       this.listOrganisation$ = organisations
     })
   }
@@ -100,10 +98,11 @@ export class CreateEventComponent implements OnInit {
     newEvent.longitude = data.longitudeEvent;
     newEvent.participantsLimit = data.participantsLimitEvent;
     newEvent.category = data.categoryEvent;
-    newEvent.creator = this.user;
+    newEvent.creator = this.user$;
     newEvent.picture = data.pictureFile;
     newEvent.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(newEvent);
+    // TODO : Create-Event on submit pas activé
     // this.eventService.postEvent(newEvent);
   }
 }

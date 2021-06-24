@@ -19,14 +19,16 @@ export class CreatePostComponent implements OnInit {
   faSmile = faSmile;
   faCalendarAlt = faCalendarAlt;
   faUserFriends = faUserFriends;
-  user: User;
+  user$: User;
   text: string;
 
-  constructor(private authService: AuthService, private userService: UserService, private postService: PostService) { }
+  constructor(private _authService: AuthService,
+              private _userService: UserService,
+              private _postService: PostService) { }
 
   ngOnInit(): void {
-    this.userService.getById(this.authService.getCurrentUserId()).subscribe(user=>{
-      this.user=user;
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.user$=user;
     });
   }
 
@@ -50,7 +52,7 @@ export class CreatePostComponent implements OnInit {
   sendPost() {
     let post: Post= new Post();
     post.text = this.text;
-    this.postService.createPost(post)
+    this._postService.createPost(post)
       .subscribe(console.log);
     this.closePopup();
   }
