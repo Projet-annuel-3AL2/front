@@ -53,88 +53,13 @@ export class PostService {
     })
   }
 
-  //TODO : getPostByUserId()
-  getPostByUsername(username: string): Observable<Post[]> {
-    return this.getAllPost();
+  //TODO : getPostByUserName() à implementer sur l'API
+  getPostWithUsername(username: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithUsername/${username}`);
   }
 
-  // TODO : getPostByEventId()
-  getPostByEventId(eventId: string): Observable<Post[]> {
-    return this.getAllPost();
-  }
-
-
-
-  fakeGetRelatedPost(id: string) {
-    let posts: Post[];
-
-    posts = [
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id),
-      this.getPost(id)
-    ]
-    return posts;
-  }
-
-  private getPost(id: string) {
-    const post: Post = {
-      commentCount: 10,
-      comments: [],
-      createdAt: undefined,
-      creator: this.getUser("1"),
-      event: new Event(),
-      group: undefined,
-      id: "1",
-      likeCount: 100,
-      likes: [],
-      medias: [],
-      organisation: this.getFakeOrgaMini(),
-      postShares: undefined,
-      shareCount: 8,
-      sharedPost: undefined,
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed placerat felis porta nulla auctor, elementum pellentesque sapien aliquam. Maecenas pulvinar dictum mauris, vel commod"
-    }
-    return post;
-  }
-
-  getUserRelatedPost(username: string) {
-    return this.fakeGetRelatedPost(username);
-  }
-
-  getRelatedEventPost(event: Event): Post[] {
-    return this.fakeGetRelatedPost('as');
-  }
-
-  getRelatedUserPost(user: User) {
-    return this.fakeGetRelatedPost('1');
-  }
-  private getFakeOrgaMini() {
-    let organisation: Organisation = new Organisation();
-    organisation.id = '1';
-    organisation.name = 'OrganisationDeBilly';
-    organisation.owner = this.getUser('1');
-    organisation.bannerPicture = undefined;
-
-    return organisation;
-  }
-
-  getUser(id: string) {
-    const user: User = {
-      bannerPicture: undefined,
-      certification: new Certification(),
-      createdEvents: [],
-      createdPosts: [],
-      firstname: "firstName",
-      id: "1",
-      lastname: "lastname",
-      likedPosts: [],
-      profilePicture: undefined,
-      username: "Username"
-    }
-    return user;
+  // TODO : getPostByEventId() à implementer sur L'API
+  getPostWithEventId(eventId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`);
   }
 }

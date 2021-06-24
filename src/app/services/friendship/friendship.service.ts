@@ -9,8 +9,8 @@ export class FriendshipService {
 
   constructor(private http: HttpClient) { }
 
-  postFriendship(username: string){
-    this.http.post(`${environment.baseUrl}/friendship/${username}`, null, {withCredentials: true}).subscribe({
+  postFriendship(username: string, us){
+    this.http.post(`${environment.baseUrl}/friendship/${username}`, null).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -20,7 +20,7 @@ export class FriendshipService {
   }
 
   rejectFriendship(username: string){
-    this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`, {withCredentials: true}).subscribe({
+    this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -30,7 +30,7 @@ export class FriendshipService {
   }
 
   removeFriendship(username: string){
-    this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`, {withCredentials: true}).subscribe({
+    this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);

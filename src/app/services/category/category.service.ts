@@ -11,14 +11,6 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  postCategory(category: Category){
-    this.http.post<Category>(`${environment.baseUrl}/category/`, JSON.stringify(category), {withCredentials: true}).subscribe({
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
-  }
-
   getAllCategory(): Observable<Category[]>{
     return this.http.get<Category[]>(`${environment.baseUrl}/category/`);
   }
@@ -32,6 +24,7 @@ export class CategoryService {
   }
 
 
+  // TODO : Les fonctions seront là seront pas plutôt coter admin ?
   deleteCategory(categoryId: string){
     this.http.delete(`${environment.baseUrl}/category/${categoryId}`, {withCredentials: true}).subscribe({
       error: error => {
@@ -43,6 +36,14 @@ export class CategoryService {
   }
 
 
+  postCategory(category: Category){
+    this.http.post<Category>(`${environment.baseUrl}/category/`, JSON.stringify(category), {withCredentials: true}).subscribe({
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
+  }
+
   putCategory(categoryName: string, category: Category){
     this.http.put<Category>(`${environment.baseUrl}/category/${categoryName}`, JSON.stringify(category), {withCredentials: true}).subscribe({
       error: error => {
@@ -51,11 +52,4 @@ export class CategoryService {
     })
   }
 
-  fakeGetAllCategories(): Category[]{
-    return [
-      new Category("1", "Nettoyage de plage"),
-      new Category("2", "Manifestation"),
-      new Category("3", "Collecte"),
-    ]
-  }
 }

@@ -46,22 +46,6 @@ export class EventService {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`);
   }
 
-  getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {
-      withCredentials: true
-    });
-  }
-
-  getEventWithUserLocationNotEnd(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd/${userLocationX}/${userLocationY}/${range}`, {
-      withCredentials: true
-    });
-  }
-
-  getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
-  }
-
   deleteEvent(eventId: string) {
     this.http.delete(`${environment.baseUrl}/event/${eventId}`, {withCredentials: true}).subscribe({
       error: error => {
@@ -92,12 +76,12 @@ export class EventService {
 
   // TODO: Pas implémenter dans l'API
   getEventMembers(eventId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/event/getMembers/${eventId}`, {headers: {"Access-Control-Allow-Origin": "*"}})
+    return this.http.get<User[]>(`${environment.baseUrl}/event/getMembers/${eventId}`);
   }
 
-  //TODO : getEventWithRecherche()
-  getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
+  // TODO: pas implémenter dans l'api
+  getEventRelatedToUser(userId: string): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventRelatedToUser/${userId}`);
   }
 
   // TODO : getNotEndEvent avec limit de 4 item max
@@ -107,92 +91,22 @@ export class EventService {
   }
 
 
-
-
-
-  fakeGetEvent(id: String) {
-    const event: Event = {
-      id: "1",
-      name: "Nettoyage de la plage de Diepe",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed placerat felis porta nulla auctor, " +
-        "elementum pellentesque sapien aliquam. Maecenas pulvinar dictum mauris, vel commodo elit ultricies vel. Sed " +
-        "interdum mollis sapien, vel dictum ligula consequat in. Nulla nibh enim, sollicitudin id mattis eget, aliquet " +
-        "non augue. Nunc eu malesuada erat, ac pulvinar odio. Quisque tempor venenatis vestibulum. Aenean magna lectus, " +
-        "vestibulum bibendum nunc id, blandit hendrerit nulla. Vivamus suscipit elementum arcu, nec vestibulum mauris euismod " +
-        "vel. Curabitur interdum, mi fermentum mattis lobortis, turpis est bibendum augue, at mattis lorem libero et lacus." +
-        " Sed consectetur condimentum turpis, in fermentum lacus porta nec. Ut luctus tincidunt mollis. ",
-      category: new Category('1','Nettoyage de plage'),
-      creator: new User(),
-      startDate: new Date(Date.now()),
-      endDate: new Date(Date.now() + 1),
-      latitude: 49.929118,
-      longitude: 1.076918,
-      organisation: this.getFakeOrgaMini(),
-      participantsLimit: 15,
-      picture: undefined,
-      participants: this.getParticipants('1')
-
-    }
-    return event;
+  //TODO : getEventWithRecherche() A implémenter voire refecto
+  getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
-
-  fakeGetEvents() {
-    let events = [
-      this.fakeGetEvent("1"),
-      this.fakeGetEvent("2"),
-      this.fakeGetEvent("3"),
-      this.fakeGetEvent("4")
-    ]
-    return events;
+  // TODO : Les fonctions sontimplémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
+  getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {
+      withCredentials: true
+    });
   }
-
-  getEventFilter() {
-    let events = [
-      this.fakeGetEvent("3"),
-      this.fakeGetEvent("4")
-    ]
-    return events;
+  getEventWithUserLocationNotEnd(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd/${userLocationX}/${userLocationY}/${range}`, {
+      withCredentials: true
+    });
   }
-  getParticipants(id: string) {
-    let users: User[];
-    users = [
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id),
-      this.getUser(id)
-    ]
-    return users;
-  }
-
-  getUser(id: string) {
-    const user: User = {
-      bannerPicture: undefined,
-      certification: undefined,
-      createdEvents: [],
-      createdPosts: [],
-      firstname: "firstName",
-      id: "1",
-      lastname: "lastname",
-      likedPosts: [],
-      profilePicture: undefined,
-      username: "username"
-    }
-    return user;
-  }
-
-  private getFakeOrgaMini() {
-    let organisation: Organisation = new Organisation();
-    organisation.id = '1';
-    organisation.name = 'OrganisationDeBilly';
-    organisation.owner = this.getUser('1');
-    organisation.bannerPicture = undefined;
-
-    return organisation;
+  getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
 }
