@@ -29,3 +29,7 @@ mat-toolbar {
   text-align: center;
   pointer-events: none;
 }
+
+.search-bar{
+  transform: translatex(-50%);
+}
