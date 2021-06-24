@@ -6,7 +6,7 @@ import {ConversationBoxService} from "../../../services/conversation-box/convers
 import {User} from "../../../shared/models/user.model";
 import {ConversationService} from "../../../services/conversation/conversation.service";
 import {Message} from "../../../shared/models/message.model";
-import {delay, repeat} from "rxjs/operators";
+import {timer} from "rxjs";
 
 @Component({
   selector: 'app-conversation',
@@ -39,8 +39,12 @@ export class ConversationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.scroll = this.scrollFrame.nativeElement;
+    timer(0,3000)
+      .subscribe(()=> this.updateConversation());
+  }
+
+  updateConversation(){
     this.conversationService.getMessages(this.conversation.id)
-      .pipe(delay(3000), repeat())
       .subscribe(messages => {
         this.conversation.messages = messages;
         this.isNearBottom = this.isUserNearBottom();
@@ -72,7 +76,8 @@ export class ConversationComponent implements OnInit, AfterViewInit {
   sendMessage() {
     let message: Message = new Message();
     message.text = this.message;
-    this.conversationService.sendMessage(this.conversation.id, message).subscribe();
+    this.conversationService.sendMessage(this.conversation.id, message)
+      .subscribe(()=> this.updateConversation());
     this.message = "";
   }
 

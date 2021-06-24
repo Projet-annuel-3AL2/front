@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../shared/models/post.model";
 import {faCheckCircle, faComment, faEllipsisH, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 import {PostService} from "../../services/post/post.service";
-import {delay, repeat} from "rxjs/operators";
+import {timer} from "rxjs";
 
 @Component({
   selector: 'post',
@@ -22,12 +22,8 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.updatePost();
-    this.postService.getPostLikes(this.post.id)
-      .pipe(delay(3000), repeat())
-      .subscribe(likes=> this.post.likes = likes);
-    this.postService.isPostLiked(this.post.id)
-      .pipe(delay(3000), repeat())
-      .subscribe(isLiked=> this.post.isLiked = isLiked);
+    timer(0,3000)
+      .subscribe(()=> this.updatePost());
   }
 
   updatePost(): void{
