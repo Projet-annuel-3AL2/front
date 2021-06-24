@@ -1,7 +1,5 @@
 <div class="row m-0">
   <div class="col-md-4">
-    <app-create-event *ngIf="canCreateEvent()"></app-create-event>
-    <app-create-organisation *ngIf="canCreateOrganisation()"></app-create-organisation>
   </div>
   <div class="col-md-4 " >
     <app-list-post [listPost]="listPost$"></app-list-post>

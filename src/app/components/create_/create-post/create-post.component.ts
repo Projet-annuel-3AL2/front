@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {faTimes, faImage, faSmile, faCalendarAlt, faUserFriends} from '@fortawesome/free-solid-svg-icons';
-import {User} from "../../shared/models/user.model";
-import {AuthService} from "../../services/auth/auth.service";
-import {UserService} from "../../services/user/user.service";
-import {PostService} from "../../services/post/post.service";
-import {Post} from "../../shared/models/post.model";
+import {User} from "../../../shared/models/user.model";
+import {AuthService} from "../../../services/auth/auth.service";
+import {UserService} from "../../../services/user/user.service";
+import {PostService} from "../../../services/post/post.service";
+import {Post} from "../../../shared/models/post.model";
 
 @Component({
   selector: 'app-create-post',
