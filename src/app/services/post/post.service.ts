@@ -33,12 +33,16 @@ export class PostService {
     this.http.delete(`${environment.baseUrl}/${postId}`, {withCredentials: true});
   }
 
+    // TODO : commande identique
   postPost(newPost: Post) {
     this.http.post<Post>(`${environment.baseUrl}/post/`, JSON.stringify(newPost), {withCredentials: true}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }
     })
+  }
+    createPost(post: Post) {
+    return this.http.post<Post>(`${environment.baseUrl}/post`, post);
   }
 
   updatePost(post: Post){

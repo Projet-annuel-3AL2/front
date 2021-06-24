@@ -40,13 +40,39 @@ import {CreateOrganisationComponent} from "./components/create_/create-organisat
 import {A11yModule} from "@angular/cdk/a11y";
 import {UpdateEventComponent} from "./components/update_/update-event/update-event.component";
 import {UpdateOrganisationComponent} from "./components/update_/update-organisation/update-organisation.component";
+import {TimelineComponent} from "./components/timeline/timeline.component";
+import {EventSuggestionComponent} from "./components/event-suggestion/event-suggestion.component";
+import {EventSuggestionListComponent} from "./components/event-suggestion-list/event-suggestion-list.component";
+import {LoginComponent} from "./components/login/login.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RegisterComponent} from "./components/register/register.component";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import {AuthGuardService} from "./services/auth/auth-guard.service";
+import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {ConversationComponent} from "./components/conversations/conversation/conversation.component";
+import {ConversationsBoxComponent} from "./components/conversations/conversations-box/conversations-box.component";
+import {MessageComponent} from "./components/conversations/message/message.component";
+import {ConversationCardComponent} from "./components/conversations/conversation-card/conversation-card.component";
+import {TimeagoModule} from "ngx-timeago";
+import {ConversationBoxDirective} from "./directives/conversation-box/conversation-box.directive";
+import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
+import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
+import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
+import {CreatePostComponent} from "./components/create-post/create-post.component";
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
 
 @NgModule({
   declarations: [
     AppComponent,
     PostComponent,
+    LoginComponent,
     NavbarComponent,
+    MessageComponent,
     TimelineComponent,
+    RegisterComponent,
+    CreatePostComponent,
+    ConversationComponent,
     EventSuggestionComponent,
     ListEventSuggestionComponent,
     PageEventComponent,
@@ -69,11 +95,18 @@ import {UpdateOrganisationComponent} from "./components/update_/update-organisat
     CreateOrganisationComponent,
     UpdateEventComponent,
     UpdateOrganisationComponent
+    ConversationBoxDirective,
+    ConversationsBoxComponent,
+    ConversationCardComponent,
+    ConversationsListComponent,
+    EventSuggestionListComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule,
     CommonModule,
+    FlexLayoutModule,
+    HttpClientModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
@@ -86,10 +119,20 @@ import {UpdateOrganisationComponent} from "./components/update_/update-organisat
     FormsModule,
     HttpClientModule,
     A11yModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    TimeagoModule.forRoot(),
+    FormsModule,
+    PickerModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GlobalHttpInterceptor,
+      multi: true
+    }],
+  bootstrap: [AppComponent]
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]

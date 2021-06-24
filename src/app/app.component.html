@@ -1,2 +1,4 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
+<app-conversations-box *ngIf="authService.isAuthenticated()"></app-conversations-box>
+<app-create-post *ngIf="authService.isAuthenticated()"></app-create-post>

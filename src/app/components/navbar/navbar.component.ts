@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {faBell, faCalendarAlt, faComments, faUserFriends, faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faBell, faCalendarAlt, faComments, faSearch, faUserFriends} from '@fortawesome/free-solid-svg-icons';
+import {AuthService} from "../../services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -15,10 +16,14 @@ export class NavbarComponent implements OnInit {
   faSearch = faSearch;
 
   constructor(private _activatedRoute:ActivatedRoute,
+              private _authService: AuthService,
               private _router:Router) {
   }
 
   ngOnInit(): void {
   }
 
+  public onDisconnect() {
+    this.authService.logout().subscribe(() => this.router.navigate(['../login']));
+  }
 }

@@ -1,0 +1,24 @@
+.conversations-box-header {
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid #ADADAD;
+}
+
+.message-list {
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 350px;
+  width: 100%;
+  background-color: #E5E5E5;
+}
+
+.message-input {
+  height: 50px;
+}
+
+.message-input textarea {
+  resize: none;
+  width: auto;
+}

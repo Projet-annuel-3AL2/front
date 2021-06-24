@@ -6,13 +6,12 @@ import {Event} from "./event.model";
 export class User {
   id: string;
   username: string;
-  firstname: string;
-  lastname: string;
-  createdEvents: Event[];
-  createdPosts: Post[];
-  likedPosts: Post[];
-  profilePicture: Media;
-  bannerPicture: Media;
-  certification: Certification;
-
+  firstname?: string;
+  lastname?: string;
+  createdEvents?: Event[];
+  createdPosts?: Post[];
+  likedPosts?: Post[];
+  profilePicture?: Media;
+  bannerPicture?: Media;
+  certification?: Certification;
 }

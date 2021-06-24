@@ -1,0 +1,26 @@
+<div class="conversations-box col">
+  <div (click)="conversationBoxService.opened=!conversationBoxService.opened" class="conversations-box-header">
+    <fa-icon (click)="leaveConversation()" [icon]="faTimes" class="m-2 mx-3" size="2x"></fa-icon>
+    <div fxFlex fxLayoutAlign="start center">
+      <h2 class="user-select-none m-2 mx-4 ">{{getConversationName()}}</h2>
+    </div>
+    <fa-icon *ngIf="!conversationBoxService.opened" [icon]="faAngleUp" class="my-2 mx-4" fxFlex
+             fxLayoutAlign="end center" size="2x"></fa-icon>
+    <fa-icon *ngIf="conversationBoxService.opened" [icon]="faAngleDown" class="my-2 mx-4" fxFlex
+             fxLayoutAlign="end center" size="2x"></fa-icon>
+  </div>
+  <div *ngIf="conversationBoxService.opened">
+    <div #scroll class="message-list">
+      <div *ngFor="let message of conversation.messages">
+        <app-message [message]="message"></app-message>
+      </div>
+    </div>
+    <div class="message-input w-100 d-inline-flex">
+      <textarea [(ngModel)]="message" class="w-100"></textarea>
+      <button (click)="sendMessage()" type="submit">
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
+        Envoyer
+      </button>
+    </div>
+  </div>
+</div>

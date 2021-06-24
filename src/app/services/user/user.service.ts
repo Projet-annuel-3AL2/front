@@ -12,8 +12,17 @@ import {Certification} from "../../shared/models/certification.model";
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private http:HttpClient,
+            private authService: AuthService) { }
 
+  getConversations(): Observable<Conversation[]> {
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this.authService.getCurrentUserId()}/conversations`);
+  }
+
+
+  getById(userId: string) {
+    return this.http.get<User>(`${environment.baseUrl}/user/${userId}`);
+  }
 
   fakeGetParticipants(id: string) {
     let users: User[];
@@ -103,3 +112,4 @@ export class UserService {
     return organisation;
   }
 }
+

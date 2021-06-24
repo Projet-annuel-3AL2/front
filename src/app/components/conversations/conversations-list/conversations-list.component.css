@@ -1,0 +1,15 @@
+.conversations-box-header {
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+  border-bottom: 1px solid #ADADAD;
+}
+
+.conversations-list {
+  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 400px;
+  width: 100%;
+  background-color: #E5E5E5;
+}
