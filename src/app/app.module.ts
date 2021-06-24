@@ -37,6 +37,7 @@ import {CreatePostComponent} from "./components/create-post/create-post.componen
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {PostListComponent} from "./components/post-list/post-list.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import {ScrollingModule as ExperimentalScrollingModule } from "@angular/cdk-experimental/scrolling";
 
 @NgModule({
   declarations: [
@@ -57,26 +58,27 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     EventSuggestionListComponent,
     PostListComponent,
   ],
-  imports: [
-    BrowserModule,
-    RouterModule,
-    CommonModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    FontAwesomeModule,
-    BrowserAnimationsModule,
-    BsDropdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot(),
-    CollapseModule.forRoot(),
-    MaterialModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    TimeagoModule.forRoot(),
-    FormsModule,
-    PickerModule,
-    ScrollingModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule,
+        CommonModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        FontAwesomeModule,
+        BrowserAnimationsModule,
+        BsDropdownModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
+        CollapseModule.forRoot(),
+        MaterialModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        TimeagoModule.forRoot(),
+        FormsModule,
+        PickerModule,
+        ScrollingModule,
+        ExperimentalScrollingModule
+    ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,
     {
