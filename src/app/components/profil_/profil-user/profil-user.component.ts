@@ -61,7 +61,7 @@ export class ProfilUserComponent implements OnInit {
   }
 
   private getRelatedPost(username: any) {
-    this._postService.getPostByUsername(username).subscribe({
+    this._postService.getPostWithUsername(username).subscribe({
       next: posts => {
         this.listPost$ = posts
       },

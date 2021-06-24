@@ -44,7 +44,7 @@ export class PageEventComponent implements OnInit {
   }
 
   private getPosts() {
-    this._postService.getPostByEventId(this.event.id).subscribe({
+    this._postService.getPostWithEventId(this.event.id).subscribe({
       next: data => {
         this.listPost$ = data;
       },
