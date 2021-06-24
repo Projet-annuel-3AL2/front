@@ -5,7 +5,7 @@ import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-list-organisation-suggestion',
-  templateUrl: './list-organisation-suggestion..component.html',
+  templateUrl: './list-organisation-suggestion.component.html',
   styleUrls: ['./list-organisation-suggestion.component.css']
 })
 export class ListOrganisationSuggestionComponent implements OnInit {
@@ -14,7 +14,7 @@ export class ListOrganisationSuggestionComponent implements OnInit {
   constructor(private organisationService: OrganisationService) { }
 
   ngOnInit(): void {
-    this.listOrganisation$ = this.organisationService.getListOrganisation();
+    // TODO: this.getSuggestionOrganisation() pas activé
     // this.getSuggestionOrganisation();
   }
 

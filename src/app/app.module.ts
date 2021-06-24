@@ -30,7 +30,7 @@ import {ListPostComponent} from "./components/tabs_/list-post/list-post.componen
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
 import {ListUserComponent} from "./components/tabs_/list-user/list-user.component";
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
-import {ListOrganisationSuggestionComponent} from "./components/tabs_/list-organisation-suggestion/list-organisation-suggestion..component";
+import {ListOrganisationSuggestionComponent} from "./components/tabs_/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";

@@ -4,6 +4,10 @@ import * as L from 'leaflet';
 import {LeafletMouseEvent} from "leaflet";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {EventService} from "../../../services/event/event.service";
+import {User} from "../../../shared/models/user.model";
+import {environment} from "../../../../environments/environment";
+
 @Component({
   selector: 'app-event-infos',
   templateUrl: './event-infos.component.html',
@@ -12,15 +16,13 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 export class EventInfosComponent implements OnInit {
 
   @Input('event') event : Event = new Event();
-  organisation: Organisation;
-
-  constructor(private organisationService: OrganisationService) {
+  organisation$: Organisation;
+  listMembers$: User[];
+  constructor(private _organisationService: OrganisationService) {
 
   }
 
   ngOnInit(): void {
-    this.organisation = this.organisationService.fakeGetOrganisation();
-    console.log(this.organisation);
     this.getOrganisationMembers();
   }
 
@@ -36,7 +38,20 @@ export class EventInfosComponent implements OnInit {
    //     accessToken: 'your.mapbox.access.token'
    //   }).addTo(map);
   // }
-  private getOrganisationMembers() {
 
+  // TODO: Part du principe que Organisation se trouve dans la variable event
+  private getOrganisationMembers() {
+    this._organisationService.getOrganisationMembership(this.event.organisation.name).subscribe({
+      next: listOrganisationMembership => {
+        listOrganisationMembership.forEach(member =>{
+          this.listMembers$.push(member.user)
+        })
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
   }
 }
