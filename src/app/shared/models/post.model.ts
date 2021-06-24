@@ -6,9 +6,9 @@ import {Event} from "./event.model";
 
 export class Post {
   id: string;
-  creator: User = new User();
-  organisation: Organisation;
-  group: Group;
+  creator: User;
+  organisation?: Organisation;
+  group?: Group;
   text: string;
   likes: User[];
   sharedPost: Post;

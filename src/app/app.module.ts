@@ -36,6 +36,7 @@ import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-intercept
 import {CreatePostComponent} from "./components/create-post/create-post.component";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {PostListComponent} from "./components/post-list/post-list.component";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {PostListComponent} from "./components/post-list/post-list.component";
     ReactiveFormsModule,
     TimeagoModule.forRoot(),
     FormsModule,
-    PickerModule
+    PickerModule,
+    ScrollingModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,

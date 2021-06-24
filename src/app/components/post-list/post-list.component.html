@@ -1,0 +1,5 @@
+<cdk-virtual-scroll-viewport itemSize="500" class="h-100">
+  <div *cdkVirtualFor="let post of posts">
+    <post [post]="post"></post>
+  </div>
+</cdk-virtual-scroll-viewport>
