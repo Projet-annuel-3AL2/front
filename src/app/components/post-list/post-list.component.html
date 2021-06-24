@@ -1,5 +1,5 @@
-<cdk-virtual-scroll-viewport autosize class="h-75">
-  <div *cdkVirtualFor="let post of posts">
+<cdk-virtual-scroll-viewport autosize style="height: calc(100% - 80px)">
+  <div *cdkVirtualFor="let post of posts" class="my-3">
     <post [post]="post"></post>
   </div>
 </cdk-virtual-scroll-viewport>
