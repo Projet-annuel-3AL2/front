@@ -7,6 +7,12 @@
   <!-- TODO : faCheckCircle a placer correctement -->
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a> <fa-icon [icon]="faCheckCircle"></fa-icon></p>
   <div class="spacer"></div>
-  <button *ngIf="canAdd(user.id)" mat-raised-button class="ml-auto button-add-friend" (click)="this.askFriend(user.username)"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-  <button *ngIf="!canAdd(user.id)" mat-raised-button class="ml-auto button-add-friend-disable" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)"> Enlever</button>
+  <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
+  <mat-menu #menu="matMenu">
+    <button *ngIf="canAdd(user.id)" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
+    <button *ngIf="!canAdd(user.id)" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
+    <button mat-menu-item (click)="this.deleteParticipantEvent(user.id)">Retirer Participant</button>
+  </mat-menu>
+
+
 </div>

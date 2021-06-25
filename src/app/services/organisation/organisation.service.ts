@@ -70,8 +70,28 @@ export class OrganisationService {
     return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
   }
 
-  // TODO: getOrganisationMembership A faire coter API get MemberShip JOIN User
+  // TODO: getOrganisationMembership A faire coté API get MemberShip JOIN User
   getOrganisationMembership(organisationName: string): Observable<OrganisationMembership[]> {
     return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/organisation/getMembership/${organisationName}`)
+  }
+
+  // TODO: deleteOrganisationMembership A faire coté API
+  deleteOrganisationMembership(userId: string, organisationId: string) {
+    return this.http.delete(`${environment.baseUrl}/organisation/deleteMembership/${organisationId}/${userId}`).subscribe({
+      error: err => {
+        if (!environment.production){
+          console.log(err);
+        }
+      }
+    })
+  }
+
+  // TODO : giveAdminToMember A faire coté API, il faudrait faire un update mais je sais pas si il faut absolument l'id de membership
+  giveAdminToMember(userId: string, organisationId: string) {
+    this.http.put(`${environment.baseUrl}/organisation/giveAdminToMember/${organisationId}/${userId}`, null);
+  }
+  // TODO: pareil que pour giveAdminToMember, il faudrait faire un put
+  removeAdminToAdminMember(userId: string, organisationId: string){
+    this.http.put(`${environment.baseUrl}/organisation/removeAdminToAdminMember/${organisationId}/${userId}`, null);
   }
 }

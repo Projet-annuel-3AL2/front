@@ -55,7 +55,16 @@
                 <app-event-infos [event]="event"></app-event-infos>
               </mat-tab>
               <mat-tab label="Participants">
-                <app-list-user [listUser]="event.participants" ></app-list-user>
+                <div class="my-3" *ngIf="!isOwner() && !isAdmin()">
+                  <div class="display-list-user" *ngFor="let user of event.participants;" >
+                    <app-user-card  [user]="user" class="m-0"></app-user-card>
+                  </div>
+                </div>
+                <div class="my-3" *ngIf="isOwner() || isAdmin()">
+                  <div class="display-list-user" *ngFor="let user of event.participants;" >
+                    <app-card-user-mange-event  [user]="user" [eventId]="eventId" class="m-0"></app-card-user-mange-event>
+                  </div>
+                </div>
               </mat-tab>
             </mat-tab-group>
           </div>

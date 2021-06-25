@@ -95,7 +95,7 @@ export class EventService {
   getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
-  // TODO : Les fonctions sontimplémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
+  // TODO : Les fonctions sont implémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
   getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {
       withCredentials: true
@@ -109,4 +109,10 @@ export class EventService {
   getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
     return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
+
+  // TODO : fonction pas implémenter dans l'api
+  getEventOrganisationMembership(eventId: string): Observable<OrganisationMembership[]>{
+    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`);
+  }
 }
+//
