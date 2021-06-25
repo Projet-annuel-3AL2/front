@@ -1,1 +1,18 @@
-<p>card-user-mange-event works!</p>
+<div class="rounded-pill border d-flex p-2 card-user my-3">
+  <div class="mr-2">
+    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'"  [routerLink]="['/user/' + user.username]" class="rounded-circle"
+         width="50" alt="">
+  </div>
+  <div class="spacer"></div>
+  <!-- TODO : faCheckCircle a placer correctement -->
+  <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a> <fa-icon [icon]="faCheckCircle"></fa-icon></p>
+  <div class="spacer"></div>
+  <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
+  <mat-menu #menu="matMenu">
+    <button *ngIf="canAdd(user.id)" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
+    <button *ngIf="!canAdd(user.id)" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
+    <button mat-menu-item (click)="this.deleteParticipantEvent(user.id)">Retirer Participant</button>
+  </mat-menu>
+
+
+</div>
