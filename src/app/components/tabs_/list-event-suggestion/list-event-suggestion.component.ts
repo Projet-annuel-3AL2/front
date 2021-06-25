@@ -17,13 +17,13 @@ export class ListEventSuggestionComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: getSuggestionEvent pas activé
-    // this.getSuggestionEvent();
+    this.getSuggestionEvent();
   }
 
   getSuggestionEvent(){
     this.eventService.getNotEndEvent().subscribe({
       next: data => {
-        this.event$ = data;
+        this.event$ = data.slice(0, 4);
       },
       error: error => {
         if (!environment.production) {

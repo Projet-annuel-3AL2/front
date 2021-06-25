@@ -12,7 +12,7 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   getAllCategory(): Observable<Category[]>{
-    return this.http.get<Category[]>(`${environment.baseUrl}/category/`);
+    return this.http.get<Category[]>(`${environment.baseUrl}/category/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getCategoryById(categoryId: string): Observable<Category[]>{

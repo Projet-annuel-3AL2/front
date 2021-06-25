@@ -29,7 +29,7 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
       this.user=user;
     });
     // TODO: en lien avec event-filter, faut réfléchir a la logique derriere
-    // this.getNotEndEvents();
+    this.getNotEndEvents();
   }
 
   private getNotEndEvents() {

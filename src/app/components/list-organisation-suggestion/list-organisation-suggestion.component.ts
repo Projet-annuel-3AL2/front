@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {OrganisationService} from "../../../services/organisation/organisation.service";
-import {Organisation} from "../../../shared/models/organisation.model";
-import {environment} from "../../../../environments/environment";
+import {OrganisationService} from "../../services/organisation/organisation.service";
+import {Organisation} from "../../shared/models/organisation.model";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-list-organisation-suggestion',
@@ -14,7 +14,7 @@ export class ListOrganisationSuggestionComponent implements OnInit {
   constructor(private organisationService: OrganisationService) { }
 
   ngOnInit(): void {
-    // TODO: this.getSuggestionOrganisation() pas activé
+    // TODO: this.getSuggestionOrganisation() ne fonctionne pas
     // this.getSuggestionOrganisation();
   }
 

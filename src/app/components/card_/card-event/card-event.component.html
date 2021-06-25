@@ -15,7 +15,7 @@
       <p><i class="fa fa-user" aria-hidden="true"></i>  {{event.organisation.name}}</p>
     </div>
     <div class="date-card-event" >
-      <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}} {{event.startDate.getHours()}}H{{event.startDate.getMinutes()}} -- {{event.endDate.getHours()}}H{{event.endDate.getMinutes()}}</p>
+      <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} -- {{event.endDate.toString() | slice: 11 : 16}}</p>
     </div>
     <div class="category-card-event">
       <p><i class="fas fa-tags"></i> {{event.category.name}}</p>

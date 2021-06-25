@@ -39,7 +39,7 @@ export class EventFilterComponent implements OnInit {
     this.isLocated = false;
     this.initializeFormGroup();
 
-    // this.getAllCategories()
+    this.getAllCategories()
   }
 
   formatLabel(value: number) {

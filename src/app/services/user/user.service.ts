@@ -22,21 +22,21 @@ export class UserService {
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/conversations`);
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getById(userId: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${userId}`);
+    return this.http.get<User>(`${environment.baseUrl}/user/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   // TODO : getByName() pas implémenter sur l'API
   getByName(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/getWthUsername/${username}`);
+    return this.http.get<User>(`${environment.baseUrl}/user/getWthUsername/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   // TODO: getUserFriends() pas implémenter sur l'API
   getUserFriends(userId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${userId}`);
+    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 }
 //

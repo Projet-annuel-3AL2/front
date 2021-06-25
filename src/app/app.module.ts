@@ -23,14 +23,14 @@ import {EventFilterComponent} from "./components/event_/event-filter/event-filte
 import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
 import {CardEventComponent} from "./components/card_/card-event/card-event.component";
-import {EventListDisplayComponent} from "./components/event_/event-list-display/event-list-display.component";
+import {EventListDisplayComponent} from "./components/tabs_/event-list-display/event-list-display.component";
 import {EventDialogMapsComponent} from "./components/event_/event-dialog-maps/event-dialog-maps.component";
 import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
 import {ListPostComponent} from "./components/tabs_/list-post/list-post.component";
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
 import {ListUserComponent} from "./components/tabs_/list-user/list-user.component";
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
-import {ListOrganisationSuggestionComponent} from "./components/tabs_/list-organisation-suggestion/list-organisation-suggestion.component";
+import {ListOrganisationSuggestionComponent} from "./components/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";

@@ -84,10 +84,9 @@ export class EventService {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventRelatedToUser/${userId}`);
   }
 
-  // TODO : getNotEndEvent avec limit de 4 item max
+
   getNotEndEvent(): Observable<Event[]> {
-    return this.getAllEvent();
-    // return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
 

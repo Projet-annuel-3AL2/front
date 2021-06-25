@@ -17,7 +17,7 @@ export class OrganisationService {
   constructor(private http: HttpClient) { }
 
   postOrganisation(organisation:Organisation){
-    this.http.post(`${environment.baseUrl}/organisation/`, JSON.stringify(organisation), {withCredentials: true}).subscribe({
+    this.http.post(`${environment.baseUrl}/organisation/`, JSON.stringify(organisation), {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
         error: err => {
           if (!environment.production){
             console.log(err);
@@ -28,19 +28,19 @@ export class OrganisationService {
   }
 
   getAllOrganisation(): Observable<Organisation[]>{
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`);
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getOrganisationByName(orgaName: string): Observable<Organisation>{
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${orgaName}`);
+    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${orgaName}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getPostsOrganisation(orgaName: string): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${orgaName}/posts`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${orgaName}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getSuggestionOrganisation(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/suggestion-organisation`);
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestionOrganisation`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   // TODO: A faire coté api
