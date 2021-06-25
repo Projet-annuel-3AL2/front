@@ -19,7 +19,7 @@ export class EventService {
               private http: HttpClient) { }
 
   postEvent(newEvent: Event) {
-    this.http.post<Event>(`${environment.baseUrl}/event/`, JSON.stringify(newEvent), {withCredentials: true}).subscribe({
+    this.http.post<Event>(`${environment.baseUrl}/event/`, JSON.stringify(newEvent), {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -28,14 +28,8 @@ export class EventService {
     })
   }
 
-  postAddParticipant(userId: string, eventId: string) {
-    this.http.post<any>(`${environment.baseUrl}/event/addParticipant`, {userId, eventId}, {withCredentials: true}).subscribe({
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
+  postAddParticipant(userId: string, eventId: string): Observable<Object> {
+    return this.http.post<any>(`${environment.baseUrl}/event/addParticipant`, {userId, eventId}, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getAllEvent(): Observable<Event[]> {
@@ -56,14 +50,8 @@ export class EventService {
     })
   }
 
-  deleteParticipantEvent(eventId: string, userId: string) {
-    this.http.delete(`${environment.baseUrl}/event/${eventId}/${userId}`, {withCredentials: true}).subscribe({
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
+  deleteParticipantEvent(eventId: string, userId: string): Observable<Object> {
+    return this.http.delete(`${environment.baseUrl}/event/participant/${eventId}/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   putEvent(event: Event){
@@ -75,8 +63,8 @@ export class EventService {
   }
 
   // TODO: Pas implémenter dans l'API
-  getEventMembers(eventId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/event/getMembers/${eventId}`);
+  getEventMembers(eventId: string): Observable<Event> {
+    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/getMembers`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   // TODO: pas implémenter dans l'api

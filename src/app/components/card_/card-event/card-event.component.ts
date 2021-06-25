@@ -4,6 +4,7 @@ import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-card-event',
@@ -14,7 +15,7 @@ export class CardEventComponent implements OnInit {
 
   @Input("event") event : Event = new Event()
   user$: User;
-
+  isAbleToJoin: boolean = true;
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
@@ -25,6 +26,7 @@ export class CardEventComponent implements OnInit {
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
       this.user$=user;
     });
+    this.canJoin();
   }
 
 
@@ -33,22 +35,43 @@ export class CardEventComponent implements OnInit {
     return "6 boulevard Maréchal Foch, 76200 Dieppe"
   }
 
-  // TODO : JoinEvent()
+
   joinEvent(id: string) {
-      // this.eventService.postAddParticipant(this.user.id, id);
+      this._eventService.postAddParticipant(this.user$.id, id).subscribe({
+        next: () =>{
+          this.isAbleToJoin = false;
+        },
+        error: error => {
+          if (!environment.production){
+            console.error('There was an error!', error);
+          }
+        }
+      });
+      this.canJoin();
   }
-
-  // TODO : leaveEvent()
+  
   leaveEvent(id: string) {
-    // this.eventService.deleteParticipantEvent(id, this.user.id);
+    this._eventService.deleteParticipantEvent(id, this.user$.id).subscribe({
+      next: () =>{
+        this.isAbleToJoin = true;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    });
+
   }
 
-  // TODO: J'ai pas la logique pour un truc propre -> Vérifier que this.user n'est pas dans UserList
-  canJoin(eventId: string) {
-    // return this.eventService.getEventMembers(eventId).subscribe(userList => {
-    //   return false;
-    // })
-    return true;
+  canJoin() {
+    this._eventService.getEventMembers(this.event.id).subscribe(event => {
+      event.participants.forEach(user => {
+        if (user.id == this.user$.id){
+          this.isAbleToJoin = false;
+        }
+      })
+    });
   }
 
 }
