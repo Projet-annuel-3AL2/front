@@ -5,6 +5,7 @@ import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {UserService} from "../../../services/user/user.service";
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-card-user-mange-event',
@@ -15,18 +16,15 @@ export class CardUserMangeEventComponent implements OnInit {
 
   @Input('user') user: User = new User();
   @Input('eventId') eventId: string;
+  @Input('userSession') userSession: User;
   faCheckCircle = faCheckCircle;
-  userSession: User;
 
   constructor(private _friendshipService: FriendshipService,
               private _eventService: EventService,
-              private _authService: AuthService,
               private _userService: UserService) { }
 
   ngOnInit(): void {
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.userSession=user;
-    });
+
   }
 
   // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
@@ -42,7 +40,17 @@ export class CardUserMangeEventComponent implements OnInit {
     // this._friendshipService.removeFriendship(username)
   }
 
+  // TODO : Ne fonctionne pas
   deleteParticipantEvent(userId: string) {
-    this._eventService.deleteParticipantEvent(this.eventId, userId);
+    this._eventService.deleteParticipantEvent(this.eventId, userId).subscribe({
+      next: () => {
+
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err)
+        }
+      }
+    });
   }
 }

@@ -20,7 +20,7 @@ export class ProfilUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   user$: User;
-  authenticateUser$: User;
+  userSession: User;
   listPost$: Post[];
   listEvent$: Event[];
   listUser$: User[];
@@ -37,11 +37,11 @@ export class ProfilUserComponent implements OnInit {
     const username = this.route.snapshot.params['username'];
 
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.authenticateUser$=user;
+      this.userSession=user;
 
     });
     // TODO: fonction pas activé
-    // this.getUser(username);
+    this.getUser(username);
     // this.getRelatedPost(username);
     // this.getRelatedEvent(this.user.id);
     // this.getUserFriends(this.user.id);
@@ -51,6 +51,8 @@ export class ProfilUserComponent implements OnInit {
     this._userService.getByName(username).subscribe({
       next: user => {
         this.user$ = user
+        this.listPost$ = user.createdPosts
+        console.log(this.listPost$)
       },
       error: error => {
         if (!environment.production) {

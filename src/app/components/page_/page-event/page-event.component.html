@@ -17,8 +17,8 @@
               <p>{{event.name}}</p>
             </div>
             <div flflex="20" class="button-join" >
-              <button *ngIf="canJoin(event.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" ><i class="fa fa-user-plus" aria-hidden="true"></i>  Rejoindre</button>
-              <button *ngIf="!canJoin(event.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.leaveEvent(event.id)"> Quittez</button>
+              <button *ngIf="isAbleToJoin" mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event.id)" ><i class="fa fa-user-plus" aria-hidden="true"></i>  Rejoindre</button>
+              <button *ngIf="!isAbleToJoin" mat-raised-button class="ml-auto button-join-event" (click)="this.leaveEvent(event.id)"> Quitter</button>
             </div>
 
             <div class="dropdown-event" flflex="20">
@@ -40,7 +40,7 @@
           </div>
           <div class="date-area-event">
             <div flflex="30" class="dates-event">
-              <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}} {{event.startDate.getHours()}}H{{event.startDate.getMinutes()}} -- {{event.endDate.getHours()}}H{{event.endDate.getMinutes()}}</p>
+              <p><i class="fas fa-clock"></i>  {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} -- {{event.endDate.toString() | slice: 11 : 16}}</p>
             </div>
           </div>
 
@@ -52,17 +52,17 @@
                 <app-list-post [listPost]="listPost$"></app-list-post>
               </mat-tab>
               <mat-tab label="Infos">
-                <app-event-infos [event]="event"></app-event-infos>
+                <app-event-infos [event]="event" [userSession]="userSession$"></app-event-infos>
               </mat-tab>
               <mat-tab label="Participants">
                 <div class="my-3" *ngIf="!isOwner() && !isAdmin()">
                   <div class="display-list-user" *ngFor="let user of event.participants;" >
-                    <app-user-card  [user]="user" class="m-0"></app-user-card>
+                    <app-user-card [user]="user" [userSession]="userSession$" class="m-0"></app-user-card>
                   </div>
                 </div>
                 <div class="my-3" *ngIf="isOwner() || isAdmin()">
                   <div class="display-list-user" *ngFor="let user of event.participants;" >
-                    <app-card-user-mange-event  [user]="user" [eventId]="eventId" class="m-0"></app-card-user-mange-event>
+                    <app-card-user-mange-event  [user]="user" [eventId]="eventId" [userSession]="userSession$" class="m-0"></app-card-user-mange-event>
                   </div>
                 </div>
               </mat-tab>

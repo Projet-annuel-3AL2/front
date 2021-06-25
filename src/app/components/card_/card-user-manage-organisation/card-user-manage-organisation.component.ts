@@ -18,8 +18,8 @@ export class CardUserManageOrganisationComponent implements OnInit {
 
   @Input('user') user: User = new User();
   @Input('organisation') organisation: Organisation;
+  @Input('userSession') userSession: User;
   faCheckCircle = faCheckCircle;
-  userSession: User;
 
   constructor(private _friendshipService: FriendshipService,
               private _authService: AuthService,
@@ -27,9 +27,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
               private _organisationService: OrganisationService) { }
 
   ngOnInit(): void {
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.userSession=user;
-    });
+    console.log(this.user.id + "  " + this.userSession.id)
   }
 
   // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
@@ -80,8 +78,8 @@ export class CardUserManageOrganisationComponent implements OnInit {
     let isAdmin = false;
 
     this._organisationService.getOrganisationMembership(this.organisation.id).subscribe({
-      next: listMemberShip => {
-        listMemberShip.forEach(member => {
+      next: organisation => {
+        organisation.members.forEach(member => {
           if (member.user.id == userId && member.isAdmin){
             isAdmin = true;
           }

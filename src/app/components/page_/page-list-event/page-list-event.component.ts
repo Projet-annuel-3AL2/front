@@ -16,8 +16,9 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
 
   events$: Event[];
   eventsFilter$: Event[] = undefined;
-  user: User;
+  userSession$: User;
   @ViewChild(EventFilterComponent) eventFilterComponent;
+
 
   constructor(private _eventService: EventService,
               private _userService: UserService,
@@ -26,7 +27,7 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.user=user;
+      this.userSession$=user;
     });
     // TODO: en lien avec event-filter, faut réfléchir a la logique derriere
     this.getNotEndEvents();

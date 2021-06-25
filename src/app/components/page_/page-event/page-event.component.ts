@@ -23,7 +23,9 @@ export class PageEventComponent implements OnInit {
   event: Event;
   eventId: string;
   faEllipsisH = faEllipsisH;
-  user: User;
+  userSession$: User;
+  listParticipant$: User[];
+  isAbleToJoin: boolean = true;
 
   constructor(private _activatedRoute:ActivatedRoute,
               private _router:Router,
@@ -36,19 +38,20 @@ export class PageEventComponent implements OnInit {
 
   ngOnInit(): void {
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.user=user;
+      this.userSession$=user;
     });
-    // TODO: getEvent() et getPosts() pas activé
-    // this.getEvent();
+    this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
+    this.getEvent();
+
     // this.getPosts();
     // TODO: peut-être changer l'url pour avoir le nom au lieu de l'id ?
-    this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
   }
 
   private getPosts() {
     this._postService.getPostWithEventId(this.event.id).subscribe({
       next: data => {
         this.listPost$ = data;
+
       },
       error: error => {
         if (!environment.production) {
@@ -60,11 +63,13 @@ export class PageEventComponent implements OnInit {
 
 
   private getEvent() {
-    this._eventService.getEventById(this.eventId).subscribe({
+    this._eventService.getEventFull(this.eventId).subscribe({
       next: data => {
         this.event = data;
+        this.canJoin();
       },
       error: error => {
+
         if (!environment.production) {
           console.error('Error: ', error);
         }
@@ -72,22 +77,50 @@ export class PageEventComponent implements OnInit {
     })
   }
 
-  // TODO: J'ai pas la logique pour un truc propre -> Vérifier que this.user n'est pas dans UserList
-  canJoin(eventId: string) {
-    // return this._eventService.getEventMembers(eventId).subscribe(userList => {
-    //   return false;
-    // })
-    return true;
+  canJoin() {
+
+    this._eventService.getEventMembers(this.event.id).subscribe({
+      next: event =>{
+        event.participants.forEach(user => {
+          if (user.id == this.userSession$.id){
+            this.isAbleToJoin = false;
+          }
+        });
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+
   }
 
-  // TODO: JoinEvent()
   joinEvent(id: string) {
-    // this._eventService.postAddParticipant(this.user.id,id);
+    this._eventService.postAddParticipant(this.userSession$.id, id).subscribe({
+      next: () =>{
+        this.isAbleToJoin = false;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    });
+    this.canJoin();
   }
 
-  // TODO: LeaveEvent()
   leaveEvent(id: string) {
-    // this._eventService.deleteParticipantEvent(id,this.user.id);
+    this._eventService.deleteParticipantEvent(id, this.userSession$.id).subscribe({
+      next: () =>{
+        this.isAbleToJoin = true;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    });
   }
 
   // TODO: IsOwner() dela page-event

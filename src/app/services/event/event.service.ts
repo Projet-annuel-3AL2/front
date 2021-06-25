@@ -37,7 +37,7 @@ export class EventService {
   }
 
   getEventById(eventId: string): Observable<Event> {
-    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`);
+    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   deleteEvent(eventId: string) {
@@ -62,7 +62,6 @@ export class EventService {
     })
   }
 
-  // TODO: Pas implémenter dans l'API
   getEventMembers(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/getMembers`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
@@ -100,6 +99,11 @@ export class EventService {
   // TODO : fonction pas implémenter dans l'api
   getEventOrganisationMembership(eventId: string): Observable<OrganisationMembership[]>{
     return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`);
+  }
+
+  getEventFull(eventId: string): Observable<Event> {
+    return this.http.get<Event>(`${environment.baseUrl}/event/fullEvent/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+
   }
 }
 //

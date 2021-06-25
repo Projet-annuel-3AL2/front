@@ -31,7 +31,7 @@ export class UserService {
 
   // TODO : getByName() pas implémenter sur l'API
   getByName(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/getWthUsername/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<User>(`${environment.baseUrl}/user/getWithUsername/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   // TODO: getUserFriends() pas implémenter sur l'API

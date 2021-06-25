@@ -19,7 +19,7 @@ export class ProfilOrganisationComponent implements OnInit {
   organisation$: Organisation;
   organisationName: string;
   faEllipsisH = faEllipsisH;
-  user: User;
+  userSession$: User;
   listMember$: User[];
 
   constructor(private _organisationService: OrganisationService,
@@ -32,30 +32,17 @@ export class ProfilOrganisationComponent implements OnInit {
     this.organisationName = this.route.snapshot.params['organisationName']
 
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.user=user;
+      this.userSession$=user;
     });
     // this.getOrganisation();
-    // this.getListMember();
   }
 
   private getOrganisation() {
-    this._organisationService.getOrganisationByName(this.organisationName).subscribe({
-      next: organisation => {
-        this.organisation$ = organisation
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
-  private getListMember() {
     this._organisationService.getOrganisationMembership(this.organisationName).subscribe({
-      next: listOrganisationMembership => {
-        listOrganisationMembership.forEach(organisationMembership => {
-          this.listMember$.push(organisationMembership.user);
+      next: organisation => {
+        this.organisation$ = organisation;
+        this.organisation$.members.forEach(orgaMembership => {
+          this.listMember$.push(orgaMembership.user);
         })
       },
       error: error => {
@@ -63,7 +50,7 @@ export class ProfilOrganisationComponent implements OnInit {
           console.error('Error: ', error);
         }
       }
-    })
+    });
   }
 
   // TODO : Implémenter la fonctionnalité de follow

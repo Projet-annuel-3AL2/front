@@ -40,7 +40,7 @@
           <div class="user-card-div-row-2">
             <div class="user-card-infos">
               <!-- TODO : Remplacer par un text de description de User-->
-              <p>Nombre de post: {{user$.createdPosts.length }} -- A Participer à {{listEvent$.length}} Événements</p>
+
             </div>
           </div>
         </div>
@@ -51,10 +51,10 @@
             <app-list-post [listPost]="listPost$"></app-list-post>
           </mat-tab>
           <mat-tab label="Amis">
-            <app-list-user [listUser]="listUser$"></app-list-user>
+            <app-list-user [listUser]="listUser$" [userSession]="userSession"></app-list-user>
           </mat-tab>
           <mat-tab label="Événements">
-            <app-profil-list-event [listEvent]="listEvent$"></app-profil-list-event>
+            <app-profil-list-event [listEvent]="listEvent$" [userSession]="userSession"></app-profil-list-event>
           </mat-tab>
         </mat-tab-group>
       </div>

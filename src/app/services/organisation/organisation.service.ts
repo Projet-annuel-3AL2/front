@@ -71,8 +71,8 @@ export class OrganisationService {
   }
 
   // TODO: getOrganisationMembership A faire coté API get MemberShip JOIN User
-  getOrganisationMembership(organisationName: string): Observable<OrganisationMembership[]> {
-    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/organisation/getMembership/${organisationName}`)
+  getOrganisationMembership(organisationName: string): Observable<Organisation> {
+    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/getMembership/${organisationName}`)
   }
 
   // TODO: deleteOrganisationMembership A faire coté API

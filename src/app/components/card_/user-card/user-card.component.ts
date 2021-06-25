@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {AuthService} from "../../../services/auth/auth.service";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-user-card',
@@ -11,6 +13,8 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 export class UserCardComponent implements OnInit {
 
   @Input('user') user: User = new User()
+  @Input('userSession') userSession: User;
+
   faCheckCircle = faCheckCircle;
   constructor(private _friendshipService: FriendshipService) { }
 

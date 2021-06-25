@@ -14,7 +14,7 @@ import {environment} from "../../../../environments/environment";
 export class CardEventComponent implements OnInit {
 
   @Input("event") event : Event = new Event()
-  user$: User;
+  @Input('userSession') userSession: User;
   isAbleToJoin: boolean = true;
   constructor(
     private _userService: UserService,
@@ -23,9 +23,7 @@ export class CardEventComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.user$=user;
-    });
+
     this.canJoin();
   }
 
@@ -37,7 +35,7 @@ export class CardEventComponent implements OnInit {
 
 
   joinEvent(id: string) {
-      this._eventService.postAddParticipant(this.user$.id, id).subscribe({
+      this._eventService.postAddParticipant(this.userSession.id, id).subscribe({
         next: () =>{
           this.isAbleToJoin = false;
         },
@@ -49,9 +47,9 @@ export class CardEventComponent implements OnInit {
       });
       this.canJoin();
   }
-  
+
   leaveEvent(id: string) {
-    this._eventService.deleteParticipantEvent(id, this.user$.id).subscribe({
+    this._eventService.deleteParticipantEvent(id, this.userSession.id).subscribe({
       next: () =>{
         this.isAbleToJoin = true;
       },
@@ -67,7 +65,7 @@ export class CardEventComponent implements OnInit {
   canJoin() {
     this._eventService.getEventMembers(this.event.id).subscribe(event => {
       event.participants.forEach(user => {
-        if (user.id == this.user$.id){
+        if (user.id == this.userSession.id){
           this.isAbleToJoin = false;
         }
       })

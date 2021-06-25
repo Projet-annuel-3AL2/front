@@ -9,10 +9,10 @@
   <div class="spacer"></div>
   <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
   <mat-menu #menu="matMenu">
-    <button *ngIf="canAdd(user.id)" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
-    <button *ngIf="!canAdd(user.id)" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
+    <div *ngIf="user.id !== userSession.id">
+      <button *ngIf="canAdd(user.id)" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
+      <button *ngIf="!canAdd(user.id)" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
+    </div>
     <button mat-menu-item (click)="this.deleteParticipantEvent(user.id)">Retirer Participant</button>
   </mat-menu>
-
-
 </div>
