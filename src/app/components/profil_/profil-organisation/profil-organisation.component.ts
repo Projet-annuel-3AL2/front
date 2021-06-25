@@ -84,4 +84,25 @@ export class ProfilOrganisationComponent implements OnInit {
     return true;
     // return this.organisation$.owner.id == this.user.id;
   }
+
+
+  // TODO: IsAdmin de l'event (fonction dé***)
+  isAdmin() {
+    let isAdmin = false;
+    // this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
+    //   next: listMemberShip => {
+    //     listMemberShip.forEach(member => {
+    //       if (member.user.id == this.user.id && member.isAdmin){
+    //         isAdmin = true;
+    //       }
+    //     })
+    //   },
+    //   error: error => {
+    //     if (!environment.production) {
+    //       console.error('Error: ', error);
+    //     }
+    //   }
+    // })
+    return isAdmin;
+  }
 }

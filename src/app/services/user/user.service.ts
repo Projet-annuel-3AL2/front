@@ -17,8 +17,9 @@ import {environment} from "../../../environments/environment";
 })
 export class UserService {
 
-  constructor(private http:HttpClient,
-            private _authService: AuthService) { }
+  constructor(private http: HttpClient,
+              private _authService: AuthService) {
+  }
 
   getConversations(): Observable<Conversation[]> {
     return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/conversations`);
@@ -38,4 +39,4 @@ export class UserService {
     return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${userId}`);
   }
 }
-
+//

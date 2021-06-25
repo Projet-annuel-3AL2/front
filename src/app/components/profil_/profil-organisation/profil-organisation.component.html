@@ -48,7 +48,16 @@
             <app-list-post [listPost]="organisation$.posts"></app-list-post>
           </mat-tab>
           <mat-tab label="Membres">
-            <app-list-user [listUser]="listMember$"></app-list-user>
+            <div *ngIf="!isOwner() && !isAdmin()">
+              <mat-List-item *ngFor="let member of listMember$">
+                <app-user-card [user]="member"></app-user-card>
+              </mat-List-item>
+            </div>
+            <div class="my-3" *ngIf="isOwner() || isAdmin()">
+              <div class="display-list-user" *ngFor="let member of listMember$;" >
+                <app-card-user-manage-organisation  [user]="member" [organisation]="organisation$" class="m-0"></app-card-user-manage-organisation>
+              </div>
+            </div>
           </mat-tab>
           <mat-tab label="Événements">
             <app-profil-list-event [listEvent]="organisation$.events"></app-profil-list-event>

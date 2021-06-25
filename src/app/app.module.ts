@@ -55,6 +55,8 @@ import {ConversationsListComponent} from "./components/conversations/conversatio
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 import {CreatePostComponent} from "./components/create_/create-post/create-post.component";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
+import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-event/card-user-mange-event.component";
+import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
     ConversationBoxDirective,
     ConversationsBoxComponent,
     ConversationCardComponent,
-    ConversationsListComponent
+    ConversationsListComponent,
+    CardUserMangeEventComponent,
+    CardUserManageOrganisationComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import {User} from "../../../shared/models/user.model";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {OrganisationService} from "../../../services/organisation/organisation.service";
 
 @Component({
   selector: 'app-page-event',
@@ -29,7 +30,8 @@ export class PageEventComponent implements OnInit {
               private _eventService:EventService,
               private _postService:PostService,
               private _userService: UserService,
-              private _authService: AuthService
+              private _authService: AuthService,
+              private _organisationService: OrganisationService
               ) { }
 
   ngOnInit(): void {
@@ -92,5 +94,25 @@ export class PageEventComponent implements OnInit {
   isOwner() {
     return true;
     // return this.event.creator.id == this.user.id;
+  }
+
+  // TODO: IsAdmin de l'event (fonction dé***)
+  isAdmin() {
+    let isAdmin = false;
+    // this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
+    //   next: listMemberShip => {
+    //     listMemberShip.forEach(member => {
+    //       if (member.user.id == this.user.id && member.isAdmin){
+    //         isAdmin = true;
+    //       }
+    //     })
+    //   },
+    //   error: error => {
+    //     if (!environment.production) {
+    //       console.error('Error: ', error);
+    //     }
+    //   }
+    // })
+    return isAdmin;
   }
 }
