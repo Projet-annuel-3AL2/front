@@ -12,7 +12,7 @@ export class ProfilListEventComponent implements OnInit {
 
 
   @Input('listEvent') listEvent$: Event[] = [];
-
+  @Input('userSession') userSession: User;
   constructor() { }
 
   ngOnInit(): void {

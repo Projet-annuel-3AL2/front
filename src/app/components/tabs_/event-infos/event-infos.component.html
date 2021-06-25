@@ -12,7 +12,8 @@
         <div class="px-4">
           <h2>Infos</h2>
           <p><i class="fas fa-user-check"></i> {{event.participants.length}} / {{event.participantsLimit}} participants</p>
-          <p><i class="fas fa-clock"></i> {{event.startDate.getDate()}}/{{event.startDate.getMonth() + 1}}/{{event.startDate.getFullYear()}}</p>
+          <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} </p>
+          <p><i class="fas fa-clock"></i> {{event.endDate.toString() | slice: 8: 10 }}/{{event.endDate.toString() | slice: 5: 7}}/{{event.endDate.toString() | slice: 0: 4}} {{event.endDate.toString() | slice: 11 : 16}} </p>
           <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
           <p><a [routerLink]="['/organisation/' + event.organisation.name]"><i class="fa fa-building" aria-hidden="true">  {{event.organisation.name}}</i></a></p>
         </div>
@@ -23,7 +24,7 @@
     <div class="border rounded-3 d-flex flex-column p-2 event-infos-map">
       <div class="m-3">
         <div class="px-4">
-          <!-- TODO // trouver un moyen de le rendre dynamique -->
+          <!-- TODO : trouver un moyen de le rendre dynamique -->
           <h2><i class="fas fa-map-marker-alt"></i> <strong>Dieppe</strong> (76200)</h2>
           <img alt="" class="rounded image-event-infos" style="object-fit: none"
                src="../../../../assets/images/image-event-3.png">
@@ -37,8 +38,8 @@
         <div class="px-4">
           <mat-list>
             <h2>Organisateurs</h2>
-              <mat-List-item *ngFor="let member of listMembers$">
-                <app-user-card [user]="member"></app-user-card>
+              <mat-List-item *ngFor="let member of listUser">
+                <app-user-card [user]="member" [userSession]="this.userSession"></app-user-card>
               </mat-List-item>
           </mat-list>
         </div>

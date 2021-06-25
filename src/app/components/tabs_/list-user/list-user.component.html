@@ -1,5 +1,5 @@
 <div class="my-3">
   <div class="display-list-user" *ngFor="let user of listUser$;">
-    <app-user-card [user]="user" class="m-0"></app-user-card>
+    <app-user-card [user]="user" [userSession]="this.userSession" class="m-0"></app-user-card>
   </div>
 </div>

@@ -16,8 +16,9 @@ import {environment} from "../../../../environments/environment";
 export class EventInfosComponent implements OnInit {
 
   @Input('event') event : Event = new Event();
+  @Input('userSession') userSession: User;
   organisation$: Organisation;
-  listMembers$: User[];
+  listUser: User[] = [];
   constructor(private _organisationService: OrganisationService) {
 
   }
@@ -39,13 +40,11 @@ export class EventInfosComponent implements OnInit {
    //   }).addTo(map);
   // }
 
-  // TODO: Part du principe que Organisation se trouve dans la variable event
   private getOrganisationMembers() {
     this._organisationService.getOrganisationMembership(this.event.organisation.name).subscribe({
-      next: listOrganisationMembership => {
-        listOrganisationMembership.forEach(member =>{
-          this.listMembers$.push(member.user)
-        })
+      next: organisation => {
+        this.organisation$ = organisation;
+        this.parseMembership();
       },
       error: error => {
         if (!environment.production) {
@@ -55,5 +54,10 @@ export class EventInfosComponent implements OnInit {
     })
   }
 
+  private parseMembership(){
+    this.organisation$.members.forEach(orgaMembership => {
+      this.listUser.push(orgaMembership.user);
+    })
+  }
 
 }
