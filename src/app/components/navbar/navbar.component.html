@@ -1,0 +1,50 @@
+<mat-toolbar fxFlex fxLayout="row">
+  <div fxFlex fxLayoutAlign="start center">
+    <a routerLink="/">
+      <img alt="logo" height="75" src="../../../assets/images/logo.png">
+    </a>
+    <div>
+      <a class="m-4" href="#" matRipple>
+        <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
+      </a>
+    </div>
+    <div *ngIf="authService.isAuthenticated()">
+      <a class="m-4" href="#" matRipple>
+        <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
+      </a>
+      <a class="m-4" href="#" matRipple>
+        <fa-icon [icon]="faComments" size="2x"></fa-icon>
+      </a>
+    </div>
+    <div fxFlex fxLayoutAlign="center center">
+      <div class="form-group search-bar">
+        <fa-icon [icon]="faSearch"></fa-icon>
+        <label>
+          <input class="rounded-pill form-control" placeholder="Search" type="text">
+        </label>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!authService.isAuthenticated()" class="auth-buttons">
+    <button class="m-2" mat-flat-button routerLink="/login">Connexion</button>
+    <button class="m-2 register-button" mat-raised-button routerLink="/register">Inscription</button>
+  </div>
+  <div *ngIf="authService.isAuthenticated()">
+    <fa-icon [icon]="faBell" size="2x"></fa-icon>
+    <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="m-2" mat-raised-button>
+      <fa-icon [icon]="faUserFriends"></fa-icon>
+      username
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/profile">
+        <span>Profil</span>
+      </button>
+      <button mat-menu-item routerLink="/settings">
+        <span>Paramètres</span>
+      </button>
+      <button (click)="onDisconnect()" mat-menu-item>
+        <span>Déconnexion</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

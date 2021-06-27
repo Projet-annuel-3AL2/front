@@ -1,0 +1,17 @@
+<div (click)="onConversationSelect()" class="conversation-card container " fxFlex fxLayout="row">
+  <div fxFlex fxLayoutAlign="start center">
+    <img
+      [src]="getPicture() || 'https://picsum.photos/50/50'"
+      alt="" class="rounded-circle mx-2" width="50">
+    <div class="w-100" fxFlex fxLayout="row">
+      <div fxFlex fxFlexFill fxLayout="column" fxLayoutAlign="start start">
+        <p class="m-0 fw-bold username">{{getName() || "username"}}</p>
+        <p *ngIf="conversation.messages?.length > 0" class="m-0">{{conversation.messages[0]?.text}}</p>
+        <p *ngIf="conversation.messages?.length === 0" class="m-0">Commencer la conversation</p>
+      </div>
+      <div fxFlex fxLayoutAlign="end start">
+        <p *ngIf="conversation.messages?.length > 0" class="m-0">{{conversation.messages[0]?.createdAt | timeago}}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="container d-inline-block my-2">
+  <div *ngIf="message.user.id !== authService.getCurrentUserId(); else currentUser" class="float-start w-75" fxFlex
+       fxLayout="row">
+    <div class="rounded-circle profile-picture" fxFlex>
+      <img [alt]="message.user.username" [src]="message.user.profilePicture || 'https://picsum.photos/50/50'"
+           class="rounded-circle profile-picture" size="10px">
+    </div>
+    <div class="bg-light rounded-3 mx-2 p-2 w-75">
+      <p class="m-0 text-break">{{message.text}}</p>
+      <hr class="my-1">
+      <span class="m-0 text-break date">{{message.user.username}} | </span>
+      <span class="m-0 text-break date">{{message.createdAt | date:'MM/dd/yy, HH:mm'}}</span>
+    </div>
+  </div>
+  <ng-template #currentUser>
+    <div class="float-end w-75" fxFlex fxLayout="row">
+      <div class="bg-light rounded-3 mx-2 p-2 w-75">
+        <p class="m-0 text-break">{{message.text}}</p>
+        <hr class="my-1">
+        <span class="m-0 text-break date">{{message.user.username}} | </span>
+        <span class="m-0 text-break date">{{message.createdAt | date:'MM/dd/yy, HH:mm'}}</span>
+      </div>
+      <div class="rounded-circle profile-picture" fxFlex fxLayoutAlign="end end">
+        <img [alt]="message.user.username" [src]="message.user.profilePicture || 'https://picsum.photos/50/50'"
+             class="rounded-circle profile-picture" size="10px">
+      </div>
+    </div>
+  </ng-template>
+</div>
