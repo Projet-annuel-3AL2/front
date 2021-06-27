@@ -66,12 +66,6 @@ export class EventService {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/getMembers`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  // TODO: pas implémenter dans l'api
-  getEventRelatedToUser(userId: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventRelatedToUser/${userId}`);
-  }
-
-
   getNotEndEvent(): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }

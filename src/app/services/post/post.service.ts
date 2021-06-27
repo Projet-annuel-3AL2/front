@@ -26,22 +26,14 @@ export class PostService {
   }
 
   getLikePostById(postId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/${postId}/likes`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/${postId}/likes`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   deletePost(postId: string) {
     this.http.delete(`${environment.baseUrl}/${postId}`, {withCredentials: true});
   }
 
-    // TODO : commande identique
-  postPost(newPost: Post) {
-    this.http.post<Post>(`${environment.baseUrl}/post/`, JSON.stringify(newPost), {withCredentials: true}).subscribe({
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
-  }
-    createPost(post: Post) {
+  createPost(post: Post) {
     return this.http.post<Post>(`${environment.baseUrl}/post`, post);
   }
 
@@ -53,11 +45,6 @@ export class PostService {
     })
   }
 
-  //TODO : getPostByUserName() à implementer sur l'API
-  getPostWithUsername(username: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithUsername/${username}`);
-  }
-
   // TODO : getPostByEventId() à implementer sur L'API
   getPostWithEventId(eventId: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`);
@@ -66,4 +53,9 @@ export class PostService {
   getPostWithOrgaName(organisationName: string): Observable<Post[]>{
     return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostsOrganisation/${organisationName}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
+
+  getTimeline(userId): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/${userId}/0/0`)
+  }
+
 }

@@ -16,7 +16,6 @@ export class ListOrganisationSuggestionComponent implements OnInit {
               private _eventService: EventService) { }
 
   ngOnInit(): void {
-    // TODO: this.getSuggestionOrganisation() ne fonctionne pas
     this.getSuggestionOrganisation();
   }
 

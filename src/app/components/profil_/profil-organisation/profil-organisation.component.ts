@@ -40,11 +40,13 @@ export class ProfilOrganisationComponent implements OnInit {
     this.organisationName = this.route.snapshot.params['organisationName']
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
       this.userSession$=user;
+      this.isOwner();
+      this.isAdmin();
+      this.canFollow();
     });
     this.getOrganisation();
-    this.isOwner();
-    this.isAdmin();
-    this.canFollow();
+
+
   }
 
   private getOrganisation() {
@@ -76,29 +78,27 @@ export class ProfilOrganisationComponent implements OnInit {
 
   }
 
-  // TODO : isOwner pour modification Organisation
   isOwner() {
-    return true;
-    // return this.organisation$.owner.id == this.user.id;
+      if (this.organisation$.owner.id == this.userSession$.id){
+        this.isOwnerB = true
+      }
   }
 
-
-  // TODO: IsAdmin de l'event (fonction dé***)
   isAdmin() {
-    // this._eventService.getEventOrganisationMembership(this.organisation$.id).subscribe({
-    //   next: listMemberShip => {
-    //     listMemberShip.forEach(member => {
-    //       if (member.user.id == this.userSession$.id && member.isAdmin){
-    //         this.isAdminB = true;
-    //       }
-    //     })
-    //   },
-    //   error: error => {
-    //     if (!environment.production) {
-    //       console.error('Error: ', error);
-    //     }
-    //   }
-    // })
+    this._eventService.getEventOrganisationMembership(this.organisation$.id).subscribe({
+      next: listMemberShip => {
+        listMemberShip.forEach(member => {
+          if (member.user.id == this.userSession$.id && member.isAdmin){
+            this.isAdminB = true;
+          }
+        })
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
   }
 
 }

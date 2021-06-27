@@ -43,8 +43,6 @@ export class ProfilUserComponent implements OnInit {
     });
     // TODO: fonction pas activé
     this.getFullUser(username);
-    // this.getRelatedPost(username);
-    // this.getRelatedEvent(this.user.id);
     // this.getUserFriends(this.user.id);
     this.canAdd();
   }
@@ -53,6 +51,7 @@ export class ProfilUserComponent implements OnInit {
     this._userService.getFullUser(username).subscribe({
       next: user => {
         this.user$ = user
+        this.getTimeline(user.id);
       },
       error: error => {
         if (!environment.production) {
@@ -62,10 +61,10 @@ export class ProfilUserComponent implements OnInit {
     })
   }
 
-  private getRelatedPost(username: any) {
-    this._postService.getPostWithUsername(username).subscribe({
-      next: posts => {
-        this.listPost$ = posts
+  private getTimeline(userId: string) {
+    this._postService.getTimeline(userId).subscribe({
+      next: posts =>{
+        this.listPost$ = posts;
       },
       error: error => {
         if (!environment.production) {
@@ -73,32 +72,6 @@ export class ProfilUserComponent implements OnInit {
         }
       }
     })
-  }
-
-  private getRelatedEvent(userId: string) {
-    this._eventService.getEventRelatedToUser(userId).subscribe({
-      next: events => {
-        this.listEvent$ = events
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
-  private getUserFriends(userId: string) {
-    this._userService.getUserFriends(userId).subscribe({
-      next: users => {
-        this.listUser$ = users
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
   }
 
   // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)

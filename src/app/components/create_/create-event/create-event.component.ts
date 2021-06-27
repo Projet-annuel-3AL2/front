@@ -45,7 +45,7 @@ export class CreateEventComponent implements OnInit {
       this.user$=user;
     });
     // TODO: Récupération via base pas activé
-    // this.getAllCategories();
+    this.getAllCategories();
     // this.getListOrganisation();
   }
 

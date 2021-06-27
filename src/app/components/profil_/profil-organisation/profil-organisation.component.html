@@ -50,7 +50,7 @@
           </mat-tab>
           <mat-tab label="Membres">
             <div *ngIf="!isOwnerB && !isAdminB">
-              <mat-List-item *ngFor="let member of listMember$">
+              <mat-List-item *ngFor="let member of listMember$" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
                 <app-user-card [user]="member" [userSession]="this.userSession$"></app-user-card>
               </mat-List-item>
             </div>
