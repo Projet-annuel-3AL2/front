@@ -96,7 +96,6 @@ export class EventService {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
 
-  // TODO : fonction pas implémenter dans l'api
   getEventOrganisationMembership(eventId: string): Observable<OrganisationMembership[]>{
     return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`);
   }
@@ -105,5 +104,6 @@ export class EventService {
     return this.http.get<Event>(`${environment.baseUrl}/event/fullEvent/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
 
   }
+
 }
 //

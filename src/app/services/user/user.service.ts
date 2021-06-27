@@ -38,5 +38,9 @@ export class UserService {
   getUserFriends(userId: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
+
+  getFullUser(username: string): Observable<User> {
+    return this.http.get<User>(`${environment.baseUrl}/user/getFullUser/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
 }
 //

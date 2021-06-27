@@ -62,4 +62,8 @@ export class PostService {
   getPostWithEventId(eventId: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`);
   }
+
+  getPostWithOrgaName(organisationName: string): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostsOrganisation/${organisationName}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
 }

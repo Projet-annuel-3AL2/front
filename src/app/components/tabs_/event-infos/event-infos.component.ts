@@ -41,7 +41,7 @@ export class EventInfosComponent implements OnInit {
   // }
 
   private getOrganisationMembers() {
-    this._organisationService.getOrganisationMembership(this.event.organisation.name).subscribe({
+    this._organisationService.getFullOrganisation(this.event.organisation.name).subscribe({
       next: organisation => {
         this.organisation$ = organisation;
         this.parseMembership();

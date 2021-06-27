@@ -6,12 +6,12 @@
     <div class="profil-user-scroll">
       <div class="user-card-full">
         <img alt="" class="rounded" style="object-fit: none"
-             src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
+             src="{{user$.bannerPicture != undefined? user$.bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
              width="100%" height="300px">
         <div class="user-card-display" >
           <div class="user-card-div">
             <div class="user-card-img-profil">
-              <img [src]="user$.profilePicture || 'https://picsum.photos/50/50'" class="rounded-circle"
+              <img [src]="user$.profilePicture != undefined? user$.profilePicture.link: 'https://picsum.photos/50/50'" class="rounded-circle"
                    width="75" alt="">
             </div>
             <div class="user-card-username">
@@ -22,8 +22,8 @@
             </div>
             <div class="user-card-empty"></div>
             <div class="user-card-button-add">
-                <button *ngIf="canAdd(user$.id)" mat-raised-button class="ml-auto button-join-event" (click)="this.askFriend(user$.username)" ><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-                <button *ngIf="!canAdd(user$.id)" mat-raised-button class="ml-auto button-join-event" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user$.username)"> Enlever</button>
+                <button *ngIf="isCanAdd" mat-raised-button class="ml-auto button-join-event" (click)="this.askFriend(user$.username)" ><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+                <button *ngIf="!isCanAdd" mat-raised-button class="ml-auto button-join-event" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user$.username)"> Enlever</button>
             </div>
             <div class="user-card-menu">
               <div  class="dropdown" dropdown>
@@ -54,7 +54,7 @@
             <app-list-user [listUser]="listUser$" [userSession]="userSession"></app-list-user>
           </mat-tab>
           <mat-tab label="Événements">
-            <app-profil-list-event [listEvent]="listEvent$" [userSession]="userSession"></app-profil-list-event>
+            <app-profil-list-event [listEvent]="user$.eventsParticipation" [userSession]="userSession"></app-profil-list-event>
           </mat-tab>
         </mat-tab-group>
       </div>

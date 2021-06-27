@@ -39,9 +39,7 @@ export class OrganisationService {
     return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${orgaName}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getSuggestionOrganisation(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestionOrganisation`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
+
 
   // TODO: A faire coté api
   putOrganisation(originalName: string, organisation:Organisation){
@@ -70,9 +68,8 @@ export class OrganisationService {
     return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
   }
 
-  // TODO: getOrganisationMembership A faire coté API get MemberShip JOIN User
-  getOrganisationMembership(organisationName: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/getMembership/${organisationName}`)
+  getFullOrganisation(organisationName: string): Observable<Organisation> {
+    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/getFullOrganisation/${organisationName}`)
   }
 
   // TODO: deleteOrganisationMembership A faire coté API
@@ -93,5 +90,9 @@ export class OrganisationService {
   // TODO: pareil que pour giveAdminToMember, il faudrait faire un put
   removeAdminToAdminMember(userId: string, organisationId: string){
     this.http.put(`${environment.baseUrl}/organisation/removeAdminToAdminMember/${organisationId}/${userId}`, null);
+  }
+
+  getSuggestionOrganisation(): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestion/55`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 }

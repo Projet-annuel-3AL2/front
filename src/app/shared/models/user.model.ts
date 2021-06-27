@@ -2,6 +2,7 @@ import {Post} from "./post.model";
 import {Media} from "./media.model";
 import {Certification} from "./certification.model";
 import {Event} from "./event.model";
+import {Friendship} from "./friendship.model";
 
 export class User {
   id: string;
@@ -14,4 +15,5 @@ export class User {
   profilePicture?: Media;
   bannerPicture?: Media;
   certification?: Certification;
+  eventsParticipation?: Event[];
 }

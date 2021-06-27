@@ -24,6 +24,7 @@ export class ProfilUserComponent implements OnInit {
   listPost$: Post[];
   listEvent$: Event[];
   listUser$: User[];
+  isCanAdd: boolean = true;
 
   constructor(private _userService: UserService,
               private route: ActivatedRoute,
@@ -41,18 +42,17 @@ export class ProfilUserComponent implements OnInit {
 
     });
     // TODO: fonction pas activé
-    this.getUser(username);
+    this.getFullUser(username);
     // this.getRelatedPost(username);
     // this.getRelatedEvent(this.user.id);
     // this.getUserFriends(this.user.id);
+    this.canAdd();
   }
 
-  private getUser(username: string) {
-    this._userService.getByName(username).subscribe({
+  private getFullUser(username: string) {
+    this._userService.getFullUser(username).subscribe({
       next: user => {
         this.user$ = user
-        this.listPost$ = user.createdPosts
-        console.log(this.listPost$)
       },
       error: error => {
         if (!environment.production) {
@@ -102,8 +102,8 @@ export class ProfilUserComponent implements OnInit {
   }
 
   // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
-  canAdd(id: string) {
-    return false;
+  canAdd() {
+    this.isCanAdd = true;
   }
   dellFriend(username: string) {
     // this._friendshipService.removeFriendship(username);
