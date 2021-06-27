@@ -40,7 +40,6 @@ export class CardUserMangeEventComponent implements OnInit {
     // this._friendshipService.removeFriendship(username)
   }
 
-  // TODO : Ne fonctionne pas
   deleteParticipantEvent(userId: string) {
     this._eventService.deleteParticipantEvent(this.eventId, userId).subscribe({
       next: () => {
