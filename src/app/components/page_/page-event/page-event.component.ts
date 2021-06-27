@@ -26,6 +26,8 @@ export class PageEventComponent implements OnInit {
   userSession$: User;
   listParticipant$: User[];
   isAbleToJoin: boolean = true;
+  isOwnerB: boolean = false;
+  isAdminB: boolean = false;
 
   constructor(private _activatedRoute:ActivatedRoute,
               private _router:Router,
@@ -39,12 +41,13 @@ export class PageEventComponent implements OnInit {
   ngOnInit(): void {
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
       this.userSession$=user;
+      this.isOwner();
+      this.isAdmin();
     });
     this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
     this.getEvent();
 
     // this.getPosts();
-    // TODO: peut-être changer l'url pour avoir le nom au lieu de l'id ?
   }
 
   private getPosts() {
@@ -123,29 +126,28 @@ export class PageEventComponent implements OnInit {
     });
   }
 
-  // TODO: IsOwner() dela page-event
+
   isOwner() {
-    return true;
-    // return this.event.creator.id == this.user.id;
+    if(this.event.creator.id == this.userSession$.id){
+      this.isOwnerB = true;
+    }
   }
 
-  // TODO: IsAdmin de l'event (fonction dé***)
   isAdmin() {
-    let isAdmin = false;
-    // this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
-    //   next: listMemberShip => {
-    //     listMemberShip.forEach(member => {
-    //       if (member.user.id == this.user.id && member.isAdmin){
-    //         isAdmin = true;
-    //       }
-    //     })
-    //   },
-    //   error: error => {
-    //     if (!environment.production) {
-    //       console.error('Error: ', error);
-    //     }
-    //   }
-    // })
-    return isAdmin;
+    this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
+      next: listMemberShip => {
+        listMemberShip.forEach(member => {
+          if (member.user.id == this.userSession$.id && member.isAdmin){
+            this.isAdminB = true;
+          }
+        })
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+
   }
 }

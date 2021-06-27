@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {PostService} from "../../../services/post/post.service";
 import {Post} from "../../../shared/models/post.model";
 import {environment} from "../../../../environments/environment";
+import {UserService} from "../../../services/user/user.service";
+import {User} from "../../../shared/models/user.model";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-timeline',
@@ -11,15 +14,22 @@ import {environment} from "../../../../environments/environment";
 export class TimelineComponent implements OnInit {
 
   listPost$: Post[];
+  userSession: User;
 
-  constructor(private _postService: PostService) { }
+  constructor(private _postService: PostService,
+              private _userService: UserService,
+              private _authService: AuthService) { }
 
   ngOnInit(): void {
-    // this.getPosts();
+    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+      this.userSession=user;
+      this.getTimeline();
+    });
+
   }
 
-  private getPosts() {
-    this._postService.getAllPost().subscribe({
+  private getTimeline() {
+    this._postService.getTimeline(this.userSession.id).subscribe({
       next: posts => {
         this.listPost$ = posts;
       },
