@@ -7,6 +7,9 @@ import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {EventService} from "../../../services/event/event.service";
+import {PostService} from "../../../services/post/post.service";
+import {Post} from "../../../shared/models/post.model";
 
 @Component({
   selector: 'app-profil-organisation',
@@ -20,25 +23,32 @@ export class ProfilOrganisationComponent implements OnInit {
   organisationName: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
-  listMember$: User[];
-
+  listMember$: User[]= [];
+  isOwnerB: boolean = false;
+  isAdminB: boolean = false;
+  isCanFollow: boolean = true;
+  listPosts$: Post[];
   constructor(private _organisationService: OrganisationService,
               private route: ActivatedRoute,
               private _userService: UserService,
-              private _authService: AuthService
+              private _authService: AuthService,
+              private _eventService: EventService,
+              private _postService: PostService
   ) { }
 
   ngOnInit(): void {
     this.organisationName = this.route.snapshot.params['organisationName']
-
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
       this.userSession$=user;
     });
-    // this.getOrganisation();
+    this.getOrganisation();
+    this.isOwner();
+    this.isAdmin();
+    this.canFollow();
   }
 
   private getOrganisation() {
-    this._organisationService.getOrganisationMembership(this.organisationName).subscribe({
+    this._organisationService.getFullOrganisation(this.organisationName).subscribe({
       next: organisation => {
         this.organisation$ = organisation;
         this.organisation$.members.forEach(orgaMembership => {
@@ -55,7 +65,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   // TODO : Implémenter la fonctionnalité de follow
   canFollow() {
-    return false;
+    this.isCanFollow = true;
   }
 
   followOrganisation(name: string) {
@@ -75,12 +85,11 @@ export class ProfilOrganisationComponent implements OnInit {
 
   // TODO: IsAdmin de l'event (fonction dé***)
   isAdmin() {
-    let isAdmin = false;
-    // this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
+    // this._eventService.getEventOrganisationMembership(this.organisation$.id).subscribe({
     //   next: listMemberShip => {
     //     listMemberShip.forEach(member => {
-    //       if (member.user.id == this.user.id && member.isAdmin){
-    //         isAdmin = true;
+    //       if (member.user.id == this.userSession$.id && member.isAdmin){
+    //         this.isAdminB = true;
     //       }
     //     })
     //   },
@@ -90,6 +99,6 @@ export class ProfilOrganisationComponent implements OnInit {
     //     }
     //   }
     // })
-    return isAdmin;
   }
+
 }

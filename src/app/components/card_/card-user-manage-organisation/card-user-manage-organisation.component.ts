@@ -77,7 +77,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
   userIsAdmin(userId: string) {
     let isAdmin = false;
 
-    this._organisationService.getOrganisationMembership(this.organisation.id).subscribe({
+    this._organisationService.getFullOrganisation(this.organisation.id).subscribe({
       next: organisation => {
         organisation.members.forEach(member => {
           if (member.user.id == userId && member.isAdmin){

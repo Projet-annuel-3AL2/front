@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {OrganisationService} from "../../services/organisation/organisation.service";
 import {Organisation} from "../../shared/models/organisation.model";
 import {environment} from "../../../environments/environment";
+import {EventService} from "../../services/event/event.service";
 
 @Component({
   selector: 'app-list-organisation-suggestion',
@@ -11,19 +12,20 @@ import {environment} from "../../../environments/environment";
 export class ListOrganisationSuggestionComponent implements OnInit {
 
   listOrganisation$: Organisation[];
-  constructor(private organisationService: OrganisationService) { }
+  constructor(private _organisationService: OrganisationService,
+              private _eventService: EventService) { }
 
   ngOnInit(): void {
     // TODO: this.getSuggestionOrganisation() ne fonctionne pas
-    // this.getSuggestionOrganisation();
+    this.getSuggestionOrganisation();
   }
 
   private getSuggestionOrganisation() {
-    this.organisationService.getSuggestionOrganisation().subscribe({
-      next: data => {
-        this.listOrganisation$ = data;
+    this._organisationService.getSuggestionOrganisation().subscribe({
+      next: organisations => {
+        this.listOrganisation$ = organisations;
       },
-        error: error => {
+      error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
         }
