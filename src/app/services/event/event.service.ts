@@ -9,6 +9,7 @@ import {User} from "../../shared/models/user.model";
 import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
 import {Organisation} from "../../shared/models/organisation.model";
 import {RechercheEventModel} from "../../shared/models/rechercheEvent.model";
+import {Post} from "../../shared/models/post.model";
 
 @Injectable({
   providedIn: 'root'
@@ -62,15 +63,17 @@ export class EventService {
     })
   }
 
-  getEventMembers(eventId: string): Observable<Event> {
-    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/getMembers`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getEventMembers(eventId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/event/${eventId}/getMembers`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getNotEndEvent(): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/is-finished`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-
+  getEventPosts(eventId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/event/${eventId}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
 
 
 
