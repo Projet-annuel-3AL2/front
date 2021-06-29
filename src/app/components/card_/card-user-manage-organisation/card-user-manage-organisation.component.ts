@@ -8,7 +8,6 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
-import {AddFriendEnum} from "../../../shared/addFriend.enum";
 import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
 
 @Component({

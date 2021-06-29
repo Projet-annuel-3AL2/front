@@ -1,6 +1,6 @@
 <div class="rounded-pill border d-flex p-2 card-user my-3">
   <div class="mr-2">
-    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'"  [routerLink]="['/user/' + user.username]" class="rounded-circle"
+    <img [src]="user.profilePicture != undefined? user.profilePicture.link :'https://picsum.photos/50/50'"  [routerLink]="['/user/' + user.username]" class="rounded-circle"
          width="50" alt="">
   </div>
   <div class="spacer"></div>
