@@ -14,11 +14,11 @@ export class UserService {
   constructor(private http: HttpClient, private authService: AuthService) {
   }
 
-  getById(userId: string): Observable<User> {
+  getByUsername(userId: string): Observable<User> {
     return this.http.get<User>(`${environment.baseUrl}/user/${userId}`);
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this.authService.getCurrentUserId()}/conversations`);
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this.authService.getCurrentUsername()}/conversations`);
   }
 }
