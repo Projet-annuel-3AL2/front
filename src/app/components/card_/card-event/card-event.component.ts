@@ -23,7 +23,7 @@ export class CardEventComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    // TODO: Ajouter le getEvent avec relations
     this.canJoin();
   }
 
@@ -63,8 +63,8 @@ export class CardEventComponent implements OnInit {
   }
 
   canJoin() {
-    this._eventService.getEventMembers(this.event.id).subscribe(event => {
-      event.participants.forEach(user => {
+    this._eventService.getEventMembers(this.event.id).subscribe(users => {
+      users.forEach(user => {
         if (user.id == this.userSession.id){
           this.isAbleToJoin = false;
         }
