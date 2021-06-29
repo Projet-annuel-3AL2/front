@@ -17,6 +17,7 @@ export class EventInfosComponent implements OnInit {
 
   @Input('event') event : Event = new Event();
   @Input('userSession') userSession: User;
+  @Input('participantsNumber') participantNumber: number;
   organisation$: Organisation;
   listUser: User[] = [];
   constructor(private _organisationService: OrganisationService) {
@@ -24,27 +25,16 @@ export class EventInfosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.organisation$ = this.event.organisation;
     this.getOrganisationMembers();
   }
 
-
-   // getMap() {
-   //  let map = L.map('eventInfoMap').setView([this.event_.latitude, this.event_.latitude], 13);
-   //   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-   //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-   //     maxZoom: 18,
-   //     id: 'mapbox/streets-v11',
-   //     tileSize: 512,
-   //     zoomOffset: -1,
-   //     accessToken: 'your.mapbox.access.token'
-   //   }).addTo(map);
-  // }
-
   private getOrganisationMembers() {
-    this._organisationService.getFullOrganisation(this.event.organisation.name).subscribe({
-      next: organisation => {
-        this.organisation$ = organisation;
-        this.parseMembership();
+    this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
+      next: organisationMemberships => {
+        organisationMemberships.forEach(organisationMembership => {
+          this.listUser.push(organisationMembership.user)
+        })
       },
       error: error => {
         if (!environment.production) {
@@ -54,10 +44,16 @@ export class EventInfosComponent implements OnInit {
     })
   }
 
-  private parseMembership(){
-    this.organisation$.members.forEach(orgaMembership => {
-      this.listUser.push(orgaMembership.user);
-    })
-  }
+  // getMap() {
+  //  let map = L.map('eventInfoMap').setView([this.event_.latitude, this.event_.latitude], 13);
+  //   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+  //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  //     maxZoom: 18,
+  //     id: 'mapbox/streets-v11',
+  //     tileSize: 512,
+  //     zoomOffset: -1,
+  //     accessToken: 'your.mapbox.access.token'
+  //   }).addTo(map);
+  // }
 
 }
