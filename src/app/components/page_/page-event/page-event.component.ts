@@ -41,8 +41,6 @@ export class PageEventComponent implements OnInit {
   ngOnInit(): void {
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
       this.userSession$=user;
-      this.isOwner();
-      this.isAdmin();
     });
     this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
     this.getEvent();
@@ -50,29 +48,16 @@ export class PageEventComponent implements OnInit {
     // this.getPosts();
   }
 
-  private getPosts() {
-    this._postService.getPostWithEventId(this.event.id).subscribe({
-      next: data => {
-        this.listPost$ = data;
-
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
-
   private getEvent() {
-    this._eventService.getEventFull(this.eventId).subscribe({
+    this._eventService.getEventById(this.eventId).subscribe({
       next: data => {
         this.event = data;
-        this.canJoin();
+        this.isOwner();
+        this.isAdmin();
+        this.getPosts();
+        this.getParticipants();
       },
       error: error => {
-
         if (!environment.production) {
           console.error('Error: ', error);
         }
@@ -80,15 +65,34 @@ export class PageEventComponent implements OnInit {
     })
   }
 
-  canJoin() {
 
-    this._eventService.getEventMembers(this.event.id).subscribe({
-      next: event =>{
-        event.participants.forEach(user => {
-          if (user.id == this.userSession$.id){
-            this.isAbleToJoin = false;
+  isOwner() {
+    if(this.event.creator.id == this.userSession$.id){
+      this.isOwnerB = true;
+    }
+  }
+
+  isAdmin() {
+    this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
+      next: organisationMemberships => {
+        organisationMemberships.forEach(organisationMembership => {
+          if (organisationMembership.user.id == this.userSession$.id && organisationMembership.isAdmin){
+            this.isAdminB = true;
           }
-        });
+        })
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getPosts() {
+    this._eventService.getEventPosts(this.event.id).subscribe({
+      next: posts => {
+        this.listPost$ = posts;
       },
       error: error => {
         if (!environment.production) {
@@ -96,11 +100,35 @@ export class PageEventComponent implements OnInit {
         }
       }
     });
+  }
 
+  private getParticipants() {
+    this._eventService.getEventMembers(this.eventId).subscribe({
+      next: listUser =>{
+        this.listParticipant$ = listUser;
+        this.canJoin();
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+
+  canJoin() {
+    if (this.listParticipant$ != null){
+      this.listParticipant$.forEach(user => {
+        if (user.id == this.userSession$.id){
+          this.isAbleToJoin = false;
+        }
+      })
+    }
   }
 
   joinEvent(id: string) {
-    this._eventService.postAddParticipant(this.userSession$.id, id).subscribe({
+    this._eventService.postAddParticipant(id).subscribe({
       next: () =>{
         this.isAbleToJoin = false;
       },
@@ -124,30 +152,5 @@ export class PageEventComponent implements OnInit {
         }
       }
     });
-  }
-
-
-  isOwner() {
-    if(this.event.creator.id == this.userSession$.id){
-      this.isOwnerB = true;
-    }
-  }
-
-  isAdmin() {
-    this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
-      next: listMemberShip => {
-        listMemberShip.forEach(member => {
-          if (member.user.id == this.userSession$.id && member.isAdmin){
-            this.isAdminB = true;
-          }
-        })
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-
   }
 }

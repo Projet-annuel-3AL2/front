@@ -43,7 +43,6 @@
               <p><i class="fas fa-clock"></i>  {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} -- {{event.endDate.toString() | slice: 11 : 16}}</p>
             </div>
           </div>
-
         </div>
       </div>
           <div class="tab-event" >
@@ -52,7 +51,7 @@
                 <app-list-post [listPost]="listPost$"></app-list-post>
               </mat-tab>
               <mat-tab label="Infos">
-                <app-event-infos [event]="event" [userSession]="userSession$"></app-event-infos>
+                <app-event-infos [event]="event" [userSession]="userSession$" [participantsNumber]="event.participants.length"></app-event-infos>
               </mat-tab>
               <mat-tab label="Participants">
                 <div class="my-3" *ngIf="!isOwnerB && !isAdminB">
