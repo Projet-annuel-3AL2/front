@@ -17,6 +17,8 @@ export class PostComponent implements OnInit, OnDestroy {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   private timeSubscription: Subscription;
+  showComments: boolean=true;
+  text:string;
 
   constructor(private postService: PostService) {
   }
