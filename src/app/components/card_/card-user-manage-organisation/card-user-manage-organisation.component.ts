@@ -8,6 +8,8 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
+import {AddFriendEnum} from "../../../shared/addFriend.enum";
+import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
 
 @Component({
   selector: 'app-card-user-manage-organisation',
@@ -21,18 +23,56 @@ export class CardUserManageOrganisationComponent implements OnInit {
   @Input('userSession') userSession: User;
   faCheckCircle = faCheckCircle;
 
+  canAdd: number = 0;
+  isAdminOrga: boolean = false;
+  isOwner: boolean = false;
+  userIsAdmin: boolean = false;
+
   constructor(private _friendshipService: FriendshipService,
               private _authService: AuthService,
               private _userService: UserService,
               private _organisationService: OrganisationService) { }
 
   ngOnInit(): void {
-    console.log(this.user.id + "  " + this.userSession.id)
+    this.canAddFriend();
+    this.isUserAdminFormOrga();
+    this.isOwnerOrga();
+    this.userIsAdminOrga();
   }
 
   // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
-  canAdd(userId: string) {
-    return true;
+  canAddFriend() {
+    this.canAdd = 0;
+  }
+
+  private isOwnerOrga() {
+    this.isOwner = this.organisation.owner.id == this.userSession.id;
+  }
+
+  private userIsAdminOrga() {
+    this._organisationService.getMembersOrga(this.organisation.id).subscribe({
+        next: organisationMemberships => {
+          organisationMemberships.forEach(organisationMembership => {
+            // Vérifie que l'UserSession est admin
+            if (organisationMembership.user.id == this.userSession.id && organisationMembership.isAdmin){
+              this.isAdminOrga = true;
+            }
+            // Vérifie que l'User passer en paramètre est admin
+            if (organisationMembership.user.id == this.user.id && organisationMembership.isAdmin){
+              this.userIsAdmin = true;
+            }
+          })
+        },
+        error: error => {
+          if (!environment.production) {
+            console.error('Error: ', error);
+          }
+        }
+    });
+  }
+
+  private isUserAdminFormOrga() {
+
   }
 
   askFriend(username: string) {
@@ -47,53 +87,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
     this._organisationService.deleteOrganisationMembership(userId, this.organisation.id);
   }
 
-  // TODO: IsOwner() dela page-event
-  isOwner() {
-    return true;
-    // return this.event.creator.id == this.user.id;
-  }
-
-  // TODO: canRemove from Organisation la
-  canRemoveUser(id: string): Boolean {
-    let canRemove = false;
-
-    // this._organisationService.getOrganisationMembership(this.organisation.id).subscribe({
-    //   next: listMemberShip => {
-    //     listMemberShip.forEach(member => {
-    //       if (member.user.id == this.user.id && member.isAdmin){
-    //         canRemove = true;
-    //       }
-    //     })
-    //   },
-    //   error: error => {
-    //     if (!environment.production) {
-    //       console.error('Error: ', error);
-    //     }
-    //   }
-    // })
-    return canRemove;
-  }
-
-  userIsAdmin(userId: string) {
-    let isAdmin = false;
-
-    this._organisationService.getFullOrganisation(this.organisation.id).subscribe({
-      next: organisation => {
-        organisation.members.forEach(member => {
-          if (member.user.id == userId && member.isAdmin){
-            isAdmin = true;
-          }
-        })
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-    return isAdmin;
-  }
-
   giveAdmin(userId: string) {
     this._organisationService.giveAdminToMember(userId, this.organisation.id);
   }
@@ -101,5 +94,4 @@ export class CardUserManageOrganisationComponent implements OnInit {
   removeAdmin(userId: string) {
     this._organisationService.removeAdminToAdminMember(userId, this.organisation.id);
   }
-
 }

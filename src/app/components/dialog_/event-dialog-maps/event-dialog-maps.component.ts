@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {EventDialogData} from "../event-filter/event-filter.component";
+import {EventDialogData} from "../../event_/event-filter/event-filter.component";
 
 @Component({
   selector: 'app-event-dialog-maps',

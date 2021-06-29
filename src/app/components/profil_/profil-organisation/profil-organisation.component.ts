@@ -28,6 +28,7 @@ export class ProfilOrganisationComponent implements OnInit {
   isAdminB: boolean = false;
   isCanFollow: boolean = true;
   listPosts$: Post[];
+
   constructor(private _organisationService: OrganisationService,
               private route: ActivatedRoute,
               private _userService: UserService,
@@ -45,8 +46,6 @@ export class ProfilOrganisationComponent implements OnInit {
       this.canFollow();
     });
     this.getOrganisation();
-
-
   }
 
   private getOrganisation() {

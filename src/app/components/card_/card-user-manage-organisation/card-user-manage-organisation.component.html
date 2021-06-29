@@ -9,11 +9,12 @@
   <div *ngIf="user.id !== userSession.id">
     <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
     <mat-menu #menu="matMenu" >
-      <button *ngIf="canAdd(user.id)" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
-      <button *ngIf="!canAdd(user.id)" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
-      <button *ngIf="canRemoveUser(user.id) || isOwner()" mat-menu-item (click)="this.deleteMembership(user.id)">Retirer Participant</button>
-      <button *ngIf="(canRemoveUser(user.id) || isOwner()) && userIsAdmin(user.id)" mat-menu-item (click)="this.giveAdmin(user.id)">Donner Admin</button>
-      <button *ngIf="isOwner()" mat-menu-item (click)="this.removeAdmin(user.id)">Retirer Admin</button>
+      <button *ngIf="canAdd == 0" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
+      <button *ngIf="canAdd == 1" mat-menu-item>Requête envoyé</button>
+      <button *ngIf="canAdd == 2" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
+      <button *ngIf="isOwner || (isAdminOrga && !userIsAdmin) " mat-menu-item (click)="this.deleteMembership(user.id)">Retirer de l'Orga</button>
+      <button *ngIf="isOwner && !userIsAdmin" mat-menu-item (click)="this.giveAdmin(user.id)">Donner Admin</button>
+      <button *ngIf="isOwner && userIsAdmin" mat-menu-item (click)="this.removeAdmin(user.id)">Retirer Admin</button>
     </mat-menu>
   </div>
 </div>
