@@ -31,6 +31,10 @@ export class OrganisationService {
     return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
+  getOrganisation(organisationId: string): Observable<Organisation> {
+    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`,{headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
   getOrganisationPosts(organisationId: string): Observable<Post[]>{
     return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${organisationId}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
