@@ -48,5 +48,9 @@ export class UserService {
   getParticipations(username: string): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`,{headers: {'Access-Control-Allow-Origin': '*'}});
   }
+
+  getFriends(username: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
+  }
 }
 //
