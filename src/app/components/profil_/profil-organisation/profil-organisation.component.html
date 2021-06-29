@@ -45,8 +45,7 @@
       <div class="tab-event  ">
         <mat-tab-group dynamicHeight mat-align-tabs="center">
           <mat-tab label="Post">
-<!--           TODO: Récupérer les posts dans organisations
-              <app-list-post [listPost]="organisation$.posts"></app-list-post>-->
+              <app-list-post [listPost]="organisation$.posts"></app-list-post>
           </mat-tab>
           <mat-tab label="Membres">
             <div *ngIf="!isOwnerB && !isAdminB">

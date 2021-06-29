@@ -20,7 +20,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   faCheckCircle = faCheckCircle;
   organisation$: Organisation;
-  organisationName: string;
+  organisationId: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
   listMember$: User[]= [];
@@ -38,22 +38,44 @@ export class ProfilOrganisationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.organisationName = this.route.snapshot.params['organisationName']
+    this.organisationId = this.route.snapshot.params['id']
     this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
       this.userSession$=user;
-      this.isOwner();
-      this.isAdmin();
-      this.canFollow();
     });
     this.getOrganisation();
   }
 
   private getOrganisation() {
-    this._organisationService.getFullOrganisation(this.organisationName).subscribe({
+    this._organisationService.getOrganisation(this.organisationId).subscribe({
       next: organisation => {
         this.organisation$ = organisation;
-        this.organisation$.members.forEach(orgaMembership => {
-          this.listMember$.push(orgaMembership.user);
+        this.getOrganisationMember();
+        this.isOwner();
+        this.canFollow();
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  isOwner() {
+      if (this.organisation$.owner.id == this.userSession$.id){
+        this.isOwnerB = true
+      }
+  }
+
+  private getOrganisationMember() {
+    this._organisationService.getMembersOrga(this.organisationId).subscribe({
+      next: listMemberShip => {
+        listMemberShip.forEach(member => {
+          this.listMember$.push(member.user)
+          // isAdmin()
+          if (member.user.id == this.userSession$.id && member.isAdmin){
+            this.isAdminB = true;
+          }
         })
       },
       error: error => {
@@ -76,28 +98,4 @@ export class ProfilOrganisationComponent implements OnInit {
   unFollowOrganisation(name: string) {
 
   }
-
-  isOwner() {
-      if (this.organisation$.owner.id == this.userSession$.id){
-        this.isOwnerB = true
-      }
-  }
-
-  isAdmin() {
-    this._eventService.getEventOrganisationMembership(this.organisation$.id).subscribe({
-      next: listMemberShip => {
-        listMemberShip.forEach(member => {
-          if (member.user.id == this.userSession$.id && member.isAdmin){
-            this.isAdminB = true;
-          }
-        })
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
 }
