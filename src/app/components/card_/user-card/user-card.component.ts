@@ -30,7 +30,7 @@ export class UserCardComponent implements OnInit {
   }
 
   canAdd() {
-    this._friendshipService.isFriendshipRequested(this.user.id, this.userSession.id).subscribe({
+    this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
       next: requestStatus => {
         this.friendshipRequest = requestStatus;
       }
@@ -38,7 +38,7 @@ export class UserCardComponent implements OnInit {
   }
 
   askFriend() {
-    this._friendshipService.postFriendship(this.user.id).subscribe({
+    this._friendshipService.postFriendship(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = this.allFriendRequestStatus.PENDING;
       },
@@ -51,7 +51,7 @@ export class UserCardComponent implements OnInit {
   }
 
   dellFriend() {
-    this._friendshipService.removeFriendship(this.user.id).subscribe({
+    this._friendshipService.removeFriendship(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = this.allFriendRequestStatus.NONE;
       },
@@ -66,7 +66,7 @@ export class UserCardComponent implements OnInit {
   showDialogueRespondFriendRequest() {
     const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
       width: '500px',
-      data: {userId: this.user.id}
+      data: {userId: this.user.username}
     });
 
     dialogRef.afterClosed().subscribe(result => {

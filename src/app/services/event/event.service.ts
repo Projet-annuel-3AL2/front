@@ -93,7 +93,7 @@ export class EventService {
   getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
     return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
-  
+
   getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
