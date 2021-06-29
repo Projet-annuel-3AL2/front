@@ -1,1 +1,8 @@
-<p>dialog-res-friendship-request works!</p>
+<h1 mat-dialog-title>Accepter la demande</h1>
+<div mat-dialog-content>
+  <button mat-button [mat-dialog-close]="friendshipRequestStatus" (click)="acceptFriendship()" cdkFocusInitial>Valider</button>
+  <button mat-button [mat-dialog-close]="friendshipRequestStatus" (click)="delFriendshipRequest()">Refuser</button>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Quitter</button>
+</div>
