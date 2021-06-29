@@ -13,24 +13,24 @@ export class FriendshipService {
 
   constructor(private http: HttpClient) { }
 
-  postFriendship(userId: string): Observable<Friendship>{
-    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${userId}`, null);
+  postFriendship(username: string): Observable<Friendship>{
+    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, null,{headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  acceptFriendship(userId: string): Observable<Friendship> {
-    return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${userId}`, null);
+  acceptFriendship(username: string): Observable<Friendship> {
+    return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  rejectFriendship(userId: string){
-    return this.http.delete(`${environment.baseUrl}/friendship/${userId}/reject`)
+  rejectFriendship(username: string){
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  removeFriendship(userId: string): Observable<any> {
-    return this.http.delete(`${environment.baseUrl}/friendship/${userId}/remove`);
+  removeFriendship(username: string): Observable<any> {
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  putFriendship(userId: string){
-    this.http.put(`${environment.baseUrl}/friendship/${userId}`, null).subscribe({
+  putFriendship(username: string){
+    this.http.put(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
       error: error => {
         if (!environment.production){
           console.error('There was an error!', error);
@@ -39,11 +39,12 @@ export class FriendshipService {
     })
   }
 
-  isFriendshipRequested(userId: string, userSessionId: string): Observable<FriendRequestStatus> {
-    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${userId}/${userSessionId}`)
+  isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
+    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
-  isFriendship(userId: string, userSessionId: string): Observable<boolean> {
-    return  this.http.get<boolean>(`${environment.baseUrl}`)// TODO : url à remplacer
+  getSentFriendshipRequest(): Observable<Friendship> {
+    return this.http.get<Friendship>(`${environment.baseUrl}/friendship/sent-friendship-request`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
+
 }

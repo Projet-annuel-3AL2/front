@@ -28,8 +28,8 @@ export class EventService {
     })
   }
 
-  postAddParticipant(userId: string, eventId: string): Observable<Object> {
-    return this.http.post<any>(`${environment.baseUrl}/event/addParticipant`, {userId, eventId}, {headers: {'Access-Control-Allow-Origin': '*'}});
+  postAddParticipant(eventId: string): Observable<Object> {
+    return this.http.post<any>(`${environment.baseUrl}/event/${eventId}/join`,  {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getAllEvent(): Observable<Event[]> {
@@ -67,14 +67,18 @@ export class EventService {
   }
 
   getNotEndEvent(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/notEndEvent`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/is-finished`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
 
-  //TODO : getEventWithRecherche() A implémenter voire refecto
-  getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
+
+
+
+  getEventOrganisationMembership(eventId: string): Observable<OrganisationMembership[]>{
+    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`);
   }
+
+
   // TODO : Les fonctions sont implémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
   getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {
@@ -89,15 +93,9 @@ export class EventService {
   getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
     return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
-
-  getEventOrganisationMembership(eventId: string): Observable<OrganisationMembership[]>{
-    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`);
+  
+  getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
-
-  getEventFull(eventId: string): Observable<Event> {
-    return this.http.get<Event>(`${environment.baseUrl}/event/fullEvent/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
-
-  }
-
 }
 //

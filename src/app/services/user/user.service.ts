@@ -11,6 +11,7 @@ import {Observable} from "rxjs";
 import {Conversation} from "../../shared/models/conversation.model";
 import {AuthService} from "../auth/auth.service";
 import {environment} from "../../../environments/environment";
+import {Group} from "../../shared/models/group.model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,22 +26,27 @@ export class UserService {
     return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getById(userId: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getGroups(): Observable<Group[]> {
+    return this.http.get<Group[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/groups`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+  getById(username: string): Observable<User> {
+    return this.http.get<User>(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  // TODO : getByName() pas implémenter sur l'API
-  getByName(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/getWithUsername/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getPosts(username: string): Observable<User> {
+    return this.http.get<User>(`${environment.baseUrl}/user/${username}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
-  // TODO: getUserFriends() pas implémenter sur l'API
-  getUserFriends(userId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  deleteUser(username: string): Observable<any> {
+    return this.http.delete(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
-  getFullUser(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/getFullUser/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  putUser(user: User): Observable<any> {
+    return this.http.put(`${environment.baseUrl}/user/${user.username}`, user, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  getParticipations(username: string): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`,{headers: {'Access-Control-Allow-Origin': '*'}});
   }
 }
 //
