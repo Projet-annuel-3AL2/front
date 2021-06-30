@@ -39,22 +39,20 @@ export class PageEventComponent implements OnInit {
               ) { }
 
   ngOnInit(): void {
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession$=user;
     });
     this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
     this.getEvent();
-
-    // this.getPosts();
   }
 
   private getEvent() {
-    this._eventService.getEventById(this.eventId).subscribe({
+    this._eventService.getProfil(this.eventId).subscribe({
       next: data => {
         this.event = data;
         this.isOwner();
-        this.isAdmin();
-        this.getPosts();
+        // this.isAdmin();
+        // this.getPosts();
         this.getParticipants();
       },
       error: error => {
@@ -67,28 +65,26 @@ export class PageEventComponent implements OnInit {
 
 
   isOwner() {
-    if(this.event.creator.id == this.userSession$.id){
+    if(this.event.user.id == this.userSession$.id){
       this.isOwnerB = true;
     }
   }
 
+  // TODO : ne fonctionne pas
   isAdmin() {
-    this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
-      next: organisationMemberships => {
-        organisationMemberships.forEach(organisationMembership => {
-          if (organisationMembership.user.id == this.userSession$.id && organisationMembership.isAdmin){
-            this.isAdminB = true;
-          }
-        })
+    this._organisationService.isAdmin(this.event.organisation.id).subscribe({
+      next: bool => {
+        this.isAdminB = bool;
       },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
         }
       }
-    })
+    });
   }
 
+  // TODO : Ne fonctionne pas
   private getPosts() {
     this._eventService.getEventPosts(this.event.id).subscribe({
       next: posts => {

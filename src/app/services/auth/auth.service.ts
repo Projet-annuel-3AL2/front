@@ -53,4 +53,5 @@ export class AuthService {
   public getCurrentUsername(): string {
     return JSON.parse(localStorage.getItem('user'));
   }
+
 }

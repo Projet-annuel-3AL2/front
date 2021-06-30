@@ -13,7 +13,7 @@ import {environment} from "../../../../environments/environment";
 })
 export class CardEventComponent implements OnInit {
 
-  @Input("event") event : Event = new Event()
+  @Input("event") event : Event = new Event();
   @Input('userSession') userSession: User;
   isAbleToJoin: boolean = true;
   constructor(
@@ -23,8 +23,9 @@ export class CardEventComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getEvent();
     // TODO: Ajouter le getEvent avec relations
-    this.canJoin();
+    // this.canJoin();
   }
 
 
@@ -72,4 +73,16 @@ export class CardEventComponent implements OnInit {
     });
   }
 
+  private getEvent() {
+    this._eventService.getProfil(this.event.id).subscribe({
+      next: event =>{
+        this.event = event;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
 }
