@@ -100,5 +100,14 @@ export class EventService {
   getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
+
+  getSuggestion(): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/suggestion`);
+  }
+
+  getProfil(eventId: string): Observable<Event> {
+    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/profil`);
+  }
+
 }
 //
