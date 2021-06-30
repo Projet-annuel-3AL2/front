@@ -13,7 +13,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 })
 export class TimelineComponent implements OnInit {
 
-  listPost$: Post[];
+  listPost$: Post[] = [];
   userSession: User;
 
   constructor(private _postService: PostService,
