@@ -102,4 +102,17 @@ export class OrganisationService {
   getMemberOrganisation(organisationId: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.baseUrl}/organisation/${organisationId}/members`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
+
+  isAdmin(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${id}/is-admin`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  isOwner(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${id}/is-owner`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  // TODO : get Event created par organisationId
+  getEventCreated(organisationId: string): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/organisation/${organisationId}/events`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
 }
