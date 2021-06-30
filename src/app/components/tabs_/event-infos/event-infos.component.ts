@@ -30,11 +30,9 @@ export class EventInfosComponent implements OnInit {
   }
 
   private getOrganisationMembers() {
-    this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
-      next: organisationMemberships => {
-        organisationMemberships.forEach(organisationMembership => {
-          this.listUser.push(organisationMembership.user)
-        })
+    this._organisationService.getMemberOrganisation(this.event.organisation.id).subscribe({
+      next: users => {
+        this.listUser = users;
       },
       error: error => {
         if (!environment.production) {
@@ -42,6 +40,18 @@ export class EventInfosComponent implements OnInit {
         }
       }
     })
+    // this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
+    //   next: organisationMemberships => {
+    //     organisationMemberships.forEach(organisationMembership => {
+    //       this.listUser.push(organisationMembership.user)
+    //     })
+    //   },
+    //   error: error => {
+    //     if (!environment.production) {
+    //       console.error('Error: ', error);
+    //     }
+    //   }
+    // })
   }
 
   // getMap() {
