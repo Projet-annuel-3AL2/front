@@ -1,0 +1,10 @@
+<div class="border rounded-3 d-flex flex-column p-2 orga-suggestion-list">
+  <div class="m-3">
+    <div class="px-4">
+      <h2>Organisations suggérées</h2>
+    </div>
+    <div *ngFor="let organisation of listOrganisation$">
+      <app-card-organisation [organisation]="organisation"></app-card-organisation>
+    </div>
+  </div>
+</div>

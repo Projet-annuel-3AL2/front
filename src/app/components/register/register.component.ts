@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   error: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
+              private _authService: AuthService,
               private router: Router) {
     this.error = false;
     this.submitted = false;
@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
   onSubmitForm() {
     this.submitted = true;
     const formValue = this.registerForm.value;
-    this.authService.register(formValue.mail, formValue.username, formValue.password)
+    this._authService.register(formValue.mail, formValue.username, formValue.password)
       .subscribe(() => {
       }, error => {
         this.submitted = false;

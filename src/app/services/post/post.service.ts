@@ -1,39 +1,61 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {Post} from "../../shared/models/post.model";
+import {Event} from "../../shared/models/event.model";
+import {User} from "../../shared/models/user.model";
+import {Organisation} from "../../shared/models/organisation.model";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable} from "rxjs";
-import {User} from "../../shared/models/user.model";
+import {Certification} from "../../shared/models/certification.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
+
   constructor(private http: HttpClient) {
+  }
+
+  getPostById(postId: string): Observable<Post>{
+    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`);
+  }
+
+  getAllPost(): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/`);
+  }
+
+  getLikePostById(postId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/${postId}/likes`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  deletePost(postId: string) {
+    this.http.delete(`${environment.baseUrl}/${postId}`, {withCredentials: true});
   }
 
   createPost(post: Post) {
     return this.http.post<Post>(`${environment.baseUrl}/post`, post);
   }
 
-  getTimeline(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`);
+  updatePost(post: Post){
+    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post), {withCredentials: true}).subscribe({
+      error: error => {
+        console.error('There was an error!', error);
+      }
+    })
   }
 
-  getPostLikes(postId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/post/${postId}/likes`);
+  // TODO : getPostByEventId() à implementer sur L'API
+  getPostWithEventId(eventId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`);
   }
 
-  isPostLiked(postId: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/post/${postId}/is-liked`);
+  getPostWithOrgaName(organisationName: string): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostsOrganisation/${organisationName}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
-  likePost(postId: string): Observable<void> {
-    return this.http.get<void>(`${environment.baseUrl}/post/${postId}/like`);
+  getTimeline(userId): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/${userId}/0/0`)
   }
 
-  dislikePost(postId: string): Observable<void> {
-    return this.http.delete<void>(`${environment.baseUrl}/post/${postId}/like`);
-  }
 }

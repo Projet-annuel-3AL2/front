@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   error: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private authService: AuthService,
+              private _authService: AuthService,
               private router: Router) {
     this.error = false;
     this.submitted = false;
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmitForm() {
     this.submitted = true;
     const formValue = this.userForm.value;
-    this.authService.login(formValue.username, formValue.password)
+    this._authService.login(formValue.username, formValue.password)
       .subscribe(() => {
       }, error => {
         this.submitted = false;

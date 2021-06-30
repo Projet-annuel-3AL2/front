@@ -1,0 +1,10 @@
+<div class="border rounded-3 d-flex flex-column p-2 event-suggestion-list">
+  <div class="m-3">
+    <div class="px-4">
+      <h2>Événements du moment</h2>
+    </div>
+    <div *ngFor="let event of event$">
+      <app-event-suggestion [event]="event"></app-event-suggestion>
+    </div>
+  </div>
+</div>

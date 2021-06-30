@@ -1,0 +1,16 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.center {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.event-suggestion-list {
+  background: #F6F6F6;
+  border-color: #ADADAD;
+}
+
+
+
