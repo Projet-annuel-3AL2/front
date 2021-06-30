@@ -20,7 +20,8 @@ export class ListOrganisationSuggestionComponent implements OnInit {
   }
 
   private getSuggestionOrganisation() {
-    this._organisationService.getSuggestionOrganisation().subscribe({
+    // TODO: getSuggestionOrganisation
+    this._organisationService.getAllOrganisation().subscribe({
       next: organisations => {
         this.listOrganisation$ = organisations;
       },
