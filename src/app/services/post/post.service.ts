@@ -55,7 +55,7 @@ export class PostService {
   }
 
   getTimeline(userId): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/${userId}/0/0`)
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`)
   }
 
 }
