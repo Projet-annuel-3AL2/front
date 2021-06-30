@@ -27,8 +27,8 @@ export class CreatePostComponent implements OnInit {
               private _postService: PostService) { }
 
   ngOnInit(): void {
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
-      this.user$=user;
+    this.userService.getByUsername(this.authService.getCurrentUsername()).subscribe(user => {
+      this.user$ = user;
     });
   }
 

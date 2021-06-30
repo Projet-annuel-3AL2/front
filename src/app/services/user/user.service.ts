@@ -22,8 +22,8 @@ export class UserService {
               private _authService: AuthService) {
   }
 
-  getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getByUsername(username: string): Observable<User> {
+    return this.http.get<User>(`${environment.baseUrl}/user/${username}`);
   }
 
   getGroups(): Observable<Group[]> {
@@ -40,6 +40,10 @@ export class UserService {
   deleteUser(username: string): Observable<any> {
     return this.http.delete(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
+  // TODO: getUserFriends() pas implémenter sur l'API
+  getUserFriends(username: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
 
   putUser(user: User): Observable<any> {
     return this.http.put(`${environment.baseUrl}/user/${user.username}`, user, {headers: {'Access-Control-Allow-Origin': '*'}});
@@ -53,4 +57,3 @@ export class UserService {
     return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
   }
 }
-//
