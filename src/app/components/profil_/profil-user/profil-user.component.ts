@@ -54,11 +54,11 @@ export class ProfilUserComponent implements OnInit {
     this._userService.getByUsername(username).subscribe({
       next: user => {
         this.user$ = user
-        this.getPosts(user.username);
-        this.getFriendsList();
+        // this.getPosts(user.username);
+        // this.getFriendsList();
         this.getEventParticipations();
         if (user.id != this.userSession.id){
-          this.canAdd();
+          // this.canAdd();
         }
       },
       error: error => {
