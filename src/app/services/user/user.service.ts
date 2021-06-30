@@ -12,6 +12,7 @@ import {Conversation} from "../../shared/models/conversation.model";
 import {AuthService} from "../auth/auth.service";
 import {environment} from "../../../environments/environment";
 import {Group} from "../../shared/models/group.model";
+import {Post} from "../../shared/models/post.model";
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +28,11 @@ export class UserService {
   }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUserId()}/groups`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-  getById(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Group[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/groups`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getPosts(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${username}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  getPosts(username: string): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/user/${username}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
   deleteUser(username: string): Observable<any> {
@@ -55,5 +53,9 @@ export class UserService {
 
   getFriends(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
+  }
+
+  getConversations(): Observable<Conversation[]> {
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`);
   }
 }

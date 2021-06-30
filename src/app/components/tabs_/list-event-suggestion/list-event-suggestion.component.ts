@@ -20,9 +20,9 @@ export class ListEventSuggestionComponent implements OnInit {
   }
 
   getSuggestionEvent(){
-    this.eventService.getNotEndEvent().subscribe({
+    this.eventService.getSuggestion().subscribe({
       next: data => {
-        this.event$ = data.slice(0, 4);
+        this.event$ = data;
       },
       error: error => {
         if (!environment.production) {

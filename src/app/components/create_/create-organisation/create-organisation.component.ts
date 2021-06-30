@@ -24,7 +24,7 @@ export class CreateOrganisationComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.user$=user;
     });
     this.initialiseFormGroup();

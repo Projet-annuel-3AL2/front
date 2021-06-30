@@ -34,7 +34,7 @@ export class UpdateEventComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.user$=user;
     });
     // TODO : getAllCategories && getListOrganisation pas activé
@@ -91,7 +91,7 @@ export class UpdateEventComponent implements OnInit {
     this.event.longitude = data.longitudeEvent;
     this.event.participantsLimit = data.participantsLimitEvent;
     this.event.category = data.categoryEvent;
-    this.event.creator = this.user$;
+    this.event.user = this.user$;
     this.event.picture = data.pictureFile;
     this.event.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(this.event);

@@ -41,7 +41,7 @@ export class CreateEventComponent implements OnInit {
   ngOnInit(): void {
 
     this.initialiseFormGroup();
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.user$=user;
     });
     // TODO: Récupération via base pas activé
@@ -98,7 +98,7 @@ export class CreateEventComponent implements OnInit {
     newEvent.longitude = data.longitudeEvent;
     newEvent.participantsLimit = data.participantsLimitEvent;
     newEvent.category = data.categoryEvent;
-    newEvent.creator = this.user$;
+    newEvent.user = this.user$;
     newEvent.picture = data.pictureFile;
     newEvent.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(newEvent);

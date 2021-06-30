@@ -7,7 +7,7 @@ export class Event {
   id: string;
   name: String;
   description: String;
-  creator: User;
+  user: User;
   startDate: Date;
   endDate: Date;
   latitude: number;
