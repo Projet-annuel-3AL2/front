@@ -43,18 +43,18 @@ export class ProfilUserComponent implements OnInit {
   ngOnInit(): void {
     const username = this.route.snapshot.params['username'];
 
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession=user;
     });
-    this.getFullUser(username);
+    this.getUser(username);
 
   }
 
-  private getFullUser(username: string) {
-    this._userService.getById(username).subscribe({
+  private getUser(username: string) {
+    this._userService.getByUsername(username).subscribe({
       next: user => {
         this.user$ = user
-        this.getTimeline(user.id);
+        this.getPosts(user.username);
         this.getFriendsList();
         this.getEventParticipations();
         if (user.id != this.userSession.id){
@@ -69,8 +69,8 @@ export class ProfilUserComponent implements OnInit {
     })
   }
 
-  private getTimeline(userId: string) {
-    this._postService.getTimeline(userId).subscribe({
+  private getPosts(username: string) {
+    this._userService.getPosts(username).subscribe({
       next: posts =>{
         this.listPost$ = posts;
       },
