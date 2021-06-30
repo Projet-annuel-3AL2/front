@@ -68,15 +68,25 @@ export class ProfilOrganisationComponent implements OnInit {
   }
 
   private getOrganisationMember() {
-    this._organisationService.getMembersOrga(this.organisationId).subscribe({
-      next: listMemberShip => {
-        listMemberShip.forEach(member => {
-          this.listMember$.push(member.user)
-          // isAdmin()
-          if (member.user.id == this.userSession$.id && member.isAdmin){
-            this.isAdminB = true;
-          }
-        })
+    // this._organisationService.getMembersOrga(this.organisationId).subscribe({
+    //   next: listMemberShip => {
+    //     listMemberShip.forEach(member => {
+    //       this.listMember$.push(member.user)
+    //       // isAdmin()
+    //       if (member.user.id == this.userSession$.id && member.isAdmin){
+    //         this.isAdminB = true;
+    //       }
+    //     })
+    //   },
+    //   error: error => {
+    //     if (!environment.production) {
+    //       console.error('Error: ', error);
+    //     }
+    //   }
+    // });
+    this._organisationService.getMemberOrganisation(this.organisationId).subscribe({
+      next: users => {
+        this.listMember$ = users;
       },
       error: error => {
         if (!environment.production) {
