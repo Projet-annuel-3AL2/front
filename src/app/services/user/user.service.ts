@@ -26,11 +26,11 @@ export class UserService {
   }
 
   // TODO: getUserFriends() pas implémenter sur l'API
-  getUserFriends(userId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getUserFriends(username: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this.authService.getCurrentUsername()}/conversations`);
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`);
   }
 }
