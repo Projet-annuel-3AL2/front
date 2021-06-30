@@ -24,7 +24,7 @@ export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
-  listParticipant$: User[];
+  listParticipant$: User[] = [];
   isAbleToJoin: boolean = true;
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
