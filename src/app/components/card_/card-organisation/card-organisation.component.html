@@ -5,6 +5,6 @@
   <div class="spacer"></div>
   <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
   <div class="spacer"></div>
-  <button *ngIf="canFollow()" mat-raised-button class="ml-auto button-follow-orga" (click)="this.followOrganisation(organisation.name)"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
-  <button *ngIf="!canFollow()" mat-raised-button class="ml-auto button-follow-orga-disable" matTooltip="Arrêter de suivre l'organisation" (click)="this.unfollowOrganisation(organisation.name)">Arrêter</button>
+  <button *ngIf="!isFollowing" mat-raised-button class="ml-auto button-follow-orga" (click)="this.followOrganisation()"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
+  <button *ngIf="isFollowing" mat-raised-button class="ml-auto button-follow-orga-disable" matTooltip="Arrêter de suivre l'organisation" (click)="this.unfollowOrganisation()">Ne plus suivre</button>
 </div>
