@@ -25,8 +25,8 @@
             </div>
             <div class="orga-card-empty"></div>
             <div class="orga-card-button">
-                <button *ngIf="isCanFollow" mat-raised-button class="ml-auto button-join-event" (click)="this.followOrganisation(organisation$.name)"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
-                <button *ngIf="!isCanFollow" mat-raised-button class="ml-auto mat-button-event" (click)="this.unFollowOrganisation(organisation$.name)">Arrêter de suivre</button>
+                <button *ngIf="!isFollowing" mat-raised-button class="ml-auto button-join-event" (click)="this.followOrganisation()"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
+                <button *ngIf="isFollowing" mat-raised-button class="ml-auto mat-button-event" (click)="this.unfollowOrganisation()">Ne plus suivre</button>
             </div>
             <div class="orga-card-menu">
               <div  class="dropdown" dropdown>

@@ -27,7 +27,7 @@ export class ProfilOrganisationComponent implements OnInit {
   listMember$: User[] = [];
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
-  isCanFollow: boolean = true;
+  isFollowing: boolean = false;
   listPosts$: Post[] = [];
   listEvent$: Event[] = [];
 
@@ -53,9 +53,9 @@ export class ProfilOrganisationComponent implements OnInit {
       next: organisation => {
         this.organisation$ = organisation;
         this.getOrganisationMember();
+        this.canFollow();
         // this.isOwner();
         // this.isAdmin();
-        // this.canFollow();
         // this.getListEvent();
         this.getPostsOrganisation();
       },
@@ -131,16 +131,44 @@ export class ProfilOrganisationComponent implements OnInit {
     })
   }
 
-  // TODO : Implémenter la fonctionnalité de follow
   canFollow() {
-    this.isCanFollow = true;
+    this._userService.isFollowingOrganisation(this.organisationId).subscribe({
+      next: bool =>{
+        this.isFollowing = bool;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
   }
 
-  followOrganisation(name: string) {
-
+  followOrganisation() {
+    this._organisationService.followOrganisation(this.organisationId).subscribe({
+      next: () =>{
+        this.isFollowing = true;
+        console.log(this.isFollowing)
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
   }
 
-  unFollowOrganisation(name: string) {
-
+  unfollowOrganisation() {
+    this._organisationService.unfollowOrganisation(this.organisationId).subscribe({
+      next: () =>{
+        this.isFollowing = false;
+        console.log(this.isFollowing)
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
   }
 }
