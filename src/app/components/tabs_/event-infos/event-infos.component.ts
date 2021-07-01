@@ -7,6 +7,7 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {EventService} from "../../../services/event/event.service";
 import {User} from "../../../shared/models/user.model";
 import {environment} from "../../../../environments/environment";
+import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-event-infos',
@@ -20,7 +21,10 @@ export class EventInfosComponent implements OnInit {
   @Input('participantsNumber') participantNumber: number;
   organisation$: Organisation;
   listUser: User[] = [];
-  constructor(private _organisationService: OrganisationService) {
+  isFollowing: boolean = false;
+
+  constructor(private _organisationService: OrganisationService,
+              private _userService: UserService) {
 
   }
 
@@ -33,6 +37,7 @@ export class EventInfosComponent implements OnInit {
     this._organisationService.getMemberOrganisation(this.event.organisation.id).subscribe({
       next: users => {
         this.listUser = users;
+        this.canFollow();
       },
       error: error => {
         if (!environment.production) {
@@ -40,6 +45,48 @@ export class EventInfosComponent implements OnInit {
         }
       }
     })
+  }
+    canFollow() {
+      this._userService.isFollowingOrganisation(this.organisation$.id).subscribe({
+        next: bool =>{
+          this.isFollowing = bool;
+        },
+        error: error => {
+          if (!environment.production){
+            console.error('There was an error!', error);
+          }
+        }
+      })
+    }
+
+    followOrganisation() {
+      this._organisationService.followOrganisation(this.organisation$.id).subscribe({
+        next: () =>{
+          this.isFollowing = true;
+          console.log(this.isFollowing)
+        },
+        error: error => {
+          if (!environment.production){
+            console.error('There was an error!', error);
+          }
+        }
+      })
+    }
+
+    unfollowOrganisation() {
+      this._organisationService.unfollowOrganisation(this.organisation$.id).subscribe({
+        next: () =>{
+          this.isFollowing = false;
+          console.log(this.isFollowing)
+        },
+        error: error => {
+          if (!environment.production){
+            console.error('There was an error!', error);
+          }
+        }
+      })
+    }
+
     // this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
     //   next: organisationMemberships => {
     //     organisationMemberships.forEach(organisationMembership => {
@@ -52,7 +99,6 @@ export class EventInfosComponent implements OnInit {
     //     }
     //   }
     // })
-  }
 
   // getMap() {
   //  let map = L.map('eventInfoMap').setView([this.event_.latitude, this.event_.latitude], 13);

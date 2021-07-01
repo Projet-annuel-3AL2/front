@@ -16,6 +16,8 @@
           <p><i class="fas fa-clock"></i> {{event.endDate.toString() | slice: 8: 10 }}/{{event.endDate.toString() | slice: 5: 7}}/{{event.endDate.toString() | slice: 0: 4}} {{event.endDate.toString() | slice: 11 : 16}} </p>
           <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
           <p><a [routerLink]="['/organisation/' + event.organisation.name]"><i class="fa fa-building" aria-hidden="true">  {{event.organisation.name}}</i></a></p>
+          <button *ngIf="!isFollowing" mat-raised-button class="ml-auto button-follow-orga" (click)="this.followOrganisation()"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
+          <button *ngIf="isFollowing" mat-raised-button class="ml-auto button-follow-orga-disable" matTooltip="Arrêter de suivre l'organisation" (click)="this.unfollowOrganisation()">Ne plus suivre</button>
         </div>
       </div>
     </div>
