@@ -115,4 +115,12 @@ export class OrganisationService {
   getEventCreated(organisationId: string): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/organisation/${organisationId}/events`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
+
+  unfollowOrganisation(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/organisation/${id}/unfollow`);
+  }
+
+  followOrganisation(id: string): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/organisation/${id}/follow`, null);
+  }
 }

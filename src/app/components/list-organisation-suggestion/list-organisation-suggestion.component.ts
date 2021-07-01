@@ -32,4 +32,5 @@ export class ListOrganisationSuggestionComponent implements OnInit {
       }
     });
   }
+
 }

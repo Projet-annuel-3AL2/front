@@ -58,4 +58,8 @@ export class UserService {
   getConversations(): Observable<Conversation[]> {
     return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`);
   }
+
+  isFollowingOrganisation(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/user/is-following-orga/${id}`)
+  }
 }
