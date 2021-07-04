@@ -3,6 +3,7 @@ WORKDIR /usr/src/app
 RUN npm install -g npm
 COPY . .
 RUN npm install
+ENV PATH /app/node_modules/.bin:$PATH
 RUN ng build --prod
 
 FROM nginx:1.17.1-alpine
