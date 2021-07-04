@@ -3,12 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 import * as process from "process";
-import {config} from "dotenv";
-config();
 
 export const environment = {
   production: false,
-  baseUrl: process.env.API_URL
+  baseUrl: "localhost:4500"
 };
 
 /*
