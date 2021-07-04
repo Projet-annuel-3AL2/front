@@ -22,7 +22,7 @@ export class AuthService {
       username,
       password,
       mail
-    }, {headers: {'Access-Control-Allow-Origin': '*'}})
+    })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.id));
         this.userSubject.next(user);
