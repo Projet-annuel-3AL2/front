@@ -1,0 +1,35 @@
+.auth-buttons {
+  display: table-cell;
+}
+
+mat-toolbar {
+  min-height: 80px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 5px 5px grey;
+}
+
+.register-button {
+  color: white;
+  background-color: #00643C !important;
+}
+
+.search-bar .form-control {
+  padding-left: 2.375rem;
+}
+
+.search-bar fa-icon {
+  position: absolute;
+  z-index: 2;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.search-bar {
+  transform: translatex(-50%);
+}
