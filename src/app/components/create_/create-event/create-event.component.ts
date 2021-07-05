@@ -41,7 +41,7 @@ export class CreateEventComponent implements OnInit {
   ngOnInit(): void {
 
     this.initialiseFormGroup();
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.user$=user;
     });
     // TODO: Récupération via base pas activé

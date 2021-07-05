@@ -38,7 +38,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   ngOnInit(): void {
     this.organisationName = this.route.snapshot.params['organisationName']
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession$=user;
       this.isOwner();
       this.isAdmin();

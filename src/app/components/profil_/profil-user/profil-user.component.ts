@@ -37,7 +37,7 @@ export class ProfilUserComponent implements OnInit {
   ngOnInit(): void {
     const username = this.route.snapshot.params['username'];
 
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession=user;
 
     });
@@ -48,7 +48,7 @@ export class ProfilUserComponent implements OnInit {
   }
 
   private getFullUser(username: string) {
-    this._userService.getFullUser(username).subscribe({
+    this._userService.getByUsername(username).subscribe({
       next: user => {
         this.user$ = user
         this.getTimeline(user.id);

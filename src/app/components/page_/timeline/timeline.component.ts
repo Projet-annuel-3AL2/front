@@ -21,7 +21,7 @@ export class TimelineComponent implements OnInit {
               private _authService: AuthService) { }
 
   ngOnInit(): void {
-    this._userService.getById(this._authService.getCurrentUserId()).subscribe(user=>{
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession=user;
       this.getTimeline();
     });
