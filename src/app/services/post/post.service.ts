@@ -7,6 +7,7 @@ import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Certification} from "../../shared/models/certification.model";
+import {Report} from "../../shared/models/report.model";
 
 @Injectable({
   providedIn: 'root'
@@ -58,4 +59,7 @@ export class PostService {
     return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
+  sendReport(id: string, report: Report): Observable<any> {
+    return this.http.put<any>(`${environment.baseUrl}/post/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
 }

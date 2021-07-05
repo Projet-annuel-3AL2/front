@@ -8,6 +8,7 @@ import {OrganisationMembership} from "../../shared/models/organisation_membershi
 import {User} from "../../shared/models/user.model";
 import {Event} from "../../shared/models/event.model";
 import {Category} from "../../shared/models/category.model";
+import {Report} from "../../shared/models/report.model";
 
 @Injectable({
   providedIn: 'root'
@@ -118,5 +119,9 @@ export class OrganisationService {
 
   isUserOwner(organisationId: string, username: string): Observable<boolean> {
     return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-owner/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  sendReport(id: string, report: Report): Observable<any> {
+    return this.http.put<any>(`${environment.baseUrl}/organisation/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 }
