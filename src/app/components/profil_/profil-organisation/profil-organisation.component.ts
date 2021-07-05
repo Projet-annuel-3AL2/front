@@ -54,8 +54,8 @@ export class ProfilOrganisationComponent implements OnInit {
         this.organisation$ = organisation;
         this.getOrganisationMember();
         this.canFollow();
-        // this.isOwner();
-        // this.isAdmin();
+        this.isOwner();
+        this.isAdmin();
         // this.getListEvent();
         this.getPostsOrganisation();
       },
@@ -71,6 +71,7 @@ export class ProfilOrganisationComponent implements OnInit {
     this._organisationService.isOwner(this.organisationId).subscribe({
       next: bool => {
         this.isOwnerB = bool;
+        console.log(bool)
       },
       error: error => {
         if (!environment.production) {

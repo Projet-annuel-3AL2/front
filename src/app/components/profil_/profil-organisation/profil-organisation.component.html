@@ -53,9 +53,14 @@
                 <app-user-card [user]="member" [userSession]="this.userSession$"></app-user-card>
               </mat-List-item>
             </div>
-            <div class="my-3" *ngIf="isOwnerB || isAdminB">
+            <div class="my-3" *ngIf="isAdminB && !isOwnerB">
               <div class="display-list-user" *ngFor="let member of listMember$;" >
-                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" class="m-0"></app-card-user-manage-organisation>
+                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" [isOwner]="false" class="m-0"></app-card-user-manage-organisation>
+              </div>
+            </div>
+            <div class="my-3" *ngIf="isOwnerB">
+              <div class="display-list-user" *ngFor="let member of listMember$;" >
+                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" [isOwner]="true" class="m-0"></app-card-user-manage-organisation>
               </div>
             </div>
           </mat-tab>
