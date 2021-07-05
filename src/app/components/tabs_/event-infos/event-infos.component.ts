@@ -63,7 +63,6 @@ export class EventInfosComponent implements OnInit {
       this._organisationService.followOrganisation(this.organisation$.id).subscribe({
         next: () =>{
           this.isFollowing = true;
-          console.log(this.isFollowing)
         },
         error: error => {
           if (!environment.production){
@@ -77,7 +76,6 @@ export class EventInfosComponent implements OnInit {
       this._organisationService.unfollowOrganisation(this.organisation$.id).subscribe({
         next: () =>{
           this.isFollowing = false;
-          console.log(this.isFollowing)
         },
         error: error => {
           if (!environment.production){

@@ -58,7 +58,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
   askFriend() {
     this._friendshipService.postFriendship(this.user.username).subscribe({
       next: () => {
-        console.log("je suis la")
         this.friendshipRequest = this.allFriendRequestStatus.PENDING;
       },
       error: err => {

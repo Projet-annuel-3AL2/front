@@ -37,7 +37,6 @@ export class CardOrganisationComponent implements OnInit {
     this._organisationService.followOrganisation(this.organisation.id).subscribe({
       next: () =>{
         this.isFollowing = true;
-        console.log(this.isFollowing)
       },
       error: error => {
         if (!environment.production){

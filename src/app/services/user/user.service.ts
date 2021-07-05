@@ -24,7 +24,7 @@ export class UserService {
   }
 
   getByUsername(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${username}`);
+    return this.http.get<User>(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getGroups(): Observable<Group[]> {
@@ -52,14 +52,14 @@ export class UserService {
   }
 
   getFriends(username: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
+    return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`);
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   isFollowingOrganisation(id: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/user/is-following-orga/${id}`)
+    return this.http.get<boolean>(`${environment.baseUrl}/user/is-following-orga/${id}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 }

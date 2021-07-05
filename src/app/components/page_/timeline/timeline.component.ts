@@ -31,7 +31,6 @@ export class TimelineComponent implements OnInit {
   private getTimeline() {
     this._postService.getTimeline(this.userSession.id).subscribe({
       next: posts => {
-        console.log(posts);
         this.listPost$ = posts;
       },
       error: error => {

@@ -82,35 +82,31 @@ export class EventService {
 
 
   getEventOrganisationMembership(eventId: string): Observable<OrganisationMembership[]>{
-    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`);
+    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/event/getOrganisationMembership/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
 
   // TODO : Les fonctions sont implémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
   getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {
-      withCredentials: true
-    });
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
   getEventWithUserLocationNotEnd(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd/${userLocationX}/${userLocationY}/${range}`, {
-      withCredentials: true
-    });
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/getEventWithUserLocationNotEnd/${userLocationX}/${userLocationY}/${range}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
   getUserRechercheNameEvent(userRecherche: string): Observable<Event[]>{
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getSuggestion(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/suggestion`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/event/suggestions/events`);
   }
 
   getProfil(eventId: string): Observable<Event> {
-    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/profil`);
+    return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/profil`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
 }

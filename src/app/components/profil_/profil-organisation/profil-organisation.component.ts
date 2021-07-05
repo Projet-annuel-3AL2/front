@@ -71,7 +71,6 @@ export class ProfilOrganisationComponent implements OnInit {
     this._organisationService.isOwner(this.organisationId).subscribe({
       next: bool => {
         this.isOwnerB = bool;
-        console.log(bool)
       },
       error: error => {
         if (!environment.production) {
@@ -149,7 +148,6 @@ export class ProfilOrganisationComponent implements OnInit {
     this._organisationService.followOrganisation(this.organisationId).subscribe({
       next: () =>{
         this.isFollowing = true;
-        console.log(this.isFollowing)
       },
       error: error => {
         if (!environment.production){
@@ -163,7 +161,6 @@ export class ProfilOrganisationComponent implements OnInit {
     this._organisationService.unfollowOrganisation(this.organisationId).subscribe({
       next: () =>{
         this.isFollowing = false;
-        console.log(this.isFollowing)
       },
       error: error => {
         if (!environment.production){
