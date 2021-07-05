@@ -18,11 +18,11 @@ export class PostService {
   }
 
   getPostById(postId: string): Observable<Post>{
-    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`);
+    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getAllPost(): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getLikePostById(postId: string): Observable<Post[]> {
@@ -30,15 +30,15 @@ export class PostService {
   }
 
   deletePost(postId: string) {
-    this.http.delete(`${environment.baseUrl}/${postId}`, {withCredentials: true});
+    this.http.delete(`${environment.baseUrl}/${postId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   createPost(post: Post) {
-    return this.http.post<Post>(`${environment.baseUrl}/post`, post);
+    return this.http.post<Post>(`${environment.baseUrl}/post`, post, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   updatePost(post: Post){
-    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post), {withCredentials: true}).subscribe({
+    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post), {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
       error: error => {
         console.error('There was an error!', error);
       }
@@ -47,7 +47,7 @@ export class PostService {
 
   // TODO : getPostByEventId() à implementer sur L'API
   getPostWithEventId(eventId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getPostWithOrgaName(organisationName: string): Observable<Post[]>{
@@ -55,7 +55,7 @@ export class PostService {
   }
 
   getTimeline(userId): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/${userId}/0/0`)
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
 }

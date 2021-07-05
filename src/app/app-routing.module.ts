@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'events', component: PageListEventComponent},
   { path: 'event/:id', component: PageEventComponent },
   { path: 'user/:username', component: ProfilUserComponent },
-  { path: 'organisation/:organisationName', component: ProfilOrganisationComponent },
+  { path: 'organisation/:id', component: ProfilOrganisationComponent },
 ];
 
 @NgModule({

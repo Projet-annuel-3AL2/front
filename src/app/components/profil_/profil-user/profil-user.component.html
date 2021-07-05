@@ -1,4 +1,4 @@
-<div class="row m-0">
+<div class="row m-0" *ngIf="user$ != undefined">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
@@ -21,9 +21,11 @@
               <fa-icon *ngIf="user$.certification" [icon]="faCheckCircle" ></fa-icon>
             </div>
             <div class="user-card-empty"></div>
-            <div class="user-card-button-add">
-                <button *ngIf="isCanAdd" mat-raised-button class="ml-auto button-join-event" (click)="this.askFriend(user$.username)" ><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-                <button *ngIf="!isCanAdd" mat-raised-button class="ml-auto button-join-event" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user$.username)"> Enlever</button>
+            <div *ngIf="user$.id !== userSession.id">
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.NONE" mat-raised-button class="ml-auto button-add-friend" (click)="this.askFriend()"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend()"> Enlever</button>
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Accepter ou Refuser la demande d'amis" (click)="this.showDialogueRespondFriendRequest()"> Répondre</button>
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" mat-raised-button class="ml-auto button-add-friend-disable"> En Attente</button>
             </div>
             <div class="user-card-menu">
               <div  class="dropdown" dropdown>
@@ -54,7 +56,7 @@
             <app-list-user [listUser]="listUser$" [userSession]="userSession"></app-list-user>
           </mat-tab>
           <mat-tab label="Événements">
-            <app-profil-list-event [listEvent]="user$.eventsParticipation" [userSession]="userSession"></app-profil-list-event>
+            <app-profil-list-event [listEvent]="listEvent$" [userSession]="userSession"></app-profil-list-event>
           </mat-tab>
         </mat-tab-group>
       </div>

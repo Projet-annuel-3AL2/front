@@ -11,11 +11,11 @@
       <div class="mb-3">
         <div class="px-4">
           <h2>Infos</h2>
-          <p><i class="fas fa-user-check"></i> {{event.participants.length}} / {{event.participantsLimit}} participants</p>
+          <p><i class="fas fa-user-check"></i> {{participantNumber}} / {{event.participantsLimit}} participants</p>
           <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} </p>
           <p><i class="fas fa-clock"></i> {{event.endDate.toString() | slice: 8: 10 }}/{{event.endDate.toString() | slice: 5: 7}}/{{event.endDate.toString() | slice: 0: 4}} {{event.endDate.toString() | slice: 11 : 16}} </p>
           <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
-          <p><a [routerLink]="['/organisation/' + event.organisation.name]"><i class="fa fa-building" aria-hidden="true">  {{event.organisation.name}}</i></a></p>
+          <app-card-organisation [organisation]="event.organisation"></app-card-organisation>
         </div>
       </div>
     </div>

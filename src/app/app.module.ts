@@ -19,12 +19,12 @@ import {ListEventSuggestionComponent} from "./components/tabs_/list-event-sugges
 import {PageEventComponent} from "./components/page_/page-event/page-event.component";
 import {EventInfosComponent} from "./components/tabs_/event-infos/event-infos.component";
 import {UserCardComponent} from "./components/card_/user-card/user-card.component";
-import {EventFilterComponent} from "./components/event_/event-filter/event-filter.component";
+import {EventFilterComponent} from "./components/event-filter/event-filter.component";
 import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
 import {ReturnButtonComponent} from "./components/return-button/return-button.component";
 import {CardEventComponent} from "./components/card_/card-event/card-event.component";
 import {EventListDisplayComponent} from "./components/tabs_/event-list-display/event-list-display.component";
-import {EventDialogMapsComponent} from "./components/event_/event-dialog-maps/event-dialog-maps.component";
+import {EventDialogMapsComponent} from "./components/dialog_/event-dialog-maps/event-dialog-maps.component";
 import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
 import {ListPostComponent} from "./components/tabs_/list-post/list-post.component";
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
@@ -57,6 +57,7 @@ import {CreatePostComponent} from "./components/create_/create-post/create-post.
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-event/card-user-mange-event.component";
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
+import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {PostListComponent} from "./components/post-list/post-list.component";
 
 @NgModule({
@@ -98,7 +99,8 @@ import {PostListComponent} from "./components/post-list/post-list.component";
     ConversationCardComponent,
     ConversationsListComponent,
     CardUserMangeEventComponent,
-    CardUserManageOrganisationComponent
+    CardUserManageOrganisationComponent,
+    DialogResFriendshipRequestComponent
   ],
   imports: [
     BrowserModule,

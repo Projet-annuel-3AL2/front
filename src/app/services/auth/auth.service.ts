@@ -42,7 +42,7 @@ export class AuthService {
   public logout(): Observable<unknown> {
     this.userSubject.next(null);
     localStorage.removeItem('user');
-    return this.http.delete(`${environment.baseUrl}/auth/logout`);
+    return this.http.delete(`${environment.baseUrl}/auth/logout`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   public isAuthenticated(): boolean {
@@ -53,4 +53,5 @@ export class AuthService {
   public getCurrentUsername(): string {
     return JSON.parse(localStorage.getItem('user'));
   }
+
 }
