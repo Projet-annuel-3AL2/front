@@ -58,7 +58,7 @@ export class ProfilUserComponent implements OnInit {
         // this.getFriendsList();
         this.getEventParticipations();
         if (user.id != this.userSession.id){
-          // this.canAdd();
+          this.canAdd();
         }
       },
       error: error => {
@@ -98,15 +98,16 @@ export class ProfilUserComponent implements OnInit {
   canAdd() {
     this._friendshipService.isFriendshipRequested(this.user$.username).subscribe({
       next: requestStatus => {
+        console.log(requestStatus)
         this.friendshipRequest = requestStatus;
       }
     })
   }
 
   dellFriend() {
-    this._friendshipService.postFriendship(this.user$.username).subscribe({
+    this._friendshipService.removeFriendship(this.user$.username).subscribe({
       next: () => {
-        this.friendshipRequest = FriendRequestStatus.PENDING;
+        this.friendshipRequest = FriendRequestStatus.NONE;
       },
       error: err => {
         if (!environment.production){
@@ -116,10 +117,10 @@ export class ProfilUserComponent implements OnInit {
     });
   }
 
-  askFriend(username: string) {
-    this._friendshipService.removeFriendship(this.user$.username).subscribe({
+  askFriend() {
+    this._friendshipService.postFriendship(this.user$.username).subscribe({
       next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
+        this.friendshipRequest = FriendRequestStatus.PENDING;
       },
       error: err => {
         if (!environment.production){

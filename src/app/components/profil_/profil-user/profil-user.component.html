@@ -23,8 +23,8 @@
             <div class="user-card-empty"></div>
             <div *ngIf="user$.id !== userSession.id">
               <button *ngIf="friendshipRequest === allFriendRequestStatus.NONE" mat-raised-button class="ml-auto button-add-friend" (click)="this.askFriend()"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-              <button *ngIf="friendshipRequest == allFriendRequestStatus.BEFRIENDED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend()"> Enlever</button>
-              <button *ngIf="friendshipRequest == allFriendRequestStatus.RECEIVED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Accepter ou Refuser la demande d'amis" (click)="this.showDialogueRespondFriendRequest()"> Répondre</button>
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend()"> Enlever</button>
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Accepter ou Refuser la demande d'amis" (click)="this.showDialogueRespondFriendRequest()"> Répondre</button>
               <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" mat-raised-button class="ml-auto button-add-friend-disable"> En Attente</button>
             </div>
             <div class="user-card-menu">
