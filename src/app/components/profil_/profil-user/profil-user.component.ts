@@ -13,6 +13,8 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ReportTypeEnum} from "../../../shared/ReportType.enum";
+import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 
 @Component({
   selector: 'app-profil-user',
@@ -37,7 +39,8 @@ export class ProfilUserComponent implements OnInit {
               private _friendshipService: FriendshipService,
               private _eventService: EventService,
               private _authService: AuthService,
-              public dialog: MatDialog
+              public dialog: MatDialog,
+              public dialogReport: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -151,6 +154,16 @@ export class ProfilUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.friendshipRequest = result;
+    })
+  }
+
+  showDialogueReport() {
+    const dialogRef = this.dialogReport.open(DialogReportComponent, {
+      width: '500px',
+      data: {id: this.user$.username, reportType: ReportTypeEnum.USER}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
     })
   }
 }

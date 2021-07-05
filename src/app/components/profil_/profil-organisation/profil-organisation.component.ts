@@ -11,6 +11,9 @@ import {EventService} from "../../../services/event/event.service";
 import {PostService} from "../../../services/post/post.service";
 import {Post} from "../../../shared/models/post.model";
 import {Event} from "../../../shared/models/event.model";
+import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
+import {ReportTypeEnum} from "../../../shared/ReportType.enum";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profil-organisation',
@@ -36,7 +39,8 @@ export class ProfilOrganisationComponent implements OnInit {
               private _userService: UserService,
               private _authService: AuthService,
               private _eventService: EventService,
-              private _postService: PostService
+              private _postService: PostService,
+              public dialogReport: MatDialog
   ) {
   }
 
@@ -167,6 +171,16 @@ export class ProfilOrganisationComponent implements OnInit {
           console.error('There was an error!', error);
         }
       }
+    })
+  }
+
+  showDialogueReport() {
+    const dialogRef = this.dialogReport.open(DialogReportComponent, {
+      width: '500px',
+      data: {id: this.organisation$.id, reportType: ReportTypeEnum.ORGANISATION}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
     })
   }
 }
