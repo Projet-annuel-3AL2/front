@@ -3,6 +3,9 @@ import {Post} from "../../../shared/models/post.model";
 import {faCheckCircle, faComment, faEllipsisH, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 import {PostService} from "../../../services/post/post.service";
 import {environment} from "../../../../environments/environment";
+import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
+import {ReportTypeEnum} from "../../../shared/ReportType.enum";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'post',
@@ -17,7 +20,8 @@ export class PostComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
 
-  constructor(private _postService: PostService) {
+  constructor(private _postService: PostService,
+              public dialogReport: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -38,4 +42,13 @@ export class PostComponent implements OnInit {
   //     }
   //   })
   // }
+  showDialogueReport() {
+    const dialogRef = this.dialogReport.open(DialogReportComponent, {
+      width: '500px',
+      data: {id: this.post.id, reportType: ReportTypeEnum.POST}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
 }

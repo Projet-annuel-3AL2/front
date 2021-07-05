@@ -10,6 +10,9 @@ import {User} from "../../../shared/models/user.model";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
+import {ReportTypeEnum} from "../../../shared/ReportType.enum";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-page-event',
@@ -35,7 +38,8 @@ export class PageEventComponent implements OnInit {
               private _postService:PostService,
               private _userService: UserService,
               private _authService: AuthService,
-              private _organisationService: OrganisationService
+              private _organisationService: OrganisationService,
+              public dialogReport: MatDialog
               ) { }
 
   ngOnInit(): void {
@@ -148,5 +152,15 @@ export class PageEventComponent implements OnInit {
         }
       }
     });
+  }
+
+  showDialogueReport() {
+    const dialogRef = this.dialogReport.open(DialogReportComponent, {
+      width: '500px',
+      data: {id: this.event.id, reportType: ReportTypeEnum.EVENT}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
   }
 }
