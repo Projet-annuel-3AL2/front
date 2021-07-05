@@ -59,6 +59,7 @@ import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-ev
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
 import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-report.component";
+import {PostListComponent} from "./components/post-list/post-list.component";
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-r
     NavbarComponent,
     MessageComponent,
     TimelineComponent,
+    PostListComponent,
     RegisterComponent,
     CreatePostComponent,
     ConversationComponent,

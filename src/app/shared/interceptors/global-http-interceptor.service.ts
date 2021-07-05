@@ -4,6 +4,7 @@ import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class GlobalHttpInterceptor implements HttpInterceptor {
@@ -13,7 +14,8 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     request = request.clone({
-      withCredentials: true
+      withCredentials: true,
+      headers: request.headers.set('Access-Control-Allow-Origin', environment.baseUrl)
     });
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {

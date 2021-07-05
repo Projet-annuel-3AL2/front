@@ -53,6 +53,7 @@ export class ProfilUserComponent implements OnInit {
 
   }
 
+
   private getUser(username: string) {
     this._userService.getByUsername(username).subscribe({
       next: user => {
