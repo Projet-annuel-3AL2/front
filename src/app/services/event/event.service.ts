@@ -51,8 +51,12 @@ export class EventService {
     })
   }
 
+  deleteParticipation(eventId: string): Observable<Object> {
+    return this.http.delete(`${environment.baseUrl}/event/${eventId}/participant`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
   deleteParticipantEvent(eventId: string, userId: string): Observable<Object> {
-    return this.http.delete(`${environment.baseUrl}/event/participant/${eventId}/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.delete(`${environment.baseUrl}/event/${eventId}/participant/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   putEvent(event: Event){
