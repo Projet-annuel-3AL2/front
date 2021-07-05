@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Event} from '../../../shared/models/event.model';
 import {EventService} from "../../../services/event/event.service";
-import {EventFilterComponent} from "../../event_/event-filter/event-filter.component";
+import {EventFilterComponent} from "../../event-filter/event-filter.component";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";

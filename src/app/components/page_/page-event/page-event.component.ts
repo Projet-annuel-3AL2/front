@@ -24,7 +24,7 @@ export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
-  listParticipant$: User[];
+  listParticipant$: User[] = [];
   isAbleToJoin: boolean = true;
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
@@ -41,38 +41,21 @@ export class PageEventComponent implements OnInit {
   ngOnInit(): void {
     this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession$=user;
-      this.isOwner();
-      this.isAdmin();
     });
     this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
     this.getEvent();
-
-    // this.getPosts();
   }
-
-  private getPosts() {
-    this._postService.getPostWithEventId(this.event.id).subscribe({
-      next: data => {
-        this.listPost$ = data;
-
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
 
   private getEvent() {
-    this._eventService.getEventFull(this.eventId).subscribe({
+    this._eventService.getProfil(this.eventId).subscribe({
       next: data => {
         this.event = data;
-        this.canJoin();
+        this.isOwner();
+        // this.isAdmin();
+        // this.getPosts();
+        this.getParticipants();
       },
       error: error => {
-
         if (!environment.production) {
           console.error('Error: ', error);
         }
@@ -80,15 +63,18 @@ export class PageEventComponent implements OnInit {
     })
   }
 
-  canJoin() {
 
-    this._eventService.getEventMembers(this.event.id).subscribe({
-      next: event =>{
-        event.participants.forEach(user => {
-          if (user.id == this.userSession$.id){
-            this.isAbleToJoin = false;
-          }
-        });
+  isOwner() {
+    if(this.event.user.id == this.userSession$.id){
+      this.isOwnerB = true;
+    }
+  }
+
+  // TODO : ne fonctionne pas
+  isAdmin() {
+    this._organisationService.isAdmin(this.event.organisation.id).subscribe({
+      next: bool => {
+        this.isAdminB = bool;
       },
       error: error => {
         if (!environment.production) {
@@ -96,11 +82,49 @@ export class PageEventComponent implements OnInit {
         }
       }
     });
+  }
 
+  // TODO : Ne fonctionne pas
+  private getPosts() {
+    this._eventService.getEventPosts(this.event.id).subscribe({
+      next: posts => {
+        this.listPost$ = posts;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  private getParticipants() {
+    this._eventService.getEventMembers(this.eventId).subscribe({
+      next: listUser =>{
+        this.listParticipant$ = listUser;
+        this.canJoin();
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+
+  canJoin() {
+    if (this.listParticipant$ != null){
+      this.listParticipant$.forEach(user => {
+        if (user.id == this.userSession$.id){
+          this.isAbleToJoin = false;
+        }
+      })
+    }
   }
 
   joinEvent(id: string) {
-    this._eventService.postAddParticipant(this.userSession$.id, id).subscribe({
+    this._eventService.postAddParticipant(id).subscribe({
       next: () =>{
         this.isAbleToJoin = false;
       },
@@ -114,7 +138,7 @@ export class PageEventComponent implements OnInit {
   }
 
   leaveEvent(id: string) {
-    this._eventService.deleteParticipantEvent(id, this.userSession$.id).subscribe({
+    this._eventService.deleteParticipation(id).subscribe({
       next: () =>{
         this.isAbleToJoin = true;
       },
@@ -124,30 +148,5 @@ export class PageEventComponent implements OnInit {
         }
       }
     });
-  }
-
-
-  isOwner() {
-    if(this.event.creator.id == this.userSession$.id){
-      this.isOwnerB = true;
-    }
-  }
-
-  isAdmin() {
-    this._eventService.getEventOrganisationMembership(this.eventId).subscribe({
-      next: listMemberShip => {
-        listMemberShip.forEach(member => {
-          if (member.user.id == this.userSession$.id && member.isAdmin){
-            this.isAdminB = true;
-          }
-        })
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-
   }
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {EventDialogMapsComponent} from "../event-dialog-maps/event-dialog-maps.component";
-import {Event} from "../../../shared/models/event.model";
-import {EventService} from "../../../services/event/event.service";
-import {CategoryService} from "../../../services/category/category.service";
-import {Category} from "../../../shared/models/category.model";
-import {RechercheEventModel} from "../../../shared/models/rechercheEvent.model";
+import {EventDialogMapsComponent} from "../dialog_/event-dialog-maps/event-dialog-maps.component";
+import {Event} from "../../shared/models/event.model";
+import {EventService} from "../../services/event/event.service";
+import {CategoryService} from "../../services/category/category.service";
+import {Category} from "../../shared/models/category.model";
+import {RechercheEventModel} from "../../shared/models/rechercheEvent.model";
 
 export interface EventDialogData {
   latitude: any;

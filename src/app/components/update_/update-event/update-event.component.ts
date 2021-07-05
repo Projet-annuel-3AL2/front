@@ -91,7 +91,7 @@ export class UpdateEventComponent implements OnInit {
     this.event.longitude = data.longitudeEvent;
     this.event.participantsLimit = data.participantsLimitEvent;
     this.event.category = data.categoryEvent;
-    this.event.creator = this.user$;
+    this.event.user = this.user$;
     this.event.picture = data.pictureFile;
     this.event.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(this.event);

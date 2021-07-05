@@ -31,19 +31,20 @@ export class OrganisationService {
     return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getOrganisationByName(orgaName: string): Observable<Organisation>{
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${orgaName}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getOrganisation(organisationId: string): Observable<Organisation> {
+    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`,{headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getPostsOrganisation(orgaName: string): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${orgaName}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getOrganisationPosts(organisationId: string): Observable<Post[]>{
+    return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${organisationId}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
+  putOrganisationPost(organisationId: string, post: Post): Observable<Post>{
+    return this.http.put<Post>(`${environment.baseUrl}/organisation/${organisationId}/post`, post, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
 
-
-  // TODO: A faire coté api
-  putOrganisation(originalName: string, organisation:Organisation){
-    this.http.put(`${environment.baseUrl}/organisation/${originalName}`, JSON.stringify(organisation),{withCredentials: true}).subscribe({
+  putOrganisation(organisationId: string, organisation:Organisation){
+    this.http.put(`${environment.baseUrl}/organisation/${organisationId}`, JSON.stringify(organisation),{headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
         error: err => {
           if (!environment.production){
             console.log(err);
@@ -53,8 +54,8 @@ export class OrganisationService {
     )
   }
 
-  deleteOrganisation(organisationName: string){
-    this.http.delete(`${environment.baseUrl}/organisation/${organisationName}`, {withCredentials: true}).subscribe({
+  deleteOrganisation(organisationId: string){
+    this.http.delete(`${environment.baseUrl}/organisation/${organisationId}`, {headers: {'Access-Control-Allow-Origin': '*'}} ).subscribe({
         error: err => {
           if (!environment.production){
             console.log(err);
@@ -62,37 +63,60 @@ export class OrganisationService {
         }
       }
     )
+  }
+
+  // MemberOrganisation
+  deleteOrganisationMembership(userId: string, organisationId: string) {
+    return this.http.delete(`${environment.baseUrl}/organisation/${organisationId}/member/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
+    return ;
+    //this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getFullOrganisation(organisationName: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/getFullOrganisation/${organisationName}`)
+  giveAdminToMember(userId: string, organisationId: string): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/add-admin/${userId}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  // TODO: deleteOrganisationMembership A faire coté API
-  deleteOrganisationMembership(userId: string, organisationId: string) {
-    return this.http.delete(`${environment.baseUrl}/organisation/deleteMembership/${organisationId}/${userId}`).subscribe({
-      error: err => {
-        if (!environment.production){
-          console.log(err);
-        }
-      }
-    })
-  }
-
-  // TODO : giveAdminToMember A faire coté API, il faudrait faire un update mais je sais pas si il faut absolument l'id de membership
-  giveAdminToMember(userId: string, organisationId: string) {
-    this.http.put(`${environment.baseUrl}/organisation/giveAdminToMember/${organisationId}/${userId}`, null);
-  }
-  // TODO: pareil que pour giveAdminToMember, il faudrait faire un put
-  removeAdminToAdminMember(userId: string, organisationId: string){
-    this.http.put(`${environment.baseUrl}/organisation/removeAdminToAdminMember/${organisationId}/${userId}`, null);
+  removeAdminToAdminMember(userId: string, organisationId: string): Observable<void>{
+    return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/remove-admin/${userId}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getSuggestionOrganisation(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestion/55`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestions`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  getMemberOrganisation(organisationId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/organisation/${organisationId}/members`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  isAdmin(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${id}/is-admin`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  isOwner(id: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${id}/is-owner`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  // TODO : get Event created par organisationId
+  getEventCreated(organisationId: string): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.baseUrl}/organisation/${organisationId}/events`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  unfollowOrganisation(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/organisation/${id}/unfollow`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  followOrganisation(id: string): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/organisation/${id}/follow`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  isUserAdmin(organisationId: string, username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-admin/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  isUserOwner(organisationId: string, username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-owner/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 }

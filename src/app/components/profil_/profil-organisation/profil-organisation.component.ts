@@ -10,6 +10,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {EventService} from "../../../services/event/event.service";
 import {PostService} from "../../../services/post/post.service";
 import {Post} from "../../../shared/models/post.model";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-profil-organisation',
@@ -20,42 +21,44 @@ export class ProfilOrganisationComponent implements OnInit {
 
   faCheckCircle = faCheckCircle;
   organisation$: Organisation;
-  organisationName: string;
+  organisationId: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
-  listMember$: User[]= [];
+  listMember$: User[] = [];
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
-  isCanFollow: boolean = true;
-  listPosts$: Post[];
+  isFollowing: boolean = false;
+  listPosts$: Post[] = [];
+  listEvent$: Event[] = [];
+
   constructor(private _organisationService: OrganisationService,
               private route: ActivatedRoute,
               private _userService: UserService,
               private _authService: AuthService,
               private _eventService: EventService,
               private _postService: PostService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.organisationName = this.route.snapshot.params['organisationName']
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession$=user;
-      this.isOwner();
-      this.isAdmin();
-      this.canFollow();
+
+    this.organisationId = this.route.snapshot.params['id']
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession$ = user;
     });
     this.getOrganisation();
-
-
   }
 
   private getOrganisation() {
-    this._organisationService.getFullOrganisation(this.organisationName).subscribe({
+    this._organisationService.getOrganisation(this.organisationId).subscribe({
       next: organisation => {
         this.organisation$ = organisation;
-        this.organisation$.members.forEach(orgaMembership => {
-          this.listMember$.push(orgaMembership.user);
-        })
+        this.getOrganisationMember();
+        this.canFollow();
+        this.isOwner();
+        this.isAdmin();
+        // this.getListEvent();
+        this.getPostsOrganisation();
       },
       error: error => {
         if (!environment.production) {
@@ -65,33 +68,10 @@ export class ProfilOrganisationComponent implements OnInit {
     });
   }
 
-  // TODO : Implémenter la fonctionnalité de follow
-  canFollow() {
-    this.isCanFollow = true;
-  }
-
-  followOrganisation(name: string) {
-
-  }
-
-  unFollowOrganisation(name: string) {
-
-  }
-
   isOwner() {
-      if (this.organisation$.owner.id == this.userSession$.id){
-        this.isOwnerB = true
-      }
-  }
-
-  isAdmin() {
-    this._eventService.getEventOrganisationMembership(this.organisation$.id).subscribe({
-      next: listMemberShip => {
-        listMemberShip.forEach(member => {
-          if (member.user.id == this.userSession$.id && member.isAdmin){
-            this.isAdminB = true;
-          }
-        })
+    this._organisationService.isOwner(this.organisationId).subscribe({
+      next: bool => {
+        this.isOwnerB = bool;
       },
       error: error => {
         if (!environment.production) {
@@ -101,4 +81,93 @@ export class ProfilOrganisationComponent implements OnInit {
     })
   }
 
+  isAdmin() {
+    this._organisationService.isAdmin(this.organisationId).subscribe({
+      next: bool => {
+        this.isAdminB = bool;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getOrganisationMember() {
+    this._organisationService.getMemberOrganisation(this.organisationId).subscribe({
+      next: users => {
+        this.listMember$ = users;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+  private getListEvent() {
+    this._organisationService.getEventCreated(this.organisationId).subscribe({
+      next: events => {
+        this.listEvent$ = events;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  private getPostsOrganisation() {
+    this._organisationService.getOrganisationPosts(this.organisationId).subscribe({
+      next: posts => {
+        this.listPosts$ = posts;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  canFollow() {
+    this._userService.isFollowingOrganisation(this.organisationId).subscribe({
+      next: bool =>{
+        this.isFollowing = bool;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  followOrganisation() {
+    this._organisationService.followOrganisation(this.organisationId).subscribe({
+      next: () =>{
+        this.isFollowing = true;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  unfollowOrganisation() {
+    this._organisationService.unfollowOrganisation(this.organisationId).subscribe({
+      next: () =>{
+        this.isFollowing = false;
+      },
+      error: error => {
+        if (!environment.production){
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
 }

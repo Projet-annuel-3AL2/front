@@ -98,7 +98,7 @@ export class CreateEventComponent implements OnInit {
     newEvent.longitude = data.longitudeEvent;
     newEvent.participantsLimit = data.participantsLimitEvent;
     newEvent.category = data.categoryEvent;
-    newEvent.creator = this.user$;
+    newEvent.user = this.user$;
     newEvent.picture = data.pictureFile;
     newEvent.organisation = data.organisationEvent != null?data.organisationEvent:null;
     console.log(newEvent);

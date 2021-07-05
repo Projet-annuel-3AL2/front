@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
 import {ActivatedRoute} from "@angular/router";
@@ -10,6 +10,9 @@ import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
+import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-profil-user',
@@ -19,19 +22,22 @@ import {AuthService} from "../../../services/auth/auth.service";
 export class ProfilUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
+
   user$: User;
   userSession: User;
-  listPost$: Post[];
-  listEvent$: Event[];
-  listUser$: User[];
-  isCanAdd: boolean = true;
+  listPost$: Post[] = [];
+  listEvent$: Event[] = [];
+  listUser$: User[] = [];
+  friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
+  allFriendRequestStatus = FriendRequestStatus;
 
   constructor(private _userService: UserService,
               private route: ActivatedRoute,
               private _postService: PostService,
               private _friendshipService: FriendshipService,
               private _eventService: EventService,
-              private _authService: AuthService
+              private _authService: AuthService,
+              public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -39,19 +45,22 @@ export class ProfilUserComponent implements OnInit {
 
     this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
       this.userSession=user;
-
     });
-    // TODO: fonction pas activé
-    this.getFullUser(username);
-    // this.getUserFriends(this.user.id);
-    this.canAdd();
+    this.getUser(username);
+
   }
 
-  private getFullUser(username: string) {
+
+  private getUser(username: string) {
     this._userService.getByUsername(username).subscribe({
       next: user => {
         this.user$ = user
-        this.getTimeline(user.id);
+        // this.getPosts(user.username);
+        // this.getFriendsList();
+        this.getEventParticipations();
+        if (user.id != this.userSession.id){
+          this.canAdd();
+        }
       },
       error: error => {
         if (!environment.production) {
@@ -61,8 +70,8 @@ export class ProfilUserComponent implements OnInit {
     })
   }
 
-  private getTimeline(userId: string) {
-    this._postService.getTimeline(userId).subscribe({
+  private getPosts(username: string) {
+    this._userService.getPosts(username).subscribe({
       next: posts =>{
         this.listPost$ = posts;
       },
@@ -74,15 +83,75 @@ export class ProfilUserComponent implements OnInit {
     })
   }
 
-  // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
-  canAdd() {
-    this.isCanAdd = true;
-  }
-  dellFriend(username: string) {
-    // this._friendshipService.removeFriendship(username);
+  private getFriendsList() {
+    this._userService.getFriends(this.user$.username).subscribe({
+      next: users =>{
+        this.listUser$ = users;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
   }
 
-  askFriend(username: string) {
-    // this._friendshipService.postFriendship(username);
+  canAdd() {
+    this._friendshipService.isFriendshipRequested(this.user$.username).subscribe({
+      next: requestStatus => {
+        console.log(requestStatus)
+        this.friendshipRequest = requestStatus;
+      }
+    })
+  }
+
+  dellFriend() {
+    this._friendshipService.removeFriendship(this.user$.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err)
+        }
+      }
+    });
+  }
+
+  askFriend() {
+    this._friendshipService.postFriendship(this.user$.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.PENDING;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err)
+        }
+      }
+    })
+  }
+
+  private getEventParticipations() {
+    this._userService.getParticipations(this.user$.username).subscribe({
+      next: events =>{
+        this.listEvent$ = events;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  showDialogueRespondFriendRequest() {
+    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
+      width: '500px',
+      data: {userId: this.user$.username}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.friendshipRequest = result;
+    })
   }
 }
