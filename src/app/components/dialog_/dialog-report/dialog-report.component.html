@@ -1,1 +1,11 @@
-<p>dialog-report works!</p>
+<h1 mat-dialog-title>Signaler</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+    <mat-form-field class="dialog-report-text">
+      <mat-label>Décrire le signalement</mat-label>
+      <textarea matInput placeholder="Ex. le problème est..." formControlName="text"></textarea>
+    </mat-form-field>
+    <button mat-raised-button class="button-send rounded-pill" type="submit">Envoyer</button>
+  </form>
+  <button mat-button (click)="onNoClick()">Quitter</button>
+</div>
