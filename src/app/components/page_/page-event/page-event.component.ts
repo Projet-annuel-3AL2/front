@@ -138,7 +138,7 @@ export class PageEventComponent implements OnInit {
   }
 
   leaveEvent(id: string) {
-    this._eventService.deleteParticipantEvent(id, this.userSession$.id).subscribe({
+    this._eventService.deleteParticipation(id).subscribe({
       next: () =>{
         this.isAbleToJoin = true;
       },

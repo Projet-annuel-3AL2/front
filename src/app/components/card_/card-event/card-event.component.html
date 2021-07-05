@@ -1,5 +1,5 @@
 
-<mat-card class="event-card-list">
+<mat-card class="event-card-list" *ngIf="canShow">
     <div class="img-card-event" >
       <a [routerLink]="['/event/' + event.id]">
         <img alt="" class="rounded" style="object-fit: none"

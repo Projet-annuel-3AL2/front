@@ -51,7 +51,6 @@ export class CardOrganisationComponent implements OnInit {
     this._organisationService.unfollowOrganisation(this.organisation.id).subscribe({
       next: () =>{
         this.isFollowing = false;
-        console.log(this.isFollowing)
       },
       error: error => {
         if (!environment.production){

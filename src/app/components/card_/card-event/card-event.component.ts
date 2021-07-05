@@ -16,6 +16,7 @@ export class CardEventComponent implements OnInit {
   @Input("event") event : Event = new Event();
   @Input('userSession') userSession: User;
   isAbleToJoin: boolean = true;
+  canShow: boolean = false;
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
@@ -24,8 +25,7 @@ export class CardEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEvent();
-    // TODO: Ajouter le getEvent avec relations
-    // this.canJoin();
+    this.canJoin();
   }
 
 
@@ -50,7 +50,7 @@ export class CardEventComponent implements OnInit {
   }
 
   leaveEvent(id: string) {
-    this._eventService.deleteParticipantEvent(id, this.userSession.id).subscribe({
+    this._eventService.deleteParticipation(id).subscribe({
       next: () =>{
         this.isAbleToJoin = true;
       },
@@ -77,6 +77,7 @@ export class CardEventComponent implements OnInit {
     this._eventService.getProfil(this.event.id).subscribe({
       next: event =>{
         this.event = event;
+        this.canShow = true;
       },
       error: error => {
         if (!environment.production){
