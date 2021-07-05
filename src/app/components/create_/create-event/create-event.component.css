@@ -28,6 +28,7 @@
   grid-area: 3 / 2 / 3 / 2;
 }
 .form-field-description {
+  resize: none;
   grid-area: 2 / 3 / span 3 / span 3;
 }
 .form-field-categories {
