@@ -1,0 +1,82 @@
+<div class="update-event-popup rounded-3" *ngIf="showPopup">
+  <form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+    <div class="update-event-grid">
+      <div class="update-event-title">
+        <p>Modification de l'Événement: {{event.name}}</p>
+      </div>
+      <div class="form-field-name-event">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom de l'Évènement</mat-label>
+          <input matInput placeholder="Nom de l'Évènement" formControlName="nameEvent" [(ngModel)]="event.name" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-description">
+        <mat-form-field >
+          <mat-label>Description de l'Évènement </mat-label>
+          <textarea matInput placeholder="Ex. L'Évènement se ..." formControlName="descriptionEvent" [(ngModel)]="event.description"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="form-field-longitude">
+        <mat-form-field appearance="fill" >
+          <mat-label>Longitude</mat-label>
+          <input matInput type="number" placeholder="Ex. 33400" formControlName="longitudeEvent" [(ngModel)]="event.longitude" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-latitude">
+        <mat-form-field appearance="fill" >
+          <mat-label>Latitude</mat-label>
+          <input matInput type="number" placeholder="Ex. -33400" formControlName="latitudeEvent"  [(ngModel)]="event.latitude" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-participant-limit">
+        <mat-form-field appearance="fill" >
+          <mat-label>Nb. de participant Max</mat-label>
+          <input matInput type="number" placeholder="Ex. 30"  [formControl]="limitParticipant" min="2" formControlName="participantsLimitEvent" [(ngModel)]="event.participantsLimit" required >
+          <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-field-categories">
+        <mat-form-field appearance="fill">
+          <mat-label>Categories:</mat-label>
+          <mat-select formControlName="categoryEvent" [(value)]="event.category.name" matNativeControl required>
+            <mat-option *ngFor="let category of listCategory$" value="{{category.id}}" >{{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-organisation">
+        <mat-form-field appearance="fill">
+          <mat-label>Organisation :</mat-label>
+          <mat-select formControlName="organisationEvent" [(value)]="event.organisation.id" required>
+            <mat-option  value="null">Pas d'Organisation
+            </mat-option>
+            <mat-option *ngFor="let organisation of listOrganisation$" value="{{organisation.id}}">{{organisation.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-date-picker">
+        <mat-form-field appearance="fill">
+          <mat-label>Entrer la durée de l'Evènement</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate formControlName="startDateEvent" placeholder="Date de début" [(ngModel)]="event.startDate" required>
+            <input matEndDate formControlName="endDateEvent" placeholder="Date de fin" [(ngModel)]="event.endDate" required>
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-file">
+        <label for="myfile">Choisissez une image :</label>
+        <input type="file" id="myfile" name="myfile" data-max-size="2048" formControlName="pictureFile">
+      </div>
+      <div class="form-field-button-validate">
+        <button mat-raised-button class="button-validate rounded-pill" type="submit">Valider</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="popup-blur" (click)="closePopup()" *ngIf="showPopup"></div>
+<div class="update-event-button">
+  <button mat-raised-button class="rounded-pill" (click)="openPopup()" [disabled]="showPopup">Modifier</button>
+</div>

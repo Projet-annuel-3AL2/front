@@ -1,0 +1,24 @@
+<div class="row m-0">
+  <div class="col-md-3 my-3">
+    <div class="position-fixed">
+      <app-return-button></app-return-button>
+      <div class="event-list-filter mb-3 my-5">
+        <app-event-filter></app-event-filter>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 my-5">
+    <div  *ngIf="eventsFilter$ == undefined">
+      <app-event-list-display [events]="events$" [userSession]="userSession$"></app-event-list-display>
+    </div>
+    <div *ngIf="eventsFilter$ != undefined">
+      <app-event-list-display  [events]="eventsFilter$"></app-event-list-display>
+    </div>
+  </div>
+  <div class="col-lg-4 my-3">
+    <div class="position-fixed">
+      <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
+    </div>
+  </div>
+</div>

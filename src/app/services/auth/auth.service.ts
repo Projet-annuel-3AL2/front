@@ -24,16 +24,16 @@ export class AuthService {
       mail
     })
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user.id));
+        localStorage.setItem('user', JSON.stringify(user.username));
         this.userSubject.next(user);
         return user;
       }));
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {username, password})
+    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {username, password}, {headers: {'Access-Control-Allow-Origin': '*'}})
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user.id));
+        localStorage.setItem('user', JSON.stringify(user.username));
         this.userSubject.next(user);
         return user;
       }));
@@ -50,7 +50,7 @@ export class AuthService {
     return user !== null && user !== undefined && user !== "";
   }
 
-  public getCurrentUserId(): string {
+  public getCurrentUsername(): string {
     return JSON.parse(localStorage.getItem('user'));
   }
 }

@@ -11,7 +11,7 @@ export class Post {
   group?: Group;
   text: string;
   likes: User[];
-  sharedPost: Post;
+  sharedPosts: Post[];
   postShares: Post;
   comments: Comment[];
   medias: Media[];

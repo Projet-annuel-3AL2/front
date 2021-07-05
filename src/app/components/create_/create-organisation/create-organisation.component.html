@@ -1,0 +1,30 @@
+<div class="create-organisation-popup rounded-3" *ngIf="showPopup">
+  <form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+    <div class="create-organisation-grid">
+      <div class="create-organisation-title">
+        <p>Création d'une Organisation</p>
+      </div>
+      <div class="form-field-name-organisation">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom de l'Organisation</mat-label>
+          <input matInput placeholder="Nom de l'Organisation" formControlName="name" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-profil-picture">
+        <label for="profilPicture">Image de profile :  </label>
+        <input type="file" id="profilPicture" name="profilPicture" data-max-size="2048" formControlName="profilPicture">
+      </div>
+      <div class="form-field-banner-picture">
+        <label for="bannerPicture">Bannière :  </label>
+        <input type="file" id="bannerPicture" name="bannerPicture" data-max-size="2048" formControlName="bannerPicture">
+      </div>
+      <div class="form-field-button-validate">
+        <button mat-raised-button class="button-validate rounded-pill" type="submit">Valider</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="popup-blur" (click)="closePopup()" *ngIf="showPopup"></div>
+<div class="create-organisation-button">
+  <button mat-raised-button class="rounded-pill" (click)="openPopup()" [disabled]="showPopup">Créer une Organisation</button>
+</div>

@@ -1,0 +1,13 @@
+<div class="rounded-pill border d-flex p-2 card-user my-3">
+  <div class="mr-2">
+    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'"  [routerLink]="['/user/' + user.username]" class="rounded-circle"
+         width="50" alt="">
+  </div>
+  <div class="spacer"></div>
+  <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a> <fa-icon [icon]="faCheckCircle"></fa-icon></p>
+  <div class="spacer"></div>
+  <div *ngIf="user.id !== userSession.id">
+    <button *ngIf="canAdd(user.id)" mat-raised-button class="ml-auto button-add-friend" (click)="this.askFriend(user.username)"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+    <button *ngIf="!canAdd(user.id)" mat-raised-button class="ml-auto button-add-friend-disable" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)"> Enlever</button>
+  </div>
+</div>
