@@ -3,7 +3,6 @@
     <div class="create-post-picture">
       <img class="rounded-circle profile-picture" [src]="user$.profilePicture || 'https://picsum.photos/50/50'" [alt]="user$.username">
     </div>
-    <!-- TODO: J'ai une erreur sur (input)="text=$event.target.textContent" -->
     <div (input)="text=$event.target.textContent" [textContent]="text" class="create-post-textarea mx-2" contenteditable="true"
          ondragenter="return false;" ondragover="return false;" placeholder="Quoi de neuf ?" spellcheck="true"></div>
    </div>

@@ -59,16 +59,4 @@
       </a>
     </div>
   </div>
-  <div *ngIf="showComments">
-    <div fxFlex fxLayout="row">
-      <div>
-        <img [src]="post.creator.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle profile-picture" width="50">
-      </div>
-      <div (input)="text=$event.target.textContent" [textContent]="text"  contenteditable
-           ondragenter="return false;" ondragover="return false;" spellcheck="true"
-           class="w-75 rounded-3 p-2" style="background-color: #E5E5E5" placeholder="Saisissez votre commentaire">
-      </div>
-
-    </div>
-  </div>
 </div>
