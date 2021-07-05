@@ -67,13 +67,7 @@ export class OrganisationService {
 
   // MemberOrganisation
   deleteOrganisationMembership(userId: string, organisationId: string) {
-    return this.http.delete(`${environment.baseUrl}/organisation/deleteMembership/${organisationId}/${userId}`).subscribe({
-      error: err => {
-        if (!environment.production){
-          console.log(err);
-        }
-      }
-    })
+    return this.http.delete(`${environment.baseUrl}/organisation/${organisationId}/member/${userId}`);
   }
 
   getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
@@ -81,22 +75,16 @@ export class OrganisationService {
     //this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`);
   }
 
-  giveAdminToMember(userId: string, organisationId: string) {
-    //this.http.put(`${environment.baseUrl}/organisation/giveAdminToMember/${organisationId}/${userId}`, null);
+  giveAdminToMember(userId: string, organisationId: string): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/add-admin/${userId}`, null);
   }
 
-  removeAdminToAdminMember(userId: string, organisationId: string){
-    //this.http.put(`${environment.baseUrl}/organisation/removeAdminToAdminMember/${organisationId}/${userId}`, null);
+  removeAdminToAdminMember(userId: string, organisationId: string): Observable<void>{
+    return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/remove-admin/${userId}`, null);
   }
 
   getSuggestionOrganisation(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestion/55`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
-  // TODO : Récupérer les membres d'une organisation pas Fait coter API
-  getMembersOrga(id: string): Observable<OrganisationMembership[]> {
-    return ;
-    // this.http.get<User[]>(`${environment.baseUrl}/organisation/getListMembers/${id}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestions`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getMemberOrganisation(organisationId: string): Observable<User[]> {
@@ -122,5 +110,13 @@ export class OrganisationService {
 
   followOrganisation(id: string): Observable<void> {
     return this.http.put<void>(`${environment.baseUrl}/organisation/${id}/follow`, null);
+  }
+
+  isUserAdmin(organisationId: string, username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-admin/${username}`)
+  }
+
+  isUserOwner(organisationId: string, username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-owner/${username}`)
   }
 }
