@@ -1,6 +1,6 @@
 export enum FriendRequestStatus {
+  NONE,
   PENDING,
   RECEIVED,
-  NONE,
   BEFRIENDED
 }
