@@ -1,5 +1,5 @@
-<div class="my-3">
-  <div class="display-related-post col-md-6 " *ngFor="let post of listPost;">
-    <post [post]="post" class="m-2"></post>
+<cdk-virtual-scroll-viewport autosize style="height: calc(100% - 80px)">
+  <div *cdkVirtualFor="let post of posts" class="my-3">
+    <post [post]="post"></post>
   </div>
-</div>
+</cdk-virtual-scroll-viewport>

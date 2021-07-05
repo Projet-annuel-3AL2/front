@@ -59,6 +59,8 @@ import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-ev
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
 import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {PostListComponent} from "./components/post-list/post-list.component";
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
 
 @NgModule({
   declarations: [
@@ -124,7 +126,9 @@ import {PostListComponent} from "./components/post-list/post-list.component";
     ReactiveFormsModule,
     TimeagoModule.forRoot(),
     FormsModule,
-    PickerModule
+    PickerModule,
+    ScrollingModule,
+    ExperimentalScrollingModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,

@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../../shared/models/post.model";
 import {faCheckCircle, faComment, faEllipsisH, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 import {PostService} from "../../../services/post/post.service";
+import {Subscription, timer} from "rxjs";
 
 @Component({
   selector: 'post',
