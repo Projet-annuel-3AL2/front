@@ -29,7 +29,7 @@ export class TimelineComponent implements OnInit {
   }
 
   private getTimeline() {
-    this._postService.getTimeline(this.userSession.id).subscribe({
+    this._postService.getTimeline().subscribe({
       next: posts => {
         this.listPost$ = posts;
       },
@@ -38,6 +38,6 @@ export class TimelineComponent implements OnInit {
           console.error('Error: ', error);
         }
       }
-    })
+    });
   }
 }
