@@ -17,45 +17,27 @@ export class PostService {
   constructor(private http: HttpClient) {
   }
 
-  getPostById(postId: string): Observable<Post>{
-    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
-  getAllPost(): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
-  getLikePostById(postId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/${postId}/likes`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
-  deletePost(postId: string) {
-    this.http.delete(`${environment.baseUrl}/${postId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
   createPost(post: Post) {
-    return this.http.post<Post>(`${environment.baseUrl}/post`, post, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.post<Post>(`${environment.baseUrl}/post`, post);
   }
 
-  updatePost(post: Post){
-    this.http.put(`${environment.baseUrl}/post/`, JSON.stringify(post), {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+  getTimeline(): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`);
   }
 
-  // TODO : getPostByEventId() à implementer sur L'API
-  getPostWithEventId(eventId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostWithEventId/${eventId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getPostLikes(postId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.baseUrl}/post/${postId}/likes`);
   }
 
-  getPostWithOrgaName(organisationName: string): Observable<Post[]>{
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/getPostsOrganisation/${organisationName}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  isPostLiked(postId: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/post/${postId}/is-liked`);
   }
 
-  getTimeline(userId): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  likePost(postId: string): Observable<void> {
+    return this.http.get<void>(`${environment.baseUrl}/post/${postId}/like`);
   }
 
+  dislikePost(postId: string): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/post/${postId}/like`);
+  }
 }
