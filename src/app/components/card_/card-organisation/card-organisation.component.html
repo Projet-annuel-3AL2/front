@@ -1,0 +1,10 @@
+<div class="rounded-pill border d-flex p-2 organisation-card my-3">
+  <div class="mr-2">
+    <a [routerLink]="['/organisation/' + organisation.id]"><i class="far fa-building fa-2x"></i></a>
+  </div>
+  <div class="spacer"></div>
+  <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
+  <div class="spacer"></div>
+  <button *ngIf="!isFollowing" mat-raised-button class="ml-auto button-follow-orga" (click)="this.followOrganisation()"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
+  <button *ngIf="isFollowing" mat-raised-button class="ml-auto button-follow-orga-disable" matTooltip="Arrêter de suivre l'organisation" (click)="this.unfollowOrganisation()">Ne plus suivre</button>
+</div>

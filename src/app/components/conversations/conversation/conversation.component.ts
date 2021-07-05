@@ -69,7 +69,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (this.conversation.organisation !== undefined) {
       return this.conversation.organisation.name;
     } else if (this.conversation.friendship) {
-      return this.conversation.friendship.friendOne.id !== this.authService.getCurrentUserId() ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;
+      return this.conversation.friendship.friendOne.username !== this.authService.getCurrentUsername() ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;
     }
     return undefined;
   }

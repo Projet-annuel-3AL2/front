@@ -1,0 +1,15 @@
+<!-- TODO: Event-dialog-maps non dynamique -->
+<h1 mat-dialog-title>Choisissez votre localisation</h1>
+<div mat-dialog-content>
+  <img alt="" class="rounded" style="object-fit: none"
+       src="../../../../assets/images/img-maps.png"
+       width="auto" height="400px">
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.longitude">
+    <input matInput [(ngModel)]="data.latitude">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Quitter</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Valider</button>
+</div>

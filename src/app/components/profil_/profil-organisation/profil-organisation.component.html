@@ -1,0 +1,80 @@
+<div class="row m-0" *ngIf="organisation$ != undefined">
+  <div class="col-md-3 my-3">
+    <app-return-button></app-return-button>
+    <div *ngIf="isOwnerB || isAdminB">
+      <app-update-organisation [organisation]="organisation$"></app-update-organisation>
+    </div>
+  </div>
+  <div class="col-md-5 my-3">
+    <div class="profil-user-scroll">
+      <div class="orga-card-full">
+        <img alt="" class="rounded" style="object-fit: none"
+             src="{{organisation$.bannerPicture != undefined? organisation$.bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
+             width="100%" height="300px">
+        <div class="orga-card-display" >
+          <div class="orga-card-div">
+            <div class="orga-card-img-profil">
+              <img [src]="organisation$.profilePicture != undefined? organisation$.profilePicture.link: 'https://picsum.photos/50/50'" class="rounded-circle"
+                   width="75" alt="">
+            </div>
+            <div class="orga-card-name">
+              <p>{{organisation$.name}}</p>
+            </div>
+            <div class="orga-card-certification">
+              <fa-icon [icon]="faCheckCircle"></fa-icon>
+            </div>
+            <div class="orga-card-empty"></div>
+            <div class="orga-card-button">
+                <button *ngIf="!isFollowing" mat-raised-button class="ml-auto button-join-event" (click)="this.followOrganisation()"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
+                <button *ngIf="isFollowing" mat-raised-button class="ml-auto mat-button-event" (click)="this.unfollowOrganisation()">Ne plus suivre</button>
+            </div>
+            <div class="orga-card-menu">
+              <div  class="dropdown" dropdown>
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+                        dropdownToggle type="button">
+                  <fa-icon [icon]="faEllipsisH"></fa-icon>
+                </button>
+                <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+                  <a class="dropdown-item" href="#">Signaler</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-event  ">
+        <mat-tab-group dynamicHeight mat-align-tabs="center">
+          <mat-tab label="Post">
+              <app-list-post [listPost]="organisation$.posts"></app-list-post>
+          </mat-tab>
+          <mat-tab label="Membres">
+            <div *ngIf="!isOwnerB && !isAdminB">
+              <mat-List-item *ngFor="let member of listMember$" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+                <app-user-card [user]="member" [userSession]="this.userSession$"></app-user-card>
+              </mat-List-item>
+            </div>
+            <div class="my-3" *ngIf="isAdminB && !isOwnerB">
+              <div class="display-list-user" *ngFor="let member of listMember$;" >
+                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" [isOwner]="false" class="m-0"></app-card-user-manage-organisation>
+              </div>
+            </div>
+            <div class="my-3" *ngIf="isOwnerB">
+              <div class="display-list-user" *ngFor="let member of listMember$;" >
+                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" [isOwner]="true" class="m-0"></app-card-user-manage-organisation>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab label="Événements">
+            <app-profil-list-event [listEvent]="organisation$.events" [userSession]="userSession$"></app-profil-list-event>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2 my-3">
+    <div class="position-fixed">
+      <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
+    </div>
+  </div>
+</div>

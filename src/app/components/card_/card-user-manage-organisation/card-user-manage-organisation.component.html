@@ -1,0 +1,21 @@
+<div class="rounded-pill border d-flex p-2 card-user my-3">
+  <div class="mr-2">
+    <img [src]="user.profilePicture != undefined? user.profilePicture.link :'https://picsum.photos/50/50'"  [routerLink]="['/user/' + user.username]" class="rounded-circle"
+         width="50" alt="">
+  </div>
+  <div class="spacer"></div>
+  <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a> <fa-icon [icon]="faCheckCircle"></fa-icon></p>
+  <div class="spacer"></div>
+  <div *ngIf="user.id !== userSession.id">
+    <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
+    <mat-menu #menu="matMenu" >
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.NONE" mat-menu-item class="ml-auto button-add-friend" (click)="this.askFriend()"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED" mat-menu-item class="ml-auto button-add-friend" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend()"> Enlever</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED" mat-menu-item class="ml-auto button-add-friend" matTooltip="Accepter ou Refuser la demande d'amis" (click)="this.showDialogueRespondFriendRequest()"> Répondre</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" mat-menu-item class="ml-auto button-add-friend-disable"> En Attente</button>
+      <button *ngIf="isOwner || (!userIsAdmin && !userIsOwner) " mat-menu-item (click)="this.deleteMembership(user.id)">Retirer de l'Orga</button>
+      <button *ngIf="isOwner && !userIsAdmin" mat-menu-item (click)="this.giveAdmin(user.id)">Donner Admin</button>
+      <button *ngIf="isOwner && userIsAdmin" mat-menu-item (click)="this.removeAdmin(user.id)">Retirer Admin</button>
+    </mat-menu>
+  </div>
+</div>

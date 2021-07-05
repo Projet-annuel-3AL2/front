@@ -5,7 +5,9 @@ import {Media} from "./media.model";
 
 export class Event {
   id: string;
-  creator: User;
+  name: String;
+  description: String;
+  user: User;
   startDate: Date;
   endDate: Date;
   latitude: number;
@@ -14,4 +16,5 @@ export class Event {
   organisation: Organisation;
   category: Category;
   picture: Media;
+  participants: User[];
 }

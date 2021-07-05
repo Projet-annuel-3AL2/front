@@ -1,5 +1,5 @@
 <div class="container d-inline-block my-2">
-  <div *ngIf="message.user.id !== authService.getCurrentUserId(); else currentUser" class="float-start w-75" fxFlex
+  <div *ngIf="message.user.username !== authService.getCurrentUsername(); else currentUser" class="float-start w-75" fxFlex
        fxLayout="row">
     <div class="rounded-circle profile-picture" fxFlex>
       <img [alt]="message.user.username" [src]="message.user.profilePicture || 'https://picsum.photos/50/50'"

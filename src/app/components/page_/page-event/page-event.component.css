@@ -1,0 +1,129 @@
+.event-card-infos-event {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(229, 229,229, 0.08) 0%, #E5E5E5 63.02%);
+  color: #fff;
+  padding: 10px;
+  width: 100%;
+  height: 50%;
+  border-radius: 5px;
+
+}
+
+.titre-event {
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  max-width: 80%;
+  font-size: 46px;
+  font-family: Roboto, serif;
+  color: #00643C;
+  font-weight: bold;
+}
+
+.button-join {
+  flex: 1 2 80%;
+  box-sizing: border-box;
+  max-width: 15%;
+  padding-top: 5px;
+  padding-left: 20px;
+}
+
+.dropdown-event {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 5%;
+  padding-top: 5px;
+  color: #00643C;
+}
+
+.dates-event {
+  flex: 1 1 0%;
+  box-sizing: border-box;
+  max-width: 30%;
+  color: black;
+}
+.description-event {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 80%;
+  font-size: 15px;
+  font-family: Roboto, serif;
+  text-align: justify;
+  color: black;
+}
+
+.fa-chevron-circle-down {
+  color: #00643C;
+  border: hidden;
+}
+
+
+.event-card-text-infos {
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.event-card-full {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-toggle::after {
+  content: initial
+}
+
+.dropdown-toggle {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+}
+
+.date-area-event {
+  flex-flow: row-reverse wrap;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.tab-event {
+}
+
+/* Styles for tab labels */
+.tab-group-user-profil.mat-tab-label {
+  min-width: 250px !important;
+  background-color: transparent;
+  font-weight: 700;
+}
+
+/* Styles for the active tab label */
+.tab-group-user-profil.mat-tab-label.mat-tab-label-active {
+  min-width: 250px !important;
+  background-color: transparent;
+  font-weight: 700;
+}
+
+/* Styles for the ink bar */
+.mat-ink-bar {
+  background-color: #00643C;
+}
+
+.dropdown-toggle::after {
+  content: initial
+}
+
+.dropdown-toggle {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+}
+
+.display-list-user {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+

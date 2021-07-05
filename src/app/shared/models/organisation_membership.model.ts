@@ -5,4 +5,11 @@ export class OrganisationMembership {
   user: User;
   organisation: Organisation;
   isAdmin: boolean;
+
+
+  constructor(user: User) {
+    this.user = user;
+  }
 }
+
+

@@ -2,3 +2,5 @@
 <router-outlet style="height: calc(100% - 80px);"></router-outlet>
 <app-conversations-box *ngIf="authService.isAuthenticated()"></app-conversations-box>
 <app-create-post *ngIf="authService.isAuthenticated()"></app-create-post>
+<app-create-event *ngIf="authService.isAuthenticated() && canCreateEvent()"></app-create-event>
+<app-create-organisation *ngIf="authService.isAuthenticated() && canCreateOrganisation()"></app-create-organisation>

@@ -1,0 +1,16 @@
+<div class="row m-0">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4 " *ngIf="listPost$.length == 0" >
+    <p style="padding-top: 100px">Il n'y a pas de post à afficher</p>
+  </div>
+  <div class="col-md-4 " *ngIf="listPost$.length > 0" >
+    <app-list-post [listPost]="listPost$"></app-list-post>
+  </div>
+  <div class="col-md-4 my-3">
+    <div class="position-fixed">
+      <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
+    </div>
+  </div>
+</div>
