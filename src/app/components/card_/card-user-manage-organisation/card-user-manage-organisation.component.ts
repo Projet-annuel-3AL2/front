@@ -9,6 +9,9 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
 import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
+import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
+import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-card-user-manage-organisation',
@@ -20,77 +23,136 @@ export class CardUserManageOrganisationComponent implements OnInit {
   @Input('user') user: User = new User();
   @Input('organisation') organisation: Organisation;
   @Input('userSession') userSession: User;
+  @Input('isOwner') isOwner: boolean;
   faCheckCircle = faCheckCircle;
 
-  canAdd: number = 0;
-  isAdminOrga: boolean = false;
-  isOwner: boolean = false;
+  friendshipRequest: FriendRequestStatus;
   userIsAdmin: boolean = false;
+  allFriendRequestStatus =  FriendRequestStatus;
+  userIsOwner: Boolean = false;
 
   constructor(private _friendshipService: FriendshipService,
               private _authService: AuthService,
               private _userService: UserService,
-              private _organisationService: OrganisationService) { }
+              private _organisationService: OrganisationService,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.canAddFriend();
     this.isUserAdminFormOrga();
-    this.isOwnerOrga();
-    this.userIsAdminOrga();
+    this.getStatusUserInOrga();
   }
 
-  // TODO : Logique de Un user peut ajouter ou non un amis (voir list d'amis)
   canAddFriend() {
-    this.canAdd = 0;
-  }
-
-  private isOwnerOrga() {
-    this.isOwner = this.organisation.owner.id == this.userSession.id;
-  }
-
-  private userIsAdminOrga() {
-    this._organisationService.getMembersOrga(this.organisation.id).subscribe({
-        next: organisationMemberships => {
-          organisationMemberships.forEach(organisationMembership => {
-            // Vérifie que l'UserSession est admin
-            if (organisationMembership.user.id == this.userSession.id && organisationMembership.isAdmin){
-              this.isAdminOrga = true;
-            }
-            // Vérifie que l'User passer en paramètre est admin
-            if (organisationMembership.user.id == this.user.id && organisationMembership.isAdmin){
-              this.userIsAdmin = true;
-            }
-          })
-        },
-        error: error => {
-          if (!environment.production) {
-            console.error('Error: ', error);
-          }
-        }
-    });
+    this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
+      next: requestStatus => {
+        this.friendshipRequest = requestStatus;
+      }
+    })
   }
 
   private isUserAdminFormOrga() {
 
   }
 
-  askFriend(username: string) {
-    // this._friendshipService.postFriendship(username);
+  askFriend() {
+    this._friendshipService.postFriendship(this.user.username).subscribe({
+      next: () => {
+        console.log("je suis la")
+        this.friendshipRequest = this.allFriendRequestStatus.PENDING;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err)
+        }
+      }
+    });
   }
 
-  dellFriend(username: string) {
-    // this._friendshipService.removeFriendship(username)
+  dellFriend() {
+    this._friendshipService.removeFriendship(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = this.allFriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err)
+        }
+      }
+    })
+  }
+
+  showDialogueRespondFriendRequest() {
+    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
+      width: '500px',
+      data: {userId: this.user.username}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.canAddFriend()
+    })
   }
 
   deleteMembership(userId: string) {
-    this._organisationService.deleteOrganisationMembership(userId, this.organisation.id);
+    this._organisationService.deleteOrganisationMembership(userId, this.organisation.id).subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err);
+        }
+      }
+    });
   }
 
   giveAdmin(userId: string) {
-    this._organisationService.giveAdminToMember(userId, this.organisation.id);
+    this._organisationService.giveAdminToMember(userId, this.organisation.id).subscribe({
+      next: () => {
+        this.userIsAdmin = true;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err);
+        }
+      }
+    });
   }
 
   removeAdmin(userId: string) {
-    this._organisationService.removeAdminToAdminMember(userId, this.organisation.id);
+    this._organisationService.removeAdminToAdminMember(userId, this.organisation.id).subscribe({
+      next: () => {
+        this.userIsAdmin = false;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  private getStatusUserInOrga() {
+    this._organisationService.isUserAdmin(this.organisation.id, this.user.username).subscribe({
+      next: bool => {
+        this.userIsAdmin = bool;
+      },
+      error: err => {
+        if (!environment.production){
+          console.log(err)
+        }
+      }
+    })
+    if (!this.isOwner){
+      this._organisationService.isUserOwner(this.organisation.id,this.user.username).subscribe({
+        next: bool => {
+          this.userIsOwner = bool;
+        },
+        error: err => {
+          if (!environment.production){
+            console.log(err)
+          }
+        }
+      })
+    }
   }
 }

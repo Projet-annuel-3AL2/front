@@ -30,11 +30,11 @@ export class UserCardComponent implements OnInit {
   }
 
   canAdd() {
-    // this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
-    //   next: requestStatus => {
-    //     this.friendshipRequest = requestStatus;
-    //   }
-    // })
+    this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
+      next: requestStatus => {
+        this.friendshipRequest = requestStatus;
+      }
+    })
   }
 
   askFriend() {
@@ -70,6 +70,7 @@ export class UserCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
       this.friendshipRequest = result;
     })
   }

@@ -9,10 +9,11 @@
   <div *ngIf="user.id !== userSession.id">
     <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
     <mat-menu #menu="matMenu" >
-      <button *ngIf="canAdd == 0" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
-      <button *ngIf="canAdd == 1" mat-menu-item>Requête envoyé</button>
-      <button *ngIf="canAdd == 2" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
-      <button *ngIf="isOwner || (isAdminOrga && !userIsAdmin) " mat-menu-item (click)="this.deleteMembership(user.id)">Retirer de l'Orga</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.NONE" mat-menu-item class="ml-auto button-add-friend" (click)="this.askFriend()"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED" mat-menu-item class="ml-auto button-add-friend" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend()"> Enlever</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED" mat-menu-item class="ml-auto button-add-friend" matTooltip="Accepter ou Refuser la demande d'amis" (click)="this.showDialogueRespondFriendRequest()"> Répondre</button>
+      <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" mat-menu-item class="ml-auto button-add-friend-disable"> En Attente</button>
+      <button *ngIf="isOwner || (!userIsAdmin && !userIsOwner) " mat-menu-item (click)="this.deleteMembership(user.id)">Retirer de l'Orga</button>
       <button *ngIf="isOwner && !userIsAdmin" mat-menu-item (click)="this.giveAdmin(user.id)">Donner Admin</button>
       <button *ngIf="isOwner && userIsAdmin" mat-menu-item (click)="this.removeAdmin(user.id)">Retirer Admin</button>
     </mat-menu>

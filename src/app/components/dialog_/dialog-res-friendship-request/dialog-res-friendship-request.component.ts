@@ -17,6 +17,7 @@ export class DialogResFriendshipRequestComponent implements OnInit {
               private _friendshipService: FriendshipService) { }
 
   ngOnInit(): void {
+
   }
 
   onNoClick(): void {
@@ -24,7 +25,8 @@ export class DialogResFriendshipRequestComponent implements OnInit {
   }
 
   acceptFriendship() {
-    this._friendshipService.acceptFriendship(this.data).subscribe({
+
+    this._friendshipService.acceptFriendship(this.data.userId).subscribe({
       next: () => {
         this.friendshipRequestStatus = FriendRequestStatus.BEFRIENDED;
       },
@@ -37,7 +39,7 @@ export class DialogResFriendshipRequestComponent implements OnInit {
   }
 
   delFriendshipRequest() {
-    this._friendshipService.rejectFriendship(this.data).subscribe({
+    this._friendshipService.rejectFriendship(this.data.userId).subscribe({
       next: () => {
         this.friendshipRequestStatus = FriendRequestStatus.NONE;
       },
