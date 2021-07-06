@@ -18,7 +18,6 @@ import {environment} from "../../../../environments/environment";
 export class DialogUpdateEventComponent implements OnInit {
 
   formData: FormGroup;
-  listOrganisation$: Organisation[];
   limitParticipant =  new FormControl(2, Validators.min(2));
   listCategory$: Category[];
 
@@ -31,12 +30,6 @@ export class DialogUpdateEventComponent implements OnInit {
   ngOnInit(): void {
     this.initialiseFormGroup();
     this.getAllCategories();
-  }
-
-  private getListOrganisation() {
-    this._organisationService.getAllOrgaWhereUserCanCreateEvent(this.data.userSession.id).subscribe(organisations => {
-      this.listOrganisation$ = organisations
-    })
   }
 
   private getAllCategories() {
