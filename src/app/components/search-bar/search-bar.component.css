@@ -1,0 +1,14 @@
+
+.search-bar .form-control {
+  padding-left: 2.375rem;
+}
+
+.search-bar fa-icon {
+  position: absolute;
+  z-index: 2;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+}
