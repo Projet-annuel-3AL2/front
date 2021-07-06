@@ -68,14 +68,14 @@ export class DialogUpdateEventComponent implements OnInit {
     updateEvent.participantsLimit = data.participantsLimitEvent;
     updateEvent.category = data.categoryEvent;
     updateEvent.user = this.data.userSession;
-    // TODO : Ajouter description
     updateEvent.description = data.descriptionEvent;
+
+
+    // TODO : convertir address en coordonées gps et gestion fichier
     // updateEvent.picture = data.pictureFile;
-    // TODO : convertir address en coordonées gps
     // updateEvent.latitude = data.latitudeEvent;
     // updateEvent.longitude = data.longitudeEvent;
 
-    console.log(data.address)
     console.log(updateEvent);
 
     this._eventService.putEvent(updateEvent).subscribe({
