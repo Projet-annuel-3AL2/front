@@ -63,6 +63,7 @@ import {PostListComponent} from "./components/post-list/post-list.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
+import {PostPageComponent} from "./components/page_/post-page/post-page.component";
 
 @NgModule({
     declarations: [
@@ -106,7 +107,8 @@ import {SearchBarComponent} from "./components/search-bar/search-bar.component";
         CardUserManageOrganisationComponent,
         DialogResFriendshipRequestComponent,
         DialogReportComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        PostPageComponent
     ],
   imports: [
     BrowserModule,

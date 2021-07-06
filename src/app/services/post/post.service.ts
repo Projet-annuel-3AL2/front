@@ -22,6 +22,10 @@ export class PostService {
     return this.http.post<Post>(`${environment.baseUrl}/post`, post);
   }
 
+  getPostById(postId: string): Observable<Post> {
+    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`);
+  }
+
   getTimeline(): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`);
   }
@@ -41,7 +45,7 @@ export class PostService {
   sendReport(id: string, report: Report): Observable<any> {
     return this.http.put<any>(`${environment.baseUrl}/post/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
-  
+
   dislikePost(postId: string): Observable<void> {
     return this.http.delete<void>(`${environment.baseUrl}/post/${postId}/like`);
   }

@@ -9,6 +9,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
+import {PostPageComponent} from "./components/page_/post-page/post-page.component";
 
 const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
   { path: 'event/:id', component: PageEventComponent },
   { path: 'user/:username', component: ProfilUserComponent },
   { path: 'organisation/:id', component: ProfilOrganisationComponent },
+  { path: 'post/:postId', component: PostPageComponent },
 ];
 
 @NgModule({

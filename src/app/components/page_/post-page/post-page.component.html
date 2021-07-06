@@ -1,0 +1,13 @@
+<div class="row m-0" style="height: calc(100% - 80px)">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
+    <post *ngIf="post" [post]="post"></post>
+  </div>
+  <div class="col-md-4 my-3">
+    <div class="position-fixed">
+      <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
+    </div>
+  </div>
+</div>
