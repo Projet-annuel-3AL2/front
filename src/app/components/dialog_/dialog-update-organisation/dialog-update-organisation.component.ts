@@ -38,7 +38,7 @@ export class DialogUpdateOrganisationComponent implements OnInit {
     // TODO : implémenter l'ajout de fichier
     // updateOrganisation.profilePicture = data.profilPicture;
     // updateOrganisation.bannerPicture = data.bannerPicture;
-    console.log(updateOrganisation);
+
     this._organisationService.putOrganisation(this.data.organisation.id, updateOrganisation).subscribe(
       {
         next: () => {
