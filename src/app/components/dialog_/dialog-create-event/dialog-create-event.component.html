@@ -1,4 +1,5 @@
-<h1 mat-dialog-title class="update-event-title">Création d'un Évènement</h1>
+<h1 mat-dialog-title class="update-event-title" *ngIf="data.organisation != null">Création d'un Évènement par {{data.organisation.name}}</h1>
+<h1 mat-dialog-title class="update-event-title" *ngIf="data.organisation === null">Création d'un Évènement par {{data.userSession.username}}</h1>
 <form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
   <div mat-dialog-content>
     <div class="update-event-grid">
@@ -20,15 +21,6 @@
           <input matInput placeholder="Adresse" formControlName="address" required>
         </mat-form-field>
       </div>
-      <div class="form-field-organisation">
-        <mat-form-field appearance="fill">
-          <mat-label>Organisation :</mat-label>
-          <mat-select formControlName="organisationEvent" required>
-            <mat-option  value="null">Pas d'Organisation</mat-option>
-            <mat-option *ngFor="let membership of listMembership$" value="{{membership.organisation.id}}">{{membership.organisation.name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill" >
           <mat-label>Nb. de participant Max</mat-label>
@@ -44,15 +36,20 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="form-field-date-picker">
+      <div class="form-field-date-picker-start">
         <mat-form-field appearance="fill">
-          <mat-label>Entrer la durée de l'Evènement</mat-label>
-          <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate formControlName="startDateEvent" placeholder="Date de début"  required>
-            <input matEndDate formControlName="endDateEvent" placeholder="Date de fin" required>
-          </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-label>Date de début</mat-label>
+          <input matInput [ngxMatDatetimePicker]="pickerFrom" formControlName="startDateEvent" placeholder="Date de début"  required>
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerFrom ></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-date-picker-end">
+        <mat-form-field appearance="fill">
+          <mat-label>Date de fin</mat-label>
+          <input matInput [ngxMatDatetimePicker]="pickerTo" formControlName="endDateEvent" placeholder="Date de fin"  required>
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerTo ></ngx-mat-datetime-picker>
         </mat-form-field>
       </div>
       <div class="form-field-file">

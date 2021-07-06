@@ -10,6 +10,7 @@ import {Category} from "../../../shared/models/category.model";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-dialog-create-event',
@@ -22,29 +23,23 @@ export class DialogCreateEventComponent implements OnInit {
   listCategory$: Category[];
   listMembership$: OrganisationMembership[];
   limitParticipant =  new FormControl(2, Validators.min(2));
+  wrongDate: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
               private _categoryService: CategoryService,
               private _organisationService: OrganisationService,
-              @Inject(MAT_DIALOG_DATA) public data: { userSession: User}) { }
+              private _snackBar: MatSnackBar,
+              @Inject(MAT_DIALOG_DATA) public data: { userSession: User, organisation: Organisation}) { }
 
   ngOnInit(): void {
     this.initialiseFormGroup();
     this.getAllCategories();
-    this.getListOrganisation();
   }
 
   private getAllCategories() {
     this._categoryService.getAllCategory().subscribe(categories => {
       this.listCategory$ = categories
-    })
-  }
-
-  private getListOrganisation() {
-    this._organisationService.getAllOrgaWhereUserCanCreateEvent().subscribe(organisations => {
-      this.listMembership$ = organisations;
-      console.log(this.listMembership$);
     })
   }
 
@@ -63,32 +58,39 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   onClickSubmit(data) {
-    let newEvent = new Event();
-    newEvent.name = data.nameEvent;
-    newEvent.startDate = data.startDateEvent;
-    newEvent.endDate = data.endDateEvent;
-    newEvent.participantsLimit = data.participantsLimitEvent;
-    newEvent.category = data.categoryEvent;
-    newEvent.user = this.data.userSession;
-    newEvent.description = data.descriptionEvent;
-    newEvent.organisation = data.organisationEvent != null? data.organisationEvent: null;
+    if (data.startDateEvent < data.endDateEvent){
 
-    // TODO : convertir address en coordonées gps et gestion fichier
-    // updateEvent.picture = data.pictureFile;
-    newEvent.latitude = 100.11;
-    newEvent.longitude = 100.12;
-    console.log(newEvent)
-    this._eventService.postEvent(newEvent).subscribe({
+      let newEvent = new Event();
+      newEvent.name = data.nameEvent;
+      newEvent.startDate = data.startDateEvent;
+      newEvent.endDate = data.endDateEvent;
+      newEvent.participantsLimit = data.participantsLimitEvent;
+      newEvent.category = data.categoryEvent;
+      newEvent.user = this.data.userSession;
+      newEvent.description = data.descriptionEvent;
+      newEvent.organisation = this.data.organisation != null? this.data.organisation: null;
 
-      next: () => {
-        this.dialogRef.close()
-      },
-      error: err => {
-        if (!environment.production){
-          console.log(err);
+      // TODO : convertir address en coordonées gps et gestion fichier
+      // updateEvent.picture = data.pictureFile;
+      newEvent.latitude = 100.11;
+      newEvent.longitude = 100.12;
+      console.log(newEvent)
+      this._eventService.postEvent(newEvent).subscribe({
+
+        next: () => {
+          this.dialogRef.close()
+        },
+        error: err => {
+          if (!environment.production){
+            console.log(err);
+          }
         }
-      }
-    });
+      });
+    }else {
+      this._snackBar.open('Problème avec le choix des dates','Fermer' , {
+        duration: 3000
+      });
+    }
   }
 
   onNoClick(): void {
