@@ -60,12 +60,8 @@ export class EventService {
     return this.http.delete(`${environment.baseUrl}/event/${eventId}/participant/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  putEvent(event: Event){
-    this.http.put(`${environment.baseUrl}/event/`, JSON.stringify(event), {withCredentials: true}).subscribe({
-      error: error => {
-        console.error('There was an error!', error);
-      }
-    })
+  putEvent(event: Event): Observable<Event>{
+    return this.http.put<Event>(`${environment.baseUrl}/event/${event.id}`, event, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getEventMembers(eventId: string): Observable<User[]> {

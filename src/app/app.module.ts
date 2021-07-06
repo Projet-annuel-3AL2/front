@@ -36,7 +36,6 @@ import {CreateEventComponent} from "./components/create_/create-event/create-eve
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
 import {UpdateEventComponent} from "./components/update_/update-event/update-event.component";
-import {UpdateOrganisationComponent} from "./components/update_/update-organisation/update-organisation.component";
 import {LoginComponent} from "./components/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
@@ -62,6 +61,8 @@ import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-r
 import {PostListComponent} from "./components/post-list/post-list.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
+import {DialogUpdateOrganisationComponent} from "./components/dialog_/dialog-update-organisation/dialog-update-organisation.component";
+import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-event/dialog-update-event.component";
 
 @NgModule({
   declarations: [
@@ -96,7 +97,6 @@ import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-exper
     CreateEventComponent,
     CreateOrganisationComponent,
     UpdateEventComponent,
-    UpdateOrganisationComponent,
     ConversationBoxDirective,
     ConversationsBoxComponent,
     ConversationCardComponent,
@@ -104,7 +104,9 @@ import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-exper
     CardUserMangeEventComponent,
     CardUserManageOrganisationComponent,
     DialogResFriendshipRequestComponent,
-    DialogReportComponent
+    DialogReportComponent,
+    DialogUpdateOrganisationComponent,
+    DialogUpdateEventComponent
   ],
   imports: [
     BrowserModule,
