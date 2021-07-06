@@ -1,0 +1,31 @@
+<h1 mat-dialog-title class="dialog-title-update-orga">Modification de  l'Organisation</h1>
+<form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+  <div mat-dialog-content>
+    <div class="update-organisation-grid">
+      <div class="form-field-name-organisation">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom de l'Organisation</mat-label>
+          <input matInput placeholder="Nom de l'Organisation" formControlName="name" [(ngModel)]="data.organisation.name" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-profil-picture">
+        <label for="profilPicture">Image de profile :  </label>
+        <input type="file" id="profilPicture" name="profilPicture" data-max-size="2048" [(ngModel)]="data.organisation.profilePicture">
+      </div>
+      <div class="form-field-banner-picture">
+        <label for="bannerPicture">Bannière :  </label>
+        <input type="file" id="bannerPicture" name="bannerPicture" data-max-size="2048" [(ngModel)]="data.organisation.bannerPicture">
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="dialog-actions-update-orga">
+    <div class="button-grid-update-orga">
+      <div class="button-cancel">
+        <button mat-button (click)="onNoClick()">Annuler</button>
+      </div>
+      <div class="button-send">
+        <button mat-raised-button class="button-send" type="submit">Envoyer</button>
+      </div>
+    </div>
+  </div>
+</form>
