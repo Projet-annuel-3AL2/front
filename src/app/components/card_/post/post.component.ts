@@ -33,7 +33,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.updatePost();
-    this.timeSubscription = timer(0, 3000)
+    this.timeSubscription = timer(0, 15000)
       .subscribe(() => this.updatePost());
   }
 

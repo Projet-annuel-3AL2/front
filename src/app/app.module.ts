@@ -67,6 +67,8 @@ import {
   NgxMatNativeDateModule,
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
+import {SearchBarComponent} from "./components/search-bar/search-bar.component";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,7 +110,8 @@ import {
     DialogReportComponent,
     DialogUpdateOrganisationComponent,
     DialogUpdateEventComponent,
-    DialogCreateEventComponent
+    DialogCreateEventComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
