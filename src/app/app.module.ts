@@ -58,6 +58,7 @@ import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-event/card-user-mange-event.component";
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
 import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
+import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-report.component";
 import {PostListComponent} from "./components/post-list/post-list.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
@@ -102,7 +103,8 @@ import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-exper
     ConversationsListComponent,
     CardUserMangeEventComponent,
     CardUserManageOrganisationComponent,
-    DialogResFriendshipRequestComponent
+    DialogResFriendshipRequestComponent,
+    DialogReportComponent
   ],
   imports: [
     BrowserModule,

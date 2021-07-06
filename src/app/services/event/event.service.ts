@@ -10,6 +10,7 @@ import {OrganisationMembership} from "../../shared/models/organisation_membershi
 import {Organisation} from "../../shared/models/organisation.model";
 import {RechercheEventModel} from "../../shared/models/rechercheEvent.model";
 import {Post} from "../../shared/models/post.model";
+import {Report} from "../../shared/models/report.model";
 
 @Injectable({
   providedIn: 'root'
@@ -109,5 +110,8 @@ export class EventService {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/profil`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
+  sendReport(id: string, report: Report): Observable<any> {
+    return this.http.put<any>(`${environment.baseUrl}/event/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
 }
 //

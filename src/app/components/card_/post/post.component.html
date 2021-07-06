@@ -21,7 +21,7 @@
               <fa-icon [icon]="faEllipsisH"></fa-icon>
             </button>
             <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-              <a class="dropdown-item" href="#">Signaler</a>
+              <button mat-menu-item (click)="showDialogueReport()">Signaler</button>
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@
              src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
              style="object-fit: none" width="100%">
         <div class="event-card-infos">
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          <p>{{post.event.description}}</p>
         </div>
       </div>
     </div>

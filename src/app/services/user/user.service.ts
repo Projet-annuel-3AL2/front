@@ -13,6 +13,7 @@ import {AuthService} from "../auth/auth.service";
 import {environment} from "../../../environments/environment";
 import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
+import {Report} from "../../shared/models/report.model";
 
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,9 @@ export class UserService {
 
   isFollowingOrganisation(id: string): Observable<boolean> {
     return this.http.get<boolean>(`${environment.baseUrl}/user/is-following-orga/${id}`, {headers: {'Access-Control-Allow-Origin': '*'}})
+  }
+
+  sendReport(id: string, report: Report): Observable<any> {
+    return this.http.put<any>(`${environment.baseUrl}/user/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 }

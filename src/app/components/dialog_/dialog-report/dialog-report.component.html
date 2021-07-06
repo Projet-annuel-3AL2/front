@@ -1,0 +1,19 @@
+<h1 mat-dialog-title class="dialog-title-report">Signaler</h1>
+<form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+  <div mat-dialog-content>
+    <mat-form-field class="dialog-report-text">
+      <mat-label>Décrire le signalement</mat-label>
+      <textarea matInput placeholder="Ex. le problème est..." formControlName="text" class="text-area-report"></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="dialog-actions-report">
+    <div class="report-grid">
+      <div class="button-cancel">
+        <button mat-button (click)="onNoClick()">Annuler</button>
+      </div>
+      <div class="button-send">
+        <button mat-raised-button class="button-send" type="submit">Envoyer</button>
+      </div>
+    </div>
+  </div>
+</form>
