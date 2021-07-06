@@ -13,6 +13,8 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
+import {DialogUpdateOrganisationComponent} from "../../dialog_/dialog-update-organisation/dialog-update-organisation.component";
+import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dialog-update-event.component";
 
 @Component({
   selector: 'app-page-event',
@@ -23,7 +25,7 @@ import {MatDialog} from "@angular/material/dialog";
 export class PageEventComponent implements OnInit {
 
   listPost$: Post[];
-  event: Event;
+  event$: Event;
   eventId: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
@@ -39,7 +41,8 @@ export class PageEventComponent implements OnInit {
               private _userService: UserService,
               private _authService: AuthService,
               private _organisationService: OrganisationService,
-              public dialogReport: MatDialog
+              public dialogReport: MatDialog,
+              public dialogUpdateEvent: MatDialog
               ) { }
 
   ngOnInit(): void {
@@ -53,7 +56,7 @@ export class PageEventComponent implements OnInit {
   private getEvent() {
     this._eventService.getProfil(this.eventId).subscribe({
       next: data => {
-        this.event = data;
+        this.event$ = data;
         this.isOwner();
         // this.isAdmin();
         // this.getPosts();
@@ -69,14 +72,21 @@ export class PageEventComponent implements OnInit {
 
 
   isOwner() {
-    if(this.event.user.id == this.userSession$.id){
-      this.isOwnerB = true;
-    }
+    this._organisationService.isOwner(this.event$.organisation.id).subscribe({
+      next: bool => {
+        this.isOwnerB = bool;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
   }
 
   // TODO : ne fonctionne pas
   isAdmin() {
-    this._organisationService.isAdmin(this.event.organisation.id).subscribe({
+    this._organisationService.isAdmin(this.event$.organisation.id).subscribe({
       next: bool => {
         this.isAdminB = bool;
       },
@@ -90,7 +100,7 @@ export class PageEventComponent implements OnInit {
 
   // TODO : Ne fonctionne pas
   private getPosts() {
-    this._eventService.getEventPosts(this.event.id).subscribe({
+    this._eventService.getEventPosts(this.event$.id).subscribe({
       next: posts => {
         this.listPost$ = posts;
       },
@@ -157,7 +167,17 @@ export class PageEventComponent implements OnInit {
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
-      data: {id: this.event.id, reportType: ReportTypeEnum.EVENT}
+      data: {id: this.event$.id, reportType: ReportTypeEnum.EVENT}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueUpdateEvent() {
+    const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
+      width: '900px',
+      data: {event: this.event$, userSession: this.userSession$}
     });
 
     dialogRef.afterClosed().subscribe(() => {
