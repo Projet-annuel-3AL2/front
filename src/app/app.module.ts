@@ -35,7 +35,6 @@ import {CardOrganisationComponent} from "./components/card_/card-organisation/ca
 import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
-import {UpdateEventComponent} from "./components/update_/update-event/update-event.component";
 import {LoginComponent} from "./components/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
@@ -96,7 +95,6 @@ import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-eve
     CardOrganisationComponent,
     CreateEventComponent,
     CreateOrganisationComponent,
-    UpdateEventComponent,
     ConversationBoxDirective,
     ConversationsBoxComponent,
     ConversationCardComponent,
