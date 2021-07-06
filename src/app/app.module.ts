@@ -69,6 +69,7 @@ import {
 } from '@angular-material-components/datetime-picker';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";
+import {CommentComponent} from "./components/card_/comment/comment.component";
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import {PostPageComponent} from "./components/page_/post-page/post-page.componen
     DialogUpdateEventComponent,
     DialogCreateEventComponent,
     SearchBarComponent,
-    PostPageComponent
+    PostPageComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
