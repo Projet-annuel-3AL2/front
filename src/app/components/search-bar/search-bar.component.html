@@ -1,0 +1,29 @@
+<div class="form-group search-bar" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+  <fa-icon [icon]="faSearch"></fa-icon>
+  <label>
+    <input
+      class="rounded-pill form-control" placeholder="Search" type="text"
+      matInput
+      [matAutocomplete]="auto"
+      [matAutocompleteConnectedTo]="origin"
+      (keyup)="searchData($event)">
+  </label>
+</div>
+<mat-autocomplete #auto="matAutocomplete" class="user-select-none">
+  <div *ngIf="searchResult?.users?.length > 0">
+    <p class="text-center fw-bold">Utilisateurs</p>
+    <mat-option *ngFor="let option of searchResult?.users" [routerLink]="['/user/' + option.username]">{{option.username}}</mat-option>
+  </div>
+  <div *ngIf="searchResult?.organisations?.length > 0">
+    <p class="text-center fw-bold">Organisations</p>
+    <mat-option *ngFor="let option of searchResult?.organisations" [routerLink]="['/organisation/' + option.id]">{{option.name}}</mat-option>
+  </div>
+  <div *ngIf="searchResult?.events?.length > 0">
+    <p class="text-center fw-bold">Evenements</p>
+    <mat-option *ngFor="let option of searchResult?.events" [routerLink]="['/event/' + option.id]">{{option.name}}</mat-option>
+  </div>
+  <div *ngIf="searchResult?.posts?.length > 0">
+    <p class="text-center fw-bold">Posts</p>
+    <mat-option *ngFor="let option of searchResult?.posts" [routerLink]="['/post/' + option.id]">{{option.text}}</mat-option>
+  </div>
+</mat-autocomplete>
