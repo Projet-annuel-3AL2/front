@@ -4,7 +4,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../../services/event/event.service";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
-import {Organisation} from "../../../shared/models/organisation.model";
 import {Event} from "../../../shared/models/event.model";
 import {CategoryService} from "../../../services/category/category.service";
 import {Category} from "../../../shared/models/category.model";
@@ -18,38 +17,19 @@ import {environment} from "../../../../environments/environment";
 export class DialogUpdateEventComponent implements OnInit {
 
   formData: FormGroup;
-  limitParticipant =  new FormControl(2, Validators.min(2));
+  limitParticipant = new FormControl(2, Validators.min(2));
   listCategory$: Category[];
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateEventComponent>,
               private _eventService: EventService,
               private _organisationService: OrganisationService,
               private _categoryService: CategoryService,
-              @Inject(MAT_DIALOG_DATA) public data: {event: Event, userSession: User}) { }
+              @Inject(MAT_DIALOG_DATA) public data: { event: Event, userSession: User }) {
+  }
 
   ngOnInit(): void {
     this.initialiseFormGroup();
     this.getAllCategories();
-  }
-
-  private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe(categories => {
-      this.listCategory$ = categories
-    })
-  }
-
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      nameEvent: new FormControl(),
-      descriptionEvent: new FormControl(),
-      startDateEvent: new FormControl(),
-      endDateEvent: new FormControl(),
-      address: new FormControl(),
-      participantsLimitEvent: new FormControl(),
-      categoryEvent: new FormControl(),
-      pictureFile: new FormControl(),
-      organisationEvent: new FormControl(),
-    });
   }
 
   onClickSubmit(data) {
@@ -71,19 +51,39 @@ export class DialogUpdateEventComponent implements OnInit {
 
     this._eventService.putEvent(updateEvent).subscribe({
 
-        next: () => {
-          this.dialogRef.close()
-        },
-        error: err => {
-          if (!environment.production){
-            console.log(err);
-          }
+      next: () => {
+        this.dialogRef.close()
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
         }
+      }
     });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe(categories => {
+      this.listCategory$ = categories
+    })
+  }
+
+  private initialiseFormGroup() {
+    this.formData = new FormGroup({
+      nameEvent: new FormControl(),
+      descriptionEvent: new FormControl(),
+      startDateEvent: new FormControl(),
+      endDateEvent: new FormControl(),
+      address: new FormControl(),
+      participantsLimitEvent: new FormControl(),
+      categoryEvent: new FormControl(),
+      pictureFile: new FormControl(),
+      organisationEvent: new FormControl(),
+    });
   }
 
 }

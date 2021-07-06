@@ -6,12 +6,13 @@
   box-shadow: 0 3px 5px grey;
 }
 
-.fa-building{
+.fa-building {
   padding-top: 10px;
   padding-left: 10px;
   color: #00643C;
 }
-p a{
+
+p a {
   text-decoration: none;
   color: black;
 }
@@ -20,6 +21,7 @@ p a{
   margin-top: 9px;
   height: 30px;
 }
+
 .button-follow-orga-disable {
   color: grey;
   margin-top: 9px;

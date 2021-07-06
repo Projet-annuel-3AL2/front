@@ -8,7 +8,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(229, 229,229, 0.08) 0%, #E5E5E5 63.02%);
+  background: linear-gradient(180deg, rgba(229, 229, 229, 0.08) 0%, #E5E5E5 63.02%);
   color: #fff;
   padding: 10px;
   width: 100%;
@@ -21,11 +21,13 @@
   box-sizing: border-box;
   display: flex;
 }
+
 .user-card-img-profil {
   flex: 1 1 100%;
   box-sizing: border-box;
   max-width: 15%;
 }
+
 .user-card-username {
   flex: 1 1 0%;
   box-sizing: border-box;
@@ -38,21 +40,25 @@
   padding-top: 25px;
 
 }
+
 .user-card-certification {
   flex: 1 1 0%;
   box-sizing: border-box;
   max-width: 5%;
   padding-top: 25px;
 }
+
 .user-card-certification fa-icon {
   color: #00643C;
 }
+
 .user-card-button-add {
   flex: 1 2 80%;
   box-sizing: border-box;
   max-width: 14%;
   padding-top: 25px;
 }
+
 .user-card-menu {
   flex: 1 1 100%;
   box-sizing: border-box;
@@ -60,6 +66,7 @@
   padding-top: 25px;
   color: #00643C;
 }
+
 .user-card-empty {
   flex: 1 1 100%;
   box-sizing: border-box;
@@ -93,6 +100,7 @@
   color: #00643C;
   border: hidden;
 }
+
 .dropdown-toggle::after {
   content: initial
 }

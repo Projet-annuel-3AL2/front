@@ -1,5 +1,5 @@
-<div class="create-organisation-popup rounded-3" *ngIf="showPopup">
-  <form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+<div *ngIf="showPopup" class="create-organisation-popup rounded-3">
+  <form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
     <div class="create-organisation-grid">
       <div class="create-organisation-title">
         <p>Création d'une Organisation</p>
@@ -7,24 +7,25 @@
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input matInput placeholder="Nom de l'Organisation" formControlName="name" required>
+          <input formControlName="name" matInput placeholder="Nom de l'Organisation" required>
         </mat-form-field>
       </div>
       <div class="form-field-profil-picture">
-        <label for="profilPicture">Image de profile :  </label>
-        <input type="file" id="profilPicture" name="profilPicture" data-max-size="2048" formControlName="profilPicture">
+        <label for="profilPicture">Image de profile : </label>
+        <input data-max-size="2048" formControlName="profilPicture" id="profilPicture" name="profilPicture" type="file">
       </div>
       <div class="form-field-banner-picture">
-        <label for="bannerPicture">Bannière :  </label>
-        <input type="file" id="bannerPicture" name="bannerPicture" data-max-size="2048" formControlName="bannerPicture">
+        <label for="bannerPicture">Bannière : </label>
+        <input data-max-size="2048" formControlName="bannerPicture" id="bannerPicture" name="bannerPicture" type="file">
       </div>
       <div class="form-field-button-validate">
-        <button mat-raised-button class="button-validate rounded-pill" type="submit">Valider</button>
+        <button class="button-validate rounded-pill" mat-raised-button type="submit">Valider</button>
       </div>
     </div>
   </form>
 </div>
-<div class="popup-blur" (click)="closePopup()" *ngIf="showPopup"></div>
+<div (click)="closePopup()" *ngIf="showPopup" class="popup-blur"></div>
 <div class="create-organisation-button">
-  <button mat-raised-button class="rounded-pill" (click)="openPopup()" [disabled]="showPopup">Créer une Organisation</button>
+  <button (click)="openPopup()" [disabled]="showPopup" class="rounded-pill" mat-raised-button>Créer une Organisation
+  </button>
 </div>

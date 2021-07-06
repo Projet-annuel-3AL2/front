@@ -14,11 +14,11 @@ const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent, canActivate: [NegateAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [NegateAuthGuardService]},
-  { path: 'timeline', component: TimelineComponent },
-  { path: 'events', component: PageListEventComponent},
-  { path: 'event/:id', component: PageEventComponent },
-  { path: 'user/:username', component: ProfilUserComponent },
-  { path: 'organisation/:id', component: ProfilOrganisationComponent },
+  {path: 'timeline', component: TimelineComponent},
+  {path: 'events', component: PageListEventComponent},
+  {path: 'event/:id', component: PageEventComponent},
+  {path: 'user/:username', component: ProfilUserComponent},
+  {path: 'organisation/:id', component: ProfilOrganisationComponent},
 ];
 
 @NgModule({

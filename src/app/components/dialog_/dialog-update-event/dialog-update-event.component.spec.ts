@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DialogUpdateEventComponent } from './dialog-update-event.component';
+import {DialogUpdateEventComponent} from './dialog-update-event.component';
 
 describe('DialogUpdateEventComponent', () => {
   let component: DialogUpdateEventComponent;
@@ -8,9 +8,9 @@ describe('DialogUpdateEventComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogUpdateEventComponent ]
+      declarations: [DialogUpdateEventComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

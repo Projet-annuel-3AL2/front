@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DialogCreateEventComponent } from './dialog-create-event.component';
+import {DialogCreateEventComponent} from './dialog-create-event.component';
 
 describe('DialogCreateEventComponent', () => {
   let component: DialogCreateEventComponent;
@@ -8,9 +8,9 @@ describe('DialogCreateEventComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogCreateEventComponent ]
+      declarations: [DialogCreateEventComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

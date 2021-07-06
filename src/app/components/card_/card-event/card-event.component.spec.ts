@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CardEventComponent } from './card-event.component';
+import {CardEventComponent} from './card-event.component';
 
 
 // @ts-ignore
@@ -11,9 +11,9 @@ describe('EventCardComponent', () => {
   // @ts-ignore
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardEventComponent ]
+      declarations: [CardEventComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   // @ts-ignore

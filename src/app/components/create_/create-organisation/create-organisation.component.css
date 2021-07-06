@@ -7,6 +7,7 @@
   width: 100%;
   height: 100%;
 }
+
 .create-organisation-title {
   grid-area: 1 / 1 / 1 / span 2;
   text-align: center;
@@ -15,22 +16,27 @@
   color: #00643C;
   font-weight: bold;
 }
+
 .form-field-name-organisation {
   grid-area: 2 / 1 / 2 / span 2;
   margin: auto;
 }
+
 .form-field-profil-picture {
   grid-area: 3 / 1 / 3 / span 2;
   align-self: start;
 }
+
 .form-field-banner-picture {
   grid-area: 4 / 1 / 4 /  span 2;
   align-self: start;
 }
+
 .form-field-button-validate {
   grid-area: 5 / 1 / 5 /  span 2;
   margin: auto;
 }
+
 .create-organisation-popup {
   z-index: 10;
   overflow: scroll;
@@ -40,27 +46,30 @@
   top: 50%;
   left: 50%;
   position: fixed;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   height: 255px;
   width: 600px;
   border: 1px solid #ADADAD;
   background-color: #E5E5E5;
 }
-.popup-blur{
+
+.popup-blur {
   z-index: 9;
-  top:0;
+  top: 0;
   left: 0;
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(229, 229, 229, 0.50);
 }
+
 [contenteditable][placeholder]:empty:before {
   content: attr(placeholder);
   position: absolute;
   color: gray;
   background-color: transparent;
 }
+
 .create-organisation-button {
   z-index: 8;
   position: fixed;
@@ -68,6 +77,6 @@
   left: 250px;
 }
 
-.create-organisation-button button{
+.create-organisation-button button {
   background-color: #E5E5E5;
 }

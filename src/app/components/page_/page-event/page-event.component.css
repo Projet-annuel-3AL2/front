@@ -2,7 +2,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  background: linear-gradient(180deg, rgba(229, 229,229, 0.08) 0%, #E5E5E5 63.02%);
+  background: linear-gradient(180deg, rgba(229, 229, 229, 0.08) 0%, #E5E5E5 63.02%);
   color: #fff;
   padding: 10px;
   width: 100%;
@@ -44,6 +44,7 @@
   color: black;
   text-align: center;
 }
+
 .description-event {
   flex: 1 1 100%;
   box-sizing: border-box;

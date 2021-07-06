@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Event} from '../../../shared/models/event.model';
 import {EventService} from "../../../services/event/event.service";
 import {environment} from "../../../../environments/environment";
-import {OrganisationService} from "../../../services/organisation/organisation.service";
 
 @Component({
   selector: 'app-list-event-suggestion',
@@ -11,15 +10,16 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 })
 export class ListEventSuggestionComponent implements OnInit {
 
-  event$ : Event[];
+  event$: Event[];
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {
+  }
 
   ngOnInit(): void {
     this.getSuggestionEvent();
   }
 
-  getSuggestionEvent(){
+  getSuggestionEvent() {
     this.eventService.getSuggestion().subscribe({
       next: data => {
         this.event$ = data;

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { faCheckCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {Organisation} from "../../../shared/models/organisation.model";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
@@ -45,7 +45,8 @@ export class ProfilOrganisationComponent implements OnInit {
               public dialogReport: MatDialog,
               public dialogUpdateOrganisation: MatDialog,
               public dialogCreateEvent: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
 
@@ -54,25 +55,6 @@ export class ProfilOrganisationComponent implements OnInit {
       this.userSession$ = user;
     });
     this.getOrganisation();
-  }
-
-  private getOrganisation() {
-    this._organisationService.getOrganisation(this.organisationId).subscribe({
-      next: organisation => {
-        this.organisation$ = organisation;
-        this.getOrganisationMember();
-        this.canFollow();
-        this.isOwner();
-        this.isAdmin();
-        // this.getListEvent();
-        this.getPostsOrganisation();
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
   }
 
   isOwner() {
@@ -101,51 +83,13 @@ export class ProfilOrganisationComponent implements OnInit {
     })
   }
 
-  private getOrganisationMember() {
-    this._organisationService.getMemberOrganisation(this.organisationId).subscribe({
-      next: users => {
-        this.listMember$ = users;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-  private getListEvent() {
-    this._organisationService.getEventCreated(this.organisationId).subscribe({
-      next: events => {
-        this.listEvent$ = events;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
-  private getPostsOrganisation() {
-    this._organisationService.getOrganisationPosts(this.organisationId).subscribe({
-      next: posts => {
-        this.listPosts$ = posts;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
   canFollow() {
     this._userService.isFollowingOrganisation(this.organisationId).subscribe({
-      next: bool =>{
+      next: bool => {
         this.isFollowing = bool;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -154,11 +98,11 @@ export class ProfilOrganisationComponent implements OnInit {
 
   followOrganisation() {
     this._organisationService.followOrganisation(this.organisationId).subscribe({
-      next: () =>{
+      next: () => {
         this.isFollowing = true;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -167,11 +111,11 @@ export class ProfilOrganisationComponent implements OnInit {
 
   unfollowOrganisation() {
     this._organisationService.unfollowOrganisation(this.organisationId).subscribe({
-      next: () =>{
+      next: () => {
         this.isFollowing = false;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -202,10 +146,68 @@ export class ProfilOrganisationComponent implements OnInit {
   showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
       width: '900px',
-      data: { userSession: this.userSession$, organisation: this.organisation$,}
+      data: {userSession: this.userSession$, organisation: this.organisation$,}
     });
 
     dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  private getOrganisation() {
+    this._organisationService.getOrganisation(this.organisationId).subscribe({
+      next: organisation => {
+        this.organisation$ = organisation;
+        this.getOrganisationMember();
+        this.canFollow();
+        this.isOwner();
+        this.isAdmin();
+        // this.getListEvent();
+        this.getPostsOrganisation();
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  private getOrganisationMember() {
+    this._organisationService.getMemberOrganisation(this.organisationId).subscribe({
+      next: users => {
+        this.listMember$ = users;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  private getListEvent() {
+    this._organisationService.getEventCreated(this.organisationId).subscribe({
+      next: events => {
+        this.listEvent$ = events;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  private getPostsOrganisation() {
+    this._organisationService.getOrganisationPosts(this.organisationId).subscribe({
+      next: posts => {
+        this.listPosts$ = posts;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
     })
   }
 }

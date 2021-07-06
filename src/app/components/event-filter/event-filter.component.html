@@ -1,6 +1,6 @@
 <div class="border rounded-3 d-flex flex-column p-2 event-list-filter">
   <div class="mb-3 my-3">
-    <div [formGroup]="formData" (ngSubmit)="onclickSubmit(formData.value)">
+    <div (ngSubmit)="onclickSubmit(formData.value)" [formGroup]="formData">
       <div class="px-4">
         <h2>Filtre</h2>
         <mat-divider></mat-divider>
@@ -9,7 +9,7 @@
           <h3>Localisation</h3>
           <div class="localisation-filter">
             <div class="button-maps">
-              <button mat-flat-button (click)="showDialogMapsCollapse()">
+              <button (click)="showDialogMapsCollapse()" mat-flat-button>
                 <i class="fas fa-map-marked"></i>
               </button>
             </div>
@@ -25,10 +25,10 @@
           <mat-form-field appearance="fill">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate placeholder="Date de début" formControlName="startDate" required>
-              <input matEndDate placeholder="Date de fin" formControlName="endDate" required>
+              <input formControlName="startDate" matStartDate placeholder="Date de début" required>
+              <input formControlName="endDate" matEndDate placeholder="Date de fin" required>
             </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         </div>
@@ -36,15 +36,15 @@
           <mat-divider></mat-divider>
           <h3>Distance (km)</h3>
           <mat-slider
-            thumbLabel
-            class="range-picker"
             [displayWith]="formatLabel"
-            tickInterval="10"
-            step="10"
-            min="0"
-            max="5000"
             aria-label="units"
-            formControlName="range" required></mat-slider>
+            class="range-picker"
+            formControlName="range"
+            max="5000"
+            min="0"
+            required
+            step="10"
+            thumbLabel tickInterval="10"></mat-slider>
         </div>
         <div class="row m-3">
           <mat-divider></mat-divider>
@@ -52,7 +52,7 @@
           <mat-form-field class="section-checkbox">
             <mat-select formControlName="category" required>
               <ul>
-                <li  *ngFor="let category of listCategories$">
+                <li *ngFor="let category of listCategories$">
                   <mat-option class="mat-checkbox" value="{{category.id}}">{{category.name}}</mat-option>
                 </li>
               </ul>
@@ -60,7 +60,7 @@
           </mat-form-field>
         </div>
       </div>
-      <button mat-raised-button class="button-validate rounded-pill" type="submit">Rechercher</button>
+      <button class="button-validate rounded-pill" mat-raised-button type="submit">Rechercher</button>
     </div>
   </div>
 </div>

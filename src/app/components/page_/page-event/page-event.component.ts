@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {environment} from "../../../../environments/environment";
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {User} from "../../../shared/models/user.model";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
@@ -13,7 +13,6 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogUpdateOrganisationComponent} from "../../dialog_/dialog-update-organisation/dialog-update-organisation.component";
 import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dialog-update-event.component";
 
 @Component({
@@ -34,42 +33,25 @@ export class PageEventComponent implements OnInit {
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
 
-  constructor(private _activatedRoute:ActivatedRoute,
-              private _router:Router,
-              private _eventService:EventService,
-              private _postService:PostService,
+  constructor(private _activatedRoute: ActivatedRoute,
+              private _router: Router,
+              private _eventService: EventService,
+              private _postService: PostService,
               private _userService: UserService,
               private _authService: AuthService,
               private _organisationService: OrganisationService,
               public dialogReport: MatDialog,
               public dialogUpdateEvent: MatDialog
-              ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession$=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession$ = user;
     });
-    this.eventId=this._activatedRoute.snapshot.paramMap.get("id");
+    this.eventId = this._activatedRoute.snapshot.paramMap.get("id");
     this.getEvent();
   }
-
-  private getEvent() {
-    this._eventService.getProfil(this.eventId).subscribe({
-      next: data => {
-        this.event$ = data;
-        this.isOwner();
-        // this.isAdmin();
-        // this.getPosts();
-        this.getParticipants();
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
 
   isOwner() {
     this._organisationService.isOwner(this.event$.organisation.id).subscribe({
@@ -98,39 +80,10 @@ export class PageEventComponent implements OnInit {
     });
   }
 
-  // TODO : Ne fonctionne pas
-  private getPosts() {
-    this._eventService.getEventPosts(this.event$.id).subscribe({
-      next: posts => {
-        this.listPost$ = posts;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
-  private getParticipants() {
-    this._eventService.getEventMembers(this.eventId).subscribe({
-      next: listUser =>{
-        this.listParticipant$ = listUser;
-        this.canJoin();
-      },
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-
   canJoin() {
-    if (this.listParticipant$ != null){
+    if (this.listParticipant$ != null) {
       this.listParticipant$.forEach(user => {
-        if (user.id == this.userSession$.id){
+        if (user.id == this.userSession$.id) {
           this.isAbleToJoin = false;
         }
       })
@@ -139,11 +92,11 @@ export class PageEventComponent implements OnInit {
 
   joinEvent(id: string) {
     this._eventService.postAddParticipant(id).subscribe({
-      next: () =>{
+      next: () => {
         this.isAbleToJoin = false;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -153,11 +106,11 @@ export class PageEventComponent implements OnInit {
 
   leaveEvent(id: string) {
     this._eventService.deleteParticipation(id).subscribe({
-      next: () =>{
+      next: () => {
         this.isAbleToJoin = true;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -181,6 +134,51 @@ export class PageEventComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  private getEvent() {
+    this._eventService.getProfil(this.eventId).subscribe({
+      next: data => {
+        this.event$ = data;
+        this.isOwner();
+        // this.isAdmin();
+        // this.getPosts();
+        this.getParticipants();
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  // TODO : Ne fonctionne pas
+  private getPosts() {
+    this._eventService.getEventPosts(this.event$.id).subscribe({
+      next: posts => {
+        this.listPost$ = posts;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  private getParticipants() {
+    this._eventService.getEventMembers(this.eventId).subscribe({
+      next: listUser => {
+        this.listParticipant$ = listUser;
+        this.canJoin();
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
     })
   }
 }

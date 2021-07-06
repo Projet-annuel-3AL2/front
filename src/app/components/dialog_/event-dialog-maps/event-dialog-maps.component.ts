@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventDialogData} from "../../event-filter/event-filter.component";
 
 @Component({
@@ -10,7 +10,8 @@ import {EventDialogData} from "../../event-filter/event-filter.component";
 export class EventDialogMapsComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EventDialogMapsComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: EventDialogData ) { }
+              @Inject(MAT_DIALOG_DATA) public data: EventDialogData) {
+  }
 
   ngOnInit(): void {
   }

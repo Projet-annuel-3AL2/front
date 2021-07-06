@@ -62,7 +62,11 @@ import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-exper
 import {DialogUpdateOrganisationComponent} from "./components/dialog_/dialog-update-organisation/dialog-update-organisation.component";
 import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-event/dialog-update-event.component";
 import {DialogCreateEventComponent} from "./components/dialog_/dialog-create-event/dialog-create-event.component";
-import {NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 
 @NgModule({

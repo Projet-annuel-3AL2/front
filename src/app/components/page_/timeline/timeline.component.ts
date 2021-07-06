@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PostService} from "../../../services/post/post.service";
 import {Post} from "../../../shared/models/post.model";
 import {environment} from "../../../../environments/environment";
@@ -18,11 +18,12 @@ export class TimelineComponent implements OnInit {
 
   constructor(private _postService: PostService,
               private _userService: UserService,
-              private _authService: AuthService) { }
+              private _authService: AuthService) {
+  }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession = user;
       this.getTimeline();
     });
 
@@ -34,7 +35,7 @@ export class TimelineComponent implements OnInit {
         this.listPost$ = posts;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('Error: ', error);
         }
       }

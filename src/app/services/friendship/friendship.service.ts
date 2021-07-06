@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {User} from "../../shared/models/user.model";
 import {Observable} from "rxjs";
 import {FriendRequestStatus} from "../../shared/FriendshipRequestStatus.enum";
 import {Friendship} from "../../shared/models/friendship.model";
@@ -11,17 +10,18 @@ import {Friendship} from "../../shared/models/friendship.model";
 })
 export class FriendshipService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  postFriendship(username: string): Observable<Friendship>{
-    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, null,{headers: {'Access-Control-Allow-Origin': '*'}});
+  postFriendship(username: string): Observable<Friendship> {
+    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   acceptFriendship(username: string): Observable<Friendship> {
     return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  rejectFriendship(username: string){
+  rejectFriendship(username: string) {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
@@ -29,10 +29,10 @@ export class FriendshipService {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  putFriendship(username: string){
+  putFriendship(username: string) {
     this.http.put(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }

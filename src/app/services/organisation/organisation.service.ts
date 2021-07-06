@@ -4,10 +4,8 @@ import {Post} from "../../shared/models/post.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
-import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
 import {User} from "../../shared/models/user.model";
 import {Event} from "../../shared/models/event.model";
-import {Category} from "../../shared/models/category.model";
 import {Report} from "../../shared/models/report.model";
 
 @Injectable({
@@ -15,12 +13,13 @@ import {Report} from "../../shared/models/report.model";
 })
 export class OrganisationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  postOrganisation(organisation:Organisation){
+  postOrganisation(organisation: Organisation) {
     this.http.post(`${environment.baseUrl}/organisation/`, JSON.stringify(organisation), {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
         error: err => {
-          if (!environment.production){
+          if (!environment.production) {
             console.log(err);
           }
         }
@@ -28,30 +27,30 @@ export class OrganisationService {
     )
   }
 
-  getAllOrganisation(): Observable<Organisation[]>{
+  getAllOrganisation(): Observable<Organisation[]> {
     return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getOrganisation(organisationId: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`,{headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getOrganisationPosts(organisationId: string): Observable<Post[]>{
+  getOrganisationPosts(organisationId: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${organisationId}/posts`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  putOrganisationPost(organisationId: string, post: Post): Observable<Post>{
+  putOrganisationPost(organisationId: string, post: Post): Observable<Post> {
     return this.http.put<Post>(`${environment.baseUrl}/organisation/${organisationId}/post`, post, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
-  putOrganisation(organisationId: string, organisation: Organisation): Observable<Organisation>{
+  putOrganisation(organisationId: string, organisation: Organisation): Observable<Organisation> {
     return this.http.put<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`, organisation, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  deleteOrganisation(organisationId: string){
-    this.http.delete(`${environment.baseUrl}/organisation/${organisationId}`, {headers: {'Access-Control-Allow-Origin': '*'}} ).subscribe({
+  deleteOrganisation(organisationId: string) {
+    this.http.delete(`${environment.baseUrl}/organisation/${organisationId}`, {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
         error: err => {
-          if (!environment.production){
+          if (!environment.production) {
             console.log(err);
           }
         }
@@ -68,7 +67,7 @@ export class OrganisationService {
     return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/add-admin/${userId}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  removeAdminToAdminMember(userId: string, organisationId: string): Observable<void>{
+  removeAdminToAdminMember(userId: string, organisationId: string): Observable<void> {
     return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/remove-admin/${userId}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 

@@ -1,72 +1,84 @@
-<div class="row m-0" *ngIf="event$ != undefined">
+<div *ngIf="event$ != undefined" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-6 my-3">
     <div class="event-scroll">
       <div class="event-card-full">
-        <img alt="" class="rounded" style="object-fit: none"
-             [src]="event$.picture != undefined? event$.picture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
-             width="100%" height="300px">
+        <img [src]="event$.picture != undefined? event$.picture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'" alt="" class="rounded"
+             height="300px"
+             style="object-fit: none" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
-            <div flflex="60" class="titre-event">
+            <div class="titre-event" flflex="60">
               <p>{{event$.name}}</p>
             </div>
-            <div flflex="20" class="button-join" >
-              <button *ngIf="isAbleToJoin" mat-raised-button class="ml-auto button-join-event" (click)="this.joinEvent(event$.id)" ><i class="fa fa-user-plus" aria-hidden="true"></i>  Rejoindre</button>
-              <button *ngIf="!isAbleToJoin" mat-raised-button class="ml-auto button-join-event" (click)="this.leaveEvent(event$.id)"> Quitter</button>
+            <div class="button-join" flflex="20">
+              <button (click)="this.joinEvent(event$.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
+                      mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
+              </button>
+              <button (click)="this.leaveEvent(event$.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
+                      mat-raised-button> Quitter
+              </button>
             </div>
 
             <div class="dropdown-event" flflex="20">
-              <div  class="dropdown" dropdown>
-                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+              <div class="dropdown" dropdown>
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                        data-toggle="dropdown"
                         dropdownToggle type="button">
                   <fa-icon [icon]="faEllipsisH"></fa-icon>
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-                  <button mat-menu-item (click)="showDialogueReport()">Signaler</button>
+                  <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
                   <div *ngIf="isOwnerB || isAdminB">
-                    <button mat-menu-item (click)="showDialogueUpdateEvent()">Modifier</button>
+                    <button (click)="showDialogueUpdateEvent()" mat-menu-item>Modifier</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="description-area-event">
-            <div flflex="30" class="description-event">
+            <div class="description-event" flflex="30">
               <p>{{event$.description | slice:0:200}}...</p>
             </div>
           </div>
           <div class="date-area-event">
-            <div flflex="30" class="dates-event">
-              <p><i class="fas fa-clock"></i>  {{event$.startDate.toString() | slice: 8: 10 }}/{{event$.startDate.toString() | slice: 5: 7}}/{{event$.startDate.toString() | slice: 0: 4}} -- {{event$.endDate.toString() | slice: 8: 10 }}/{{event$.endDate.toString() | slice: 5: 7}}/{{event$.endDate.toString() | slice: 0: 4}} {{event$.startDate.toString() | slice: 11 : 16}} -- {{event$.endDate.toString() | slice: 11 : 16}}</p>
+            <div class="dates-event" flflex="30">
+              <p><i class="fas fa-clock"></i>  {{event$.startDate.toString() | slice: 8: 10 }}
+                /{{event$.startDate.toString() | slice: 5: 7}}/{{event$.startDate.toString() | slice: 0: 4}}
+                -- {{event$.endDate.toString() | slice: 8: 10 }}/{{event$.endDate.toString() | slice: 5: 7}}
+                /{{event$.endDate.toString() | slice: 0: 4}} {{event$.startDate.toString() | slice: 11 : 16}}
+                -- {{event$.endDate.toString() | slice: 11 : 16}}</p>
             </div>
           </div>
         </div>
       </div>
-          <div class="tab-event" >
-            <mat-tab-group class="mat-tab-event" dynamicHeight mat-align-tabs="center" color="#00643C"  backgroundColor="#00643C">
-              <mat-tab label="Accueil">
-                <app-list-post [listPost]="listPost$"></app-list-post>
-              </mat-tab>
-              <mat-tab label="Infos">
-                <app-event-infos [event]="event$" [userSession]="userSession$" [participantsNumber]="listParticipant$.length"></app-event-infos>
-              </mat-tab>
-              <mat-tab label="Participants">
-                <div class="my-3" *ngIf="!isOwnerB && !isAdminB">
-                  <div class="display-list-user" *ngFor="let user of listParticipant$;" >
-                    <app-user-card [user]="user" [userSession]="userSession$" class="m-0"></app-user-card>
-                  </div>
-                </div>
-                <div class="my-3" *ngIf="isOwnerB || isAdminB">
-                  <div class="display-list-user" *ngFor="let user of listParticipant$;" >
-                    <app-card-user-mange-event  [user]="user" [eventId]="eventId" [userSession]="userSession$" class="m-0"></app-card-user-mange-event>
-                  </div>
-                </div>
-              </mat-tab>
-            </mat-tab-group>
-          </div>
+      <div class="tab-event">
+        <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C" dynamicHeight
+                       mat-align-tabs="center">
+          <mat-tab label="Accueil">
+            <app-list-post [listPost]="listPost$"></app-list-post>
+          </mat-tab>
+          <mat-tab label="Infos">
+            <app-event-infos [event]="event$" [participantsNumber]="listParticipant$.length"
+                             [userSession]="userSession$"></app-event-infos>
+          </mat-tab>
+          <mat-tab label="Participants">
+            <div *ngIf="!isOwnerB && !isAdminB" class="my-3">
+              <div *ngFor="let user of listParticipant$;" class="display-list-user">
+                <app-user-card [userSession]="userSession$" [user]="user" class="m-0"></app-user-card>
+              </div>
+            </div>
+            <div *ngIf="isOwnerB || isAdminB" class="my-3">
+              <div *ngFor="let user of listParticipant$;" class="display-list-user">
+                <app-card-user-mange-event [eventId]="eventId" [userSession]="userSession$" [user]="user"
+                                           class="m-0"></app-card-user-mange-event>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
     </div>
   </div>
   <div class="col-md-2 my-3">

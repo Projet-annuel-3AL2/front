@@ -43,61 +43,16 @@ export class ProfilUserComponent implements OnInit {
               public dialog: MatDialog,
               public dialogReport: MatDialog,
               public dialogCreateEvent: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     const username = this.route.snapshot.params['username'];
 
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession$=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession$ = user;
       this.getUser(username);
     });
-  }
-
-
-  private getUser(username: string) {
-    this._userService.getByUsername(username).subscribe({
-      next: user => {
-        this.user$ = user
-        // this.getPosts(user.username);
-        // this.getFriendsList();
-        this.getEventParticipations();
-        if (user.id != this.userSession$.id){
-          this.canAdd();
-        }
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
-  private getPosts(username: string) {
-    this._userService.getPosts(username).subscribe({
-      next: posts =>{
-        this.listPost$ = posts;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
-  private getFriendsList() {
-    this._userService.getFriends(this.user$.username).subscribe({
-      next: users =>{
-        this.listUser$ = users;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
   }
 
   canAdd() {
@@ -115,7 +70,7 @@ export class ProfilUserComponent implements OnInit {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
@@ -128,21 +83,8 @@ export class ProfilUserComponent implements OnInit {
         this.friendshipRequest = FriendRequestStatus.PENDING;
       },
       error: err => {
-        if (!environment.production){
-          console.log(err)
-        }
-      }
-    })
-  }
-
-  private getEventParticipations() {
-    this._userService.getParticipations(this.user$.username).subscribe({
-      next: events =>{
-        this.listEvent$ = events;
-      },
-      error: error => {
         if (!environment.production) {
-          console.error('Error: ', error);
+          console.log(err)
         }
       }
     })
@@ -171,10 +113,68 @@ export class ProfilUserComponent implements OnInit {
   showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
       width: '900px',
-      data: { userSession: this.userSession$, organisation: null}
+      data: {userSession: this.userSession$, organisation: null}
     });
 
     dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  private getUser(username: string) {
+    this._userService.getByUsername(username).subscribe({
+      next: user => {
+        this.user$ = user
+        // this.getPosts(user.username);
+        // this.getFriendsList();
+        this.getEventParticipations();
+        if (user.id != this.userSession$.id) {
+          this.canAdd();
+        }
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getPosts(username: string) {
+    this._userService.getPosts(username).subscribe({
+      next: posts => {
+        this.listPost$ = posts;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getFriendsList() {
+    this._userService.getFriends(this.user$.username).subscribe({
+      next: users => {
+        this.listUser$ = users;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getEventParticipations() {
+    this._userService.getParticipations(this.user$.username).subscribe({
+      next: events => {
+        this.listEvent$ = events;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
     })
   }
 }

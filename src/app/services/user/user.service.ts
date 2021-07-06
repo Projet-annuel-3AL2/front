@@ -1,11 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {User} from "../../shared/models/user.model";
-import {EventService} from "../event/event.service";
 import {Event} from "../../shared/models/event.model";
-import {Category} from "../../shared/models/category.model";
-import {Organisation} from "../../shared/models/organisation.model";
-import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
-import {Certification} from "../../shared/models/certification.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Conversation} from "../../shared/models/conversation.model";
@@ -39,6 +34,7 @@ export class UserService {
   deleteUser(username: string): Observable<any> {
     return this.http.delete(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
+
   // TODO: getUserFriends() pas implémenter sur l'API
   getUserFriends(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
@@ -49,7 +45,7 @@ export class UserService {
   }
 
   getParticipations(username: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`,{headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getFriends(username: string): Observable<User[]> {

@@ -31,7 +31,10 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {username, password}, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {
+      username,
+      password
+    }, {headers: {'Access-Control-Allow-Origin': '*'}})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
         this.userSubject.next(user);

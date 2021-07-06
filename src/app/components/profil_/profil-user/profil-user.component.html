@@ -1,42 +1,55 @@
-<div class="row m-0" *ngIf="user$ != undefined">
+<div *ngIf="user$ != undefined" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="user-card-full">
-        <img alt="" class="rounded" style="object-fit: none"
+        <img alt="" class="rounded" height="300px"
              src="{{user$.bannerPicture != undefined? user$.bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
-             width="100%" height="300px">
-        <div class="user-card-display" >
+             style="object-fit: none" width="100%">
+        <div class="user-card-display">
           <div class="user-card-div">
             <div class="user-card-img-profil">
-              <img [src]="user$.profilePicture != undefined? user$.profilePicture.link: 'https://picsum.photos/50/50'" class="rounded-circle"
-                   width="75" alt="">
+              <img [src]="user$.profilePicture != undefined? user$.profilePicture.link: 'https://picsum.photos/50/50'"
+                   alt=""
+                   class="rounded-circle" width="75">
             </div>
             <div class="user-card-username">
-                <p>{{user$.username}}</p>
+              <p>{{user$.username}}</p>
             </div>
             <div class="user-card-certification">
-              <fa-icon *ngIf="user$.certification" [icon]="faCheckCircle" ></fa-icon>
+              <fa-icon *ngIf="user$.certification" [icon]="faCheckCircle"></fa-icon>
             </div>
             <div class="user-card-empty"></div>
             <div *ngIf="user$.id !== userSession$.id">
-              <button *ngIf="friendshipRequest === allFriendRequestStatus.NONE" mat-raised-button class="ml-auto button-add-friend" (click)="this.askFriend()"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter</button>
-              <button *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Enlever de la list d'amis" (click)="this.dellFriend()"> Enlever</button>
-              <button *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED" mat-raised-button class="ml-auto button-add-friend" matTooltip="Accepter ou Refuser la demande d'amis" (click)="this.showDialogueRespondFriendRequest()"> Répondre</button>
-              <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" mat-raised-button class="ml-auto button-add-friend-disable"> En Attente</button>
+              <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
+                      class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true"
+                                                                                      class="fa fa-user-plus"></i> Ajouter
+              </button>
+              <button (click)="this.dellFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
+                      class="ml-auto button-add-friend" mat-raised-button
+                      matTooltip="Enlever de la list d'amis"> Enlever
+              </button>
+              <button (click)="this.showDialogueRespondFriendRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+                      class="ml-auto button-add-friend" mat-raised-button
+                      matTooltip="Accepter ou Refuser la demande d'amis"> Répondre
+              </button>
+              <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
+                      mat-raised-button> En Attente
+              </button>
             </div>
             <div class="user-card-menu">
-              <div  class="dropdown" dropdown>
-                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+              <div class="dropdown" dropdown>
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                        data-toggle="dropdown"
                         dropdownToggle type="button">
                   <fa-icon [icon]="faEllipsisH"></fa-icon>
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-                  <button mat-menu-item (click)="showDialogueReport()">Signaler</button>
+                  <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
                   <div *ngIf="user$.id === userSession$.id">
-                    <button mat-menu-item (click)="showDialogueCreateEvent()">Créer un évènement</button>
+                    <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                   </div>
                 </div>
               </div>
@@ -50,7 +63,7 @@
         </div>
       </div>
       <div class="tab-user-profil">
-        <mat-tab-group dynamicHeight mat-align-tabs="center" class="tab-group-user-profil">
+        <mat-tab-group class="tab-group-user-profil" dynamicHeight mat-align-tabs="center">
           <mat-tab label="Post">
             <app-list-post [listPost]="listPost$"></app-list-post>
           </mat-tab>

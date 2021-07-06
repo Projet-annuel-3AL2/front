@@ -1,18 +1,20 @@
-<div class="row m-0" *ngIf="organisation$ != undefined">
+<div *ngIf="organisation$ != undefined" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="orga-card-full">
-        <img alt="" class="rounded" style="object-fit: none"
+        <img alt="" class="rounded" height="300px"
              src="{{organisation$.bannerPicture != undefined? organisation$.bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
-             width="100%" height="300px">
-        <div class="orga-card-display" >
+             style="object-fit: none" width="100%">
+        <div class="orga-card-display">
           <div class="orga-card-div">
             <div class="orga-card-img-profil">
-              <img [src]="organisation$.profilePicture != undefined? organisation$.profilePicture.link: 'https://picsum.photos/50/50'" class="rounded-circle"
-                   width="75" alt="">
+              <img
+                [src]="organisation$.profilePicture != undefined? organisation$.profilePicture.link: 'https://picsum.photos/50/50'"
+                alt=""
+                class="rounded-circle" width="75">
             </div>
             <div class="orga-card-name">
               <p>{{organisation$.name}}</p>
@@ -22,20 +24,25 @@
             </div>
             <div class="orga-card-empty"></div>
             <div class="orga-card-button">
-                <button *ngIf="!isFollowing" mat-raised-button class="ml-auto button-join-event" (click)="this.followOrganisation()"><i class="fa fa-user-plus" aria-hidden="true"></i> Suivre</button>
-                <button *ngIf="isFollowing" mat-raised-button class="ml-auto mat-button-event" (click)="this.unfollowOrganisation()">Ne plus suivre</button>
+              <button (click)="this.followOrganisation()" *ngIf="!isFollowing" class="ml-auto button-join-event"
+                      mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Suivre
+              </button>
+              <button (click)="this.unfollowOrganisation()" *ngIf="isFollowing" class="ml-auto mat-button-event"
+                      mat-raised-button>Ne plus suivre
+              </button>
             </div>
             <div class="orga-card-menu">
-              <div  class="dropdown" dropdown>
-                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+              <div class="dropdown" dropdown>
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                        data-toggle="dropdown"
                         dropdownToggle type="button">
                   <fa-icon [icon]="faEllipsisH"></fa-icon>
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-                  <button mat-menu-item (click)="showDialogueReport()">Signaler</button>
+                  <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
                   <div *ngIf="isOwnerB || isAdminB">
-                    <button mat-menu-item (click)="showDialogueUpdateOrganisation()">Modifier</button>
-                    <button mat-menu-item (click)="showDialogueCreateEvent()">Créer un évènement</button>
+                    <button (click)="showDialogueUpdateOrganisation()" mat-menu-item>Modifier</button>
+                    <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                   </div>
                 </div>
               </div>
@@ -46,27 +53,33 @@
       <div class="tab-event  ">
         <mat-tab-group dynamicHeight mat-align-tabs="center">
           <mat-tab label="Post">
-              <app-list-post [listPost]="organisation$.posts"></app-list-post>
+            <app-list-post [listPost]="organisation$.posts"></app-list-post>
           </mat-tab>
           <mat-tab label="Membres">
             <div *ngIf="!isOwnerB && !isAdminB">
-              <mat-List-item *ngFor="let member of listMember$" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
-                <app-user-card [user]="member" [userSession]="this.userSession$"></app-user-card>
+              <mat-List-item *ngFor="let member of listMember$"
+                             style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
+                <app-user-card [userSession]="this.userSession$" [user]="member"></app-user-card>
               </mat-List-item>
             </div>
-            <div class="my-3" *ngIf="isAdminB && !isOwnerB">
-              <div class="display-list-user" *ngFor="let member of listMember$;" >
-                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" [isOwner]="false" class="m-0"></app-card-user-manage-organisation>
+            <div *ngIf="isAdminB && !isOwnerB" class="my-3">
+              <div *ngFor="let member of listMember$;" class="display-list-user">
+                <app-card-user-manage-organisation [isOwner]="false" [organisation]="organisation$"
+                                                   [userSession]="userSession$" [user]="member"
+                                                   class="m-0"></app-card-user-manage-organisation>
               </div>
             </div>
-            <div class="my-3" *ngIf="isOwnerB">
-              <div class="display-list-user" *ngFor="let member of listMember$;" >
-                <app-card-user-manage-organisation [user]="member" [organisation]="organisation$" [userSession]="userSession$" [isOwner]="true" class="m-0"></app-card-user-manage-organisation>
+            <div *ngIf="isOwnerB" class="my-3">
+              <div *ngFor="let member of listMember$;" class="display-list-user">
+                <app-card-user-manage-organisation [isOwner]="true" [organisation]="organisation$"
+                                                   [userSession]="userSession$" [user]="member"
+                                                   class="m-0"></app-card-user-manage-organisation>
               </div>
             </div>
           </mat-tab>
           <mat-tab label="Événements">
-            <app-profil-list-event [listEvent]="organisation$.events" [userSession]="userSession$"></app-profil-list-event>
+            <app-profil-list-event [listEvent]="organisation$.events"
+                                   [userSession]="userSession$"></app-profil-list-event>
           </mat-tab>
         </mat-tab-group>
       </div>

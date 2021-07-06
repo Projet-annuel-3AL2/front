@@ -16,15 +16,16 @@ export class NavbarComponent implements OnInit {
   faUserFriends = faUserFriends;
   faComments = faComments;
   userSession: User;
-  constructor(private _activatedRoute:ActivatedRoute,
+
+  constructor(private _activatedRoute: ActivatedRoute,
               public _authService: AuthService,
               private _userService: UserService,
-              private _router:Router) {
+              private _router: Router) {
   }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession = user;
     });
   }
 

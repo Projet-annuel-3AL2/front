@@ -1,36 +1,39 @@
-<h1 mat-dialog-title class="update-event-title">Modification de  l'Évènement</h1>
-<form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+<h1 class="update-event-title" mat-dialog-title>Modification de l'Évènement</h1>
+<form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
   <div mat-dialog-content>
     <div class="update-event-grid">
       <div class="form-field-name-event">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Évènement</mat-label>
-          <input matInput placeholder="Nom de l'Évènement" formControlName="nameEvent" [(ngModel)]="data.event.name" required>
+          <input [(ngModel)]="data.event.name" formControlName="nameEvent" matInput placeholder="Nom de l'Évènement"
+                 required>
         </mat-form-field>
       </div>
       <div class="form-field-description">
-        <mat-form-field >
-          <mat-label>Description de l'Évènement </mat-label>
-          <textarea class="textarea-description" matInput placeholder="Ex. L'Évènement se ..." formControlName="descriptionEvent" [(ngModel)]="data.event.description" ></textarea>
+        <mat-form-field>
+          <mat-label>Description de l'Évènement</mat-label>
+          <textarea [(ngModel)]="data.event.description" class="textarea-description" formControlName="descriptionEvent"
+                    matInput placeholder="Ex. L'Évènement se ..."></textarea>
         </mat-form-field>
       </div>
       <div class="form-field-address">
         <mat-form-field appearance="fill">
           <mat-label>Adresse de l'Évènement</mat-label>
-          <input matInput placeholder="Adresse" formControlName="address" required>
+          <input formControlName="address" matInput placeholder="Adresse" required>
         </mat-form-field>
       </div>
       <div class="form-field-participant-limit">
-        <mat-form-field appearance="fill" >
+        <mat-form-field appearance="fill">
           <mat-label>Nb. de participant Max</mat-label>
-          <input matInput type="number" placeholder="Ex. 30"  [formControl]="limitParticipant" min="2" formControlName="participantsLimitEvent" [(ngModel)]="data.event.participantsLimit" required >
+          <input [(ngModel)]="data.event.participantsLimit" [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2"
+                 placeholder="Ex. 30" required type="number">
           <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
         </mat-form-field>
       </div>
       <div class="form-field-categories">
         <mat-form-field appearance="fill">
           <mat-label>Categories:</mat-label>
-          <mat-select formControlName="categoryEvent" [(value)]="data.event.category.name" matNativeControl required>
+          <mat-select [(value)]="data.event.category.name" formControlName="categoryEvent" matNativeControl required>
             <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}
             </mat-option>
           </mat-select>
@@ -40,26 +43,28 @@
         <mat-form-field appearance="fill">
           <mat-label>Entrer la durée de l'Evènement</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate formControlName="startDateEvent" placeholder="Date de début" [(ngModel)]="data.event.startDate" required>
-            <input matEndDate formControlName="endDateEvent" placeholder="Date de fin" [(ngModel)]="data.event.endDate" required>
+            <input [(ngModel)]="data.event.startDate" formControlName="startDateEvent" matStartDate
+                   placeholder="Date de début" required>
+            <input [(ngModel)]="data.event.endDate" formControlName="endDateEvent" matEndDate placeholder="Date de fin"
+                   required>
           </mat-date-range-input>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
       </div>
       <div class="form-field-file">
         <label for="myfile">Choisissez une image :</label>
-        <input type="file" id="myfile" name="myfile" data-max-size="2048" formControlName="pictureFile">
+        <input data-max-size="2048" formControlName="pictureFile" id="myfile" name="myfile" type="file">
       </div>
     </div>
   </div>
-  <div mat-dialog-actions class="dialog-actions-update-event">
+  <div class="dialog-actions-update-event" mat-dialog-actions>
     <div class="button-grid-update-event">
       <div class="button-cancel">
-        <button mat-button (click)="onNoClick()">Annuler</button>
+        <button (click)="onNoClick()" mat-button>Annuler</button>
       </div>
       <div class="button-send">
-        <button mat-raised-button class="button-send" type="submit">Envoyer</button>
+        <button class="button-send" mat-raised-button type="submit">Envoyer</button>
       </div>
     </div>
   </div>

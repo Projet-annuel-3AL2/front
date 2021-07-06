@@ -1,30 +1,33 @@
-<h1 mat-dialog-title class="dialog-title-update-orga">Modification de  l'Organisation</h1>
-<form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+<h1 class="dialog-title-update-orga" mat-dialog-title>Modification de l'Organisation</h1>
+<form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
   <div mat-dialog-content>
     <div class="update-organisation-grid">
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input matInput placeholder="Nom de l'Organisation" formControlName="name" [(ngModel)]="data.organisation.name" required>
+          <input [(ngModel)]="data.organisation.name" formControlName="name" matInput
+                 placeholder="Nom de l'Organisation" required>
         </mat-form-field>
       </div>
       <div class="form-field-profil-picture">
-        <label for="profilPicture">Image de profile :  </label>
-        <input type="file" id="profilPicture" name="profilPicture" data-max-size="2048" [(ngModel)]="data.organisation.profilePicture">
+        <label for="profilPicture">Image de profile : </label>
+        <input [(ngModel)]="data.organisation.profilePicture" data-max-size="2048" id="profilPicture" name="profilPicture"
+               type="file">
       </div>
       <div class="form-field-banner-picture">
-        <label for="bannerPicture">Bannière :  </label>
-        <input type="file" id="bannerPicture" name="bannerPicture" data-max-size="2048" [(ngModel)]="data.organisation.bannerPicture">
+        <label for="bannerPicture">Bannière : </label>
+        <input [(ngModel)]="data.organisation.bannerPicture" data-max-size="2048" id="bannerPicture" name="bannerPicture"
+               type="file">
       </div>
     </div>
   </div>
-  <div mat-dialog-actions class="dialog-actions-update-orga">
+  <div class="dialog-actions-update-orga" mat-dialog-actions>
     <div class="button-grid-update-orga">
       <div class="button-cancel">
-        <button mat-button (click)="onNoClick()">Annuler</button>
+        <button (click)="onNoClick()" mat-button>Annuler</button>
       </div>
       <div class="button-send">
-        <button mat-raised-button class="button-send" type="submit">Envoyer</button>
+        <button class="button-send" mat-raised-button type="submit">Envoyer</button>
       </div>
     </div>
   </div>

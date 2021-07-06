@@ -15,21 +15,15 @@ export class DialogUpdateOrganisationComponent implements OnInit {
 
   formData: FormGroup;
   updateOrganisation: Organisation;
+
   constructor(public dialogRef: MatDialogRef<DialogUpdateOrganisationComponent>,
               private _organisationService: OrganisationService,
-              @Inject(MAT_DIALOG_DATA) public data: {organisation: Organisation, userSession: User}) { }
+              @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation, userSession: User }) {
+  }
 
   ngOnInit(): void {
     this.initialiseFormGroup();
     this.updateOrganisation = this.data.organisation
-  }
-
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      name: new FormControl(),
-      profilPicture: new FormControl(),
-      bannerPicture: new FormControl()
-    });
   }
 
   onClickSubmit(data) {
@@ -45,7 +39,7 @@ export class DialogUpdateOrganisationComponent implements OnInit {
           this.dialogRef.close()
         },
         error: err => {
-          if (!environment.production){
+          if (!environment.production) {
             console.log(err);
           }
         }
@@ -55,5 +49,13 @@ export class DialogUpdateOrganisationComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  private initialiseFormGroup() {
+    this.formData = new FormGroup({
+      name: new FormControl(),
+      profilPicture: new FormControl(),
+      bannerPicture: new FormControl()
+    });
   }
 }

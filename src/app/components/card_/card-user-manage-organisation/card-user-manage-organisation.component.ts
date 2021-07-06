@@ -1,14 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
-import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {UserService} from "../../../services/user/user.service";
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
-import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {MatDialog} from "@angular/material/dialog";
@@ -28,14 +26,15 @@ export class CardUserManageOrganisationComponent implements OnInit {
 
   friendshipRequest: FriendRequestStatus;
   userIsAdmin: boolean = false;
-  allFriendRequestStatus =  FriendRequestStatus;
+  allFriendRequestStatus = FriendRequestStatus;
   userIsOwner: Boolean = false;
 
   constructor(private _friendshipService: FriendshipService,
               private _authService: AuthService,
               private _userService: UserService,
               private _organisationService: OrganisationService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.canAddFriend();
@@ -51,17 +50,13 @@ export class CardUserManageOrganisationComponent implements OnInit {
     })
   }
 
-  private isUserAdminFormOrga() {
-
-  }
-
   askFriend() {
     this._friendshipService.postFriendship(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = this.allFriendRequestStatus.PENDING;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
@@ -74,7 +69,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
         this.friendshipRequest = this.allFriendRequestStatus.NONE;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
@@ -97,7 +92,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
       next: () => {
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err);
         }
       }
@@ -110,7 +105,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
         this.userIsAdmin = true;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err);
         }
       }
@@ -123,11 +118,15 @@ export class CardUserManageOrganisationComponent implements OnInit {
         this.userIsAdmin = false;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err);
         }
       }
     });
+  }
+
+  private isUserAdminFormOrga() {
+
   }
 
   private getStatusUserInOrga() {
@@ -136,18 +135,18 @@ export class CardUserManageOrganisationComponent implements OnInit {
         this.userIsAdmin = bool;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
     })
-    if (!this.isOwner){
-      this._organisationService.isUserOwner(this.organisation.id,this.user.username).subscribe({
+    if (!this.isOwner) {
+      this._organisationService.isUserOwner(this.organisation.id, this.user.username).subscribe({
         next: bool => {
           this.userIsOwner = bool;
         },
         error: err => {
-          if (!environment.production){
+          if (!environment.production) {
             console.log(err)
           }
         }

@@ -14,7 +14,8 @@ export class DialogResFriendshipRequestComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogResFriendshipRequestComponent>,
               @Inject(MAT_DIALOG_DATA) public data,
-              private _friendshipService: FriendshipService) { }
+              private _friendshipService: FriendshipService) {
+  }
 
   ngOnInit(): void {
 
@@ -31,7 +32,7 @@ export class DialogResFriendshipRequestComponent implements OnInit {
         this.friendshipRequestStatus = FriendRequestStatus.BEFRIENDED;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err);
         }
       }
@@ -44,7 +45,7 @@ export class DialogResFriendshipRequestComponent implements OnInit {
         this.friendshipRequestStatus = FriendRequestStatus.NONE;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err);
         }
       }

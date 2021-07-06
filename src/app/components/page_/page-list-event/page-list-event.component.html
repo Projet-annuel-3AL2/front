@@ -8,11 +8,11 @@
     </div>
   </div>
   <div class="col-md-5 my-5">
-    <div  *ngIf="eventsFilter$ == undefined">
+    <div *ngIf="eventsFilter$ == undefined">
       <app-event-list-display [events]="events$" [userSession]="userSession$"></app-event-list-display>
     </div>
     <div *ngIf="eventsFilter$ != undefined">
-      <app-event-list-display  [events]="eventsFilter$"></app-event-list-display>
+      <app-event-list-display [events]="eventsFilter$"></app-event-list-display>
     </div>
   </div>
   <div class="col-lg-4 my-3">
