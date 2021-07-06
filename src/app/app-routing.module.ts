@@ -5,8 +5,8 @@ import {PageEventComponent} from "./components/page_/page-event/page-event.compo
 import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
 import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
-import {LoginComponent} from "./components/login/login.component";
-import {RegisterComponent} from "./components/register/register.component";
+import {LoginComponent} from "./components/page_/auth_/login/login.component";
+import {RegisterComponent} from "./components/page_/auth_/register/register.component";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";

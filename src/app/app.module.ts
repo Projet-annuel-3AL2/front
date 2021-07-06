@@ -34,9 +34,9 @@ import {ListOrganisationSuggestionComponent} from "./components/list-organisatio
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
-import {LoginComponent} from "./components/login/login.component";
+import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RegisterComponent} from "./components/register/register.component";
+import {RegisterComponent} from "./components/page_/auth_/register/register.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
