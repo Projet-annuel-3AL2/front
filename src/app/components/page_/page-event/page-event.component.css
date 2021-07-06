@@ -42,6 +42,7 @@
   box-sizing: border-box;
   max-width: 30%;
   color: black;
+  text-align: center;
 }
 .description-event {
   flex: 1 1 100%;

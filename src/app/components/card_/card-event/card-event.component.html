@@ -12,7 +12,8 @@
       </a>
     </div>
     <div class="orga-card-event" >
-      <p><i class="fa fa-user" aria-hidden="true"></i>  {{event.organisation.name}}</p>
+      <p *ngIf="event.organisation != null"><i class="fa fa-user" aria-hidden="true"></i>  {{event.organisation.name}}</p>
+      <p *ngIf="event.organisation === null"><i class="fa fa-user" aria-hidden="true"></i>  {{event.user.username}} <fa-icon [icon]="faCheckCircle"></fa-icon></p>
     </div>
     <div class="date-card-event" >
       <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} -- {{event.endDate.toString() | slice: 11 : 16}}</p>

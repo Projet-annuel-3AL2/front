@@ -5,6 +5,7 @@ import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-card-event',
@@ -17,6 +18,8 @@ export class CardEventComponent implements OnInit {
   @Input('userSession') userSession: User;
   isAbleToJoin: boolean = true;
   canShow: boolean = false;
+  faCheckCircle = faCheckCircle;
+
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
