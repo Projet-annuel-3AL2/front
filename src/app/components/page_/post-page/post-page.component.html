@@ -1,8 +1,22 @@
-<div class="row m-0" style="height: calc(100% - 80px)">
+<div class="row m-0">
   <div class="col-md-4">
   </div>
-  <div class="col-md-4">
-    <post *ngIf="post" [post]="post"></post>
+  <div class="col-md-4" fxFlex
+       fxLayout="column">
+    <post *ngIf="post" [post]="post" class="w-100"></post>
+    <div fxFlex
+         fxLayout="row" class="my-2">
+      <div class="rounded-circle profile-picture" fxFlex>
+        <img [src]="(_authService.user.toPromise() | async)?.profilePicture?.link || 'https://picsum.photos/50/50'" alt="" class="me-1 rounded-circle"
+             width="50">
+      </div>
+      <div contenteditable="true" class="w-100 bg-light"></div>
+    </div>
+    <div fxLayoutAlign="column">
+      <div *ngFor="let comment of comments">
+        <app-comment [comment]="comment"></app-comment>
+      </div>
+    </div>
   </div>
   <div class="col-md-4 my-3">
     <div class="position-fixed">
