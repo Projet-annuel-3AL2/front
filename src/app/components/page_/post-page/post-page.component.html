@@ -10,7 +10,7 @@
         <img [src]="(_authService.user.toPromise() | async)?.profilePicture?.link || 'https://picsum.photos/50/50'" alt="" class="me-1 rounded-circle"
              width="50">
       </div>
-      <div contenteditable="true" class="bg-light send-comment-textarea" (input)="text=$event.target.textContent" [textContent]="text"
+      <div contenteditable="true" class="bg-light send-comment-textarea p-2 rounded-3" (input)="text=$event.target.textContent" [textContent]="text"
            ondragenter="return false;" ondragover="return false;"  placeholder="Envoyez un commentaire" spellcheck="true"></div>
     </div>
     <div>
