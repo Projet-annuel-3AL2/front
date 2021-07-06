@@ -14,6 +14,7 @@ import {Event} from "../../../shared/models/event.model";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
+import {DialogUpdateOrganisationComponent} from "../../dialog_/dialog-update-organisation/dialog-update-organisation.component";
 
 @Component({
   selector: 'app-profil-organisation',
@@ -40,9 +41,9 @@ export class ProfilOrganisationComponent implements OnInit {
               private _authService: AuthService,
               private _eventService: EventService,
               private _postService: PostService,
-              public dialogReport: MatDialog
-  ) {
-  }
+              public dialogReport: MatDialog,
+              public dialogUpdateOrganisation: MatDialog
+  ) { }
 
   ngOnInit(): void {
 
@@ -179,6 +180,16 @@ export class ProfilOrganisationComponent implements OnInit {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
       data: {id: this.organisation$.id, reportType: ReportTypeEnum.ORGANISATION}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueUpdateOrganisation() {
+    const dialogRef = this.dialogUpdateOrganisation.open(DialogUpdateOrganisationComponent, {
+      width: '600px',
+      data: {organisation: this.organisation$, userSession: this.userSession$}
     });
 
     dialogRef.afterClosed().subscribe(() => {
