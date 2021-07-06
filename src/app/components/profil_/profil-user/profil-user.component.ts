@@ -15,6 +15,7 @@ import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-frie
 import {MatDialog} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
+import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
 
 @Component({
   selector: 'app-profil-user',
@@ -26,7 +27,7 @@ export class ProfilUserComponent implements OnInit {
   faEllipsisH = faEllipsisH;
 
   user$: User;
-  userSession: User;
+  userSession$: User;
   listPost$: Post[] = [];
   listEvent$: Event[] = [];
   listUser$: User[] = [];
@@ -40,17 +41,17 @@ export class ProfilUserComponent implements OnInit {
               private _eventService: EventService,
               private _authService: AuthService,
               public dialog: MatDialog,
-              public dialogReport: MatDialog
+              public dialogReport: MatDialog,
+              public dialogCreateEvent: MatDialog
   ) { }
 
   ngOnInit(): void {
     const username = this.route.snapshot.params['username'];
 
     this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession=user;
+      this.userSession$=user;
+      this.getUser(username);
     });
-    this.getUser(username);
-
   }
 
 
@@ -61,7 +62,7 @@ export class ProfilUserComponent implements OnInit {
         // this.getPosts(user.username);
         // this.getFriendsList();
         this.getEventParticipations();
-        if (user.id != this.userSession.id){
+        if (user.id != this.userSession$.id){
           this.canAdd();
         }
       },
@@ -152,7 +153,6 @@ export class ProfilUserComponent implements OnInit {
       width: '500px',
       data: {userId: this.user$.username}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       this.friendshipRequest = result;
     })
@@ -162,6 +162,16 @@ export class ProfilUserComponent implements OnInit {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
       data: {id: this.user$.username, reportType: ReportTypeEnum.USER}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueCreateEvent() {
+    const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
+      width: '900px',
+      data: { userSession: this.userSession$, organisation: null}
     });
 
     dialogRef.afterClosed().subscribe(() => {

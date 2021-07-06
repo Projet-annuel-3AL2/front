@@ -44,15 +44,8 @@ export class OrganisationService {
     return this.http.put<Post>(`${environment.baseUrl}/organisation/${organisationId}/post`, post, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 
-  putOrganisation(organisationId: string, organisation:Organisation){
-    this.http.put(`${environment.baseUrl}/organisation/${organisationId}`, JSON.stringify(organisation),{headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
-        error: err => {
-          if (!environment.production){
-            console.log(err);
-          }
-        }
-      }
-    )
+  putOrganisation(organisationId: string, organisation: Organisation): Observable<Organisation>{
+    return this.http.put<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`, organisation, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   deleteOrganisation(organisationId: string){
@@ -69,11 +62,6 @@ export class OrganisationService {
   // MemberOrganisation
   deleteOrganisationMembership(userId: string, organisationId: string) {
     return this.http.delete(`${environment.baseUrl}/organisation/${organisationId}/member/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
-  getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
-    return ;
-    //this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   giveAdminToMember(userId: string, organisationId: string): Observable<void> {

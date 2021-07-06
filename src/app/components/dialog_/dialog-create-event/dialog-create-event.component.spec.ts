@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdateOrganisationComponent } from './update-organisation.component';
+import { DialogCreateEventComponent } from './dialog-create-event.component';
 
-describe('UpdateOrganisationComponent', () => {
-  let component: UpdateOrganisationComponent;
-  let fixture: ComponentFixture<UpdateOrganisationComponent>;
+describe('DialogCreateEventComponent', () => {
+  let component: DialogCreateEventComponent;
+  let fixture: ComponentFixture<DialogCreateEventComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdateOrganisationComponent ]
+      declarations: [ DialogCreateEventComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UpdateOrganisationComponent);
+    fixture = TestBed.createComponent(DialogCreateEventComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

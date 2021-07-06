@@ -1,9 +1,6 @@
 <div class="row m-0" *ngIf="organisation$ != undefined">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
-    <div *ngIf="isOwnerB || isAdminB">
-      <app-update-organisation [organisation]="organisation$"></app-update-organisation>
-    </div>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
@@ -36,6 +33,10 @@
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                   <button mat-menu-item (click)="showDialogueReport()">Signaler</button>
+                  <div *ngIf="isOwnerB || isAdminB">
+                    <button mat-menu-item (click)="showDialogueUpdateOrganisation()">Modifier</button>
+                    <button mat-menu-item (click)="showDialogueCreateEvent()">Créer un évènement</button>
+                  </div>
                 </div>
               </div>
             </div>
