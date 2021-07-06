@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ProfilListEventComponent } from './profil-list-event.component';
+import {ProfilListEventComponent} from './profil-list-event.component';
 
 describe('ProfilListEventComponent', () => {
   let component: ProfilListEventComponent;
@@ -8,9 +8,9 @@ describe('ProfilListEventComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfilListEventComponent ]
+      declarations: [ProfilListEventComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

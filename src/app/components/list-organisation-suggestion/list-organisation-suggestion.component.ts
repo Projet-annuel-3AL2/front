@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {OrganisationService} from "../../services/organisation/organisation.service";
 import {Organisation} from "../../shared/models/organisation.model";
 import {environment} from "../../../environments/environment";
@@ -12,8 +12,10 @@ import {EventService} from "../../services/event/event.service";
 export class ListOrganisationSuggestionComponent implements OnInit {
 
   listOrganisation$: Organisation[];
+
   constructor(private _organisationService: OrganisationService,
-              private _eventService: EventService) { }
+              private _eventService: EventService) {
+  }
 
   ngOnInit(): void {
     this.getSuggestionOrganisation();

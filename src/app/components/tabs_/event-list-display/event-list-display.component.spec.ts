@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EventListDisplayComponent } from './event-list-display.component';
+import {EventListDisplayComponent} from './event-list-display.component';
 
 describe('EventListDisplayComponent', () => {
   let component: EventListDisplayComponent;
@@ -8,9 +8,9 @@ describe('EventListDisplayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EventListDisplayComponent ]
+      declarations: [EventListDisplayComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

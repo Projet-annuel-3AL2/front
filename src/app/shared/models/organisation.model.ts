@@ -4,6 +4,7 @@ import {Media} from "./media.model";
 import {Conversation} from "./conversation.model";
 import {Post} from "./post.model";
 import {Event} from "./event.model";
+
 export class Organisation {
   id: string;
   name: string;

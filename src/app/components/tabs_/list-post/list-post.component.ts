@@ -8,9 +8,10 @@ import {Post} from "../../../shared/models/post.model";
 })
 export class ListPostComponent implements OnInit {
   @Input('listPost')
-  posts : Post[];
+  posts: Post[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
 

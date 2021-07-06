@@ -23,14 +23,19 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
   constructor(private _eventService: EventService,
               private _userService: UserService,
               private _authService: AuthService
-              ) {}
+  ) {
+  }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession$=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession$ = user;
     });
     // TODO: en lien avec event-filter, faut réfléchir a la logique derriere
     this.getNotEndEvents();
+  }
+
+  ngAfterViewInit() {
+    this.eventsFilter$ = this.eventFilterComponent.listFilterEvent$;
   }
 
   private getNotEndEvents() {
@@ -44,9 +49,5 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
         }
       }
     })
-  }
-
-  ngAfterViewInit()  {
-    this.eventsFilter$ = this.eventFilterComponent.listFilterEvent$;
   }
 }

@@ -15,6 +15,7 @@ import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-frie
 import {MatDialog} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
+import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
 
 @Component({
   selector: 'app-profil-user',
@@ -26,7 +27,7 @@ export class ProfilUserComponent implements OnInit {
   faEllipsisH = faEllipsisH;
 
   user$: User;
-  userSession: User;
+  userSession$: User;
   listPost$: Post[] = [];
   listEvent$: Event[] = [];
   listUser$: User[] = [];
@@ -40,63 +41,18 @@ export class ProfilUserComponent implements OnInit {
               private _eventService: EventService,
               private _authService: AuthService,
               public dialog: MatDialog,
-              public dialogReport: MatDialog
-  ) { }
+              public dialogReport: MatDialog,
+              public dialogCreateEvent: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
     const username = this.route.snapshot.params['username'];
 
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.userSession=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.userSession$ = user;
+      this.getUser(username);
     });
-    this.getUser(username);
-
-  }
-
-
-  private getUser(username: string) {
-    this._userService.getByUsername(username).subscribe({
-      next: user => {
-        this.user$ = user
-        // this.getPosts(user.username);
-        // this.getFriendsList();
-        this.getEventParticipations();
-        if (user.id != this.userSession.id){
-          this.canAdd();
-        }
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
-  private getPosts(username: string) {
-    this._userService.getPosts(username).subscribe({
-      next: posts =>{
-        this.listPost$ = posts;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
-
-  private getFriendsList() {
-    this._userService.getFriends(this.user$.username).subscribe({
-      next: users =>{
-        this.listUser$ = users;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
   }
 
   canAdd() {
@@ -114,7 +70,7 @@ export class ProfilUserComponent implements OnInit {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
@@ -127,21 +83,8 @@ export class ProfilUserComponent implements OnInit {
         this.friendshipRequest = FriendRequestStatus.PENDING;
       },
       error: err => {
-        if (!environment.production){
-          console.log(err)
-        }
-      }
-    })
-  }
-
-  private getEventParticipations() {
-    this._userService.getParticipations(this.user$.username).subscribe({
-      next: events =>{
-        this.listEvent$ = events;
-      },
-      error: error => {
         if (!environment.production) {
-          console.error('Error: ', error);
+          console.log(err)
         }
       }
     })
@@ -152,7 +95,6 @@ export class ProfilUserComponent implements OnInit {
       width: '500px',
       data: {userId: this.user$.username}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       this.friendshipRequest = result;
     })
@@ -165,6 +107,74 @@ export class ProfilUserComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueCreateEvent() {
+    const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
+      width: '900px',
+      data: {userSession: this.userSession$, organisation: null}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  private getUser(username: string) {
+    this._userService.getByUsername(username).subscribe({
+      next: user => {
+        this.user$ = user
+        // this.getPosts(user.username);
+        // this.getFriendsList();
+        this.getEventParticipations();
+        if (user.id != this.userSession$.id) {
+          this.canAdd();
+        }
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getPosts(username: string) {
+    this._userService.getPosts(username).subscribe({
+      next: posts => {
+        this.listPost$ = posts;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getFriendsList() {
+    this._userService.getFriends(this.user$.username).subscribe({
+      next: users => {
+        this.listUser$ = users;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getEventParticipations() {
+    this._userService.getParticipations(this.user$.username).subscribe({
+      next: events => {
+        this.listEvent$ = events;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
     })
   }
 }

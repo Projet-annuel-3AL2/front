@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from "../../../shared/models/user.model";
 import {UserService} from "../../../services/user/user.service";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -20,12 +20,13 @@ export class CreateOrganisationComponent implements OnInit {
   constructor(private _userService: UserService,
               private _organisationService: OrganisationService,
               private _authService: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
 
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user=>{
-      this.user$=user;
+    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+      this.user$ = user;
     });
     this.initialiseFormGroup();
   }
@@ -41,14 +42,6 @@ export class CreateOrganisationComponent implements OnInit {
     document.querySelector("body").classList.remove("no-scroll");
   }
 
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      name: new FormControl(),
-      profilPicture: new FormControl(),
-      bannerPicture: new FormControl()
-    });
-  }
-
   onClickSubmit(data) {
     let newOrganisation: Organisation = new Organisation();
     newOrganisation.name = data.name;
@@ -58,5 +51,13 @@ export class CreateOrganisationComponent implements OnInit {
     console.log(newOrganisation);
     // TODO : create-organisation onClickSubmit() pas activé
     // this._organisationService.postOrganisation(newOrganisation);
+  }
+
+  private initialiseFormGroup() {
+    this.formData = new FormGroup({
+      name: new FormControl(),
+      profilPicture: new FormControl(),
+      bannerPicture: new FormControl()
+    });
   }
 }

@@ -21,7 +21,7 @@ export class AppComponent {
 
   // TODO: Je sais pas si on à la certif avec getById()
   canCreateEvent() {
-    if (this.user != undefined){
+    if (this.user != undefined) {
       return this.user.certification !== undefined;
     }
     return false;
@@ -29,7 +29,7 @@ export class AppComponent {
 
   // TODO : Je sais pas si un user peut avoir ou pas plusieurs organisation
   canCreateOrganisation() {
-    if (this.user != undefined){
+    if (this.user != undefined) {
       return this.user.certification !== undefined;
     }
     return false;

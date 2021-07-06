@@ -32,11 +32,8 @@ import {ListUserComponent} from "./components/tabs_/list-user/list-user.componen
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
 import {ListOrganisationSuggestionComponent} from "./components/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
-import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
-import {UpdateEventComponent} from "./components/update_/update-event/update-event.component";
-import {UpdateOrganisationComponent} from "./components/update_/update-organisation/update-organisation.component";
 import {LoginComponent} from "./components/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/register/register.component";
@@ -62,54 +59,62 @@ import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-r
 import {PostListComponent} from "./components/post-list/post-list.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
+import {DialogUpdateOrganisationComponent} from "./components/dialog_/dialog-update-organisation/dialog-update-organisation.component";
+import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-event/dialog-update-event.component";
+import {DialogCreateEventComponent} from "./components/dialog_/dialog-create-event/dialog-create-event.component";
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        PostComponent,
-        LoginComponent,
-        NavbarComponent,
-        MessageComponent,
-        TimelineComponent,
-        PostListComponent,
-        RegisterComponent,
-        CreatePostComponent,
-        ConversationComponent,
-        EventSuggestionComponent,
-        ListEventSuggestionComponent,
-        PageEventComponent,
-        EventInfosComponent,
-        UserCardComponent,
-        EventFilterComponent,
-        PageListEventComponent,
-        ReturnButtonComponent,
-        CardEventComponent,
-        EventListDisplayComponent,
-        EventDialogMapsComponent,
-        ProfilUserComponent,
-        ListPostComponent,
-        ListUserComponent,
-        ProfilOrganisationComponent,
-        ProfilListEventComponent,
-        ListOrganisationSuggestionComponent,
-        CardOrganisationComponent,
-        CreateEventComponent,
-        CreateOrganisationComponent,
-        UpdateEventComponent,
-        UpdateOrganisationComponent,
-        ConversationBoxDirective,
-        ConversationsBoxComponent,
-        ConversationCardComponent,
-        ConversationsListComponent,
-        CardUserMangeEventComponent,
-        CardUserManageOrganisationComponent,
-        DialogResFriendshipRequestComponent,
-        DialogReportComponent,
-        SearchBarComponent,
-        PostPageComponent
-    ],
+  declarations: [
+    AppComponent,
+    PostComponent,
+    LoginComponent,
+    NavbarComponent,
+    MessageComponent,
+    TimelineComponent,
+    PostListComponent,
+    RegisterComponent,
+    CreatePostComponent,
+    ConversationComponent,
+    EventSuggestionComponent,
+    ListEventSuggestionComponent,
+    PageEventComponent,
+    EventInfosComponent,
+    UserCardComponent,
+    EventFilterComponent,
+    PageListEventComponent,
+    ReturnButtonComponent,
+    CardEventComponent,
+    EventListDisplayComponent,
+    EventDialogMapsComponent,
+    ProfilUserComponent,
+    ListPostComponent,
+    ListUserComponent,
+    ProfilOrganisationComponent,
+    ProfilListEventComponent,
+    ListOrganisationSuggestionComponent,
+    CardOrganisationComponent,
+    CreateOrganisationComponent,
+    ConversationBoxDirective,
+    ConversationsBoxComponent,
+    ConversationCardComponent,
+    ConversationsListComponent,
+    CardUserMangeEventComponent,
+    CardUserManageOrganisationComponent,
+    DialogResFriendshipRequestComponent,
+    DialogReportComponent,
+    DialogUpdateOrganisationComponent,
+    DialogUpdateEventComponent,
+    DialogCreateEventComponent,
+    SearchBarComponent,
+    PostPageComponent
+  ],
   imports: [
     BrowserModule,
     RouterModule,
@@ -134,7 +139,10 @@ import {PostPageComponent} from "./components/page_/post-page/post-page.componen
     FormsModule,
     PickerModule,
     ScrollingModule,
-    ExperimentalScrollingModule
+    ExperimentalScrollingModule,
+    NgxMatDatetimePickerModule,
+    NgxMatTimepickerModule,
+    NgxMatNativeDateModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,

@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event} from '../../../shared/models/event.model';
 import {User} from "../../../shared/models/user.model";
-import {UserService} from "../../../services/user/user.service";
 
 @Component({
   selector: 'app-profil-list-event',
@@ -13,7 +12,9 @@ export class ProfilListEventComponent implements OnInit {
 
   @Input('listEvent') listEvent$: Event[] = [];
   @Input('userSession') userSession: User;
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
 

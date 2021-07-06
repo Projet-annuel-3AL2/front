@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CardUserMangeEventComponent } from './card-user-mange-event.component';
+import {CardUserMangeEventComponent} from './card-user-mange-event.component';
 
 describe('CardUserMangeEventComponent', () => {
   let component: CardUserMangeEventComponent;
@@ -8,9 +8,9 @@ describe('CardUserMangeEventComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardUserMangeEventComponent ]
+      declarations: [CardUserMangeEventComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
