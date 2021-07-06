@@ -18,4 +18,5 @@ export class User {
   certification?: Certification;
   eventsParticipation?: Event[];
   comments?: Comment[];
+  bio?: string;
 }
