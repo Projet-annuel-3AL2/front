@@ -32,7 +32,6 @@ import {ListUserComponent} from "./components/tabs_/list-user/list-user.componen
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
 import {ListOrganisationSuggestionComponent} from "./components/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
-import {CreateEventComponent} from "./components/create_/create-event/create-event.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
 import {LoginComponent} from "./components/login/login.component";
@@ -62,6 +61,7 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
 import {DialogUpdateOrganisationComponent} from "./components/dialog_/dialog-update-organisation/dialog-update-organisation.component";
 import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-event/dialog-update-event.component";
+import {DialogCreateEventComponent} from "./components/dialog_/dialog-create-event/dialog-create-event.component";
 
 @NgModule({
   declarations: [
@@ -93,7 +93,6 @@ import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-eve
     ProfilListEventComponent,
     ListOrganisationSuggestionComponent,
     CardOrganisationComponent,
-    CreateEventComponent,
     CreateOrganisationComponent,
     ConversationBoxDirective,
     ConversationsBoxComponent,
@@ -104,7 +103,8 @@ import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-eve
     DialogResFriendshipRequestComponent,
     DialogReportComponent,
     DialogUpdateOrganisationComponent,
-    DialogUpdateEventComponent
+    DialogUpdateEventComponent,
+    DialogCreateEventComponent
   ],
   imports: [
     BrowserModule,
