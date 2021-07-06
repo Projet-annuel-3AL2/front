@@ -202,7 +202,7 @@ export class ProfilOrganisationComponent implements OnInit {
   showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
       width: '900px',
-      data: {organisation: this.organisation$, userSession: this.userSession$}
+      data: { userSession: this.userSession$, organisation: this.organisation$,}
     });
 
     dialogRef.afterClosed().subscribe(() => {
