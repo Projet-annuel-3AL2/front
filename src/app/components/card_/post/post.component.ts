@@ -6,6 +6,7 @@ import {environment} from "../../../../environments/environment";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
+import {Subscription, timer} from "rxjs";
 
 @Component({
   selector: 'post',
@@ -13,35 +14,38 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input('post') post: Post;
+  @Input('post') post: Post = new Post();
   faThumbsUp = faThumbsUp;
   faComment = faComment;
   faShare = faShare;
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
+  private timeSubscription: Subscription;
+  showComments: boolean=true;
+  text:string;
 
   constructor(private _postService: PostService,
               public dialogReport: MatDialog) {
   }
-
-  ngOnInit(): void {
-    // this.getCommentLikeShared();
+  
+  ngOnDestroy(): void {
+    this.timeSubscription.unsubscribe();
   }
 
-  // private getCommentLikeShared() {
-  //   this._postService.getPostInfos(this.post.id).subscribe({
-  //     next: post => {
-  //       this.post.sharedPosts = post.sharedPosts;
-  //       this.post.likes = post.likes;
-  //       this.post.comments = post.comments;
-  //     },
-  //     error: error => {
-  //       if (!environment.production) {
-  //         console.error('Error: ', error);
-  //       }
-  //     }
-  //   })
-  // }
+  ngOnInit(): void {
+    this.updatePost();
+    this.timeSubscription = timer(0, 3000)
+      .subscribe(() => this.updatePost());
+  }
+
+  updatePost(): void {
+    this.postService.getPostLikes(this.post.id)
+      .subscribe(likes => this.post.likes = likes);
+    this.postService.isPostLiked(this.post.id)
+      .subscribe(isLiked => this.post.isLiked = isLiked);
+  }
+
+
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
@@ -50,5 +54,14 @@ export class PostComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
     })
+
+  likePost() {
+    this.postService.likePost(this.post.id)
+      .subscribe(() => this.updatePost());
+  }
+
+  dislikePost() {
+    this.postService.dislikePost(this.post.id)
+      .subscribe(() => this.updatePost());
   }
 }
