@@ -21,13 +21,12 @@ export class PostComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   private timeSubscription: Subscription;
-  showComments: boolean=true;
   text:string;
 
   constructor(private _postService: PostService,
               public dialogReport: MatDialog) {
   }
-  
+
   ngOnDestroy(): void {
     this.timeSubscription.unsubscribe();
   }
@@ -39,9 +38,9 @@ export class PostComponent implements OnInit {
   }
 
   updatePost(): void {
-    this.postService.getPostLikes(this.post.id)
+    this._postService.getPostLikes(this.post.id)
       .subscribe(likes => this.post.likes = likes);
-    this.postService.isPostLiked(this.post.id)
+    this._postService.isPostLiked(this.post.id)
       .subscribe(isLiked => this.post.isLiked = isLiked);
   }
 
@@ -53,15 +52,16 @@ export class PostComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-    })
+    });
+  }
 
   likePost() {
-    this.postService.likePost(this.post.id)
+    this._postService.likePost(this.post.id)
       .subscribe(() => this.updatePost());
   }
 
   dislikePost() {
-    this.postService.dislikePost(this.post.id)
+    this._postService.dislikePost(this.post.id)
       .subscribe(() => this.updatePost());
   }
 }
