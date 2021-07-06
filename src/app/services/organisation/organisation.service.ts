@@ -64,9 +64,8 @@ export class OrganisationService {
     return this.http.delete(`${environment.baseUrl}/organisation/${organisationId}/member/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getAllOrgaWhereUserCanCreateEvent(userId: string): Observable<Organisation[]> {
-    return ;
-    //this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/getCreatorOrga/${userId}`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getAllOrgaWhereUserCanCreateEvent(): Observable<OrganisationMembership[]> {
+    return this.http.get<OrganisationMembership[]>(`${environment.baseUrl}/organisation/list-orga/where-user-is-admin`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   giveAdminToMember(userId: string, organisationId: string): Observable<void> {
