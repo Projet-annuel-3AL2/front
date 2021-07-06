@@ -51,4 +51,8 @@ export class PostService {
   getComments(postId: string): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${environment.baseUrl}/post/${postId}/comments`);
   }
+
+  sendComment(postId, text: string): Observable<Comment> {
+    return this.http.post<Comment>(`${environment.baseUrl}/post/${postId}/comment`, {text})
+  }
 }

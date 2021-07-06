@@ -10,7 +10,18 @@
         <img [src]="(_authService.user.toPromise() | async)?.profilePicture?.link || 'https://picsum.photos/50/50'" alt="" class="me-1 rounded-circle"
              width="50">
       </div>
-      <div contenteditable="true" class="w-100 bg-light"></div>
+      <div contenteditable="true" class="w-100 bg-light send-comment-textarea" (input)="text=$event.target.textContent" [textContent]="text"
+           ondragenter="return false;" ondragover="return false;"  placeholder="Envoyez un commentaire" spellcheck="true"></div>
+      <button (click)="sendComment()" type="submit">
+        <fa-icon [icon]="faPaperPlane"></fa-icon>
+        Envoyer
+      </button>
+    </div>
+    <div style="margin-left: 50px">
+      <fa-icon [icon]="faImage" class="mx-1" size="2x"></fa-icon>
+      <fa-icon (click)="showEmojiPicker = !showEmojiPicker" [icon]="faSmile" class="mx-1" size="2x"></fa-icon>
+      <fa-icon [icon]="faCalendarAlt" class="mx-1" size="2x"></fa-icon>
+      <fa-icon [icon]="faUserFriends" class="mx-1" size="2x"></fa-icon>
     </div>
     <div fxLayoutAlign="column">
       <div *ngFor="let comment of comments">
@@ -25,3 +36,4 @@
     </div>
   </div>
 </div>
+<emoji-mart (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker" class="emoji-picker"></emoji-mart>
