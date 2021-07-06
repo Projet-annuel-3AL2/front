@@ -20,14 +20,8 @@ export class EventService {
   constructor(private userService: UserService,
               private http: HttpClient) { }
 
-  postEvent(newEvent: Event) {
-    this.http.post<Event>(`${environment.baseUrl}/event/`, JSON.stringify(newEvent), {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
+  postEvent(newEvent: Event): Observable<Event> {
+    return this.http.post<Event>(`${environment.baseUrl}/event/`, newEvent, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   postAddParticipant(eventId: string): Observable<Object> {
