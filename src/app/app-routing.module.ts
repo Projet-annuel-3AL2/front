@@ -10,6 +10,8 @@ import {RegisterComponent} from "./components/page_/auth_/register/register.comp
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";
+import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
+import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 
 const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
@@ -21,6 +23,8 @@ const appRoutes: Routes = [
   {path: 'user/:username', component: ProfilUserComponent},
   {path: 'organisation/:id', component: ProfilOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password/:recoveryToken', component: PasswordRecoveryComponent},
 ];
 
 @NgModule({
