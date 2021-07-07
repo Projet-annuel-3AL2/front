@@ -47,8 +47,12 @@ export class AuthService {
     return this.http.get<void>(`${environment.baseUrl}/auth/forgot-password/${username}`);
   }
 
-  public resetPassword(resetToken: string,password: string) {
-    return this.http.post<void>(`${environment.baseUrl}/auth/reset-password/${resetToken}`, {password});
+  public isValidToken(resetToken: string,username:string) {
+    return this.http.get<void>(`${environment.baseUrl}/auth/is-valid-token/${username}/${resetToken}`);
+  }
+
+  public resetPassword(resetToken: string,username:string, password: string) {
+    return this.http.post<void>(`${environment.baseUrl}/auth/reset-password/${username}/${resetToken}`, {password});
   }
 
   public logout(): Observable<unknown> {
