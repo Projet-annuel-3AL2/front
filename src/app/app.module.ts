@@ -70,6 +70,8 @@ import {
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";
 import {CommentComponent} from "./components/card_/comment/comment.component";
+import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
+import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
 
 @NgModule({
   declarations: [
@@ -115,7 +117,9 @@ import {CommentComponent} from "./components/card_/comment/comment.component";
     DialogCreateEventComponent,
     SearchBarComponent,
     PostPageComponent,
-    CommentComponent
+    CommentComponent,
+    PasswordRecoveryComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
