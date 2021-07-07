@@ -17,14 +17,13 @@ const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent, canActivate: [NegateAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [NegateAuthGuardService]},
-  {path: 'timeline', component: TimelineComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NegateAuthGuardService]},
+  {path: 'reset-password/:recoveryToken', component: PasswordRecoveryComponent, canActivate: [NegateAuthGuardService]},
   {path: 'events', component: PageListEventComponent},
   {path: 'event/:id', component: PageEventComponent},
   {path: 'user/:username', component: ProfilUserComponent},
   {path: 'organisation/:id', component: ProfilOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'reset-password/:recoveryToken', component: PasswordRecoveryComponent},
 ];
 
 @NgModule({
