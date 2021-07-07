@@ -4,7 +4,6 @@ import {Event} from "../../shared/models/event.model";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Conversation} from "../../shared/models/conversation.model";
-import {AuthService} from "../auth/auth.service";
 import {environment} from "../../../environments/environment";
 import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
@@ -15,16 +14,15 @@ import {Report} from "../../shared/models/report.model";
 })
 export class UserService {
 
-  constructor(private http: HttpClient,
-              private _authService: AuthService) {
+  constructor(private http: HttpClient) {
   }
 
   getByUsername(username: string): Observable<User> {
     return this.http.get<User>(`${environment.baseUrl}/user/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/groups`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  getGroups(username: string): Observable<Group[]> {
+    return this.http.get<Group[]>(`${environment.baseUrl}/user/${username}/groups`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getPosts(username: string): Observable<Post[]> {
@@ -53,7 +51,7 @@ export class UserService {
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   isFollowingOrganisation(id: string): Observable<boolean> {

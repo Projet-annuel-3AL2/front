@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private _userService: UserService) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.user = this.userSubject.asObservable();
   }
@@ -49,8 +50,8 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const user = localStorage.getItem('user');
-    return user !== null && user !== undefined && user !== "";
+    const username = this.getCurrentUsername();
+    return username !== null && username !== undefined && username !== "";
   }
 
   public getCurrentUsername(): string {

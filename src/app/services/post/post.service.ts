@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Report} from "../../shared/models/report.model";
+import {Comment} from "../../shared/models/comment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,10 @@ export class PostService {
 
   createPost(post: Post) {
     return this.http.post<Post>(`${environment.baseUrl}/post`, post);
+  }
+
+  getPostById(postId: string): Observable<Post> {
+    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}`);
   }
 
   getTimeline(): Observable<Post[]> {
@@ -41,5 +46,13 @@ export class PostService {
 
   dislikePost(postId: string): Observable<void> {
     return this.http.delete<void>(`${environment.baseUrl}/post/${postId}/like`);
+  }
+
+  getComments(postId: string): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${environment.baseUrl}/post/${postId}/comments`);
+  }
+
+  sendComment(postId, text: string): Observable<Comment> {
+    return this.http.post<Comment>(`${environment.baseUrl}/post/${postId}/comment`, {text})
   }
 }
