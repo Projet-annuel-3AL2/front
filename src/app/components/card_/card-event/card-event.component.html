@@ -13,7 +13,7 @@
   <div class="orga-card-event">
     <p *ngIf="event.organisation != null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.organisation.name}}</p>
     <p *ngIf="event.organisation === null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.user.username}}
-      <fa-icon [icon]="faCheckCircle"></fa-icon>
+      <fa-icon [icon]="faCheckCircle" *ngIf="event.user.certification"></fa-icon>
     </p>
   </div>
   <div class="date-card-event">
