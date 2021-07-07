@@ -13,8 +13,10 @@ export class CardOrganisationComponent implements OnInit {
 
   isFollowing: boolean = false;
   @Input('organisation') organisation: Organisation;
+
   constructor(private _userService: UserService,
-              private _organisationService: OrganisationService) { }
+              private _organisationService: OrganisationService) {
+  }
 
   ngOnInit(): void {
     this.canFollow();
@@ -22,11 +24,11 @@ export class CardOrganisationComponent implements OnInit {
 
   canFollow() {
     this._userService.isFollowingOrganisation(this.organisation.id).subscribe({
-      next: bool =>{
+      next: bool => {
         this.isFollowing = bool;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -35,11 +37,11 @@ export class CardOrganisationComponent implements OnInit {
 
   followOrganisation() {
     this._organisationService.followOrganisation(this.organisation.id).subscribe({
-      next: () =>{
+      next: () => {
         this.isFollowing = true;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -48,11 +50,11 @@ export class CardOrganisationComponent implements OnInit {
 
   unfollowOrganisation() {
     this._organisationService.unfollowOrganisation(this.organisation.id).subscribe({
-      next: () =>{
+      next: () => {
         this.isFollowing = false;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }

@@ -1,0 +1,78 @@
+<h1 *ngIf="data.organisation != null" class="update-event-title" mat-dialog-title>Création d'un Évènement
+  par {{data.organisation.name}}</h1>
+<h1 *ngIf="data.organisation === null" class="update-event-title" mat-dialog-title>Création d'un Évènement
+  par {{data.userSession.username}}</h1>
+<form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
+  <div mat-dialog-content>
+    <div class="update-event-grid">
+      <div class="form-field-name-event">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom de l'Évènement</mat-label>
+          <input formControlName="nameEvent" matInput placeholder="Nom de l'Évènement" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-description">
+        <mat-form-field>
+          <mat-label>Description de l'Évènement</mat-label>
+          <textarea class="textarea-description" formControlName="descriptionEvent" matInput
+                    placeholder="Ex. L'Évènement se ..."></textarea>
+        </mat-form-field>
+      </div>
+      <div class="form-field-address">
+        <mat-form-field appearance="fill">
+          <mat-label>Adresse de l'Évènement</mat-label>
+          <input formControlName="address" matInput placeholder="Adresse" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-participant-limit">
+        <mat-form-field appearance="fill">
+          <mat-label>Nb. de participant Max</mat-label>
+          <input [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2" placeholder="Ex. 30"
+                 required type="number">
+          <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-field-categories">
+        <mat-form-field appearance="fill">
+          <mat-label>Categories:</mat-label>
+          <mat-select formControlName="categoryEvent" matNativeControl required>
+            <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-field-date-picker-start">
+        <mat-form-field appearance="fill">
+          <mat-label>Date de début</mat-label>
+          <input [ngxMatDatetimePicker]="pickerFrom" formControlName="startDateEvent" matInput
+                 placeholder="Date de début" required>
+          <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerFrom></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-date-picker-end">
+        <mat-form-field appearance="fill">
+          <mat-label>Date de fin</mat-label>
+          <input [ngxMatDatetimePicker]="pickerTo" formControlName="endDateEvent" matInput placeholder="Date de fin"
+                 required>
+          <mat-datepicker-toggle [for]="pickerTo" matSuffix></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerTo></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-file">
+        <label for="myfile">Choisissez une image :</label>
+        <input data-max-size="2048" formControlName="pictureFile" id="myfile" name="myfile" type="file">
+      </div>
+    </div>
+  </div>
+  <div class="dialog-actions-update-event" mat-dialog-actions>
+    <div class="button-grid-update-event">
+      <div class="button-cancel">
+        <button (click)="onNoClick()" mat-button>Annuler</button>
+      </div>
+      <div class="button-send">
+        <button class="button-send" mat-raised-button type="submit">Envoyer</button>
+      </div>
+    </div>
+  </div>
+</form>
+

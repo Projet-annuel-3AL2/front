@@ -1,10 +1,10 @@
 <div class="row m-0" style="height: calc(100% - 80px)">
   <div class="col-md-4">
   </div>
-  <div class="col-md-4 " *ngIf="listPost$.length == 0" >
+  <div *ngIf="listPost$.length == 0" class="col-md-4 ">
     <p style="padding-top: 100px">Il n'y a pas de post à afficher</p>
   </div>
-  <div class="col-md-4 " *ngIf="listPost$.length > 0" >
+  <div *ngIf="listPost$.length > 0" class="col-md-4 ">
     <app-list-post [listPost]="listPost$"></app-list-post>
   </div>
   <div class="col-md-4 my-3">

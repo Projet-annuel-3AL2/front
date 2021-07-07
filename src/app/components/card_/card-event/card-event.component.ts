@@ -5,6 +5,7 @@ import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
+import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-card-event',
@@ -13,15 +14,18 @@ import {environment} from "../../../../environments/environment";
 })
 export class CardEventComponent implements OnInit {
 
-  @Input("event") event : Event = new Event();
+  @Input("event") event: Event = new Event();
   @Input('userSession') userSession: User;
   isAbleToJoin: boolean = true;
   canShow: boolean = false;
+  faCheckCircle = faCheckCircle;
+
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
     private _authService: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.getEvent();
@@ -36,26 +40,26 @@ export class CardEventComponent implements OnInit {
 
 
   joinEvent(id: string) {
-      this._eventService.postAddParticipant(id).subscribe({
-        next: () =>{
-          this.isAbleToJoin = false;
-        },
-        error: error => {
-          if (!environment.production){
-            console.error('There was an error!', error);
-          }
+    this._eventService.postAddParticipant(id).subscribe({
+      next: () => {
+        this.isAbleToJoin = false;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
         }
-      });
-      this.canJoin();
+      }
+    });
+    this.canJoin();
   }
 
   leaveEvent(id: string) {
     this._eventService.deleteParticipation(id).subscribe({
-      next: () =>{
+      next: () => {
         this.isAbleToJoin = true;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }
@@ -66,7 +70,7 @@ export class CardEventComponent implements OnInit {
   canJoin() {
     this._eventService.getEventMembers(this.event.id).subscribe(users => {
       users.forEach(user => {
-        if (user.id == this.userSession.id){
+        if (user.id == this.userSession.id) {
           this.isAbleToJoin = false;
         }
       })
@@ -75,12 +79,12 @@ export class CardEventComponent implements OnInit {
 
   private getEvent() {
     this._eventService.getProfil(this.event.id).subscribe({
-      next: event =>{
+      next: event => {
         this.event = event;
         this.canShow = true;
       },
       error: error => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error('There was an error!', error);
         }
       }

@@ -10,7 +10,8 @@ export class ListUserComponent implements OnInit {
   @Input('listUser') listUser$: User[] = [];
   @Input('userSession') userSession: User;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

@@ -1,17 +1,22 @@
 <div class="rounded-pill border d-flex p-2 card-user my-3">
   <div class="mr-2">
-    <img [src]="user.profilePicture || 'https://picsum.photos/50/50'"  [routerLink]="['/user/' + user.username]" class="rounded-circle"
-         width="50" alt="">
+    <img [routerLink]="['/user/' + user.username]" [src]="user.profilePicture || 'https://picsum.photos/50/50'"
+         alt=""
+         class="rounded-circle" width="50">
   </div>
   <div class="spacer"></div>
-  <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a> <fa-icon [icon]="faCheckCircle"></fa-icon></p>
+  <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
+    <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
+  </p>
   <div class="spacer"></div>
-  <button mat-button [matMenuTriggerFor]="menu">Gestion</button>
+  <button [matMenuTriggerFor]="menu" mat-button>Gestion</button>
   <mat-menu #menu="matMenu">
     <div *ngIf="user.id !== userSession.id">
-      <button *ngIf="canAdd(user.id)" mat-menu-item (click)="this.askFriend(user.username)">Ajouter amis</button>
-      <button *ngIf="!canAdd(user.id)" mat-menu-item matTooltip="Enlever de la list d'amis" (click)="this.dellFriend(user.username)">Enlever amis</button>
+      <button (click)="this.askFriend(user.username)" *ngIf="canAdd(user.id)" mat-menu-item>Ajouter amis</button>
+      <button (click)="this.dellFriend(user.username)" *ngIf="!canAdd(user.id)" mat-menu-item
+              matTooltip="Enlever de la list d'amis">Enlever amis
+      </button>
     </div>
-    <button mat-menu-item (click)="this.deleteParticipantEvent(user.id)">Retirer Participant</button>
+    <button (click)="this.deleteParticipantEvent(user.id)" mat-menu-item>Retirer Participant</button>
   </mat-menu>
 </div>

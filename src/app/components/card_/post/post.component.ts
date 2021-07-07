@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Post} from "../../../shared/models/post.model";
 import {faCheckCircle, faComment, faEllipsisH, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 import {PostService} from "../../../services/post/post.service";
-import {environment} from "../../../../environments/environment";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
@@ -20,8 +19,8 @@ export class PostComponent implements OnInit {
   faShare = faShare;
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
+  text: string;
   private timeSubscription: Subscription;
-  text:string;
 
   constructor(private _postService: PostService,
               public dialogReport: MatDialog) {
@@ -33,7 +32,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.updatePost();
-    this.timeSubscription = timer(0, 3000)
+    this.timeSubscription = timer(0, 15000)
       .subscribe(() => this.updatePost());
   }
 

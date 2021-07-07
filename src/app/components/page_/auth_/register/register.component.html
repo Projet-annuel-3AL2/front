@@ -1,0 +1,68 @@
+<div class="container my-3">
+  <div class="row justify-content-center">
+    <div class="col-md-auto">
+      <div class="container ">
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <a class="d-inline-block" routerLink="/">
+              <img alt="" class="user-select-none" height="140" src="../../../../../assets/images/logo.png">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="container ">
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <h1>S'inscrire</h1>
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="registerForm" class="form-group">
+        <div class="rounded-3 border p-3">
+          <div class="m-2">
+            <label>
+              Identifiant
+              <input class="rounded-pill form-control" formControlName="username" id="username" type="text">
+            </label>
+            <div *ngIf="username.invalid && (username.dirty||username.touched)">
+              <p class="text-wrap m-0 text-danger">L'identifiant doit contenir:<br>- Entre 4 et 20 caractères</p>
+            </div>
+          </div>
+          <div class="m-2">
+            <label>
+              Email
+              <input class="rounded-pill form-control" formControlName="mail" id="mail" type="email">
+            </label>
+            <div *ngIf="mail.invalid && (mail.dirty||mail.touched)">
+              <p class="text-wrap m-0 text-danger">Le format du mail est invalide.</p>
+            </div>
+          </div>
+          <div class="m-2">
+            <label>
+              Mot de passe
+              <input class="rounded-pill form-control" formControlName="password" id="password" type="password">
+            </label>
+            <div *ngIf="password.invalid && (password.dirty||password.touched)">
+              <p class="text-wrap m-0 text-danger">Le mot de passe doit contenir:<br>- Entre 8 et 30 caractères<br>- Une
+                majuscule<br>- Une minuscule<br>- Un caractère spécial</p>
+            </div>
+          </div>
+          <div class="m-2">
+            <label>
+              Confirmer
+              <input class="rounded-pill form-control" formControlName="confirmPassword" id="confirmPassword"
+                     type="password">
+            </label>
+            <div
+              *ngIf="registerForm.hasError('notSame') || confirmPassword.invalid && (confirmPassword.dirty||confirmPassword.touched)">
+              <p class="text-wrap m-0 text-danger">Le mot de passe doit correspondre</p>
+            </div>
+          </div>
+        </div>
+        <div class="row-cols-1 my-3">
+          <button (click)="onSubmitForm()" [disabled]="submitted" mat-raised-button>S'inscrire</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

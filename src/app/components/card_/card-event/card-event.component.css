@@ -1,4 +1,4 @@
-.event-card-list{
+.event-card-list {
   width: 550px;
   background: #F6F6F6;
   display: grid;
@@ -14,13 +14,13 @@
   grid-area: 1 / 1 / span 4 / 1;
 }
 
-.img-card-event img{
+.img-card-event img {
   padding: 5px;
   width: 160px;
   height: 120px;
 }
 
-.titre-card-event{
+.titre-card-event {
   grid-area: 1 / 2 / 1 / span 3;
   font-size: 20px;
   font-family: Roboto, serif;
@@ -39,7 +39,7 @@
   font-family: Roboto, serif;
 }
 
-.localisation-card-event{
+.localisation-card-event {
   grid-area: 3 / 2 / 3 / span 3;
   font-family: Roboto, serif;
 }
@@ -48,11 +48,13 @@
   grid-area: 4 / 2 / 4 / 2;
   font-family: Roboto, serif;
 }
+
 .button-join {
   grid-area: 4 / 3 / 4 / 3;
   margin-left: 60px;
 
 }
+
 .titre-card-event a {
   text-decoration: none;
   font-family: Roboto, serif;

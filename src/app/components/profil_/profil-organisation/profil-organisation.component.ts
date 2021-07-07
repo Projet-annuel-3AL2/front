@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { faCheckCircle, faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {Organisation} from "../../../shared/models/organisation.model";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
@@ -14,6 +14,8 @@ import {Event} from "../../../shared/models/event.model";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
+import {DialogUpdateOrganisationComponent} from "../../dialog_/dialog-update-organisation/dialog-update-organisation.component";
+import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
 
 @Component({
   selector: 'app-profil-organisation',
@@ -40,7 +42,9 @@ export class ProfilOrganisationComponent implements OnInit {
               private _authService: AuthService,
               private _eventService: EventService,
               private _postService: PostService,
-              public dialogReport: MatDialog
+              public dialogReport: MatDialog,
+              public dialogUpdateOrganisation: MatDialog,
+              public dialogCreateEvent: MatDialog
   ) {
   }
 
@@ -51,25 +55,6 @@ export class ProfilOrganisationComponent implements OnInit {
       this.userSession$ = user;
     });
     this.getOrganisation();
-  }
-
-  private getOrganisation() {
-    this._organisationService.getOrganisation(this.organisationId).subscribe({
-      next: organisation => {
-        this.organisation$ = organisation;
-        this.getOrganisationMember();
-        this.canFollow();
-        this.isOwner();
-        this.isAdmin();
-        // this.getListEvent();
-        this.getPostsOrganisation();
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
   }
 
   isOwner() {
@@ -98,6 +83,95 @@ export class ProfilOrganisationComponent implements OnInit {
     })
   }
 
+  canFollow() {
+    this._userService.isFollowingOrganisation(this.organisationId).subscribe({
+      next: bool => {
+        this.isFollowing = bool;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  followOrganisation() {
+    this._organisationService.followOrganisation(this.organisationId).subscribe({
+      next: () => {
+        this.isFollowing = true;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  unfollowOrganisation() {
+    this._organisationService.unfollowOrganisation(this.organisationId).subscribe({
+      next: () => {
+        this.isFollowing = false;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  showDialogueReport() {
+    const dialogRef = this.dialogReport.open(DialogReportComponent, {
+      width: '500px',
+      data: {id: this.organisation$.id, reportType: ReportTypeEnum.ORGANISATION}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueUpdateOrganisation() {
+    const dialogRef = this.dialogUpdateOrganisation.open(DialogUpdateOrganisationComponent, {
+      width: '600px',
+      data: {organisation: this.organisation$, userSession: this.userSession$}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  // TODO : Trouver un endroit ou mettre le bouton
+  showDialogueCreateEvent() {
+    const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
+      width: '900px',
+      data: {userSession: this.userSession$, organisation: this.organisation$,}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  private getOrganisation() {
+    this._organisationService.getOrganisation(this.organisationId).subscribe({
+      next: organisation => {
+        this.organisation$ = organisation;
+        this.getOrganisationMember();
+        this.canFollow();
+        this.isOwner();
+        this.isAdmin();
+        // this.getListEvent();
+        this.getPostsOrganisation();
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
   private getOrganisationMember() {
     this._organisationService.getMemberOrganisation(this.organisationId).subscribe({
       next: users => {
@@ -110,6 +184,7 @@ export class ProfilOrganisationComponent implements OnInit {
       }
     });
   }
+
   private getListEvent() {
     this._organisationService.getEventCreated(this.organisationId).subscribe({
       next: events => {
@@ -133,55 +208,6 @@ export class ProfilOrganisationComponent implements OnInit {
           console.error('Error: ', error);
         }
       }
-    })
-  }
-
-  canFollow() {
-    this._userService.isFollowingOrganisation(this.organisationId).subscribe({
-      next: bool =>{
-        this.isFollowing = bool;
-      },
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-  followOrganisation() {
-    this._organisationService.followOrganisation(this.organisationId).subscribe({
-      next: () =>{
-        this.isFollowing = true;
-      },
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-  unfollowOrganisation() {
-    this._organisationService.unfollowOrganisation(this.organisationId).subscribe({
-      next: () =>{
-        this.isFollowing = false;
-      },
-      error: error => {
-        if (!environment.production){
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-  showDialogueReport() {
-    const dialogRef = this.dialogReport.open(DialogReportComponent, {
-      width: '500px',
-      data: {id: this.organisation$.id, reportType: ReportTypeEnum.ORGANISATION}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
     })
   }
 }

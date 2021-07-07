@@ -16,12 +16,13 @@
         </div>
         <div>
           <div class="dropdown" dropdown>
-            <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                    data-toggle="dropdown"
                     dropdownToggle type="button">
               <fa-icon [icon]="faEllipsisH"></fa-icon>
             </button>
             <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-              <button mat-menu-item (click)="showDialogueReport()">Signaler</button>
+              <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
             </div>
           </div>
         </div>

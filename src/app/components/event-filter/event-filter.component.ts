@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {EventDialogMapsComponent} from "../dialog_/event-dialog-maps/event-dialog-maps.component";
@@ -32,7 +32,8 @@ export class EventFilterComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
               private _eventService: EventService,
-              private _categoryService: CategoryService) { }
+              private _categoryService: CategoryService) {
+  }
 
   ngOnInit(): void {
 
@@ -44,7 +45,7 @@ export class EventFilterComponent implements OnInit {
 
   formatLabel(value: number) {
     if (value >= 10) {
-      return Math.round(value / 10) ;
+      return Math.round(value / 10);
     }
     return value;
   }
@@ -63,23 +64,6 @@ export class EventFilterComponent implements OnInit {
     })
   }
 
-  private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe(data => {
-      this.listCategories$ = data;
-    })
-  }
-
-  private initializeFormGroup() {
-    this.formData = new FormGroup( {
-      latitude: new FormControl(),
-      longitude: new FormControl(),
-      category: new FormControl(),
-      endDate: new FormControl(),
-      startDate: new FormControl(),
-      range: new FormControl()
-    })
-  }
-
   onclickSubmit(data) {
     const rechercheEvent = new RechercheEventModel();
     rechercheEvent.latitude = data.latitude;
@@ -90,6 +74,23 @@ export class EventFilterComponent implements OnInit {
     rechercheEvent.range = data.range;
     console.log(rechercheEvent);
     // this.getEventWithRecherche(rechercheEvent);
+  }
+
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe(data => {
+      this.listCategories$ = data;
+    })
+  }
+
+  private initializeFormGroup() {
+    this.formData = new FormGroup({
+      latitude: new FormControl(),
+      longitude: new FormControl(),
+      category: new FormControl(),
+      endDate: new FormControl(),
+      startDate: new FormControl(),
+      range: new FormControl()
+    })
   }
 
   // TODO : Revoir la fonctionnalité du filter pour envoyer le résultat de la recherche dans une un autre component

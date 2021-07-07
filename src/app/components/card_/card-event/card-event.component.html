@@ -1,30 +1,39 @@
-
-<mat-card class="event-card-list" *ngIf="canShow">
-    <div class="img-card-event" >
-      <a [routerLink]="['/event/' + event.id]">
-        <img alt="" class="rounded" style="object-fit: none"
-             [src]="event.picture != undefined? event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'">
-      </a>
-    </div>
-    <div class="titre-card-event">
-      <a [routerLink]="['/event/' + event.id]">
-        <p>{{event.name}}</p>
-      </a>
-    </div>
-    <div class="orga-card-event" >
-      <p><i class="fa fa-user" aria-hidden="true"></i>  {{event.organisation.name}}</p>
-    </div>
-    <div class="date-card-event" >
-      <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}/{{event.startDate.toString() | slice: 5: 7}}/{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}} -- {{event.endDate.toString() | slice: 11 : 16}}</p>
-    </div>
-    <div class="category-card-event">
-      <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
-    </div>
-    <div class="localisation-card-event">
-      <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
-    </div>
-    <div class="button-join" >
-      <button mat-raised-button class="ml-auto button-join-event" *ngIf="isAbleToJoin" (click)="this.joinEvent(event.id)" >Rejoindre</button>
-      <button mat-raised-button class="ml-auto button-join-event" *ngIf="!isAbleToJoin" (click)="this.leaveEvent(event.id)">Quitter</button>
-    </div>
+<mat-card *ngIf="canShow" class="event-card-list">
+  <div class="img-card-event">
+    <a [routerLink]="['/event/' + event.id]">
+      <img [src]="event.picture != undefined? event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'" alt="" class="rounded"
+           style="">
+    </a>
+  </div>
+  <div class="titre-card-event">
+    <a [routerLink]="['/event/' + event.id]">
+      <p>{{event.name}}</p>
+    </a>
+  </div>
+  <div class="orga-card-event">
+    <p *ngIf="event.organisation != null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.organisation.name}}</p>
+    <p *ngIf="event.organisation === null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.user.username}}
+      <fa-icon [icon]="faCheckCircle" *ngIf="event.user.certification"></fa-icon>
+    </p>
+  </div>
+  <div class="date-card-event">
+    <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}
+      /{{event.startDate.toString() | slice: 5: 7}}
+      /{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}}
+      -- {{event.endDate.toString() | slice: 11 : 16}}</p>
+  </div>
+  <div class="category-card-event">
+    <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
+  </div>
+  <div class="localisation-card-event">
+    <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
+  </div>
+  <div class="button-join">
+    <button (click)="this.joinEvent(event.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event" mat-raised-button>
+      Rejoindre
+    </button>
+    <button (click)="this.leaveEvent(event.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
+            mat-raised-button>Quitter
+    </button>
+  </div>
 </mat-card>

@@ -1,10 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../shared/models/event.model";
-import * as L from 'leaflet';
-import {LeafletMouseEvent} from "leaflet";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
-import {EventService} from "../../../services/event/event.service";
 import {User} from "../../../shared/models/user.model";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
@@ -16,7 +13,7 @@ import {UserService} from "../../../services/user/user.service";
 })
 export class EventInfosComponent implements OnInit {
 
-  @Input('event') event : Event = new Event();
+  @Input('event') event: Event = new Event();
   @Input('userSession') userSession: User;
   @Input('participantsNumber') participantNumber: number;
   organisation$: Organisation;
@@ -33,6 +30,45 @@ export class EventInfosComponent implements OnInit {
     this.getOrganisationMembers();
   }
 
+  canFollow() {
+    this._userService.isFollowingOrganisation(this.organisation$.id).subscribe({
+      next: bool => {
+        this.isFollowing = bool;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  followOrganisation() {
+    this._organisationService.followOrganisation(this.organisation$.id).subscribe({
+      next: () => {
+        this.isFollowing = true;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
+  unfollowOrganisation() {
+    this._organisationService.unfollowOrganisation(this.organisation$.id).subscribe({
+      next: () => {
+        this.isFollowing = false;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('There was an error!', error);
+        }
+      }
+    })
+  }
+
   private getOrganisationMembers() {
     this._organisationService.getMemberOrganisation(this.event.organisation.id).subscribe({
       next: users => {
@@ -46,57 +82,19 @@ export class EventInfosComponent implements OnInit {
       }
     })
   }
-    canFollow() {
-      this._userService.isFollowingOrganisation(this.organisation$.id).subscribe({
-        next: bool =>{
-          this.isFollowing = bool;
-        },
-        error: error => {
-          if (!environment.production){
-            console.error('There was an error!', error);
-          }
-        }
-      })
-    }
 
-    followOrganisation() {
-      this._organisationService.followOrganisation(this.organisation$.id).subscribe({
-        next: () =>{
-          this.isFollowing = true;
-        },
-        error: error => {
-          if (!environment.production){
-            console.error('There was an error!', error);
-          }
-        }
-      })
-    }
-
-    unfollowOrganisation() {
-      this._organisationService.unfollowOrganisation(this.organisation$.id).subscribe({
-        next: () =>{
-          this.isFollowing = false;
-        },
-        error: error => {
-          if (!environment.production){
-            console.error('There was an error!', error);
-          }
-        }
-      })
-    }
-
-    // this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
-    //   next: organisationMemberships => {
-    //     organisationMemberships.forEach(organisationMembership => {
-    //       this.listUser.push(organisationMembership.user)
-    //     })
-    //   },
-    //   error: error => {
-    //     if (!environment.production) {
-    //       console.error('Error: ', error);
-    //     }
-    //   }
-    // })
+  // this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
+  //   next: organisationMemberships => {
+  //     organisationMemberships.forEach(organisationMembership => {
+  //       this.listUser.push(organisationMembership.user)
+  //     })
+  //   },
+  //   error: error => {
+  //     if (!environment.production) {
+  //       console.error('Error: ', error);
+  //     }
+  //   }
+  // })
 
   // getMap() {
   //  let map = L.map('eventInfoMap').setView([this.event_.latitude, this.event_.latitude], 13);

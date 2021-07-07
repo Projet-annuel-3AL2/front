@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Event} from '../../../shared/models/event.model';
 import {User} from "../../../shared/models/user.model";
 
@@ -12,7 +12,8 @@ export class EventListDisplayComponent implements OnInit {
   @Input("events") events: Event[] = [];
   @Input('userSession') userSession: User;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

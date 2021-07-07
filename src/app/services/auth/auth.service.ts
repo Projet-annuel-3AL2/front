@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
+import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private _userService: UserService) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.user = this.userSubject.asObservable();
   }
@@ -31,12 +32,27 @@ export class AuthService {
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {username, password}, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {
+      username,
+      password
+    }, {headers: {'Access-Control-Allow-Origin': '*'}})
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
         this.userSubject.next(user);
         return user;
       }));
+  }
+
+  public forgotPassword(username: string) {
+    return this.http.get<void>(`${environment.baseUrl}/auth/forgot-password/${username}`);
+  }
+
+  public isValidToken(resetToken: string,username:string):Observable<boolean> {
+    return this.http.get<boolean>(`${environment.baseUrl}/auth/is-valid-token/${username}/${resetToken}`);
+  }
+
+  public resetPassword(resetToken: string,username:string, password: string) {
+    return this.http.post<void>(`${environment.baseUrl}/auth/reset-password/${username}/${resetToken}`, {password});
   }
 
   public logout(): Observable<unknown> {
@@ -46,12 +62,11 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    const user = localStorage.getItem('user');
-    return user !== null && user !== undefined && user !== "";
+    const username = this.getCurrentUsername();
+    return username !== null && username !== undefined && username !== "";
   }
 
   public getCurrentUsername(): string {
     return JSON.parse(localStorage.getItem('user'));
   }
-
 }

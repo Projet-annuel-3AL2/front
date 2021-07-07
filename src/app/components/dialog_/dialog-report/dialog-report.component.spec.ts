@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DialogReportComponent } from './dialog-report.component';
+import {DialogReportComponent} from './dialog-report.component';
 
 describe('DialogReportComponent', () => {
   let component: DialogReportComponent;
@@ -8,9 +8,9 @@ describe('DialogReportComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogReportComponent ]
+      declarations: [DialogReportComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

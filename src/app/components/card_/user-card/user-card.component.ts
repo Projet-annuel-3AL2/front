@@ -1,9 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import {AuthService} from "../../../services/auth/auth.service";
-import {UserService} from "../../../services/user/user.service";
+import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
@@ -23,7 +21,8 @@ export class UserCardComponent implements OnInit {
   allFriendRequestStatus = FriendRequestStatus;
 
   constructor(private _friendshipService: FriendshipService,
-              public dialog: MatDialog) { }
+              public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.canAdd();
@@ -44,7 +43,7 @@ export class UserCardComponent implements OnInit {
         this.friendshipRequest = this.allFriendRequestStatus.PENDING;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
@@ -57,7 +56,7 @@ export class UserCardComponent implements OnInit {
         this.friendshipRequest = this.allFriendRequestStatus.NONE;
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }
