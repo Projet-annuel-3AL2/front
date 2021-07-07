@@ -6,7 +6,7 @@
   </div>
   <div class="spacer"></div>
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
-    <fa-icon [icon]="faCheckCircle"></fa-icon>
+    <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
   </p>
   <div class="spacer"></div>
   <div *ngIf="user.id !== userSession.id">

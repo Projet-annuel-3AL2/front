@@ -38,7 +38,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
 
   ngOnInit(): void {
     this.canAddFriend();
-    this.isUserAdminFormOrga();
     this.getStatusUserInOrga();
   }
 
@@ -125,12 +124,8 @@ export class CardUserManageOrganisationComponent implements OnInit {
     });
   }
 
-  private isUserAdminFormOrga() {
-
-  }
-
   private getStatusUserInOrga() {
-    this._organisationService.isUserAdmin(this.organisation.id, this.user.username).subscribe({
+    this._organisationService.isUserAdmin(this.organisation.id, this.user.id).subscribe({
       next: bool => {
         this.userIsAdmin = bool;
       },

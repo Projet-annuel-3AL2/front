@@ -34,9 +34,9 @@ import {ListOrganisationSuggestionComponent} from "./components/list-organisatio
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
-import {LoginComponent} from "./components/login/login.component";
+import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {RegisterComponent} from "./components/register/register.component";
+import {RegisterComponent} from "./components/page_/auth_/register/register.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
 import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
@@ -68,6 +68,8 @@ import {
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
+import {PostPageComponent} from "./components/page_/post-page/post-page.component";
+import {CommentComponent} from "./components/card_/comment/comment.component";
 
 @NgModule({
   declarations: [
@@ -111,7 +113,9 @@ import {SearchBarComponent} from "./components/search-bar/search-bar.component";
     DialogUpdateOrganisationComponent,
     DialogUpdateEventComponent,
     DialogCreateEventComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    PostPageComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

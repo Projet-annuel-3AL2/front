@@ -48,7 +48,7 @@
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                   <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                  <div *ngIf="user$.id === userSession$.id">
+                  <div *ngIf="user$.id === userSession$.id && userSession$.certification != undefined">
                     <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                   </div>
                 </div>

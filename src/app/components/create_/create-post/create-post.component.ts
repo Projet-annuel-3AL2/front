@@ -34,6 +34,10 @@ export class CreatePostComponent implements OnInit {
   }
 
   addEmoji($event: any) {
+    if(this.text === undefined){
+      this.text = $event.emoji.native;
+      return;
+    }
     this.text += $event.emoji.native;
   }
 

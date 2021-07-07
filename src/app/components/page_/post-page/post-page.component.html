@@ -1,0 +1,41 @@
+<div class="row m-0">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4" fxFlex
+       fxLayout="column">
+    <post *ngIf="post" [post]="post" class="w-100"></post>
+    <div fxFlex
+         fxLayout="row" class="my-2 w-100">
+      <div class="rounded-circle profile-picture">
+        <img [src]="(_authService.user.toPromise() | async)?.profilePicture?.link || 'https://picsum.photos/50/50'" alt="" class="me-1 rounded-circle"
+             width="50">
+      </div>
+      <div contenteditable="true" class="bg-light send-comment-textarea p-2 rounded-3" (input)="text=$event.target.textContent" [textContent]="text"
+           ondragenter="return false;" ondragover="return false;"  placeholder="Envoyez un commentaire" spellcheck="true"></div>
+    </div>
+    <div>
+      <div style="margin-left: 50px" fxFlex fxLayout="end end">
+        <fa-icon [icon]="faImage" class="mx-1" size="2x"></fa-icon>
+        <fa-icon (click)="showEmojiPicker = !showEmojiPicker" [icon]="faSmile" class="mx-1" size="2x"></fa-icon>
+        <fa-icon [icon]="faCalendarAlt" class="mx-1" size="2x"></fa-icon>
+        <fa-icon [icon]="faUserFriends" class="mx-1" size="2x"></fa-icon>
+      </div>
+        <button (click)="sendComment()" type="submit">
+          <fa-icon [icon]="faPaperPlane"></fa-icon>
+          Envoyer
+        </button>
+    </div>
+    <div>
+      <div class="w-100 my-2" *ngFor="let comment of comments">
+        <app-comment [comment]="comment"></app-comment>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 my-3">
+    <div class="position-fixed">
+      <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
+    </div>
+  </div>
+</div>
+<emoji-mart (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker" class="emoji-picker"></emoji-mart>
