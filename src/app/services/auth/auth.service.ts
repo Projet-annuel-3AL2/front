@@ -43,6 +43,14 @@ export class AuthService {
       }));
   }
 
+  public forgotPassword(username: string) {
+    return this.http.get<void>(`${environment.baseUrl}/auth/forgot-password/${username}`);
+  }
+
+  public resetPassword(resetToken: string,password: string) {
+    return this.http.post<void>(`${environment.baseUrl}/auth/reset-password/${resetToken}`, {password});
+  }
+
   public logout(): Observable<unknown> {
     this.userSubject.next(null);
     localStorage.removeItem('user');
@@ -57,5 +65,4 @@ export class AuthService {
   public getCurrentUsername(): string {
     return JSON.parse(localStorage.getItem('user'));
   }
-
 }
