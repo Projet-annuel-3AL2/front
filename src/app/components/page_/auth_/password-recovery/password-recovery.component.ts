@@ -23,7 +23,7 @@ export class PasswordRecoveryComponent implements OnInit {
       .subscribe(isValid=> {
         console.log(isValid)
         if (!isValid) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/forgot-password']);
         }
       });
     this.initForm();
@@ -32,9 +32,9 @@ export class PasswordRecoveryComponent implements OnInit {
   onSubmitForm() {
     this.submitted = true;
     const formValue = this.resetPasswordForm.value;
-    this._authService.resetPassword(formValue.password,this._activatedRoute.snapshot.paramMap.get("username"), this._activatedRoute.snapshot.paramMap.get("resetToken"))
+    this._authService.resetPassword(this._activatedRoute.snapshot.paramMap.get("resetToken"), this._activatedRoute.snapshot.paramMap.get("username"),formValue.password)
       .subscribe(() => {
-        this.info=true;
+        this.router.navigate(['/login']);
       }, () => {
       });
   }
