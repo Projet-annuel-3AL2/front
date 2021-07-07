@@ -53,7 +53,7 @@ export class UserService {
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/${this._authService.getCurrentUsername()}/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/conversations`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   isFollowingOrganisation(id: string): Observable<boolean> {
