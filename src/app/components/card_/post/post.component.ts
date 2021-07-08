@@ -7,6 +7,7 @@ import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {Subscription, timer} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
+import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog-create-post.component";
 
 @Component({
   selector: 'post',
@@ -25,7 +26,7 @@ export class PostComponent implements OnInit {
 
   constructor(private _postService: PostService,
               public _authService: AuthService,
-              public dialogReport: MatDialog) {
+              public matDialog: MatDialog) {
   }
 
   ngOnDestroy(): void {
@@ -47,7 +48,7 @@ export class PostComponent implements OnInit {
 
 
   showDialogReport() {
-    const dialogRef = this.dialogReport.open(DialogReportComponent, {
+    const dialogRef = this.matDialog.open(DialogReportComponent, {
       width: '500px',
       data: {id: this.post.id, reportType: ReportTypeEnum.POST}
     });
@@ -69,5 +70,9 @@ export class PostComponent implements OnInit {
   dislikePost() {
     this._postService.dislikePost(this.post.id)
       .subscribe(() => this.updatePost());
+  }
+
+  sharePost(){
+    this.matDialog.open(DialogCreatePostComponent,{minWidth:"500px", minHeight:"121px", data:{sharesPost:this.post}});
   }
 }
