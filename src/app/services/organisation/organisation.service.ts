@@ -7,6 +7,7 @@ import {environment} from "../../../environments/environment";
 import {User} from "../../shared/models/user.model";
 import {Event} from "../../shared/models/event.model";
 import {Report} from "../../shared/models/report.model";
+import {OrganisationRequest} from "../../shared/models/organisation_request.model";
 
 @Injectable({
   providedIn: 'root'
@@ -109,6 +110,10 @@ export class OrganisationService {
   }
 
   sendReport(id: string, report: Report): Observable<any> {
-    return this.http.put<any>(`${environment.baseUrl}/organisation/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.put<any>(`${environment.baseUrl}/organisation/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
+
+  postOrganisationRequest(organisationRequest: OrganisationRequest): Observable<void> {
+    return this.http.post<void>(`${environment.baseUrl}/organisation/request-creation`, organisationRequest, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 }
