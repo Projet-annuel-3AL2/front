@@ -21,9 +21,10 @@ export class DialogCreateEventComponent implements OnInit {
 
   formData: FormGroup;
   listCategory$: Category[];
-  listMembership$: OrganisationMembership[];
   limitParticipant = new FormControl(2, Validators.min(2));
-  wrongDate: boolean = false;
+  updatedPicture: any;
+  newEvent: Event;
+  postalAddress: string;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
@@ -34,29 +35,28 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialiseFormGroup();
     this.getAllCategories();
+    this.newEvent = new Event();
   }
 
   onClickSubmit(data) {
     if (data.startDateEvent < data.endDateEvent) {
 
-      let newEvent = new Event();
-      newEvent.name = data.nameEvent;
-      newEvent.startDate = data.startDateEvent;
-      newEvent.endDate = data.endDateEvent;
-      newEvent.participantsLimit = data.participantsLimitEvent;
-      newEvent.category = data.categoryEvent;
-      newEvent.user = this.data.userSession;
-      newEvent.description = data.descriptionEvent;
-      newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
+      this.newEvent.name = data.value.name;
+      this.newEvent.startDate = data.value.startDate;
+      this.newEvent.endDate = data.value.endDate;
+      this.newEvent.participantsLimit = data.value.participantsLimit;
+      this.newEvent.category = data.value.category;
+      this.newEvent.user = this.data.userSession;
+      this.newEvent.description = data.value.description;
+      this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
 
       // TODO : convertir address en coordonées gps et gestion fichier
       // updateEvent.picture = data.pictureFile;
-      newEvent.latitude = 100.11;
-      newEvent.longitude = 100.12;
-      console.log(newEvent)
-      this._eventService.postEvent(newEvent).subscribe({
+      this.newEvent.latitude = 100.11;
+      this.newEvent.longitude = 100.12;
+      console.log(this.newEvent)
+      this._eventService.postEvent(this.newEvent).subscribe({
 
         next: () => {
           this.dialogRef.close()
@@ -84,17 +84,7 @@ export class DialogCreateEventComponent implements OnInit {
     })
   }
 
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      nameEvent: new FormControl(),
-      descriptionEvent: new FormControl(),
-      startDateEvent: new FormControl(),
-      endDateEvent: new FormControl(),
-      address: new FormControl(),
-      participantsLimitEvent: new FormControl(),
-      categoryEvent: new FormControl(),
-      pictureFile: new FormControl(),
-      organisationEvent: new FormControl(),
-    });
+  onPictureSelected() {
+
   }
 }
