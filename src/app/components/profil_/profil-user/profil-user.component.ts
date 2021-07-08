@@ -17,6 +17,8 @@ import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
 import {DialogUpdateUserComponent} from "../../dialog_/dialog-update-user/dialog-update-user.component";
+import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certification/dialog-ask-certification.component";
+import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 
 @Component({
   selector: 'app-profil-user',
@@ -45,7 +47,9 @@ export class ProfilUserComponent implements OnInit {
               public dialog: MatDialog,
               public dialogReport: MatDialog,
               public dialogCreateEvent: MatDialog,
-              public dialogUpdateUser: MatDialog
+              public dialogUpdateUser: MatDialog,
+              public dialogAskCertification: MatDialog,
+              public dialogAskOrganisation: MatDialog
   ) {
   }
 
@@ -183,6 +187,26 @@ export class ProfilUserComponent implements OnInit {
 
   showDialogueUpdateUser() {
     const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
+      width: '950px',
+      data: {user: this.user$}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueAskCertification() {
+    const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
+      width: '950px',
+      data: {user: this.user$}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  showDialogueAskOrganisation() {
+    const dialogRef = this.dialogAskOrganisation.open(DialogAskOrganisationComponent, {
       width: '950px',
       data: {user: this.user$}
     });
