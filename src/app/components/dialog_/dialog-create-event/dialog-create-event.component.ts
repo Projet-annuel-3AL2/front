@@ -40,21 +40,16 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   onClickSubmit(data) {
-    if (data.startDateEvent < data.endDateEvent) {
+    if (this.newEvent.startDate < this.newEvent.endDate) {
 
-      this.newEvent.name = data.value.name;
-      this.newEvent.startDate = data.value.startDate;
-      this.newEvent.endDate = data.value.endDate;
-      this.newEvent.participantsLimit = data.value.participantsLimit;
-      this.newEvent.category = data.value.category;
       this.newEvent.user = this.data.userSession;
-      this.newEvent.description = data.value.description;
       this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
 
       // TODO : convertir address en coordonées gps et gestion fichier
       // updateEvent.picture = data.pictureFile;
-      this.newEvent.latitude = 100.11;
-      this.newEvent.longitude = 100.12;
+      this.newEvent.latitude = 100;
+      this.newEvent.longitude = 100;
+
       console.log(this.newEvent)
       this._eventService.postEvent(this.newEvent).subscribe({
 
