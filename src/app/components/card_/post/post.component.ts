@@ -6,6 +6,7 @@ import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.c
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {Subscription, timer} from "rxjs";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'post',
@@ -23,6 +24,7 @@ export class PostComponent implements OnInit {
   private timeSubscription: Subscription;
 
   constructor(private _postService: PostService,
+              public _authService: AuthService,
               public dialogReport: MatDialog) {
   }
 
@@ -44,7 +46,7 @@ export class PostComponent implements OnInit {
   }
 
 
-  showDialogueReport() {
+  showDialogReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
       data: {id: this.post.id, reportType: ReportTypeEnum.POST}
@@ -52,6 +54,11 @@ export class PostComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
     });
+  }
+
+  deletePost(){
+    this._postService.deletePost(this.post.id)
+      .subscribe();
   }
 
   likePost() {

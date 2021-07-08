@@ -22,7 +22,8 @@
               <fa-icon [icon]="faEllipsisH"></fa-icon>
             </button>
             <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-              <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
+              <button (click)="showDialogReport()" mat-menu-item>Signaler</button>
+              <button *ngIf="post.creator.username === _authService.getCurrentUsername()" (click)="deletePost()" class="text-danger" mat-menu-item>Supprimer</button>
             </div>
           </div>
         </div>

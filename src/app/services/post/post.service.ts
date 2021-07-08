@@ -41,7 +41,7 @@ export class PostService {
   }
 
   sendReport(id: string, report: Report): Observable<any> {
-    return this.http.put<any>(`${environment.baseUrl}/post/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.put<any>(`${environment.baseUrl}/post/${id}/report`, report);
   }
 
   dislikePost(postId: string): Observable<void> {
@@ -53,6 +53,10 @@ export class PostService {
   }
 
   sendComment(postId, text: string): Observable<Comment> {
-    return this.http.post<Comment>(`${environment.baseUrl}/post/${postId}/comment`, {text})
+    return this.http.post<Comment>(`${environment.baseUrl}/post/${postId}/comment`, {text});
+  }
+
+  deletePost(postId): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/post/${postId}`);
   }
 }
