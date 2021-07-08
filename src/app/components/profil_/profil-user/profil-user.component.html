@@ -51,6 +51,9 @@
                   <div *ngIf="user$.id === userSession$.id && userSession$.certification != undefined">
                     <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                   </div>
+                  <div *ngIf="user$.id === userSession$.id">
+                    <button (click)="showDialogueUpdateUser()" mat-menu-item>Modifier Profile</button>
+                  </div>
                 </div>
               </div>
             </div>

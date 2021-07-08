@@ -38,8 +38,8 @@ export class UserService {
     return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${username}`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  putUser(user: User): Observable<any> {
-    return this.http.put(`${environment.baseUrl}/user/${user.username}`, user, {headers: {'Access-Control-Allow-Origin': '*'}});
+  putUser(oldUsername: string, user: User): Observable<User> {
+    return this.http.put<User>(`${environment.baseUrl}/user/${oldUsername}`, user, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   getParticipations(username: string): Observable<Event[]> {

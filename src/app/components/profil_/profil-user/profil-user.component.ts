@@ -16,6 +16,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
+import {DialogUpdateUserComponent} from "../../dialog_/dialog-update-user/dialog-update-user.component";
 
 @Component({
   selector: 'app-profil-user',
@@ -34,6 +35,7 @@ export class ProfilUserComponent implements OnInit {
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
+
   constructor(private _userService: UserService,
               private route: ActivatedRoute,
               private _postService: PostService,
@@ -42,7 +44,8 @@ export class ProfilUserComponent implements OnInit {
               private _authService: AuthService,
               public dialog: MatDialog,
               public dialogReport: MatDialog,
-              public dialogCreateEvent: MatDialog
+              public dialogCreateEvent: MatDialog,
+              public dialogUpdateUser: MatDialog
   ) {
   }
 
@@ -175,6 +178,16 @@ export class ProfilUserComponent implements OnInit {
           console.error('Error: ', error);
         }
       }
+    })
+  }
+
+  showDialogueUpdateUser() {
+    const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
+      width: '950px',
+      data: {user: this.user$}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
     })
   }
 }
