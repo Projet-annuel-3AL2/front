@@ -124,7 +124,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
-      width: '500px',
+      width: '900px',
       data: {id: this.organisation$.id, reportType: ReportTypeEnum.ORGANISATION}
     });
 
