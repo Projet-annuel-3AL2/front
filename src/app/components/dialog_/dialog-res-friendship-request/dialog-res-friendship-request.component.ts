@@ -40,7 +40,7 @@ export class DialogResFriendshipRequestComponent implements OnInit {
   }
 
   delFriendshipRequest() {
-    this._friendshipService.rejectFriendship(this.data.userId).subscribe({
+    this._friendshipService.rejectFriendRequest(this.data.userId).subscribe({
       next: () => {
         this.friendshipRequestStatus = FriendRequestStatus.NONE;
       },

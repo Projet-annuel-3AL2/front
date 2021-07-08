@@ -2,12 +2,12 @@
   <div class="card">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center user-infos" [routerLink]="'/user/'+post.creator.username">
           <div class="mr-2">
             <img [src]="post.creator.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle"
                  width="50">
           </div>
-          <div class="ml-2">
+          <div class="ms-2">
             <div class="h6 m-0">{{post.creator.username}}
               <fa-icon *ngIf="post.creator.certification" [icon]="faCheckCircle"></fa-icon>
             </div>
@@ -22,7 +22,8 @@
               <fa-icon [icon]="faEllipsisH"></fa-icon>
             </button>
             <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-              <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
+              <button (click)="showDialogReport()" mat-menu-item>Signaler</button>
+              <button *ngIf="post.creator.username === _authService.getCurrentUsername()" (click)="deletePost()" class="text-danger" mat-menu-item>Supprimer</button>
             </div>
           </div>
         </div>
@@ -42,22 +43,22 @@
       </div>
     </div>
     <div class="card-footer d-flex justify-content-between">
-      <div (click)="likePost()" *ngIf="!post.isLiked" class="card-link text-decoration-none">
+      <div (click)="likePost()" *ngIf="!post.isLiked" class="card-link text-decoration-none" style="cursor: pointer">
         <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
         {{post.likes?.length || 0}} Aimer
       </div>
-      <div (click)="dislikePost()" *ngIf="post.isLiked" class="card-link text-decoration-none">
+      <div (click)="dislikePost()" *ngIf="post.isLiked" class="card-link text-decoration-none" style="cursor: pointer">
         <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
         {{post.likes?.length || 0}} Ne plus aimer
       </div>
-      <a class="card-link text-decoration-none" href="#">
+      <div class="card-link text-decoration-none" [routerLink]="'/post/'+post.id" style="cursor: pointer">
         <fa-icon [icon]="faComment" flip="horizontal"></fa-icon>
         {{post.commentCount || 0}} Commenter
-      </a>
-      <a class="card-link text-decoration-none pull-right" href="#">
+      </div>
+      <div class="card-link text-decoration-none pull-right" (click)="sharePost()" style="cursor: pointer">
         <fa-icon [icon]="faShare" flip="horizontal"></fa-icon>
         {{post.shareCount || 0}} Partager
-      </a>
+      </div>
     </div>
   </div>
 </div>

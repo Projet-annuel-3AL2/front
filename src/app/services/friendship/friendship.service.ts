@@ -13,7 +13,7 @@ export class FriendshipService {
   constructor(private http: HttpClient) {
   }
 
-  postFriendship(username: string): Observable<Friendship> {
+  sendFriendRequest(username: string): Observable<Friendship> {
     return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
@@ -21,22 +21,12 @@ export class FriendshipService {
     return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
-  rejectFriendship(username: string) {
+  rejectFriendRequest(username: string) {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
   removeFriendship(username: string): Observable<any> {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`, {headers: {'Access-Control-Allow-Origin': '*'}});
-  }
-
-  putFriendship(username: string) {
-    this.http.put(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}}).subscribe({
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
   }
 
   isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
