@@ -20,21 +20,20 @@
       <div class="form-field-address">
         <mat-form-field appearance="fill">
           <mat-label>Adresse de l'Évènement</mat-label>
-          <input [(ngModel)]="postalAddress" matInput placeholder="Adresse" required>
+          <input [(ngModel)]="postalAddress" matInput placeholder="Adresse" name="postalAddress" required>
         </mat-form-field>
       </div>
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
           <mat-label>Nb. de participant Max</mat-label>
           <input [(ngModel)]="updateEvent.participantsLimit" name="participantsLimit" matInput min="2"
-                 placeholder="Ex. 30" required type="number">
-          <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
+                 placeholder="Ex. 30" type="number" required>
         </mat-form-field>
       </div>
       <div class="form-field-categories">
         <mat-form-field appearance="fill">
           <mat-label>Categories:</mat-label>
-          <mat-select [(value)]="updateEvent.category.name" name="category" matNativeControl required>
+          <mat-select [(ngModel)]="updateEvent.category.name" name="category" matNativeControl required>
             <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}
             </mat-option>
           </mat-select>
@@ -43,7 +42,7 @@
       <div class="form-field-date-picker-start">
         <mat-form-field appearance="fill">
           <mat-label>Date de début</mat-label>
-          <input [ngxMatDatetimePicker]="pickerFrom" formControlName="startDateEvent" matInput
+          <input [ngxMatDatetimePicker]="pickerFrom" [(ngModel)]="updateEvent.startDate" matInput name="dateStart"
                  placeholder="Date de début" required>
           <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #pickerFrom></ngx-mat-datetime-picker>
@@ -52,7 +51,7 @@
       <div class="form-field-date-picker-end">
         <mat-form-field appearance="fill">
           <mat-label>Date de fin</mat-label>
-          <input [ngxMatDatetimePicker]="pickerTo" formControlName="endDateEvent" matInput placeholder="Date de fin"
+          <input [ngxMatDatetimePicker]="pickerTo"  [(ngModel)]="updateEvent.endDate"  name="endDate" matInput placeholder="Date de fin"
                  required>
           <mat-datepicker-toggle [for]="pickerTo" matSuffix></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #pickerTo></ngx-mat-datetime-picker>
@@ -67,7 +66,7 @@
       <img alt="" class="rounded" height="300px"
            *ngIf="updatedPicture != undefined"
            [src]="updatedPicture"
-           style="object-fit: none" width="100%">
+           style="object-fit: none" width="100%" >
     </div>
     <div class="form-field-update-picture-button">
       <button type="button" mat-raised-button (click)="pictureInput.click()">Choisissez une photo de Bannière</button>

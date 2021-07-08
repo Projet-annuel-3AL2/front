@@ -17,7 +17,6 @@ import {environment} from "../../../../environments/environment";
 export class DialogUpdateEventComponent implements OnInit {
 
   formData: NgForm;
-  limitParticipant = new FormControl(2, Validators.min(2));
   listCategory$: Category[];
   postalAddress: string;
   updatedPicture: any;
@@ -36,14 +35,6 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   onClickSubmit(data: NgForm) {
-    this.updateEvent.id = this.data.event.id;
-    this.updateEvent.name = data.value.name;
-    this.updateEvent.startDate = data.value.startDate;
-    this.updateEvent.endDate = data.value.endDate;
-    this.updateEvent.participantsLimit = data.value.participantsLimit;
-    this.updateEvent.category = data.value.category;
-    this.updateEvent.user = this.data.userSession;
-    this.updateEvent.description = data.value.description;
 
 
     // TODO : convertir address en coordonées gps et gestion fichier
