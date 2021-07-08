@@ -1,1 +1,82 @@
-<p>dialog-update-user works!</p>
+<h1 class="update-event-title" mat-dialog-title>Modification du Profile</h1>
+<mat-divider></mat-divider>
+<form #it="ngForm" (ngSubmit)="onClickSubmit(it)">
+  <div mat-dialog-content>
+    <div class="grid-update-user">
+      <div class="form-field-update-profilePicture">
+        <div class="mr-2">
+          <img *ngIf="updatedProfilPicture === undefined" [src]="data.user.profilePicture != undefined? data.user.profilePicture.link: '../../../../assets/images/no-image.png'"
+               alt="" class="rounded-circle"
+               width="50">
+          <img *ngIf="updatedProfilPicture != undefined" [src]="updatedProfilPicture"
+               alt="" class="rounded-circle"
+               width="50">
+        </div>
+      </div>
+      <div class="form-field-update-profilePicture-button">
+        <button type="button" mat-raised-button (click)="profilePictureInput.click()">Choisir une photo de Profile</button>
+        <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
+      </div>
+      <div class="form-field-update-bannerPicture">
+        <img alt="" class="rounded" height="300px"
+             *ngIf="updatedBannerPicture === undefined"
+             [src]="data.user.bannerPicture != undefined? data.user.bannerPicture.link: '../../../../assets/images/no-image.png'"
+             style="object-fit: none" width="100%">
+        <img alt="" class="rounded" height="300px"
+             *ngIf="updatedBannerPicture != undefined"
+             [src]="updatedBannerPicture"
+             style="object-fit: none" width="100%">
+      </div>
+      <div class="form-field-update-bannerPicture-button">
+        <button type="button" mat-raised-button (click)="profileBannerInput.click()">Choisissez une photo de Bannière</button>
+        <input hidden (change)="onProfileBannerSelected()" #profileBannerInput type="file" id="profileBanner">
+      </div>
+      <div class="form-field-update-username">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input [(ngModel)]="updatedUser.username" name="username" matInput placeholder="Username" #username="ngModel"
+                 required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-update-firstname">
+        <mat-form-field appearance="fill">
+          <mat-label>Prénom</mat-label>
+          <input [(ngModel)]="updatedUser.firstname" name="firstname" matInput placeholder="Prénom" #firstname="ngModel"
+                 required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-update-lastname">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom</mat-label>
+          <input [(ngModel)]="updatedUser.lastname" name="lastname" matInput placeholder="Nom" #lastname="ngModel"
+                 required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-update-mail">
+        <mat-form-field>
+          <mat-label>Mail</mat-label>
+          <input matInput placeholder="Mail" [(ngModel)]="updatedUser.mail" name="mail" #mail="ngModel"
+                 pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+        </mat-form-field>
+      </div>
+      <div class="form-field-update-bio">
+        <mat-form-field>
+          <mat-label>Bio</mat-label>
+          <textarea [(ngModel)]="updatedUser.bio" class="textarea-description" name="bio" #bio="ngModel"
+                    matInput placeholder="Ex. Je suis..."></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div mat-dialog-actions>
+    <div class="grid-button-update-user">
+      <div class="button-cancel">
+        <button (click)="onNoClick()" mat-button>Annuler</button>
+      </div>
+      <div class="button-send">
+        <button class="button-send" mat-raised-button type="submit">Envoyer</button>
+      </div>
+    </div>
+  </div>
+</form>

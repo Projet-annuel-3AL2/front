@@ -72,6 +72,7 @@ import {PostPageComponent} from "./components/page_/post-page/post-page.componen
 import {CommentComponent} from "./components/card_/comment/comment.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
+import {DialogUpdateUserComponent} from "./components/dialog_/dialog-update-user/dialog-update-user.component";
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     PostPageComponent,
     CommentComponent,
     PasswordRecoveryComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    DialogUpdateUserComponent
   ],
   imports: [
     BrowserModule,
