@@ -1,19 +1,23 @@
 import {Injectable} from '@angular/core';
 import {Post} from "../../shared/models/post.model";
 import {User} from "../../shared/models/user.model";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Report} from "../../shared/models/report.model";
 import {Comment} from "../../shared/models/comment.model";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-
+  public posts: Observable<Post[]>;
+  private postsSubject: BehaviorSubject<Post[]>;
 
   constructor(private http: HttpClient) {
+    this.postsSubject = new BehaviorSubject<Post[]>([]);
+    this.posts = this.postsSubject.asObservable();
   }
 
   createPost(post: Post) {
@@ -25,7 +29,11 @@ export class PostService {
   }
 
   getTimeline(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`)
+      .pipe(map(posts=> {
+        this.postsSubject.next(posts);
+        return posts;
+      }));
   }
 
   getPostLikes(postId: string): Observable<User[]> {
@@ -52,11 +60,13 @@ export class PostService {
     return this.http.get<Comment[]>(`${environment.baseUrl}/post/${postId}/comments`);
   }
 
-  sendComment(postId, text: string): Observable<Comment> {
+  sendComment(postId: string, text: string): Observable<Comment> {
     return this.http.post<Comment>(`${environment.baseUrl}/post/${postId}/comment`, {text});
   }
 
-  deletePost(postId): Observable<void> {
-    return this.http.delete<void>(`${environment.baseUrl}/post/${postId}`);
+  deletePost(postId: string): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/post/${postId}`).pipe(map(() => {
+      this.postsSubject.next(this.postsSubject.getValue().filter(a=>a.id !==postId));
+    }));
   }
 }

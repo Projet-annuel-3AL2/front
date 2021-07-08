@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {PostService} from "../../../services/post/post.service";
-import {Post} from "../../../shared/models/post.model";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
@@ -12,28 +11,17 @@ import {AuthService} from "../../../services/auth/auth.service";
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-
-  listPost$: Post[] = [];
   userSession: User;
+  offset:number=0;
+  limit:number=20;
 
-  constructor(private _postService: PostService,
+  constructor(public _postService: PostService,
               private _userService: UserService,
               private _authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
-      this.userSession = user;
-      this.getTimeline();
-    });
-
-  }
-
-  private getTimeline() {
     this._postService.getTimeline().subscribe({
-      next: posts => {
-        this.listPost$ = posts;
-      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
