@@ -37,8 +37,6 @@ import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/page_/auth_/register/register.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthGuardService} from "./services/auth/auth-guard.service";
-import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ConversationComponent} from "./components/conversations/conversation/conversation.component";
 import {ConversationsBoxComponent} from "./components/conversations/conversations-box/conversations-box.component";
@@ -46,7 +44,6 @@ import {MessageComponent} from "./components/conversations/message/message.compo
 import {ConversationCardComponent} from "./components/conversations/conversation-card/conversation-card.component";
 import {TimeagoModule} from "ngx-timeago";
 import {ConversationBoxDirective} from "./directives/conversation-box/conversation-box.directive";
-import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
 import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 import {CreatePostComponent} from "./components/create_/create-post/create-post.component";
@@ -70,6 +67,7 @@ import {PostPageComponent} from "./components/page_/post-page/post-page.componen
 import {CommentComponent} from "./components/card_/comment/comment.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
+import {DialogCreatePostComponent} from "./components/dialog_/dialog-create-post/dialog-create-post.component";
 
 @NgModule({
   declarations: [
@@ -111,6 +109,7 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     DialogUpdateOrganisationComponent,
     DialogUpdateEventComponent,
     DialogCreateEventComponent,
+    DialogCreatePostComponent,
     SearchBarComponent,
     PostPageComponent,
     CommentComponent,
@@ -147,7 +146,7 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     NgxMatNativeDateModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: GlobalHttpInterceptor,
