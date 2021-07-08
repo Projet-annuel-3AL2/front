@@ -7,6 +7,10 @@
 
 .dialog-title-report {
   text-align: center;
+  font-size: 20px;
+  font-family: Roboto, serif;
+  color: #00643C;
+  font-weight: bold;
 }
 
 .text-area-report {
