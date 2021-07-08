@@ -72,7 +72,11 @@
               </cdk-virtual-scroll-viewport>
           </mat-tab>
           <mat-tab label="Amis">
-            <app-list-user [listUser]="listUser$" [userSession]="(_authService.user | async)"></app-list-user>
+            <div class="my-3">
+              <div *ngFor="let user of (_userService.user|async).friends" class="display-list-user">
+                <app-user-card [user]="user" class="m-0"></app-user-card>
+              </div>
+            </div>
           </mat-tab>
           <mat-tab label="Événements">
             <app-profil-list-event [listEvent]="listEvent$" [userSession]="(_authService.user | async)"></app-profil-list-event>

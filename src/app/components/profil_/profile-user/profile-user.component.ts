@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
-import {User} from "../../../shared/models/user.model";
 import {ActivatedRoute} from "@angular/router";
 import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
-import {PostService} from "../../../services/post/post.service";
 import {Event} from '../../../shared/models/event.model';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
@@ -26,13 +24,11 @@ export class ProfileUserComponent implements OnInit {
   faEllipsisH = faEllipsisH;
   username: string;
   listEvent$: Event[] = [];
-  listUser$: User[] = [];
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
   constructor(public _userService: UserService,
               private route: ActivatedRoute,
-              public _postService: PostService,
               private _friendshipService: FriendshipService,
               private _eventService: EventService,
               public _authService: AuthService,
@@ -48,6 +44,12 @@ export class ProfileUserComponent implements OnInit {
       this.username = params["username"];
       this.updateUser();
     });
+  }
+
+  updateUser(): void{
+    this._userService.getByUsername(this.username).subscribe();
+    this._userService.getPosts(this.username).subscribe();
+    this._userService.getFriends(this.username).subscribe();
   }
 
   async showDialogueRespondFriendRequest() {
@@ -78,11 +80,6 @@ export class ProfileUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
     })
-  }
-
-  updateUser(): void{
-    this._userService.getByUsername(this.username).subscribe();
-    this._userService.getPosts(this.username).subscribe();
   }
 
   async canAdd() {

@@ -63,6 +63,12 @@ export class UserService {
 
   getFriends(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
+      .pipe(map(friends=>{
+        let user =this.userSubject.getValue();
+        user.friends = friends;
+        this.userSubject.next(user);
+        return friends;
+      }));
   }
 
   getConversations(): Observable<Conversation[]> {
