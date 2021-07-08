@@ -15,6 +15,8 @@ export class DialogUpdateOrganisationComponent implements OnInit {
 
   formData: FormGroup;
   updateOrganisation: Organisation;
+  updatedProfilPicture: any;
+  updatedBannerPicture: any;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateOrganisationComponent>,
               private _organisationService: OrganisationService,
@@ -57,5 +59,33 @@ export class DialogUpdateOrganisationComponent implements OnInit {
       profilPicture: new FormControl(),
       bannerPicture: new FormControl()
     });
+  }
+
+  onProfilePictureSelected() {
+    const inputNode: any = document.querySelector('#profilePicture');
+
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.updatedProfilPicture = e.target.result;
+      };
+
+      reader.readAsDataURL(inputNode.files[0]);
+    }
+  }
+
+  onProfileBannerSelected() {
+    const inputNode: any = document.querySelector('#profileBanner');
+
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.updatedBannerPicture = e.target.result;
+      };
+
+      reader.readAsDataURL(inputNode.files[0]);
+    }
   }
 }

@@ -1,4 +1,5 @@
 <h1 class="dialog-title-update-orga" mat-dialog-title>Modification de l'Organisation</h1>
+<mat-divider></mat-divider>
 <form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
   <div mat-dialog-content>
     <div class="update-organisation-grid">
@@ -9,18 +10,37 @@
                  placeholder="Nom de l'Organisation" required>
         </mat-form-field>
       </div>
-      <div class="form-field-profil-picture">
-        <label for="profilPicture">Image de profile : </label>
-        <input [(ngModel)]="data.organisation.profilePicture" data-max-size="2048" id="profilPicture" name="profilPicture"
-               type="file">
+      <div class="form-field-update-profilePicture">
+        <div class="mr-2">
+          <img *ngIf="updatedProfilPicture === undefined" [src]="data.organisation.profilePicture != undefined? data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
+               alt="" class="rounded-circle"
+               width="50">
+          <img *ngIf="updatedProfilPicture != undefined" [src]="updatedProfilPicture"
+               alt="" class="rounded-circle"
+               width="50">
+        </div>
       </div>
-      <div class="form-field-banner-picture">
-        <label for="bannerPicture">Bannière : </label>
-        <input [(ngModel)]="data.organisation.bannerPicture" data-max-size="2048" id="bannerPicture" name="bannerPicture"
-               type="file">
+      <div class="form-field-update-profilePicture-button">
+        <button type="button" mat-raised-button (click)="profilePictureInput.click()">Choisir une photo de Profile</button>
+        <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
+      </div>
+      <div class="form-field-update-bannerPicture">
+        <img alt="" class="rounded" height="300px"
+             *ngIf="updatedBannerPicture === undefined"
+             [src]="data.organisation.bannerPicture != undefined? data.organisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
+             style="object-fit: none" width="100%">
+        <img alt="" class="rounded" height="300px"
+             *ngIf="updatedBannerPicture != undefined"
+             [src]="updatedBannerPicture"
+             style="object-fit: none" width="100%">
+      </div>
+      <div class="form-field-update-bannerPicture-button">
+        <button type="button" mat-raised-button (click)="profileBannerInput.click()">Choisissez une photo de Bannière</button>
+        <input hidden (change)="onProfileBannerSelected()" #profileBannerInput type="file" id="profileBanner">
       </div>
     </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="dialog-actions-update-orga" mat-dialog-actions>
     <div class="button-grid-update-orga">
       <div class="button-cancel">
