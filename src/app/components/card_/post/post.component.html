@@ -43,22 +43,22 @@
       </div>
     </div>
     <div class="card-footer d-flex justify-content-between">
-      <div (click)="likePost()" *ngIf="!post.isLiked" class="card-link text-decoration-none">
+      <div (click)="likePost()" *ngIf="!post.isLiked" class="card-link text-decoration-none" style="cursor: pointer">
         <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
         {{post.likes?.length || 0}} Aimer
       </div>
-      <div (click)="dislikePost()" *ngIf="post.isLiked" class="card-link text-decoration-none">
+      <div (click)="dislikePost()" *ngIf="post.isLiked" class="card-link text-decoration-none" style="cursor: pointer">
         <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
         {{post.likes?.length || 0}} Ne plus aimer
       </div>
-      <a class="card-link text-decoration-none" href="#">
+      <div class="card-link text-decoration-none" [routerLink]="'/post/'+post.id" style="cursor: pointer">
         <fa-icon [icon]="faComment" flip="horizontal"></fa-icon>
         {{post.commentCount || 0}} Commenter
-      </a>
-      <a class="card-link text-decoration-none pull-right" href="#">
+      </div>
+      <div class="card-link text-decoration-none pull-right"  style="cursor: pointer">
         <fa-icon [icon]="faShare" flip="horizontal"></fa-icon>
         {{post.shareCount || 0}} Partager
-      </a>
+      </div>
     </div>
   </div>
 </div>
