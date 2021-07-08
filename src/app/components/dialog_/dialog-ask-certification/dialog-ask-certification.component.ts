@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {CertificationService} from "../../../services/certification/certification.service";
+import {User} from "../../../shared/models/user.model";
+import {environment} from "../../../../environments/environment";
+import {CertificationRequest} from "../../../shared/models/certification_request.model";
 
 @Component({
   selector: 'app-dialog-ask-certification',
@@ -6,10 +11,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dialog-ask-certification.component.css']
 })
 export class DialogAskCertificationComponent implements OnInit {
+  certificationRequest: CertificationRequest;
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<DialogAskCertificationComponent>,
+              private _certificationService: CertificationService,
+              @Inject(MAT_DIALOG_DATA) public data: {user: User}) { }
 
   ngOnInit(): void {
+    this.certificationRequest = new CertificationRequest();
+  }
+
+  onClickSubmit() {
+    this._certificationService.postCertification(this.certificationRequest).subscribe({
+      next: () => {
+        this.dialogRef.close()
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }
