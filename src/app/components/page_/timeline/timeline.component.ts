@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {PostService} from "../../../services/post/post.service";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
@@ -10,7 +10,7 @@ import {AuthService} from "../../../services/auth/auth.service";
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.css']
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit, OnDestroy {
   userSession: User;
   offset:number=0;
   limit:number=20;
@@ -28,5 +28,8 @@ export class TimelineComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
   }
 }

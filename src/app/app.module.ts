@@ -25,7 +25,7 @@ import {ReturnButtonComponent} from "./components/return-button/return-button.co
 import {CardEventComponent} from "./components/card_/card-event/card-event.component";
 import {EventListDisplayComponent} from "./components/tabs_/event-list-display/event-list-display.component";
 import {EventDialogMapsComponent} from "./components/dialog_/event-dialog-maps/event-dialog-maps.component";
-import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
+import {ProfileUserComponent} from "./components/profil_/profile-user/profile-user.component";
 import {ListPostComponent} from "./components/tabs_/list-post/list-post.component";
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
 import {ListUserComponent} from "./components/tabs_/list-user/list-user.component";
@@ -94,7 +94,7 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     CardEventComponent,
     EventListDisplayComponent,
     EventDialogMapsComponent,
-    ProfilUserComponent,
+    ProfileUserComponent,
     ListPostComponent,
     ListUserComponent,
     ProfilOrganisationComponent,
