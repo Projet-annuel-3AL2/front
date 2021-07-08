@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {EventService} from "../../../services/event/event.service";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
@@ -16,10 +16,12 @@ import {environment} from "../../../../environments/environment";
 })
 export class DialogUpdateEventComponent implements OnInit {
 
-  formData: FormGroup;
+  formData: NgForm;
   limitParticipant = new FormControl(2, Validators.min(2));
   listCategory$: Category[];
-
+  postalAddress: string;
+  updatedPicture: any;
+  updateEvent: Event;
   constructor(public dialogRef: MatDialogRef<DialogUpdateEventComponent>,
               private _eventService: EventService,
               private _organisationService: OrganisationService,
@@ -28,28 +30,29 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initialiseFormGroup();
     this.getAllCategories();
+    this.updateEvent = this.data.event;
+    this.postalAddress = null;
   }
 
-  onClickSubmit(data) {
-    let updateEvent = new Event();
-    updateEvent.id = this.data.event.id;
-    updateEvent.name = data.nameEvent;
-    updateEvent.startDate = data.startDateEvent;
-    updateEvent.endDate = data.endDateEvent;
-    updateEvent.participantsLimit = data.participantsLimitEvent;
-    updateEvent.category = data.categoryEvent;
-    updateEvent.user = this.data.userSession;
-    updateEvent.description = data.descriptionEvent;
+  onClickSubmit(data: NgForm) {
+    this.updateEvent.id = this.data.event.id;
+    this.updateEvent.name = data.value.name;
+    this.updateEvent.startDate = data.value.startDate;
+    this.updateEvent.endDate = data.value.endDate;
+    this.updateEvent.participantsLimit = data.value.participantsLimit;
+    this.updateEvent.category = data.value.category;
+    this.updateEvent.user = this.data.userSession;
+    this.updateEvent.description = data.value.description;
 
 
     // TODO : convertir address en coordonées gps et gestion fichier
     // updateEvent.picture = data.pictureFile;
     // updateEvent.latitude = data.latitudeEvent;
     // updateEvent.longitude = data.longitudeEvent;
-
-    this._eventService.putEvent(updateEvent).subscribe({
+    console.log(this.updateEvent)
+    console.log(this.updatedPicture)
+    this._eventService.putEvent(this.updateEvent).subscribe({
 
       next: () => {
         this.dialogRef.close()
@@ -72,18 +75,18 @@ export class DialogUpdateEventComponent implements OnInit {
     })
   }
 
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      nameEvent: new FormControl(),
-      descriptionEvent: new FormControl(),
-      startDateEvent: new FormControl(),
-      endDateEvent: new FormControl(),
-      address: new FormControl(),
-      participantsLimitEvent: new FormControl(),
-      categoryEvent: new FormControl(),
-      pictureFile: new FormControl(),
-      organisationEvent: new FormControl(),
-    });
-  }
 
+  onPictureSelected() {
+    const inputNode: any = document.querySelector('#picture');
+
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        this.updatedPicture = e.target.result;
+      };
+
+      reader.readAsDataURL(inputNode.files[0]);
+    }
+  }
 }
