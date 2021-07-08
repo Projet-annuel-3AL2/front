@@ -16,6 +16,7 @@ export class DialogCreatePostComponent implements OnInit {
   faSmile = faSmile;
   faCalendarAlt = faCalendarAlt;
   faUserFriends = faUserFriends;
+  caretPosition:number;
   showPopup: boolean = false;
   showEmojiPicker: boolean = false;
   text: string;
@@ -32,7 +33,7 @@ export class DialogCreatePostComponent implements OnInit {
       this.text = $event.emoji.native;
       return;
     }
-    this.text += $event.emoji.native;
+    this.text=this.text.slice(0, this.caretPosition) + $event.emoji.native + this.text.slice(this.caretPosition);
   }
 
   sendPost() {
@@ -41,5 +42,13 @@ export class DialogCreatePostComponent implements OnInit {
     this._postService.createPost(post)
       .subscribe(console.log);
     this.dialogRef.close();
+  }
+
+  setCaretPosition($event: any) {
+    if ($event.target.selectionStart) {
+      this.caretPosition = $event.target.selectionStart;
+    } else{
+      this.caretPosition = 0;
+    }
   }
 }
