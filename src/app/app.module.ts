@@ -73,6 +73,8 @@ import {CommentComponent} from "./components/card_/comment/comment.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
 import {DialogUpdateUserComponent} from "./components/dialog_/dialog-update-user/dialog-update-user.component";
+import {DialogAskCertificationComponent} from "./components/dialog_/dialog-ask-certification/dialog-ask-certification.component";
+import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 
 @NgModule({
   declarations: [
@@ -121,7 +123,9 @@ import {DialogUpdateUserComponent} from "./components/dialog_/dialog-update-user
     CommentComponent,
     PasswordRecoveryComponent,
     ForgotPasswordComponent,
-    DialogUpdateUserComponent
+    DialogUpdateUserComponent,
+    DialogAskCertificationComponent,
+    DialogAskOrganisationComponent
   ],
   imports: [
     BrowserModule,
