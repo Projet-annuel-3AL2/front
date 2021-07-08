@@ -50,6 +50,7 @@ export class ProfileUserComponent implements OnInit {
     this._userService.getByUsername(this.username).subscribe();
     this._userService.getPosts(this.username).subscribe();
     this._userService.getFriends(this.username).subscribe();
+    this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest=>this.friendshipRequest=friendshipRequest);
   }
 
   async showDialogueRespondFriendRequest() {
@@ -57,9 +58,7 @@ export class ProfileUserComponent implements OnInit {
       width: '500px',
       data: {userId: (await this._userService.user.toPromise()).username}
     });
-    dialogRef.afterClosed().subscribe(result => {
-      this.friendshipRequest = result;
-    })
+    dialogRef.afterClosed().subscribe(()=>this.updateUser());
   }
 
   async showDialogueReport() {
@@ -68,8 +67,7 @@ export class ProfileUserComponent implements OnInit {
       data: {id: (await this._userService.user.toPromise()).username, reportType: ReportTypeEnum.USER}
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-    })
+    dialogRef.afterClosed().subscribe(()=>this.updateUser());
   }
 
   async showDialogueCreateEvent() {
@@ -78,20 +76,10 @@ export class ProfileUserComponent implements OnInit {
       data: {userSession: await this._authService.user.toPromise(), organisation: null}
     });
 
-    dialogRef.afterClosed().subscribe(() => {
-    })
+    dialogRef.afterClosed().subscribe(()=>this.updateUser())
   }
 
-  async canAdd() {
-    this._friendshipService.isFriendshipRequested((await this._userService.user.toPromise()).username).subscribe({
-      next: requestStatus => {
-        console.log(requestStatus)
-        this.friendshipRequest = requestStatus;
-      }
-    })
-  }
-
-  async removeFriendship() {
+  async removeFriend() {
     this._friendshipService.removeFriendship((await this._userService.user.toPromise()).username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.NONE;

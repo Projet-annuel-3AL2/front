@@ -22,29 +22,13 @@
   display: flex;
 }
 
-.user-card-img-profil {
-  flex: 1 1 100%;
-  box-sizing: border-box;
-  max-width: 15%;
-}
-
 .user-card-username {
-  flex: 1 1 0%;
   box-sizing: border-box;
-  max-width: 20%;
   text-align: start;
   font-size: 30px;
   font-family: Roboto, serif;
   color: black;
   font-weight: bold;
-  padding-top: 25px;
-
-}
-
-.user-card-certification {
-  flex: 1 1 0%;
-  box-sizing: border-box;
-  max-width: 5%;
   padding-top: 25px;
 }
 
@@ -57,14 +41,6 @@
   box-sizing: border-box;
   max-width: 14%;
   padding-top: 25px;
-}
-
-.user-card-menu {
-  flex: 1 1 100%;
-  box-sizing: border-box;
-  max-width: 5%;
-  padding-top: 25px;
-  color: #00643C;
 }
 
 .user-card-empty {
@@ -129,3 +105,16 @@
 .mat-ink-bar {
   background-color: #00643C;
 }
+.button-add-friend {
+  height: 35px;
+  background-color: #00643C !important;
+  color: #ffffff;
+}
+
+.button-add-friend-disable {
+  color: grey;
+  margin-top: 9px;
+  height: 35px;
+}
+.button-add-friend-disable:hover span {display:none}
+.button-add-friend-disable:hover:before {content:"Reply!"}
