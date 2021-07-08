@@ -39,12 +39,15 @@
 }
 
 .form-field-categories {
-  grid-area: 5 / 1 / 5 / 1;
-
+  grid-area: 4 / 4 / 4 / 4;
 }
 
-.form-field-date-picker {
-  grid-area: 5 / 4 / 5 / 4;
+.form-field-date-picker-start {
+  grid-area: 4 / 1 / 4 / 1;
+}
+
+.form-field-date-picker-end {
+  grid-area: 4 / 2 / 4 / 2;
 }
 
 .form-field-file {

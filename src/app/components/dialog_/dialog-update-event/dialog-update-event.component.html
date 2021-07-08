@@ -40,17 +40,22 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="form-field-date-picker">
+      <div class="form-field-date-picker-start">
         <mat-form-field appearance="fill">
-          <mat-label>Entrer la durée de l'Evènement</mat-label>
-          <mat-date-range-input [rangePicker]="picker">
-            <input [(ngModel)]="updateEvent.startDate" name="startDate" matStartDate
-                   placeholder="Date de début" required>
-            <input [(ngModel)]="updateEvent.endDate" name="endDate" matEndDate placeholder="Date de fin"
-                   required>
-          </mat-date-range-input>
-          <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-label>Date de début</mat-label>
+          <input [ngxMatDatetimePicker]="pickerFrom" formControlName="startDateEvent" matInput
+                 placeholder="Date de début" required>
+          <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerFrom></ngx-mat-datetime-picker>
+        </mat-form-field>
+      </div>
+      <div class="form-field-date-picker-end">
+        <mat-form-field appearance="fill">
+          <mat-label>Date de fin</mat-label>
+          <input [ngxMatDatetimePicker]="pickerTo" formControlName="endDateEvent" matInput placeholder="Date de fin"
+                 required>
+          <mat-datepicker-toggle [for]="pickerTo" matSuffix></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #pickerTo></ngx-mat-datetime-picker>
         </mat-form-field>
       </div>
     </div>
