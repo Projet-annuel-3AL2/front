@@ -45,10 +45,10 @@
             <h2>Organisateurs</h2>
             <div *ngIf="isOrganisation">
               <mat-List-item *ngFor="let member of listUser" >
-                <app-user-card [userSession]="this.userSession" [user]="member"></app-user-card>
+                <app-user-card [user]="member"></app-user-card>
               </mat-List-item>
             </div>
-            <app-user-card [user]="event.user" [userSession]="userSession" *ngIf="!isOrganisation"></app-user-card>
+            <app-user-card [user]="event.user"*ngIf="!isOrganisation"></app-user-card>
           </mat-list>
         </div>
       </div>

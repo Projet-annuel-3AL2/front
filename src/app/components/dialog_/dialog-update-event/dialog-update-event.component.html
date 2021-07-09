@@ -33,7 +33,7 @@
       <div class="form-field-categories">
         <mat-form-field appearance="fill">
           <mat-label>Categories:</mat-label>
-          <mat-select [(ngModel)]="updateEvent.category.name" name="category" matNativeControl required>
+          <mat-select [(ngModel)]="updateEvent.category.id" name="category" matNativeControl required>
             <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}
             </mat-option>
           </mat-select>

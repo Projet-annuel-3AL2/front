@@ -27,7 +27,6 @@ export class PageEventComponent implements OnInit {
   event$: Event;
   eventId: string;
   faEllipsisH = faEllipsisH;
-  userSession$: User;
   listParticipant$: User[] = [];
   isAbleToJoin: boolean = true;
   isOwnerB: boolean = false;
@@ -46,11 +45,9 @@ export class PageEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
-      this.userSession$ = user;
-    });
     this.eventId = this._activatedRoute.snapshot.paramMap.get("id");
     this.getEvent();
+
   }
 
   isOwner() {
@@ -83,7 +80,7 @@ export class PageEventComponent implements OnInit {
   canJoin() {
     if (this.listParticipant$ != null) {
       this.listParticipant$.forEach(user => {
-        if (user.id == this.userSession$.id) {
+        if (user.username == this._authService.getCurrentUsername()) {
           this.isAbleToJoin = false;
         }
       })
@@ -130,7 +127,7 @@ export class PageEventComponent implements OnInit {
   showDialogueUpdateEvent() {
     const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
       width: '900px',
-      data: {event: this.event$, userSession: this.userSession$}
+      data: {event: this.event$}
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -172,6 +169,7 @@ export class PageEventComponent implements OnInit {
     this._eventService.getEventMembers(this.eventId).subscribe({
       next: listUser => {
         this.listParticipant$ = listUser;
+        console.log(listUser)
         this.canJoin();
       },
       error: error => {

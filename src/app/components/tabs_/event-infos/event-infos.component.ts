@@ -14,7 +14,6 @@ import {UserService} from "../../../services/user/user.service";
 export class EventInfosComponent implements OnInit {
 
   @Input('event') event: Event = new Event();
-  @Input('userSession') userSession: User;
   @Input('participantsNumber') participantNumber: number;
   organisation$: Organisation;
   listUser: User[] = [];

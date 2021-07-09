@@ -25,7 +25,7 @@ export class DialogUpdateEventComponent implements OnInit {
               private _eventService: EventService,
               private _organisationService: OrganisationService,
               private _categoryService: CategoryService,
-              @Inject(MAT_DIALOG_DATA) public data: { event: Event, userSession: User }) {
+              @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
   }
 
   ngOnInit(): void {

@@ -62,19 +62,17 @@
             <app-list-post [listPost]="listPost$"></app-list-post>
           </mat-tab>
           <mat-tab label="Infos">
-            <app-event-infos [event]="event$" [participantsNumber]="listParticipant$.length"
-                             [userSession]="userSession$"></app-event-infos>
+            <app-event-infos [event]="event$" [participantsNumber]="listParticipant$.length"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
             <div *ngIf="!isOwnerB && !isAdminB" class="my-3">
               <div *ngFor="let user of listParticipant$;" class="display-list-user">
-                <app-user-card [userSession]="userSession$" [user]="user" class="m-0"></app-user-card>
+                <app-user-card [user]="user" class="m-0"></app-user-card>
               </div>
             </div>
             <div *ngIf="isOwnerB || isAdminB" class="my-3">
               <div *ngFor="let user of listParticipant$;" class="display-list-user">
-                <app-card-user-mange-event [eventId]="eventId" [userSession]="userSession$" [user]="user"
-                                           class="m-0"></app-card-user-mange-event>
+                <app-card-user-mange-event [eventId]="eventId" [user]="user" class="m-0"></app-card-user-mange-event>
               </div>
             </div>
           </mat-tab>
