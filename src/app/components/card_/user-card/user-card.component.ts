@@ -6,6 +6,7 @@ import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum"
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {environment} from "../../../../environments/environment";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-user-card',
@@ -14,13 +15,14 @@ import {environment} from "../../../../environments/environment";
 })
 export class UserCardComponent implements OnInit {
 
-  @Input('user') user: User = new User()
-  @Input('userSession') userSession: User;
+  @Input()
+  user: User = new User()
   faCheckCircle = faCheckCircle;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
   constructor(private _friendshipService: FriendshipService,
+              public _authService: AuthService,
               public dialog: MatDialog) {
   }
 
@@ -38,7 +40,7 @@ export class UserCardComponent implements OnInit {
   }
 
   askFriend() {
-    this._friendshipService.postFriendship(this.user.username).subscribe({
+    this._friendshipService.sendFriendRequest(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = this.allFriendRequestStatus.PENDING;
       },
@@ -50,7 +52,7 @@ export class UserCardComponent implements OnInit {
     });
   }
 
-  dellFriend() {
+  removeFriend() {
     this._friendshipService.removeFriendship(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = this.allFriendRequestStatus.NONE;
@@ -72,5 +74,18 @@ export class UserCardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
       this.canAdd();
     })
+  }
+
+  cancelRequest() {
+    this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err)
+        }
+      }
+    });
   }
 }
