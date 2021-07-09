@@ -1,0 +1,25 @@
+<div class="create-post-popup rounded-3" fxFlex fxLayout="column">
+  <div class="create-post-text m-2" fxFlex fxLayout="row">
+    <div class="create-post-picture">
+      <img [alt]="(_authService.user|async).username" [src]="(_authService.user|async).profilePicture || 'https://picsum.photos/50/50'"
+           class="rounded-circle profile-picture">
+    </div>
+    <mat-form-field class="create-post-textarea ms-2" appearance="fill">
+      <textarea matInput placeholder="Quoi de neuf ?" [(ngModel)]="text" (click)="setCaretPosition($event)" (keyup)="setCaretPosition($event)"></textarea>
+    </mat-form-field>
+  </div>
+  <hr class="my-0">
+  <div class="create-post-options m-2" fxFlex fxLayout="row">
+    <div fxFlex fxLayoutAlign="start center">
+      <fa-icon [icon]="faImage" class="mx-1" size="2x"></fa-icon>
+      <fa-icon (click)="showEmojiPicker = !showEmojiPicker" [icon]="faSmile" class="mx-1" size="2x"></fa-icon>
+      <fa-icon [icon]="faCalendarAlt" class="mx-1" size="2x"></fa-icon>
+      <fa-icon [icon]="faUserFriends" class="mx-1" size="2x"></fa-icon>
+    </div>
+    <div fxFlex fxLayoutAlign="end center">
+      <button (click)="sendPost()" class="rounded-pill" mat-raised-button>Envoyer</button>
+    </div>
+  </div>
+</div>
+
+<emoji-mart (emojiSelect)="addEmoji($event)" *ngIf="showEmojiPicker" class="emoji-picker"></emoji-mart>

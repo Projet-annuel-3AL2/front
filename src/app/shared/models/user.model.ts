@@ -11,6 +11,7 @@ export class User {
   lastname?: string;
   mail?: string;
   bio?: string;
+  friends?: User[];
   createdEvents?: Event[];
   createdPosts?: Post[];
   likedPosts?: Post[];

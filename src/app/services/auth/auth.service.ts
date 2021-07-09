@@ -14,8 +14,11 @@ export class AuthService {
   private userSubject: BehaviorSubject<User>;
 
   constructor(private http: HttpClient, private _userService: UserService) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
+    if(this.isAuthenticated()) {
+      this._userService.getByUsername(this.getCurrentUsername()).subscribe(this.userSubject.next);
+    }
   }
 
   public register(mail: string, username: string, password: string) {
@@ -38,7 +41,7 @@ export class AuthService {
     })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
-        this.userSubject.next(user);
+        this._userService.getByUsername(user.username).subscribe(this.userSubject.next);
         return user;
       }));
   }

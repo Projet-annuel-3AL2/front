@@ -1,29 +1,30 @@
-<div class="rounded-pill border d-flex p-2 card-user my-3">
-  <div class="mr-2">
-    <img [routerLink]="['/user/' + user.username]" [src]="user.profilePicture || 'https://picsum.photos/50/50'"
-         alt=""
-         class="rounded-circle" width="50">
-  </div>
-  <div class="spacer"></div>
-  <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
-    <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
-  </p>
-  <div class="spacer"></div>
-  <div *ngIf="user.id !== userSession.id">
+<div class="rounded-pill border d-flex p-2 card-user my-3" fxFlex fxLayoutAlign="row">
+    <div class="mr-2" fxFlex fxLayoutAlign="row start center">
+      <img [routerLink]="['/user/' + user.username]" [src]="user.profilePicture || 'https://picsum.photos/50/50'"
+           alt=""
+           class="rounded-circle me-2" width="50">
+      <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
+        <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
+      </p>
+    </div>
+  <div *ngIf="user.username !== _authService.getCurrentUsername()" fxFlex fxLayoutAlign="end center">
     <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
             class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true"
                                                                             class="fa fa-user-plus"></i> Ajouter
     </button>
-    <button (click)="this.dellFriend()" *ngIf="friendshipRequest == allFriendRequestStatus.BEFRIENDED"
-            class="ml-auto button-add-friend" mat-raised-button matTooltip="Enlever de la list d'amis">
-      Enlever
+    <button (click)="this.removeFriend()" *ngIf="friendshipRequest == allFriendRequestStatus.BEFRIENDED"
+            class="button-add-friend" mat-raised-button
+            matTooltipPosition="above"
+            matTooltip="Enlever de la liste des amis">
+      Retirer des amis
     </button>
     <button (click)="this.showDialogueRespondFriendRequest()" *ngIf="friendshipRequest == allFriendRequestStatus.RECEIVED"
             class="ml-auto button-add-friend" mat-raised-button
+            matTooltipPosition="above"
             matTooltip="Accepter ou Refuser la demande d'amis"> Répondre
     </button>
-    <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
-            mat-raised-button> En Attente
+    <button (click)="cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
+            mat-raised-button><span>Invitation envoyé</span>
     </button>
   </div>
 </div>

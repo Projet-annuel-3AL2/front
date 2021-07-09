@@ -13,7 +13,7 @@ export class FriendshipService {
   constructor(private http: HttpClient) {
   }
 
-  postFriendship(username: string): Observable<Friendship> {
+  sendFriendRequest(username: string): Observable<Friendship> {
     return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, {});
   }
 
@@ -21,7 +21,7 @@ export class FriendshipService {
     return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, {});
   }
 
-  rejectFriendship(username: string) {
+  rejectFriendRequest(username: string) {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`);
   }
 
@@ -29,8 +29,12 @@ export class FriendshipService {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`);
   }
 
+  cancelFriendRequest(username: string) {
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/cancel`);
+  }
+
   isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
-    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`)
+    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`);
   }
 
   getSentFriendshipRequest(): Observable<Friendship> {
