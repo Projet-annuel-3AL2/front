@@ -19,15 +19,19 @@ export class EventInfosComponent implements OnInit {
   organisation$: Organisation;
   listUser: User[] = [];
   isFollowing: boolean = false;
-
+  isOrganisation: boolean = true;
   constructor(private _organisationService: OrganisationService,
               private _userService: UserService) {
 
   }
 
   ngOnInit(): void {
-    this.organisation$ = this.event.organisation;
-    this.getOrganisationMembers();
+    if (this.event.organisation != undefined){
+      this.organisation$ = this.event.organisation;
+      this.getOrganisationMembers();
+    }else{
+      this.isOrganisation = false;
+    }
   }
 
   canFollow() {

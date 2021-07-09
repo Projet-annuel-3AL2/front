@@ -19,7 +19,8 @@
             /{{event.endDate.toString() | slice: 5: 7}}
             /{{event.endDate.toString() | slice: 0: 4}} {{event.endDate.toString() | slice: 11 : 16}} </p>
           <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
-          <app-card-organisation [organisation]="event.organisation"></app-card-organisation>
+
+          <app-card-organisation [organisation]="event.organisation" *ngIf="isOrganisation"></app-card-organisation>
         </div>
       </div>
     </div>
@@ -36,15 +37,18 @@
       </div>
     </div>
   </div>
-  <div class="grid-item item3">
+  <div class="grid-item item3"  >
     <div class="border rounded-3 d-flex flex-column p-2 event-infos-infos">
       <div class="m-3">
         <div class="px-4">
           <mat-list>
             <h2>Organisateurs</h2>
-            <mat-List-item *ngFor="let member of listUser">
-              <app-user-card [userSession]="this.userSession" [user]="member"></app-user-card>
-            </mat-List-item>
+            <div *ngIf="isOrganisation">
+              <mat-List-item *ngFor="let member of listUser" >
+                <app-user-card [userSession]="this.userSession" [user]="member"></app-user-card>
+              </mat-List-item>
+            </div>
+            <app-user-card [user]="event.user" [userSession]="userSession" *ngIf="!isOrganisation"></app-user-card>
           </mat-list>
         </div>
       </div>
