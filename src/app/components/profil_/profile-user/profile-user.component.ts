@@ -76,11 +76,11 @@ export class ProfileUserComponent implements OnInit {
       data: {userSession: await this._authService.user.toPromise(), organisation: null}
     });
 
-    dialogRef.afterClosed().subscribe(()=>this.updateUser())
+    dialogRef.afterClosed().subscribe(()=>this.updateUser());
   }
 
-  async removeFriend() {
-    this._friendshipService.removeFriendship((await this._userService.user.toPromise()).username).subscribe({
+  removeFriend() {
+      this._friendshipService.removeFriendship(this.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
@@ -93,7 +93,7 @@ export class ProfileUserComponent implements OnInit {
   }
 
   async askFriend() {
-    this._friendshipService.sendFriendRequest((await this._userService.user.toPromise()).username).subscribe({
+    this._friendshipService.sendFriendRequest(this.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.PENDING;
       },
@@ -102,11 +102,11 @@ export class ProfileUserComponent implements OnInit {
           console.log(err)
         }
       }
-    })
+    });
   }
 
   private async getEventParticipations() {
-    this._userService.getParticipations((await this._userService.user.toPromise()).username).subscribe({
+    this._userService.getParticipations(this.username).subscribe({
       next: events => {
         this.listEvent$ = events;
       },
@@ -115,6 +115,19 @@ export class ProfileUserComponent implements OnInit {
           console.error('Error: ', error);
         }
       }
-    })
+    });
+  }
+
+  cancelRequest() {
+    this._friendshipService.cancelFriendRequest(this.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err)
+        }
+      }
+    });
   }
 }

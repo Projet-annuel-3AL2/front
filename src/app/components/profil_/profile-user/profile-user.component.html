@@ -41,7 +41,7 @@
                           matTooltipPosition="above"
                           matTooltip="Accepter ou Refuser la demande d'amis"> Répondre
                   </button>
-                  <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
+                  <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
                           mat-raised-button><span>Invitation envoyé</span>
                   </button>
                 </div>

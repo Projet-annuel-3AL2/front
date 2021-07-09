@@ -29,6 +29,9 @@ export class FriendshipService {
     return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`, {headers: {'Access-Control-Allow-Origin': '*'}});
   }
 
+  cancelFriendRequest(username: string) {
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/cancel`, {headers: {'Access-Control-Allow-Origin': '*'}});
+  }
   isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
     return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
