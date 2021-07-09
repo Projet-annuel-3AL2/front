@@ -75,4 +75,17 @@ export class UserCardComponent implements OnInit {
       this.canAdd();
     })
   }
+
+  cancelRequest() {
+    this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err)
+        }
+      }
+    });
+  }
 }

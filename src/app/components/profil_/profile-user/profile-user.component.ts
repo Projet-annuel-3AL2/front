@@ -61,19 +61,19 @@ export class ProfileUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(()=>this.updateUser());
   }
 
-  async showDialogueReport() {
+  showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
-      data: {id: (await this._userService.user.toPromise()).username, reportType: ReportTypeEnum.USER}
+      data: {id: this.username, reportType: ReportTypeEnum.USER}
     });
 
     dialogRef.afterClosed().subscribe(()=>this.updateUser());
   }
 
-  async showDialogueCreateEvent() {
+  showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
       width: '900px',
-      data: {userSession: await this._authService.user.toPromise(), organisation: null}
+      data: {userSession: this.username, organisation: null}
     });
 
     dialogRef.afterClosed().subscribe(()=>this.updateUser());
@@ -92,7 +92,7 @@ export class ProfileUserComponent implements OnInit {
     });
   }
 
-  async askFriend() {
+  askFriend() {
     this._friendshipService.sendFriendRequest(this.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.PENDING;
@@ -105,7 +105,7 @@ export class ProfileUserComponent implements OnInit {
     });
   }
 
-  private async getEventParticipations() {
+  private getEventParticipations() {
     this._userService.getParticipations(this.username).subscribe({
       next: events => {
         this.listEvent$ = events;
