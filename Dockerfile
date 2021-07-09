@@ -6,5 +6,5 @@ RUN npm install
 ENV PATH /app/node_modules/.bin:$PATH
 RUN npm run build
 
-FROM nginx:1.17.1-alpine
+FROM byjg/nginx-extras
 COPY --from=build /usr/src/app/dist/front /usr/share/nginx/html
