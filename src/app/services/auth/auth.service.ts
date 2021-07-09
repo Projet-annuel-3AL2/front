@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, timer} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
@@ -16,8 +16,12 @@ export class AuthService {
   constructor(private http: HttpClient, private _userService: UserService) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
+    timer(0,30000).subscribe(()=> this.updateUser());
+  }
+
+  updateUser(){
     if(this.isAuthenticated()) {
-      this._userService.getByUsername(this.getCurrentUsername()).subscribe(this.userSubject.next);
+      this._userService.getByUsername(this.getCurrentUsername()).subscribe(user=>this.userSubject.next(user));
     }
   }
 
