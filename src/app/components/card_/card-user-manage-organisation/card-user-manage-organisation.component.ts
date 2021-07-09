@@ -50,7 +50,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
   }
 
   askFriend() {
-    this._friendshipService.postFriendship(this.user.username).subscribe({
+    this._friendshipService.sendFriendRequest(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = this.allFriendRequestStatus.PENDING;
       },

@@ -13,6 +13,6 @@ export class GroupService {
   }
 
   sendReport(id: string, report: Report): Observable<any> {
-    return this.http.put<any>(`${environment.baseUrl}/group/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.put<any>(`${environment.baseUrl}/group/${id}/report`, report)
   }
 }

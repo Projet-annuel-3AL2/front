@@ -25,10 +25,9 @@ import {ReturnButtonComponent} from "./components/return-button/return-button.co
 import {CardEventComponent} from "./components/card_/card-event/card-event.component";
 import {EventListDisplayComponent} from "./components/tabs_/event-list-display/event-list-display.component";
 import {EventDialogMapsComponent} from "./components/dialog_/event-dialog-maps/event-dialog-maps.component";
-import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
+import {ProfileUserComponent} from "./components/profil_/profile-user/profile-user.component";
 import {ListPostComponent} from "./components/tabs_/list-post/list-post.component";
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
-import {ListUserComponent} from "./components/tabs_/list-user/list-user.component";
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
 import {ListOrganisationSuggestionComponent} from "./components/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
@@ -38,8 +37,6 @@ import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RegisterComponent} from "./components/page_/auth_/register/register.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthGuardService} from "./services/auth/auth-guard.service";
-import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {ConversationComponent} from "./components/conversations/conversation/conversation.component";
 import {ConversationsBoxComponent} from "./components/conversations/conversations-box/conversations-box.component";
@@ -47,7 +44,6 @@ import {MessageComponent} from "./components/conversations/message/message.compo
 import {ConversationCardComponent} from "./components/conversations/conversation-card/conversation-card.component";
 import {TimeagoModule} from "ngx-timeago";
 import {ConversationBoxDirective} from "./directives/conversation-box/conversation-box.directive";
-import {ConversationBoxService} from "./services/conversation-box/conversation-box.service";
 import {ConversationsListComponent} from "./components/conversations/conversations-list/conversations-list.component";
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 import {CreatePostComponent} from "./components/create_/create-post/create-post.component";
@@ -56,7 +52,6 @@ import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-ev
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
 import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-report.component";
-import {PostListComponent} from "./components/post-list/post-list.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
 import {DialogUpdateOrganisationComponent} from "./components/dialog_/dialog-update-organisation/dialog-update-organisation.component";
@@ -72,6 +67,9 @@ import {PostPageComponent} from "./components/page_/post-page/post-page.componen
 import {CommentComponent} from "./components/card_/comment/comment.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
+import {DialogCreatePostComponent} from "./components/dialog_/dialog-create-post/dialog-create-post.component";
+import {VirtualScrollerModule} from "ngx-virtual-scroller";
+import {PostShareCardComponent} from "./components/card_/post-share-card/post-share-card.component";
 
 @NgModule({
   declarations: [
@@ -81,10 +79,10 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     NavbarComponent,
     MessageComponent,
     TimelineComponent,
-    PostListComponent,
     RegisterComponent,
     CreatePostComponent,
     ConversationComponent,
+    PostShareCardComponent,
     EventSuggestionComponent,
     ListEventSuggestionComponent,
     PageEventComponent,
@@ -96,9 +94,8 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     CardEventComponent,
     EventListDisplayComponent,
     EventDialogMapsComponent,
-    ProfilUserComponent,
+    ProfileUserComponent,
     ListPostComponent,
-    ListUserComponent,
     ProfilOrganisationComponent,
     ProfilListEventComponent,
     ListOrganisationSuggestionComponent,
@@ -115,6 +112,7 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     DialogUpdateOrganisationComponent,
     DialogUpdateEventComponent,
     DialogCreateEventComponent,
+    DialogCreatePostComponent,
     SearchBarComponent,
     PostPageComponent,
     CommentComponent,
@@ -148,10 +146,11 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
     ExperimentalScrollingModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    VirtualScrollerModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [AuthGuardService, NegateAuthGuardService, ConversationBoxService,
+  providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: GlobalHttpInterceptor,

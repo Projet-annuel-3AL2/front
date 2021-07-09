@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, timer} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
@@ -14,8 +14,15 @@ export class AuthService {
   private userSubject: BehaviorSubject<User>;
 
   constructor(private http: HttpClient, private _userService: UserService) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
+    timer(0,30000).subscribe(()=> this.updateUser());
+  }
+
+  updateUser(){
+    if(this.isAuthenticated()) {
+      this._userService.getByUsername(this.getCurrentUsername()).subscribe(user=>this.userSubject.next(user));
+    }
   }
 
   public register(mail: string, username: string, password: string) {
@@ -35,10 +42,10 @@ export class AuthService {
     return this.http.post<User>(`${environment.baseUrl}/auth/login`, {
       username,
       password
-    }, {headers: {'Access-Control-Allow-Origin': '*'}})
+    })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
-        this.userSubject.next(user);
+        this._userService.getByUsername(user.username).subscribe(this.userSubject.next);
         return user;
       }));
   }
@@ -58,7 +65,7 @@ export class AuthService {
   public logout(): Observable<unknown> {
     this.userSubject.next(null);
     localStorage.removeItem('user');
-    return this.http.delete(`${environment.baseUrl}/auth/logout`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.delete(`${environment.baseUrl}/auth/logout`);
   }
 
   public isAuthenticated(): boolean {

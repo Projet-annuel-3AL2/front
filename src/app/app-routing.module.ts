@@ -3,7 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {TimelineComponent} from "./components/page_/timeline/timeline.component";
 import {PageEventComponent} from "./components/page_/page-event/page-event.component";
 import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
-import {ProfilUserComponent} from "./components/profil_/profil-user/profil-user.component";
+import {ProfileUserComponent} from "./components/profil_/profile-user/profile-user.component";
 import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
 import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {RegisterComponent} from "./components/page_/auth_/register/register.component";
@@ -21,7 +21,7 @@ const appRoutes: Routes = [
   {path: 'reset-password/:username/:resetToken', component: PasswordRecoveryComponent, canActivate: [NegateAuthGuardService]},
   {path: 'events', component: PageListEventComponent},
   {path: 'event/:id', component: PageEventComponent},
-  {path: 'user/:username', component: ProfilUserComponent},
+  {path: 'user/:username', component: ProfileUserComponent},
   {path: 'organisation/:id', component: ProfilOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
   {path: '**', redirectTo:"/"},

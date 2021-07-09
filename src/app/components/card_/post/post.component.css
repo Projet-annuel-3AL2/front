@@ -43,3 +43,7 @@
   height: 50px;
   width: 50px;
 }
+
+.user-infos{
+  cursor: pointer;
+}
