@@ -6,7 +6,7 @@ import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
-import {RechercheEventModel} from "../../shared/models/rechercheEvent.model";
+import {Search_eventModel} from "../../shared/models/search_event.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
 
@@ -88,7 +88,7 @@ export class EventService {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
 
-  getEventWithRecherche(rechercheEvent: RechercheEventModel): Observable<Event[]> {
+  getEventWithRecherche(rechercheEvent: Search_eventModel): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/`);
   }
 

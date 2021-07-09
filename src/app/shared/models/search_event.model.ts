@@ -1,6 +1,6 @@
 import {Category} from "./category.model";
 
-export class RechercheEventModel {
+export class Search_eventModel {
   longitude: number;
   latitude: number;
   startDate: Date;
