@@ -72,4 +72,8 @@ export class PostService {
       this.postsSubject.next(this.postsSubject.getValue().filter(a=>a.id !==postId));
     }));
   }
+
+  sharedPost(postId: string): Observable<Post> {
+    return this.http.get<Post>(`${environment.baseUrl}/post/${postId}/shares`);
+  }
 }

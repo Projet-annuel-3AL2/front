@@ -69,6 +69,7 @@ import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recov
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
 import {DialogCreatePostComponent} from "./components/dialog_/dialog-create-post/dialog-create-post.component";
 import {VirtualScrollerModule} from "ngx-virtual-scroller";
+import {PostShareCardComponent} from "./components/card_/post-share-card/post-share-card.component";
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import {VirtualScrollerModule} from "ngx-virtual-scroller";
     RegisterComponent,
     CreatePostComponent,
     ConversationComponent,
+    PostShareCardComponent,
     EventSuggestionComponent,
     ListEventSuggestionComponent,
     PageEventComponent,

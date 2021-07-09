@@ -29,10 +29,13 @@
         </div>
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body"  [routerLink]="'/post/'+post?.id">
       <p class="card-text">
         {{post?.text}}
       </p>
+      <div *ngIf="post.sharesPost">
+        <app-post-share-card [post]="post.sharesPost"></app-post-share-card>
+      </div>
       <div *ngIf="post?.event" class="event-card">
         <img alt="" class="rounded" height="300px"
              src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
