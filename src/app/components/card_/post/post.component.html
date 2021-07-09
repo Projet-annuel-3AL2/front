@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex justify-content-between align-items-center user-infos" [routerLink]="'/user/'+post.creator.username">
+        <div class="d-flex justify-content-between align-items-center user-infos" [routerLink]="'/user/'+post?.creator.username">
           <div class="mr-2">
             <img [src]="post.creator.profilePicture || 'https://picsum.photos/50/50'" alt="" class="rounded-circle"
                  width="50">
