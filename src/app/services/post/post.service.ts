@@ -21,7 +21,10 @@ export class PostService {
   }
 
   createPost(post: Post) {
-    return this.http.post<Post>(`${environment.baseUrl}/post`, post);
+    return this.http.post<Post>(`${environment.baseUrl}/post`, post).pipe(map(post=>{
+      this.postsSubject.next([post].concat(this.postsSubject.getValue()));
+      return post;
+    }));
   }
 
   getPostById(postId: string): Observable<Post> {
