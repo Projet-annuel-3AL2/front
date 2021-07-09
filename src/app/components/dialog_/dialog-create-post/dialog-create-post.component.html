@@ -4,9 +4,16 @@
       <img [alt]="(_authService.user|async).username" [src]="(_authService.user|async).profilePicture || 'https://picsum.photos/50/50'"
            class="rounded-circle profile-picture">
     </div>
-    <mat-form-field class="create-post-textarea ms-2" appearance="fill">
-      <textarea matInput placeholder="Quoi de neuf ?" [(ngModel)]="text" (click)="setCaretPosition($event)" (keyup)="setCaretPosition($event)"></textarea>
-    </mat-form-field>
+    <div class="w-100">
+      <div>
+        <mat-form-field class="create-post-textarea ms-2" appearance="fill">
+          <textarea matInput placeholder="Quoi de neuf ?" [(ngModel)]="text" (click)="setCaretPosition($event)" (keyup)="setCaretPosition($event)"></textarea>
+        </mat-form-field>
+      </div>
+      <div *ngIf="data?.sharesPost">
+        <app-post-share-card [post]="data.sharesPost"></app-post-share-card>
+      </div>
+    </div>
   </div>
   <hr class="my-0">
   <div class="create-post-options m-2" fxFlex fxLayout="row">
