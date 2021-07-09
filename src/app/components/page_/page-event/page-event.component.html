@@ -58,7 +58,7 @@
         <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C" dynamicHeight
                        mat-align-tabs="center">
           <mat-tab label="Accueil">
-            <app-list-post [listPost]="listPost$"></app-list-post>
+            <app-list-post [posts]="listPost$"></app-list-post>
           </mat-tab>
           <mat-tab label="Infos">
             <app-event-infos [event]="event$" [participantsNumber]="listParticipant$.length"

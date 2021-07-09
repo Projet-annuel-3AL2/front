@@ -42,21 +42,22 @@ export class ProfileUserComponent implements OnInit {
     this.route.params.subscribe( params =>
     {
       this.username = params["username"];
-      this.updateUser();
+      this.updateUser().then();
     });
   }
 
-  updateUser(): void{
-    this._userService.getByUsername(this.username).subscribe();
-    this._userService.getPosts(this.username).subscribe();
-    this._userService.getFriends(this.username).subscribe();
-    this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest=>this.friendshipRequest=friendshipRequest);
+  async updateUser(): Promise<void>{
+    await this._userService.getByUsername(this.username).toPromise();
+    await this._userService.getPosts(this.username).toPromise();
+    await this._userService.getFriends(this.username).toPromise();
+    await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest=>this.friendshipRequest=friendshipRequest);
+    console.log(this._userService.user)
   }
 
-  async showDialogueRespondFriendRequest() {
+  showDialogueRespondFriendRequest() {
     const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
       width: '500px',
-      data: {userId: (await this._userService.user.toPromise()).username}
+      data: {userId: this.username}
     });
     dialogRef.afterClosed().subscribe(()=>this.updateUser());
   }
