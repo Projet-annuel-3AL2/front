@@ -41,7 +41,7 @@ export class PostService {
   }
 
   sendReport(id: string, report: Report): Observable<any> {
-    return this.http.put<any>(`${environment.baseUrl}/post/${id}/report`, report, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.put<any>(`${environment.baseUrl}/post/${id}/report`, report)
   }
 
   dislikePost(postId: string): Observable<void> {
