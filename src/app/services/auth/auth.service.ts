@@ -38,7 +38,7 @@ export class AuthService {
     return this.http.post<User>(`${environment.baseUrl}/auth/login`, {
       username,
       password
-    }, {headers: {'Access-Control-Allow-Origin': '*'}})
+    })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
         this._userService.getByUsername(user.username).subscribe(this.userSubject.next);
@@ -61,7 +61,7 @@ export class AuthService {
   public logout(): Observable<unknown> {
     this.userSubject.next(null);
     localStorage.removeItem('user');
-    return this.http.delete(`${environment.baseUrl}/auth/logout`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.delete(`${environment.baseUrl}/auth/logout`);
   }
 
   public isAuthenticated(): boolean {

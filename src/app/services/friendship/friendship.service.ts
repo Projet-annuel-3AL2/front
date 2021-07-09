@@ -14,30 +14,31 @@ export class FriendshipService {
   }
 
   sendFriendRequest(username: string): Observable<Friendship> {
-    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, {});
   }
 
   acceptFriendship(username: string): Observable<Friendship> {
-    return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, null, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, {});
   }
 
   rejectFriendRequest(username: string) {
-    return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`);
   }
 
   removeFriendship(username: string): Observable<any> {
-    return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`);
   }
 
   cancelFriendRequest(username: string) {
-    return this.http.delete(`${environment.baseUrl}/friendship/${username}/cancel`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.delete(`${environment.baseUrl}/friendship/${username}/cancel`);
   }
+
   isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
-    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`);
   }
 
   getSentFriendshipRequest(): Observable<Friendship> {
-    return this.http.get<Friendship>(`${environment.baseUrl}/friendship/sent-friendship-request`, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.get<Friendship>(`${environment.baseUrl}/friendship/sent-friendship-request`);
   }
 
 }
