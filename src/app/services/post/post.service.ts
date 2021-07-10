@@ -20,8 +20,16 @@ export class PostService {
     this.posts = this.postsSubject.asObservable();
   }
 
-  createPost(post: Post) {
-    return this.http.post<Post>(`${environment.baseUrl}/post`, post).pipe(map(post=>{
+  createPost(text: string, sharesPost:Post, files: File[]) {
+    const formData = new FormData();
+    formData.append("text",text);
+    if(sharesPost !== undefined && sharesPost !== null){
+      formData.append("sharesPost",JSON.stringify(sharesPost));
+    }
+    for(let file of files){
+      formData.append("post_medias",file);
+    }
+    return this.http.post<Post>(`${environment.baseUrl}/post`, formData).pipe(map(post=>{
       this.postsSubject.next([post].concat(this.postsSubject.getValue()));
       return post;
     }));

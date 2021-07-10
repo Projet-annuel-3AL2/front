@@ -33,6 +33,10 @@
       <p class="card-text">
         {{post?.text}}
       </p>
+      <div class="d-inline-block">
+        <img [src]="env.baseUrl + '/' + media.link" *ngFor="let media of post.medias" class="h-50 w-50" alt="">
+      </div>
+
       <div *ngIf="post.sharesPost">
         <app-post-share-card [post]="post.sharesPost"></app-post-share-card>
       </div>
