@@ -10,6 +10,9 @@
           <textarea matInput placeholder="Quoi de neuf ?" [(ngModel)]="text" (click)="setCaretPosition($event)" (keyup)="setCaretPosition($event)"></textarea>
         </mat-form-field>
       </div>
+      <div class="d-inline-block">
+        <img *ngFor="let media of mediasURL" [src]="media" alt="" class="rounded-3 w-25 h-25 me-2">
+      </div>
       <div *ngIf="data?.sharesPost">
         <app-post-share-card [post]="data.sharesPost"></app-post-share-card>
       </div>

@@ -17,6 +17,7 @@ export class DialogCreatePostComponent implements OnInit {
   faCalendarAlt = faCalendarAlt;
   faUserFriends = faUserFriends;
   medias:File[];
+  mediasURL:string[];
   caretPosition:number;
   showPopup: boolean = false;
   showEmojiPicker: boolean = false;
@@ -38,12 +39,7 @@ export class DialogCreatePostComponent implements OnInit {
   }
 
   sendPost() {
-    let post: Post = new Post();
-    post.text = this.text;
-    if(this.data?.sharesPost !== undefined){
-      post.sharesPost = this.data.sharesPost;
-    }
-    this._postService.createPost(post)
+    this._postService.createPost(this.text, this.data?.sharesPost, this.medias)
       .subscribe();
     this.dialogRef.close();
   }
@@ -62,8 +58,24 @@ export class DialogCreatePostComponent implements OnInit {
 
   addImages($event: any) {
     const files: File[] = Array.from($event.target.files);
-    if(files.length <= 4 && files.every((file:File) => file.type.match(/image\/*/)!==null)) {
-      this.medias = files;
+    if (files.length > 4 && files.some((file: File) => file.type.match(/image\/*/) === null)) {
+      console.log('invalid file input');
+      return;
     }
+    this.medias = files;
+    this.mediasURL = [];
+    for(let file of files){
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (_event) => {
+        if (typeof reader.result === "string") {
+          this.mediasURL.push(reader.result);
+        }
+      }
+    }
+  }
+
+  removeImage(){
+
   }
 }
