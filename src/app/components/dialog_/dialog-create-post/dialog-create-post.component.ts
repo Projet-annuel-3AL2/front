@@ -16,6 +16,7 @@ export class DialogCreatePostComponent implements OnInit {
   faSmile = faSmile;
   faCalendarAlt = faCalendarAlt;
   faUserFriends = faUserFriends;
+  medias:File[];
   caretPosition:number;
   showPopup: boolean = false;
   showEmojiPicker: boolean = false;
@@ -52,6 +53,17 @@ export class DialogCreatePostComponent implements OnInit {
       this.caretPosition = $event.target.selectionStart;
     } else{
       this.caretPosition = 0;
+    }
+  }
+
+  openFileSelector() {
+    document.getElementById('file-selector').click();
+  }
+
+  addImages($event: any) {
+    const files: File[] = Array.from($event.target.files);
+    if(files.length <= 4 && files.every((file:File) => file.type.match(/image\/*/)!==null)) {
+      this.medias = files;
     }
   }
 }
