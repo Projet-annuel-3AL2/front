@@ -9,6 +9,7 @@ import {Subscription, timer} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog-create-post.component";
 import {MediaService} from "../../../services/media/media.service";
+import {environment} from "../../../../environments/environment";
 @Component({
   selector: 'post',
   templateUrl: './post.component.html',
@@ -23,12 +24,14 @@ export class PostComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   text: string;
+  env:unknown;
   private timeSubscription: Subscription;
 
   constructor(private _postService: PostService,
               public _authService: AuthService,
               private _mediaService: MediaService,
               public matDialog: MatDialog) {
+    this.env= environment;
   }
 
   ngOnDestroy(): void {
