@@ -8,7 +8,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Subscription, timer} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog-create-post.component";
-
+import {MediaService} from "../../../services/media/media.service";
 @Component({
   selector: 'post',
   templateUrl: './post.component.html',
@@ -27,6 +27,7 @@ export class PostComponent implements OnInit {
 
   constructor(private _postService: PostService,
               public _authService: AuthService,
+              private _mediaService: MediaService,
               public matDialog: MatDialog) {
   }
 
@@ -37,6 +38,8 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     this._postService.sharedPost(this.post.id)
       .subscribe(post => this.post.sharesPost = post);
+    this._mediaService.getPostMedias(this.post.id)
+      .subscribe(medias => this.post.medias = medias);
     this.updatePost();
     this.timeSubscription = timer(0, 15000)
       .subscribe(() => this.updatePost());
