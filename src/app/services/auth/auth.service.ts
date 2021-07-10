@@ -16,13 +16,7 @@ export class AuthService {
   constructor(private http: HttpClient, private _userService: UserService) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
-    timer(0,30000).subscribe(()=> this.updateUser());
-  }
-
-  updateUser(){
-    if(this.isAuthenticated()) {
-      this._userService.getByUsername(this.getCurrentUsername()).subscribe(user=>this.userSubject.next(user));
-    }
+    timer(0,30000).subscribe(()=>this.getCurrentUser());
   }
 
   public register(mail: string, username: string, password: string) {
@@ -33,7 +27,7 @@ export class AuthService {
     })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
-        this.userSubject.next(user);
+        this.getCurrentUser();
         return user;
       }));
   }
@@ -45,12 +39,20 @@ export class AuthService {
     })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
-        this._userService.getByUsername(user.username).subscribe(this.userSubject.next);
+        this.getCurrentUser()
         return user;
       }));
   }
 
-  public forgotPassword(username: string) {
+  public getCurrentUser(): Observable<User>{
+    return this.http.get<User>(`${environment.baseUrl}/user/${this.getCurrentUsername()}`)
+      .pipe(map(user => {
+        this.userSubject.next(user);
+        return user;
+      }));
+  }
+
+  public forgotPassword(username: string): Observable<void> {
     return this.http.get<void>(`${environment.baseUrl}/auth/forgot-password/${username}`);
   }
 

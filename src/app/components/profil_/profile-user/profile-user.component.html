@@ -52,7 +52,7 @@
                   </button>
                   <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                    <div *ngIf="(_userService.user | async).id === (_authService.user | async).id && (_authService.user | async).certification !== undefined">
+                    <div *ngIf="(_userService.user | async).username === _authService.getCurrentUsername() && (_authService.user | async).certification !== undefined">
                       <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                     </div>
                   </div>
