@@ -70,6 +70,8 @@ import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/
 import {DialogCreatePostComponent} from "./components/dialog_/dialog-create-post/dialog-create-post.component";
 import {VirtualScrollerModule} from "ngx-virtual-scroller";
 import {PostShareCardComponent} from "./components/card_/post-share-card/post-share-card.component";
+import {MapComponent} from "./components/map/map.component";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 
 @NgModule({
   declarations: [
@@ -117,7 +119,8 @@ import {PostShareCardComponent} from "./components/card_/post-share-card/post-sh
     PostPageComponent,
     CommentComponent,
     PasswordRecoveryComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -147,7 +150,8 @@ import {PostShareCardComponent} from "./components/card_/post-share-card/post-sh
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
-    VirtualScrollerModule
+    VirtualScrollerModule,
+    LeafletModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [

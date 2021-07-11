@@ -1,0 +1,1 @@
+<div class="w-100 h-100 rounded-3" *ngIf="longitude && latitude" leaflet [leafletOptions]="getOptions()" (leafletMapReady)="onMapReady($event)"></div>

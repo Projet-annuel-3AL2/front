@@ -14,7 +14,6 @@ export class EventInfosComponent implements OnInit {
   @Input()
   event: Event = new Event();
   isFollowing: boolean = false;
-  private map;
 
   constructor(private _organisationService: OrganisationService,
               public _authService: AuthService,
