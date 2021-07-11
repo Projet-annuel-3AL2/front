@@ -56,7 +56,7 @@ export class DialogCreateEventComponent implements OnInit {
       newEvent.latitude = 100.11;
       newEvent.longitude = 100.12;
       console.log(newEvent)
-      this._eventService.postEvent(newEvent).subscribe({
+      this._eventService.createEvent(newEvent).subscribe({
 
         next: () => {
           this.dialogRef.close()

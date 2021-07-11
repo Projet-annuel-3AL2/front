@@ -93,7 +93,7 @@ export class DialogReportComponent implements OnInit {
 
     } else if (this.data.reportType === ReportTypeEnum.EVENT) {
 
-      this._eventService.sendReport(this.data.id, newReport).subscribe({
+      this._eventService.reportEvent(this.data.id, newReport).subscribe({
         next: () => {
           this.dialogRef.close()
         },

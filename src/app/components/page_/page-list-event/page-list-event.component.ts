@@ -39,7 +39,7 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
   }
 
   private getNotEndEvents() {
-    this._eventService.getNotEndEvent().subscribe({
+    this._eventService.isEventFinished().subscribe({
       next: data => {
         this.events$ = data;
       },

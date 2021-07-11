@@ -49,7 +49,7 @@ export class DialogUpdateEventComponent implements OnInit {
     // updateEvent.latitude = data.latitudeEvent;
     // updateEvent.longitude = data.longitudeEvent;
 
-    this._eventService.putEvent(updateEvent).subscribe({
+    this._eventService.updateEvent(updateEvent).subscribe({
 
       next: () => {
         this.dialogRef.close()

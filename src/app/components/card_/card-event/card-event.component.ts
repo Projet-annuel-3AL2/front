@@ -40,7 +40,7 @@ export class CardEventComponent implements OnInit {
 
 
   joinEvent(id: string) {
-    this._eventService.postAddParticipant(id).subscribe({
+    this._eventService.joinEvent(id).subscribe({
       next: () => {
         this.isAbleToJoin = false;
       },

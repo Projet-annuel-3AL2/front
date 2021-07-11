@@ -20,7 +20,7 @@ const appRoutes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NegateAuthGuardService]},
   {path: 'reset-password/:username/:resetToken', component: PasswordRecoveryComponent, canActivate: [NegateAuthGuardService]},
   {path: 'events', component: PageListEventComponent},
-  {path: 'event/:id', component: PageEventComponent},
+  {path: 'event/:eventId', component: PageEventComponent},
   {path: 'user/:username', component: ProfileUserComponent},
   {path: 'organisation/:id', component: ProfilOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
