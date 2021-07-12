@@ -28,7 +28,6 @@ export class SearchBarComponent implements OnInit {
     this.searchService.searchData($event.target.value)
       .subscribe(searchResult => {
         this.searchResult = searchResult;
-        console.log(searchResult)
       });
   }
 

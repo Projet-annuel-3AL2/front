@@ -33,7 +33,6 @@ export class UserCardComponent implements OnInit {
   canAdd() {
     this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
       next: requestStatus => {
-        console.log(requestStatus)
         this.friendshipRequest = requestStatus;
       }
     })

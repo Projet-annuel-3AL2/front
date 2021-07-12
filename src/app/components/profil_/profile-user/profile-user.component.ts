@@ -50,7 +50,6 @@ export class ProfileUserComponent implements OnInit {
     await this._userService.getPosts(this.username).toPromise();
     await this._userService.getFriends(this.username).toPromise();
     await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
-    console.log(this._userService.user)
   }
 
   showDialogueRespondFriendRequest() {

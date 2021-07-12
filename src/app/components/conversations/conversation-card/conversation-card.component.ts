@@ -26,7 +26,6 @@ export class ConversationCardComponent implements OnInit {
           this.conversation.messages = [];
         }
       });
-    console.log(this.conversation)
   }
 
   onConversationSelect() {

@@ -30,7 +30,6 @@ export class PasswordRecoveryComponent implements OnInit {
   ngOnInit(): void {
     this._authService.isValidToken(this._activatedRoute.snapshot.paramMap.get("resetToken"), this._activatedRoute.snapshot.paramMap.get("username"))
       .subscribe(isValid => {
-        console.log(isValid)
         if (!isValid) {
           this.router.navigate(['/forgot-password']);
         }

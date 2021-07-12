@@ -18,7 +18,7 @@ export class MapService {
     return this.http.get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${long}&addressdetails=1&format=json`);
   }
 
-  getAddressInfos(address: string): Observable<unknown> {
-    return this.http.get<unknown>(`https://nominatim.openstreetmap.org/search?q=${address}&format=json`);
+  getAddressInfos(address: string): Observable<any> {
+    return this.http.get<any>(`https://nominatim.openstreetmap.org/search?q=${address}&format=json`);
   }
 }

@@ -48,7 +48,6 @@ export class PageEventComponent implements OnInit {
     await this._eventService.getCategory(this.eventId).toPromise();
     await this._eventService.getOrganisation(this.eventId).toPromise();
     await this._eventService.isMember(this.eventId).toPromise();
-    console.log(await this._eventService.event.toPromise());
   }
 
   joinEvent(id: string) {

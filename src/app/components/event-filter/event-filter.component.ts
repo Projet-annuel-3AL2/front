@@ -72,7 +72,6 @@ export class EventFilterComponent implements OnInit {
     rechercheEvent.endDate = data.endDate;
     rechercheEvent.startDate = data.startDate;
     rechercheEvent.range = data.range;
-    console.log(rechercheEvent);
     // this.getEventWithRecherche(rechercheEvent);
   }
 

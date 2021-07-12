@@ -57,9 +57,8 @@ export class DialogCreateEventComponent implements OnInit {
       newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
 
       this._mapService.getAddressInfos(data.address).subscribe(address => {
-        newEvent.latitude = 100.11;
-        newEvent.longitude = 100.12;
-        console.log(newEvent)
+        newEvent.latitude = address.lat;
+        newEvent.longitude = address.lon;
         this._eventService.createEvent(newEvent).subscribe({
 
           next: () => {
