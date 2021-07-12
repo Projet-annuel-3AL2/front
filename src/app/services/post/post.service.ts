@@ -26,8 +26,10 @@ export class PostService {
     if (sharesPost !== undefined && sharesPost !== null) {
       formData.append("sharesPost", JSON.stringify(sharesPost));
     }
-    for (let file of files) {
-      formData.append("post_medias", file);
+    if(files){
+      for (let file of files) {
+        formData.append("post_medias", file);
+      }
     }
     return this.http.post<Post>(`${environment.baseUrl}/post`, formData).pipe(map(post => {
       this.postsSubject.next([post].concat(this.postsSubject.getValue()));

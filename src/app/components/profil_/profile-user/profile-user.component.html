@@ -74,12 +74,14 @@
       <div class="tab-user-profil">
         <mat-tab-group mat-align-tabs="center" style="min-height: 100%">
           <mat-tab label="Post">
-            <cdk-virtual-scroll-viewport autosize class="justify-content-center w-100"
-                                         style="height: 500px; width: 350px">
-              <div *cdkVirtualFor="let post of (_userService.user|async).createdPosts" class="my-3">
-                <post [post]="post"></post>
-              </div>
-            </cdk-virtual-scroll-viewport>
+            <div #divContent style="height: 450px">
+              <virtual-scroller #scroll [enableUnequalChildrenSizes]="true" [items]="(_userService.user|async).createdPosts"
+                                [parentScroll]="divContent" class="w-100 h-100" childHeight="1">
+                <div *ngFor="let post of scroll.viewPortItems" class="mt-3 ">
+                  <post [post]="post"></post>
+                </div>
+              </virtual-scroller>
+            </div>
           </mat-tab>
           <mat-tab label="Amis">
             <div class="my-3">
