@@ -9,7 +9,9 @@ import {Comment} from "../../../shared/models/comment.model";
 export class CommentComponent implements OnInit {
   @Input()
   comment: Comment;
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

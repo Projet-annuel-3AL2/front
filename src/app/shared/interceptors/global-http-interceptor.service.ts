@@ -9,17 +9,17 @@ import {environment} from "../../../environments/environment";
 @Injectable()
 export class GlobalHttpInterceptor implements HttpInterceptor {
   authService: AuthService;
+
   constructor(private router: Router, private inj: Injector) {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.search("https://nominatim.openstreetmap.org/") === -1 ) {
+    if (request.url.search("https://nominatim.openstreetmap.org/") === -1) {
       request = request.clone({
         withCredentials: true,
         headers: request.headers.set('Access-Control-Allow-Origin', environment.baseUrl)
       });
-    }
-    else{
+    } else {
       request = request.clone({
         withCredentials: false,
         headers: request.headers.set('Access-Control-Allow-Origin', '*')

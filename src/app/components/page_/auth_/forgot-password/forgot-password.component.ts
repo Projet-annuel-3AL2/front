@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../services/auth/auth.service";
 
@@ -13,7 +13,8 @@ export class ForgotPasswordComponent implements OnInit {
   info: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private _authService: AuthService) { }
+              private _authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -24,7 +25,7 @@ export class ForgotPasswordComponent implements OnInit {
     const formValue = this.userForm.value;
     this._authService.forgotPassword(formValue.username)
       .subscribe(() => {
-        this.info=true;
+        this.info = true;
       }, () => {
       });
   }

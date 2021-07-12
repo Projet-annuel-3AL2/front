@@ -34,8 +34,7 @@ export class PageEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._activatedRoute.params.subscribe( params =>
-    {
+    this._activatedRoute.params.subscribe(params => {
       this.eventId = params["eventId"];
       this.updateEvent().then();
     });
@@ -80,11 +79,11 @@ export class PageEventComponent implements OnInit {
   }
 
   showDialogueUpdateEvent() {
-    this._eventService.event.subscribe(event=>{
-      this._authService.getCurrentUser().subscribe(user=> {
+    this._eventService.event.subscribe(event => {
+      this._authService.getCurrentUser().subscribe(user => {
         const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
           width: '900px',
-          data: {event: event, userSession:user}
+          data: {event: event, userSession: user}
         });
         dialogRef.afterClosed().subscribe(() => {
         });

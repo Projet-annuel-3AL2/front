@@ -4,7 +4,6 @@ import {BehaviorSubject, Observable, timer} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
-import {UserService} from "../user/user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +15,11 @@ export class AuthService {
   constructor(private http: HttpClient) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
-    timer(0,30000).subscribe(()=>this.updateUser());
+    timer(0, 30000).subscribe(() => this.updateUser());
   }
 
-  updateUser(){
-    if(this.getCurrentUsername()) {
+  updateUser() {
+    if (this.getCurrentUsername()) {
       this.getCurrentUser().subscribe();
     }
   }
@@ -50,7 +49,7 @@ export class AuthService {
       }));
   }
 
-  public getCurrentUser(): Observable<User>{
+  public getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${environment.baseUrl}/user/${this.getCurrentUsername()}`)
       .pipe(map(user => {
         this.userSubject.next(user);
@@ -62,11 +61,11 @@ export class AuthService {
     return this.http.get<void>(`${environment.baseUrl}/auth/forgot-password/${username}`);
   }
 
-  public isValidToken(resetToken: string,username:string):Observable<boolean> {
+  public isValidToken(resetToken: string, username: string): Observable<boolean> {
     return this.http.get<boolean>(`${environment.baseUrl}/auth/is-valid-token/${username}/${resetToken}`);
   }
 
-  public resetPassword(resetToken: string,username:string, password: string) {
+  public resetPassword(resetToken: string, username: string, password: string) {
     return this.http.post<void>(`${environment.baseUrl}/auth/reset-password/${username}/${resetToken}`, {password});
   }
 

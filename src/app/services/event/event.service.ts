@@ -30,7 +30,7 @@ export class EventService {
   }
 
   joinEvent(eventId: string): Observable<void> {
-    return this.http.post<void>(`${environment.baseUrl}/event/${eventId}/join`,{}).pipe(map(()=>{
+    return this.http.post<void>(`${environment.baseUrl}/event/${eventId}/join`, {}).pipe(map(() => {
       let event = this.eventSubject.getValue();
       event.isMember = true;
       this.eventSubject.next(event);
@@ -43,7 +43,7 @@ export class EventService {
 
   getEventById(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}`)
-      .pipe(map(event=> {
+      .pipe(map(event => {
         this.eventSubject.next(event);
         return event;
       }));
@@ -113,7 +113,7 @@ export class EventService {
   }
 
   getOwner(eventId: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/event/${eventId}/owner`).pipe(map(owner=>{
+    return this.http.get<User>(`${environment.baseUrl}/event/${eventId}/owner`).pipe(map(owner => {
       let event = this.eventSubject.getValue();
       event.owner = owner;
       this.eventSubject.next(event);
@@ -122,7 +122,7 @@ export class EventService {
   }
 
   getCategory(eventId: string) {
-    return this.http.get<Category>(`${environment.baseUrl}/event/${eventId}/category`).pipe(map(category=>{
+    return this.http.get<Category>(`${environment.baseUrl}/event/${eventId}/category`).pipe(map(category => {
       let event = this.eventSubject.getValue();
       event.category = category;
       this.eventSubject.next(event);
@@ -131,15 +131,16 @@ export class EventService {
   }
 
   getOrganisation(eventId: string) {
-    return this.http.get<Organisation>(`${environment.baseUrl}/event/${eventId}/organisation`).pipe(map(organisation=>{
+    return this.http.get<Organisation>(`${environment.baseUrl}/event/${eventId}/organisation`).pipe(map(organisation => {
       let event = this.eventSubject.getValue();
       event.organisation = organisation;
       this.eventSubject.next(event);
       return organisation;
     }));
   }
+
   getParticipants(eventId: string) {
-    return this.http.get<User[]>(`${environment.baseUrl}/event/${eventId}/participants`).pipe(map(participants=>{
+    return this.http.get<User[]>(`${environment.baseUrl}/event/${eventId}/participants`).pipe(map(participants => {
       let event = this.eventSubject.getValue();
       event.participants = participants;
       this.eventSubject.next(event);
@@ -148,7 +149,7 @@ export class EventService {
   }
 
   isMember(eventId: string) {
-    return this.http.get<boolean>(`${environment.baseUrl}/event/${eventId}/is-member`).pipe(map(isMember=>{
+    return this.http.get<boolean>(`${environment.baseUrl}/event/${eventId}/is-member`).pipe(map(isMember => {
       let event = this.eventSubject.getValue();
       event.isMember = isMember;
       this.eventSubject.next(event);

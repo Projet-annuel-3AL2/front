@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../shared/models/event.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {UserService} from "../../../services/user/user.service";
@@ -23,7 +23,6 @@ export class EventInfosComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
 
   // this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({

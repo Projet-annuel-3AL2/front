@@ -56,7 +56,7 @@ export class DialogCreateEventComponent implements OnInit {
       newEvent.description = data.descriptionEvent;
       newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
 
-      this._mapService.getAddressInfos(data.address).subscribe(address=>{
+      this._mapService.getAddressInfos(data.address).subscribe(address => {
         newEvent.latitude = 100.11;
         newEvent.longitude = 100.12;
         console.log(newEvent)
@@ -83,6 +83,17 @@ export class DialogCreateEventComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  searchAddress($event: any) {
+    clearTimeout(this.addressSearchTimeOut);
+    this.addressSearchTimeOut = setTimeout(() => {
+      if ($event.target.value === undefined || $event.target.value === '') {
+        this.addresses = undefined;
+        return;
+      }
+      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+    }, 500);
+  }
+
   private getAllCategories() {
     this._categoryService.getAllCategory().subscribe(categories => {
       this.listCategory$ = categories
@@ -101,16 +112,5 @@ export class DialogCreateEventComponent implements OnInit {
       pictureFile: new FormControl(),
       organisationEvent: new FormControl(),
     });
-  }
-
-  searchAddress($event: any) {
-    clearTimeout(this.addressSearchTimeOut);
-    this.addressSearchTimeOut = setTimeout(()=> {
-      if($event.target.value === undefined || $event.target.value === ''){
-        this.addresses = undefined;
-        return;
-      }
-      this._mapService.searchAddresses($event.target.value).subscribe(addresses=>this.addresses=addresses);
-    }, 500);
   }
 }

@@ -9,8 +9,14 @@
   margin-top: 9px;
   height: 35px;
 }
-.button-add-friend-disable:hover span {display:none}
-.button-add-friend-disable:hover:before {content:"Annuler la demande"}
+
+.button-add-friend-disable:hover span {
+  display: none
+}
+
+.button-add-friend-disable:hover:before {
+  content: "Annuler la demande"
+}
 
 .spacer {
   flex: 1 1 auto;

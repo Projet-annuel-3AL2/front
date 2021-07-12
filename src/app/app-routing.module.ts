@@ -18,13 +18,17 @@ const appRoutes: Routes = [
   {path: 'register', component: RegisterComponent, canActivate: [NegateAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [NegateAuthGuardService]},
   {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NegateAuthGuardService]},
-  {path: 'reset-password/:username/:resetToken', component: PasswordRecoveryComponent, canActivate: [NegateAuthGuardService]},
+  {
+    path: 'reset-password/:username/:resetToken',
+    component: PasswordRecoveryComponent,
+    canActivate: [NegateAuthGuardService]
+  },
   {path: 'events', component: PageListEventComponent},
   {path: 'event/:eventId', component: PageEventComponent},
   {path: 'user/:username', component: ProfileUserComponent},
   {path: 'organisation/:id', component: ProfilOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
-  {path: '**', redirectTo:"/"},
+  {path: '**', redirectTo: "/"},
 ];
 
 @NgModule({

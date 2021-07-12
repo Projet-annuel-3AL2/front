@@ -1,5 +1,5 @@
-import {AfterViewChecked, AfterViewInit, Component, Input, OnInit} from '@angular/core';
-import {latLng, MapOptions, tileLayer, Map} from "leaflet";
+import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
+import {latLng, Map, MapOptions, tileLayer} from "leaflet";
 
 @Component({
   selector: 'app-map',
@@ -12,24 +12,35 @@ export class MapComponent implements OnInit, AfterViewChecked {
   @Input()
   latitude: number;
   @Input()
-  zoomControl:boolean = true;
+  zoomControl: boolean = true;
   @Input()
-  dragging:boolean = true;
+  dragging: boolean = true;
   map: Map;
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
-  ngAfterViewChecked(){
+
+  ngAfterViewChecked() {
     this.map?.invalidateSize();
   }
-  getOptions():MapOptions{
-    return {zoomControl:this.zoomControl,dragging:this.dragging,center: latLng(this.latitude,this.longitude),zoom:12, layers:[tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18})]}
+
+  getOptions(): MapOptions {
+    return {
+      zoomControl: this.zoomControl,
+      dragging: this.dragging,
+      center: latLng(this.latitude, this.longitude),
+      zoom: 12,
+      layers: [tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18})]
+    }
   }
+
   onMapReady(map: Map): void {
     this.map = map;
-     setTimeout(() => {
-       map.invalidateSize();
-    },0);
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 0);
   }
 }

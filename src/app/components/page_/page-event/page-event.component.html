@@ -5,9 +5,11 @@
   <div class="col-md-6 my-3">
     <div class="event-scroll">
       <div class="event-card-full">
-        <img [src]="(_eventService.event|async)?.picture?.link || 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'" alt="" class="rounded"
-             height="300px"
-             style="object-fit: none" width="100%">
+        <img
+          [src]="(_eventService.event|async)?.picture?.link || 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+          alt="" class="rounded"
+          height="300px"
+          style="object-fit: none" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
             <div class="titre-event" flflex="60">
@@ -46,7 +48,8 @@
           <div class="date-area-event">
             <div class="dates-event">
               <p><i class="fas fa-clock"></i>
-                {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}} -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
+                {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}}
+                -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
             </div>
           </div>
         </div>

@@ -23,11 +23,14 @@
           <mat-label>Adresse de l'événement</mat-label>
           <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
             <label>
-              <input formControlName="address" matInput placeholder="Adresse" [matAutocompleteConnectedTo]="origin" [matAutocomplete]="auto" (input)="searchAddress($event)" required>
+              <input (input)="searchAddress($event)" [matAutocompleteConnectedTo]="origin" [matAutocomplete]="auto" formControlName="address"
+                     matInput placeholder="Adresse" required>
             </label>
           </div>
           <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
-            <mat-option *ngFor="let option of addresses" [value]="option?.address?.house_number + option?.address?.road+ option?.address?.town + option?.address?.postcode+ option?.address?.country">{{option?.address?.house_number}} {{option?.address?.road}}, {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
+            <mat-option *ngFor="let option of addresses"
+                        [value]="option?.address?.house_number + option?.address?.road+ option?.address?.town + option?.address?.postcode+ option?.address?.country">{{option?.address?.house_number}} {{option?.address?.road}}
+              , {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
           </mat-autocomplete>
 
         </mat-form-field>
@@ -35,7 +38,8 @@
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
           <mat-label>Limite de participants</mat-label>
-          <input [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2" placeholder="Ex. 30"
+          <input [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2"
+                 placeholder="Ex. 30"
                  required type="number">
           <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
         </mat-form-field>

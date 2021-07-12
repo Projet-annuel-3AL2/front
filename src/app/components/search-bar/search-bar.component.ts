@@ -21,7 +21,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   searchData($event: any): void {
-    if($event.target.value === undefined || $event.target.value === ''){
+    if ($event.target.value === undefined || $event.target.value === '') {
       this.searchResult = undefined;
       return;
     }

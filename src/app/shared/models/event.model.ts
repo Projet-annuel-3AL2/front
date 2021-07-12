@@ -20,5 +20,5 @@ export class Event {
   owner: User;
   participants: User[];
   posts: Post[];
-  isMember:boolean;
+  isMember: boolean;
 }
