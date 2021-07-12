@@ -104,7 +104,7 @@ export class EventService {
     return this.http.get<Event[]>(`${environment.baseUrl}/event/suggestions/events`);
   }
 
-  getProfil(eventId: string): Observable<Event> {
+  getProfile(eventId: string): Observable<Event> {
     return this.http.get<Event>(`${environment.baseUrl}/event/${eventId}/profil`);
   }
 

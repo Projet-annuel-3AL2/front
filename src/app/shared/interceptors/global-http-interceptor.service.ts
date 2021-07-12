@@ -13,10 +13,18 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    request = request.clone({
-      withCredentials: true,
-      headers: request.headers.set('Access-Control-Allow-Origin', environment.baseUrl)
-    });
+    if (request.url.search("https://nominatim.openstreetmap.org/") === -1 ) {
+      request = request.clone({
+        withCredentials: true,
+        headers: request.headers.set('Access-Control-Allow-Origin', environment.baseUrl)
+      });
+    }
+    else{
+      request = request.clone({
+        withCredentials: false,
+        headers: request.headers.set('Access-Control-Allow-Origin', '*')
+      });
+    }
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {

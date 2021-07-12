@@ -78,7 +78,7 @@ export class CardEventComponent implements OnInit {
   }
 
   private getEvent() {
-    this._eventService.getProfil(this.event.id).subscribe({
+    this._eventService.getProfile(this.event.id).subscribe({
       next: event => {
         this.event = event;
         this.canShow = true;

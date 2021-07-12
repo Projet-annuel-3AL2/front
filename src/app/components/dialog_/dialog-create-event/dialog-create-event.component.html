@@ -1,32 +1,40 @@
-<h1 *ngIf="data.organisation != null" class="update-event-title" mat-dialog-title>Création d'un Évènement
+<h1 *ngIf="data.organisation != null" class="update-event-title" mat-dialog-title>Création d'un événement
   par {{data.organisation.name}}</h1>
-<h1 *ngIf="data.organisation === null" class="update-event-title" mat-dialog-title>Création d'un Évènement
+<h1 *ngIf="data.organisation === null" class="update-event-title" mat-dialog-title>Création d'un événement
   par {{data.userSession.username}}</h1>
 <form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
   <div mat-dialog-content>
     <div class="update-event-grid">
       <div class="form-field-name-event">
         <mat-form-field appearance="fill">
-          <mat-label>Nom de l'Évènement</mat-label>
-          <input formControlName="nameEvent" matInput placeholder="Nom de l'Évènement" required>
+          <mat-label>Nom de l'événement</mat-label>
+          <input formControlName="nameEvent" matInput placeholder="Nom de l'événement" required>
         </mat-form-field>
       </div>
       <div class="form-field-description">
         <mat-form-field>
-          <mat-label>Description de l'Évènement</mat-label>
+          <mat-label>Description de l'événement</mat-label>
           <textarea class="textarea-description" formControlName="descriptionEvent" matInput
-                    placeholder="Ex. L'Évènement se ..."></textarea>
+                    placeholder="Ex. L'événement se ..."></textarea>
         </mat-form-field>
       </div>
       <div class="form-field-address">
         <mat-form-field appearance="fill">
-          <mat-label>Adresse de l'Évènement</mat-label>
-          <input formControlName="address" matInput placeholder="Adresse" required>
+          <mat-label>Adresse de l'événement</mat-label>
+          <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
+            <label>
+              <input formControlName="address" matInput placeholder="Adresse" [matAutocompleteConnectedTo]="origin" [matAutocomplete]="auto" (input)="searchAddress($event)" required>
+            </label>
+          </div>
+          <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
+            <mat-option *ngFor="let option of addresses" [value]="option?.address?.house_number + option?.address?.road+ option?.address?.town + option?.address?.postcode+ option?.address?.country">{{option?.address?.house_number}} {{option?.address?.road}}, {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
+          </mat-autocomplete>
+
         </mat-form-field>
       </div>
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
-          <mat-label>Nb. de participant Max</mat-label>
+          <mat-label>Limite de participants</mat-label>
           <input [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2" placeholder="Ex. 30"
                  required type="number">
           <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
@@ -34,7 +42,7 @@
       </div>
       <div class="form-field-categories">
         <mat-form-field appearance="fill">
-          <mat-label>Categories:</mat-label>
+          <mat-label>Catégorie</mat-label>
           <mat-select formControlName="categoryEvent" matNativeControl required>
             <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}</mat-option>
           </mat-select>
@@ -67,7 +75,7 @@
   <div class="dialog-actions-update-event" mat-dialog-actions>
     <div class="button-grid-update-event">
       <div class="button-cancel">
-        <button (click)="onNoClick()" mat-button>Annuler</button>
+        <button (click)="onNoClick()" mat-button type="button">Annuler</button>
       </div>
       <div class="button-send">
         <button class="button-send" mat-raised-button type="submit">Envoyer</button>

@@ -20,8 +20,8 @@
                 <div class="user-card-username">
                   <p>{{(_userService.user | async).username}}</p>
                 </div>
-                <div class="user-card-certification">
-                  <fa-icon *ngIf="(_userService.user | async).certification" [icon]="faCheckCircle"></fa-icon>
+                <div class="user-card-certification align-self-center ms-1">
+                  <fa-icon *ngIf="(_userService.user | async).certification" [icon]="faCheckCircle" size="2x"></fa-icon>
                 </div>
               </div>
               <div fxLayoutAlign="row center end">
@@ -52,9 +52,7 @@
                   </button>
                   <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                    <div *ngIf="(_userService.user | async).username === _authService.getCurrentUsername() && (_authService.user | async).certification !== undefined">
-                      <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
-                    </div>
+                    <button *ngIf="(_userService.user | async).username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== undefined" (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                   </div>
                 </div>
               </div>

@@ -13,10 +13,16 @@ export class AuthService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient, private _userService: UserService) {
+  constructor(private http: HttpClient) {
     this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
     this.user = this.userSubject.asObservable();
-    timer(0,30000).subscribe(()=>this.getCurrentUser());
+    timer(0,30000).subscribe(()=>this.updateUser());
+  }
+
+  updateUser(){
+    if(this.getCurrentUsername()) {
+      this.getCurrentUser().subscribe();
+    }
   }
 
   public register(mail: string, username: string, password: string) {
