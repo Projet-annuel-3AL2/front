@@ -72,7 +72,6 @@ export class EventFilterComponent implements OnInit {
     rechercheEvent.endDate = data.endDate;
     rechercheEvent.startDate = data.startDate;
     rechercheEvent.range = data.range;
-    console.log(rechercheEvent);
     // this.getEventWithRecherche(rechercheEvent);
   }
 
@@ -95,7 +94,7 @@ export class EventFilterComponent implements OnInit {
 
   // TODO : Revoir la fonctionnalité du filter pour envoyer le résultat de la recherche dans une un autre component
   private getEventWithRecherche(rechercheEvent: Search_eventModel) {
-    this._eventService.getEventWithRecherche(rechercheEvent).subscribe(events => {
+    this._eventService.searchEvents(rechercheEvent).subscribe(events => {
       this.listEventRecherche = events;
     });
   }

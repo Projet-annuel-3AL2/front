@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PostShareCardComponent } from './post-share-card.component';
+import {PostShareCardComponent} from './post-share-card.component';
 
 describe('PostShareCardComponent', () => {
   let component: PostShareCardComponent;
@@ -8,9 +8,9 @@ describe('PostShareCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostShareCardComponent ]
+      declarations: [PostShareCardComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

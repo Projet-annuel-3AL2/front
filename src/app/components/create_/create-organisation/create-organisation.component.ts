@@ -48,7 +48,6 @@ export class CreateOrganisationComponent implements OnInit {
     newOrganisation.owner = this.user$;
     newOrganisation.profilePicture = data.profilPicture;
     newOrganisation.bannerPicture = data.bannerPicture;
-    console.log(newOrganisation);
     // TODO : create-organisation onClickSubmit() pas activé
     // this._organisationService.postOrganisation(newOrganisation);
   }

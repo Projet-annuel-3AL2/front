@@ -12,8 +12,8 @@ import {AuthService} from "../../../services/auth/auth.service";
 })
 export class TimelineComponent implements OnInit, OnDestroy {
   userSession: User;
-  offset:number=0;
-  limit:number=20;
+  offset: number = 0;
+  limit: number = 20;
 
   constructor(public _postService: PostService,
               private _userService: UserService,
