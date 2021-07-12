@@ -89,8 +89,11 @@
             </div>
           </mat-tab>
           <mat-tab label="Événements">
-            <app-profil-list-event [listEvent]="listEvent$"
-                                   [userSession]="(_authService.user | async)"></app-profil-list-event>
+            <div class="my-3">
+              <div *ngFor="let event of (_userService.user | async).eventsParticipation">
+                <app-card-event [event]="event"></app-card-event>
+              </div>
+            </div>
           </mat-tab>
         </mat-tab-group>
       </div>
@@ -103,3 +106,4 @@
     </div>
   </div>
 </div>
+

@@ -150,9 +150,11 @@ export class EventService {
 
   isMember(eventId: string) {
     return this.http.get<boolean>(`${environment.baseUrl}/event/${eventId}/is-member`).pipe(map(isMember => {
-      let event = this.eventSubject.getValue();
-      event.isMember = isMember;
-      this.eventSubject.next(event);
+      if(this.eventSubject.getValue()) {
+        let event = this.eventSubject.getValue();
+        event.isMember = isMember;
+        this.eventSubject.next(event);
+      }
       return isMember;
     }));
   }

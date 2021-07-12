@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
 import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
-import {Event} from '../../../shared/models/event.model';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
@@ -23,7 +22,6 @@ export class ProfileUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   username: string;
-  listEvent$: Event[] = [];
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
@@ -49,6 +47,7 @@ export class ProfileUserComponent implements OnInit {
     await this._userService.getByUsername(this.username).toPromise();
     await this._userService.getPosts(this.username).toPromise();
     await this._userService.getFriends(this.username).toPromise();
+    await this._userService.getParticipations(this.username).toPromise();
     await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
   }
 
@@ -112,19 +111,6 @@ export class ProfileUserComponent implements OnInit {
       error: err => {
         if (!environment.production) {
           console.log(err)
-        }
-      }
-    });
-  }
-
-  private getEventParticipations() {
-    this._userService.getParticipations(this.username).subscribe({
-      next: events => {
-        this.listEvent$ = events;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
         }
       }
     });

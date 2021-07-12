@@ -58,7 +58,13 @@ export class UserService {
   }
 
   getParticipations(username: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`);
+    return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`)
+      .pipe(map(participations => {
+        let user = this.userSubject.getValue();
+        user.eventsParticipation = participations;
+        this.userSubject.next(user);
+        return participations;
+      }));
   }
 
   getFriends(username: string): Observable<User[]> {
