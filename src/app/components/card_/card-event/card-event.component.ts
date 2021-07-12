@@ -40,7 +40,7 @@ export class CardEventComponent implements OnInit {
 
 
   joinEvent(id: string) {
-    this._eventService.postAddParticipant(id).subscribe({
+    this._eventService.joinEvent(id).subscribe({
       next: () => {
         this.isAbleToJoin = false;
       },
@@ -78,7 +78,7 @@ export class CardEventComponent implements OnInit {
   }
 
   private getEvent() {
-    this._eventService.getProfil(this.event.id).subscribe({
+    this._eventService.getProfile(this.event.id).subscribe({
       next: event => {
         this.event = event;
         this.canShow = true;

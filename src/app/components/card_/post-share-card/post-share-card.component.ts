@@ -13,7 +13,8 @@ export class PostShareCardComponent implements OnInit {
   faShare = faShare;
   faCheckCircle = faCheckCircle;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

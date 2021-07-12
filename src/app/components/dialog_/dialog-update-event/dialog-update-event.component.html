@@ -25,7 +25,8 @@
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
           <mat-label>Nb. de participant Max</mat-label>
-          <input [(ngModel)]="data.event.participantsLimit" [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2"
+          <input [(ngModel)]="data.event.participantsLimit" [formControl]="limitParticipant"
+                 formControlName="participantsLimitEvent" matInput min="2"
                  placeholder="Ex. 30" required type="number">
           <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
         </mat-form-field>

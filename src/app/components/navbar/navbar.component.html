@@ -34,7 +34,7 @@
         {{_authService.getCurrentUsername()}}
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/user/' + _authService.getCurrentUsername()]">
+        <button [routerLink]="['/user/' + _authService.getCurrentUsername()]" mat-menu-item>
           <span>Profil</span>
         </button>
         <button mat-menu-item routerLink="/settings">

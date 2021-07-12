@@ -16,33 +16,32 @@ export class DialogCreatePostComponent implements OnInit {
   faSmile = faSmile;
   faCalendarAlt = faCalendarAlt;
   faUserFriends = faUserFriends;
-  caretPosition:number;
+  medias: File[];
+  mediasURL: string[];
+  caretPosition: number;
   showPopup: boolean = false;
   showEmojiPicker: boolean = false;
   text: string;
+
   constructor(public _authService: AuthService,
               private _postService: PostService,
               public dialogRef: MatDialogRef<DialogCreatePostComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {sharesPost: Post}) { }
+              @Inject(MAT_DIALOG_DATA) public data: { sharesPost: Post }) {
+  }
 
   ngOnInit(): void {
   }
 
   addEmoji($event: any) {
-    if(this.text === undefined){
+    if (this.text === undefined) {
       this.text = $event.emoji.native;
       return;
     }
-    this.text=this.text.slice(0, this.caretPosition) + $event.emoji.native + this.text.slice(this.caretPosition);
+    this.text = this.text.slice(0, this.caretPosition) + $event.emoji.native + this.text.slice(this.caretPosition);
   }
 
   sendPost() {
-    let post: Post = new Post();
-    post.text = this.text;
-    if(this.data?.sharesPost !== undefined){
-      post.sharesPost = this.data.sharesPost;
-    }
-    this._postService.createPost(post)
+    this._postService.createPost(this.text, this.data?.sharesPost, this.medias)
       .subscribe();
     this.dialogRef.close();
   }
@@ -50,8 +49,35 @@ export class DialogCreatePostComponent implements OnInit {
   setCaretPosition($event: any) {
     if ($event.target.selectionStart) {
       this.caretPosition = $event.target.selectionStart;
-    } else{
+    } else {
       this.caretPosition = 0;
     }
+  }
+
+  openFileSelector() {
+    document.getElementById('file-selector').click();
+  }
+
+  addImages($event: any) {
+    const files: File[] = Array.from($event.target.files);
+    if (files.length > 4 && files.some((file: File) => file.type.match(/image\/*/) === null)) {
+      console.log('invalid file input');
+      return;
+    }
+    this.medias = files;
+    this.mediasURL = [];
+    for (let file of files) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (_event) => {
+        if (typeof reader.result === "string") {
+          this.mediasURL.push(reader.result);
+        }
+      }
+    }
+  }
+
+  removeImage() {
+
   }
 }

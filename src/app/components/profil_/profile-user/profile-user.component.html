@@ -20,27 +20,30 @@
                 <div class="user-card-username">
                   <p>{{(_userService.user | async).username}}</p>
                 </div>
-                <div class="user-card-certification">
-                  <fa-icon *ngIf="(_userService.user | async).certification" [icon]="faCheckCircle"></fa-icon>
+                <div class="user-card-certification align-self-center ms-1">
+                  <fa-icon *ngIf="(_userService.user | async).certification" [icon]="faCheckCircle" size="2x"></fa-icon>
                 </div>
               </div>
               <div fxLayoutAlign="row center end">
                 <div *ngIf="(_userService.user | async).username !== _authService.getCurrentUsername()">
                   <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
-                          class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i>Ajouter
+                          class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true"
+                                                                                 class="fa fa-user-plus"></i>Ajouter
                   </button>
                   <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
                           class="button-add-friend" mat-raised-button
-                          matTooltipPosition="above"
-                          matTooltip="Enlever de la liste des amis">
+                          matTooltip="Enlever de la liste des amis"
+                          matTooltipPosition="above">
                     Retirer des amis
                   </button>
-                  <button (click)="this.showDialogueRespondFriendRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+                  <button (click)="this.showDialogueRespondFriendRequest()"
+                          *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
                           class="ml-auto button-add-friend" mat-raised-button
-                          matTooltipPosition="above"
-                          matTooltip="Accepter ou Refuser la demande d'amis">Répondre
+                          matTooltip="Accepter ou Refuser la demande d'amis"
+                          matTooltipPosition="above">Répondre
                   </button>
-                  <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
+                  <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+                          class="ml-auto button-add-friend-disable"
                           mat-raised-button><span>Invitation envoyé</span>
                   </button>
                 </div>
@@ -52,9 +55,10 @@
                   </button>
                   <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                    <div *ngIf="(_userService.user | async).id === (_authService.user | async).id && (_authService.user | async).certification !== undefined">
-                      <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
-                    </div>
+                    <button
+                      (click)="showDialogueCreateEvent()"
+                      *ngIf="(_userService.user | async).username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== undefined" mat-menu-item>Créer un évènement
+                    </button>
                   </div>
                 </div>
               </div>
@@ -70,11 +74,12 @@
       <div class="tab-user-profil">
         <mat-tab-group mat-align-tabs="center" style="min-height: 100%">
           <mat-tab label="Post">
-              <cdk-virtual-scroll-viewport autosize style="height: 500px; width: 350px" class="justify-content-center w-100">
-                <div *cdkVirtualFor="let post of (_userService.user|async).createdPosts" class="my-3">
-                  <post [post]="post"></post>
-                </div>
-              </cdk-virtual-scroll-viewport>
+            <cdk-virtual-scroll-viewport autosize class="justify-content-center w-100"
+                                         style="height: 500px; width: 350px">
+              <div *cdkVirtualFor="let post of (_userService.user|async).createdPosts" class="my-3">
+                <post [post]="post"></post>
+              </div>
+            </cdk-virtual-scroll-viewport>
           </mat-tab>
           <mat-tab label="Amis">
             <div class="my-3">
@@ -84,7 +89,8 @@
             </div>
           </mat-tab>
           <mat-tab label="Événements">
-            <app-profil-list-event [listEvent]="listEvent$" [userSession]="(_authService.user | async)"></app-profil-list-event>
+            <app-profil-list-event [listEvent]="listEvent$"
+                                   [userSession]="(_authService.user | async)"></app-profil-list-event>
           </mat-tab>
         </mat-tab-group>
       </div>

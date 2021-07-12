@@ -20,8 +20,16 @@ export class PostService {
     this.posts = this.postsSubject.asObservable();
   }
 
-  createPost(post: Post) {
-    return this.http.post<Post>(`${environment.baseUrl}/post`, post).pipe(map(post=>{
+  createPost(text: string, sharesPost: Post, files: File[]) {
+    const formData = new FormData();
+    formData.append("text", text);
+    if (sharesPost !== undefined && sharesPost !== null) {
+      formData.append("sharesPost", JSON.stringify(sharesPost));
+    }
+    for (let file of files) {
+      formData.append("post_medias", file);
+    }
+    return this.http.post<Post>(`${environment.baseUrl}/post`, formData).pipe(map(post => {
       this.postsSubject.next([post].concat(this.postsSubject.getValue()));
       return post;
     }));
@@ -33,7 +41,7 @@ export class PostService {
 
   getTimeline(): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/post/timeline/0/0`)
-      .pipe(map(posts=> {
+      .pipe(map(posts => {
         this.postsSubject.next(posts);
         return posts;
       }));
@@ -69,7 +77,7 @@ export class PostService {
 
   deletePost(postId: string): Observable<void> {
     return this.http.delete<void>(`${environment.baseUrl}/post/${postId}`).pipe(map(() => {
-      this.postsSubject.next(this.postsSubject.getValue().filter(a=>a.id !==postId));
+      this.postsSubject.next(this.postsSubject.getValue().filter(a => a.id !== postId));
     }));
   }
 

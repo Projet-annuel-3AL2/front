@@ -11,6 +11,7 @@ import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MapService} from "../../../services/map/map.service";
 
 @Component({
   selector: 'app-dialog-create-event',
@@ -18,6 +19,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./dialog-create-event.component.css']
 })
 export class DialogCreateEventComponent implements OnInit {
+
+  addresses: unknown[];
+  addressSearchTimeOut: number;
 
   formData: FormGroup;
   listCategory$: Category[];
@@ -30,6 +34,7 @@ export class DialogCreateEventComponent implements OnInit {
               private _categoryService: CategoryService,
               private _organisationService: OrganisationService,
               private _snackBar: MatSnackBar,
+              private _mapService: MapService,
               @Inject(MAT_DIALOG_DATA) public data: { userSession: User, organisation: Organisation }) {
   }
 
@@ -51,21 +56,20 @@ export class DialogCreateEventComponent implements OnInit {
       newEvent.description = data.descriptionEvent;
       newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
 
-      // TODO : convertir address en coordonées gps et gestion fichier
-      // updateEvent.picture = data.pictureFile;
-      newEvent.latitude = 100.11;
-      newEvent.longitude = 100.12;
-      console.log(newEvent)
-      this._eventService.postEvent(newEvent).subscribe({
+      this._mapService.getAddressInfos(data.address).subscribe(address => {
+        newEvent.latitude = address.lat;
+        newEvent.longitude = address.lon;
+        this._eventService.createEvent(newEvent).subscribe({
 
-        next: () => {
-          this.dialogRef.close()
-        },
-        error: err => {
-          if (!environment.production) {
-            console.log(err);
+          next: () => {
+            this.dialogRef.close()
+          },
+          error: err => {
+            if (!environment.production) {
+              console.log(err);
+            }
           }
-        }
+        });
       });
     } else {
       this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
@@ -76,6 +80,17 @@ export class DialogCreateEventComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  searchAddress($event: any) {
+    clearTimeout(this.addressSearchTimeOut);
+    this.addressSearchTimeOut = setTimeout(() => {
+      if ($event.target.value === undefined || $event.target.value === '') {
+        this.addresses = undefined;
+        return;
+      }
+      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+    }, 500);
   }
 
   private getAllCategories() {
