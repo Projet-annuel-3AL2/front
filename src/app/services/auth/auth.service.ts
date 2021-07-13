@@ -5,6 +5,7 @@ import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {CookieService} from "ngx-cookie-service";
+import {Event} from "../../shared/models/event.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,10 @@ export class AuthService {
     timer(0, 30000).subscribe(() => this.updateUser());
   }
 
-  updateUser() {
+  async updateUser() {
     if (this.getCurrentUsername()) {
-      this.getCurrentUser().subscribe();
+      await this.getCurrentUser().toPromise();
+      await this.getParticipations().toPromise();
     }
   }
 
@@ -55,6 +57,16 @@ export class AuthService {
       .pipe(map(user => {
         this.userSubject.next(user);
         return user;
+      }));
+  }
+
+  getParticipations(): Observable<Event[]> {
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/participation`)
+      .pipe(map(participations => {
+        let user = this.userSubject.getValue();
+        user.eventsParticipation = participations;
+        this.userSubject.next(user);
+        return participations;
       }));
   }
 

@@ -20,11 +20,17 @@ export class PostService {
     this.posts = this.postsSubject.asObservable();
   }
 
-  createPost(text: string, sharesPost: string, files: File[]) {
+  createPost(text: string, sharesPost: string, sharedEvent: string, files: File[]) {
     const formData = new FormData();
+    if(text===undefined) {
+      text = "";
+    }
     formData.append("text", text);
     if (sharesPost !== undefined && sharesPost !== null) {
       formData.append("sharesPost", sharesPost);
+    }
+    if (sharedEvent !== undefined && sharedEvent !== null) {
+      formData.append("sharedEvent", sharedEvent);
     }
     if(files){
       for (let file of files) {
