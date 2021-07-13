@@ -92,6 +92,7 @@ export class DialogCreatePostComponent implements OnInit {
 
   searchEvents($event: any) {
     this._searchService.searchEvent($event.target.value).subscribe(events=> {
+      console.log(events)
       this.events = events;
     });
   }

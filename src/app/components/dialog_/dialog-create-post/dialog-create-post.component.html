@@ -42,12 +42,12 @@
       <mat-menu #eventPicker>
         <input matInput
                (click) = "$event.stopPropagation()" (keyup)="searchEvents($event)"
-               placeholder="Evenement" type="text">
+               placeholder="Chercher un événement" type="text">
         <p>Vos événements</p>
         <button *ngFor="let event of (_authService.user|async)?.eventsParticipation" (click)="data.sharedEvent=event" mat-menu-item>{{event.name}}</button>
         <div *ngIf="events?.length > 0">
           <p class="text-center fw-bold">Autres événements</p>
-          <mat-option *ngFor="let option of events" (click)="data.sharedEvent=option">{{option.name}}</mat-option>
+          <button *ngFor="let option of events" (click)="data.sharedEvent=option" mat-menu-item>{{option.name}}</button>
         </div>
       </mat-menu>
       <fa-icon [icon]="faUserFriends" class="mx-1" size="2x"></fa-icon>
