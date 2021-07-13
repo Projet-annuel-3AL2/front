@@ -32,7 +32,7 @@ export class AuthService {
     })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
-        this.getCurrentUser();
+        this.updateUser();
         return user;
       }));
   }
@@ -44,7 +44,7 @@ export class AuthService {
     })
       .pipe(map(user => {
         localStorage.setItem('user', JSON.stringify(user.username));
-        this.getCurrentUser()
+        this.updateUser();
         return user;
       }));
   }

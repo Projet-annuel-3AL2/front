@@ -41,7 +41,7 @@ export class DialogCreatePostComponent implements OnInit {
   }
 
   sendPost() {
-    this._postService.createPost(this.text, this.data?.sharesPost, this.medias)
+    this._postService.createPost(this.text, this.data?.sharesPost.id, this.medias)
       .subscribe();
     this.dialogRef.close();
   }
