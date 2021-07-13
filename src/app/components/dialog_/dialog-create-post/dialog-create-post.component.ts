@@ -4,6 +4,9 @@ import {faCalendarAlt, faImage, faSmile, faTimes, faUserFriends} from '@fortawes
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {SearchService} from "../../../services/search/search.service";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-dialog-create-post',
@@ -18,15 +21,16 @@ export class DialogCreatePostComponent implements OnInit {
   faUserFriends = faUserFriends;
   medias: File[];
   mediasURL: string[];
-  caretPosition: number;
+  caretPosition: number=0;
   showPopup: boolean = false;
-  showEmojiPicker: boolean = false;
   text: string;
-
+  events: Event[];
   constructor(public _authService: AuthService,
               private _postService: PostService,
+              private _searchService: SearchService,
               public dialogRef: MatDialogRef<DialogCreatePostComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: { sharesPost: Post }) {
+              private _snackBar: MatSnackBar,
+              @Inject(MAT_DIALOG_DATA) public data: {sharedEvent: Event, sharesPost: Post }) {
   }
 
   ngOnInit(): void {
@@ -37,12 +41,17 @@ export class DialogCreatePostComponent implements OnInit {
       this.text = $event.emoji.native;
       return;
     }
-    this.text = this.text.slice(0, this.caretPosition) + $event.emoji.native + this.text.slice(this.caretPosition);
+    this.text = [this.text.slice(0, this.caretPosition), $event.emoji.native, this.text.slice(this.caretPosition)].join('');
+    this.caretPosition+=$event.emoji.native.length;
   }
 
   sendPost() {
-    this._postService.createPost(this.text, this.data?.sharesPost.id, this.medias)
-      .subscribe();
+    console.log(this.data)
+    if(this.text === undefined && this.text === '' && this.medias.length <= 0 && this.data.sharesPost === undefined && this.data.sharedEvent === undefined) {
+      this._snackBar.open("Vous ne pouvez créer un poste s'il est vide.", "Fermer");
+      return;
+    }
+    this._postService.createPost(this.text, this.data?.sharesPost?.id, this.data?.sharedEvent?.id, this.medias).subscribe();
     this.dialogRef.close();
   }
 
@@ -60,8 +69,12 @@ export class DialogCreatePostComponent implements OnInit {
 
   addImages($event: any) {
     const files: File[] = Array.from($event.target.files);
-    if (files.length > 4 && files.some((file: File) => file.type.match(/image\/*/) === null)) {
-      console.log('invalid file input');
+    if(files.length > 4){
+      this._snackBar.open("Vous ne pouvez ajouter que 4 medias au maximum.", "Fermer");
+      return;
+    }
+    if (files.some((file: File) => file.type.match(/image\/*/) === null)) {
+      this._snackBar.open("Vous ne pouvez ajouter que des images.", "Fermer");
       return;
     }
     this.medias = files;
@@ -77,7 +90,10 @@ export class DialogCreatePostComponent implements OnInit {
     }
   }
 
-  removeImage() {
-
+  searchEvents($event: any) {
+    this._searchService.searchEvent($event.target.value).subscribe(events=> {
+      console.log(events)
+      this.events = events;
+    });
   }
 }
