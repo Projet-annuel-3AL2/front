@@ -45,6 +45,8 @@ export class DialogUpdateEventComponent implements OnInit {
     console.log(this.updatedPicture)
     this._eventService.putEvent(this.updateEvent).subscribe({
 
+    this._eventService.updateEvent(updateEvent).subscribe({
+
       next: () => {
         this.dialogRef.close()
       },

@@ -6,7 +6,7 @@ import {Event} from "../../shared/models/event.model";
 import {EventService} from "../../services/event/event.service";
 import {CategoryService} from "../../services/category/category.service";
 import {Category} from "../../shared/models/category.model";
-import {RechercheEventModel} from "../../shared/models/rechercheEvent.model";
+import {Search_eventModel} from "../../shared/models/search_event.model";
 
 export interface EventDialogData {
   latitude: any;
@@ -65,14 +65,13 @@ export class EventFilterComponent implements OnInit {
   }
 
   onclickSubmit(data) {
-    const rechercheEvent = new RechercheEventModel();
+    const rechercheEvent = new Search_eventModel();
     rechercheEvent.latitude = data.latitude;
     rechercheEvent.longitude = data.longitude;
     rechercheEvent.category = data.category;
     rechercheEvent.endDate = data.endDate;
     rechercheEvent.startDate = data.startDate;
     rechercheEvent.range = data.range;
-    console.log(rechercheEvent);
     // this.getEventWithRecherche(rechercheEvent);
   }
 
@@ -94,8 +93,8 @@ export class EventFilterComponent implements OnInit {
   }
 
   // TODO : Revoir la fonctionnalité du filter pour envoyer le résultat de la recherche dans une un autre component
-  private getEventWithRecherche(rechercheEvent: RechercheEventModel) {
-    this._eventService.getEventWithRecherche(rechercheEvent).subscribe(events => {
+  private getEventWithRecherche(rechercheEvent: Search_eventModel) {
+    this._eventService.searchEvents(rechercheEvent).subscribe(events => {
       this.listEventRecherche = events;
     });
   }

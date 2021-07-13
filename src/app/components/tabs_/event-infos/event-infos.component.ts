@@ -1,10 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../shared/models/event.model";
-import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
-import {User} from "../../../shared/models/user.model";
-import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-event-infos',
@@ -20,6 +18,7 @@ export class EventInfosComponent implements OnInit {
   isFollowing: boolean = false;
   isOrganisation: boolean = true;
   constructor(private _organisationService: OrganisationService,
+              public _authService: AuthService,
               private _userService: UserService) {
 
   }
@@ -33,58 +32,6 @@ export class EventInfosComponent implements OnInit {
     }
   }
 
-  canFollow() {
-    this._userService.isFollowingOrganisation(this.organisation$.id).subscribe({
-      next: bool => {
-        this.isFollowing = bool;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-  followOrganisation() {
-    this._organisationService.followOrganisation(this.organisation$.id).subscribe({
-      next: () => {
-        this.isFollowing = true;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-  unfollowOrganisation() {
-    this._organisationService.unfollowOrganisation(this.organisation$.id).subscribe({
-      next: () => {
-        this.isFollowing = false;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
-  }
-
-  private getOrganisationMembers() {
-    this._organisationService.getMemberOrganisation(this.event.organisation.id).subscribe({
-      next: users => {
-        this.listUser = users;
-        this.canFollow();
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
-  }
 
   // this._organisationService.getMembersOrga(this.event.organisation.id).subscribe({
   //   next: organisationMemberships => {

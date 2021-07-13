@@ -12,7 +12,7 @@ export class Post {
   text: string;
   likes: User[];
   sharedPosts: Post[];
-  postShares: Post;
+  sharesPost: Post;
   comments: Comment[];
   medias: Media[];
   event: Event;

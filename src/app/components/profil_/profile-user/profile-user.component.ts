@@ -48,26 +48,25 @@ export class ProfileUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe( params =>
-    {
+    this.route.params.subscribe(params => {
       this.username = params["username"];
-      this.updateUser();
+      this.updateUser().then();
     });
   }
 
-  updateUser(): void{
-    this._userService.getByUsername(this.username).subscribe();
-    this._userService.getPosts(this.username).subscribe();
-    this._userService.getFriends(this.username).subscribe();
-    this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest=>this.friendshipRequest=friendshipRequest);
+  async updateUser(): Promise<void> {
+    await this._userService.getByUsername(this.username).toPromise();
+    await this._userService.getPosts(this.username).toPromise();
+    await this._userService.getFriends(this.username).toPromise();
+    await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
   }
 
-  async showDialogueRespondFriendRequest() {
+  showDialogueRespondFriendRequest() {
     const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
       width: '500px',
-      data: {userId: (await this._userService.user.toPromise()).username}
+      data: {userId: this.username}
     });
-    dialogRef.afterClosed().subscribe(()=>this.updateUser());
+    dialogRef.afterClosed().subscribe(() => this.updateUser());
   }
 
   showDialogueReport() {
@@ -76,7 +75,7 @@ export class ProfileUserComponent implements OnInit {
       data: {id: this.username, reportType: ReportTypeEnum.USER}
     });
 
-    dialogRef.afterClosed().subscribe(()=>this.updateUser());
+    dialogRef.afterClosed().subscribe(() => this.updateUser());
   }
 
   async showDialogueCreateEvent() {
@@ -123,7 +122,7 @@ export class ProfileUserComponent implements OnInit {
   }
 
   removeFriend() {
-      this._friendshipService.removeFriendship(this.username).subscribe({
+    this._friendshipService.removeFriendship(this.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
@@ -148,19 +147,6 @@ export class ProfileUserComponent implements OnInit {
     });
   }
 
-  private getEventParticipations() {
-    this._userService.getParticipations(this.username).subscribe({
-      next: events => {
-        this.listEvent$ = events;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
-  }
-
   cancelRequest() {
     this._friendshipService.cancelFriendRequest(this.username).subscribe({
       next: () => {
@@ -169,6 +155,19 @@ export class ProfileUserComponent implements OnInit {
       error: err => {
         if (!environment.production) {
           console.log(err)
+        }
+      }
+    });
+  }
+
+  private getEventParticipations() {
+    this._userService.getParticipations(this.username).subscribe({
+      next: events => {
+        this.listEvent$ = events;
+      },
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
         }
       }
     });

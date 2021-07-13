@@ -5,20 +5,22 @@
          class="rounded-circle" width="50">
   </div>
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
-    <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
+    <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
   </p>
   <div class="spacer"></div>
   <div *ngIf="user.id !== userSession.id">
     <button [matMenuTriggerFor]="menu" mat-button>Gestion</button>
     <mat-menu #menu="matMenu">
-      <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE" class="ml-auto button-add-friend"
+      <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
+              class="ml-auto button-add-friend"
               mat-menu-item><i aria-hidden="true" class="fa fa-user-plus"></i> Ajouter
       </button>
       <button (click)="this.dellFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
               class="ml-auto button-add-friend" mat-menu-item matTooltip="Enlever de la list d'amis">
         Enlever
       </button>
-      <button (click)="this.showDialogueRespondFriendRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+      <button (click)="this.showDialogueRespondFriendRequest()"
+              *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
               class="ml-auto button-add-friend" mat-menu-item
               matTooltip="Accepter ou Refuser la demande d'amis"> Répondre
       </button>

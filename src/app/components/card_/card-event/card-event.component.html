@@ -1,8 +1,10 @@
 <mat-card *ngIf="canShow" class="event-card-list">
   <div class="img-card-event">
     <a [routerLink]="['/event/' + event.id]">
-      <img [src]="event.picture != undefined? event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'" alt="" class="rounded"
-           style="">
+      <img
+        [src]="event.picture != undefined? event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+        alt="" class="rounded"
+        style="">
     </a>
   </div>
   <div class="titre-card-event">
@@ -13,7 +15,7 @@
   <div class="orga-card-event">
     <p *ngIf="event.organisation != null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.organisation.name}}</p>
     <p *ngIf="event.organisation === null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.user.username}}
-      <fa-icon [icon]="faCheckCircle" *ngIf="event.user.certification"></fa-icon>
+      <fa-icon *ngIf="event.user.certification" [icon]="faCheckCircle"></fa-icon>
     </p>
   </div>
   <div class="date-card-event">

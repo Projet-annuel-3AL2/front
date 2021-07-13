@@ -1,23 +1,25 @@
-<div *ngIf="event$ != undefined" class="row m-0">
+<div class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-6 my-3">
     <div class="event-scroll">
       <div class="event-card-full">
-        <img [src]="event$.picture != undefined? event$.picture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'" alt="" class="rounded"
-             height="300px"
-             style="object-fit: none" width="100%">
+        <img
+          [src]="(_eventService.event|async)?.picture?.link || 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+          alt="" class="rounded"
+          height="300px"
+          style="object-fit: none" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
             <div class="titre-event" flflex="60">
-              <p>{{event$.name}}</p>
+              <p>{{(_eventService.event|async)?.name}}</p>
             </div>
             <div class="button-join" flflex="20">
-              <button (click)="this.joinEvent(event$.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
+              <button (click)="this.joinEvent(eventId)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
                       mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
               </button>
-              <button (click)="this.leaveEvent(event$.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
+              <button (click)="this.leaveEvent(eventId)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
                       mat-raised-button> Quitter
               </button>
             </div>
@@ -40,39 +42,37 @@
           </div>
           <div class="description-area-event">
             <div class="description-event" flflex="30">
-              <p>{{event$.description | slice:0:200}}...</p>
+              <p>{{(_eventService.event|async)?.description | slice:0:200}}...</p>
             </div>
           </div>
           <div class="date-area-event">
-            <div class="dates-event" flflex="30">
-              <p><i class="fas fa-clock"></i>  {{event$.startDate.toString() | slice: 8: 10 }}
-                /{{event$.startDate.toString() | slice: 5: 7}}/{{event$.startDate.toString() | slice: 0: 4}}
-                -- {{event$.endDate.toString() | slice: 8: 10 }}/{{event$.endDate.toString() | slice: 5: 7}}
-                /{{event$.endDate.toString() | slice: 0: 4}}</p>
-              <p>{{event$.startDate.toString() | slice: 11 : 16}}
-                -- {{event$.endDate.toString() | slice: 11 : 16}}</p>
+            <div class="dates-event">
+              <p><i class="fas fa-clock"></i>
+                {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}}
+                -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
             </div>
           </div>
         </div>
       </div>
       <div class="tab-event">
-        <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C" dynamicHeight
+        <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C"
                        mat-align-tabs="center">
           <mat-tab label="Accueil">
-            <app-list-post [listPost]="listPost$"></app-list-post>
+            <app-list-post [posts]="(_eventService.event|async)?.posts"></app-list-post>
           </mat-tab>
           <mat-tab label="Infos">
-            <app-event-infos [event]="event$" [participantsNumber]="listParticipant$.length"></app-event-infos>
+            <app-event-infos [event]="(_eventService.event|async)"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
             <div *ngIf="!isOwnerB && !isAdminB" class="my-3">
-              <div *ngFor="let user of listParticipant$;" class="display-list-user">
+              <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
                 <app-user-card [user]="user" class="m-0"></app-user-card>
               </div>
             </div>
             <div *ngIf="isOwnerB || isAdminB" class="my-3">
-              <div *ngFor="let user of listParticipant$;" class="display-list-user">
-                <app-card-user-mange-event [eventId]="eventId" [user]="user" class="m-0"></app-card-user-mange-event>
+              <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
+                <app-card-user-mange-event [eventId]="eventId" [userSession]="(_authService.user|async)" [user]="user"
+                                           class="m-0"></app-card-user-mange-event>
               </div>
             </div>
           </mat-tab>

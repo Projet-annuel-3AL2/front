@@ -7,13 +7,12 @@ import {Post} from "../../../shared/models/post.model";
   styleUrls: ['./list-post.component.css']
 })
 export class ListPostComponent implements OnInit {
-  @Input('listPost')
+  @Input()
   posts: Post[];
 
   constructor() {
   }
 
   ngOnInit(): void {
-
   }
 }

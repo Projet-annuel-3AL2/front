@@ -8,6 +8,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {Subscription, timer} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog-create-post.component";
+import {MediaService} from "../../../services/media/media.service";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'post',
@@ -15,18 +17,22 @@ import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input('post') post: Post = new Post();
+  @Input()
+  post: Post;
   faThumbsUp = faThumbsUp;
   faComment = faComment;
   faShare = faShare;
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   text: string;
+  env: unknown;
   private timeSubscription: Subscription;
 
   constructor(private _postService: PostService,
               public _authService: AuthService,
+              private _mediaService: MediaService,
               public matDialog: MatDialog) {
+    this.env = environment;
   }
 
   ngOnDestroy(): void {
@@ -34,6 +40,10 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._postService.sharedPost(this.post.id)
+      .subscribe(post => this.post.sharesPost = post);
+    this._mediaService.getPostMedias(this.post.id)
+      .subscribe(medias => this.post.medias = medias);
     this.updatePost();
     this.timeSubscription = timer(0, 15000)
       .subscribe(() => this.updatePost());
@@ -57,7 +67,7 @@ export class PostComponent implements OnInit {
     });
   }
 
-  deletePost(){
+  deletePost() {
     this._postService.deletePost(this.post.id)
       .subscribe();
   }
@@ -72,7 +82,11 @@ export class PostComponent implements OnInit {
       .subscribe(() => this.updatePost());
   }
 
-  sharePost(){
-    this.matDialog.open(DialogCreatePostComponent,{minWidth:"500px", minHeight:"121px", data:{sharesPost:this.post}});
+  sharePost() {
+    this.matDialog.open(DialogCreatePostComponent, {
+      minWidth: "500px",
+      minHeight: "121px",
+      data: {sharesPost: this.post}
+    });
   }
 }

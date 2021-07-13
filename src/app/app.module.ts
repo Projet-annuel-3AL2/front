@@ -68,6 +68,10 @@ import {CommentComponent} from "./components/card_/comment/comment.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
 import {DialogCreatePostComponent} from "./components/dialog_/dialog-create-post/dialog-create-post.component";
+import {VirtualScrollerModule} from "ngx-virtual-scroller";
+import {PostShareCardComponent} from "./components/card_/post-share-card/post-share-card.component";
+import {MapComponent} from "./components/map/map.component";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {DialogUpdateUserComponent} from "./components/dialog_/dialog-update-user/dialog-update-user.component";
 import {DialogAskCertificationComponent} from "./components/dialog_/dialog-ask-certification/dialog-ask-certification.component";
 import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
@@ -83,6 +87,7 @@ import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-or
     RegisterComponent,
     CreatePostComponent,
     ConversationComponent,
+    PostShareCardComponent,
     EventSuggestionComponent,
     ListEventSuggestionComponent,
     PageEventComponent,
@@ -121,6 +126,8 @@ import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-or
     DialogUpdateUserComponent,
     DialogAskCertificationComponent,
     DialogAskOrganisationComponent
+    ForgotPasswordComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -145,7 +152,9 @@ import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-or
     ExperimentalScrollingModule,
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
-    NgxMatNativeDateModule
+    NgxMatNativeDateModule,
+    VirtualScrollerModule,
+    LeafletModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
   providers: [

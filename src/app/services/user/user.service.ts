@@ -36,8 +36,8 @@ export class UserService {
 
   getPosts(username: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/user/${username}/posts`)
-      .pipe(map(posts=>{
-        let user =this.userSubject.getValue();
+      .pipe(map(posts => {
+        let user = this.userSubject.getValue();
         user.createdPosts = posts;
         this.userSubject.next(user);
         return posts;
@@ -63,8 +63,8 @@ export class UserService {
 
   getFriends(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
-      .pipe(map(friends=>{
-        let user =this.userSubject.getValue();
+      .pipe(map(friends => {
+        let user = this.userSubject.getValue();
         user.friends = friends;
         this.userSubject.next(user);
         return friends;

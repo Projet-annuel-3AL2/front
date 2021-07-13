@@ -1,6 +1,6 @@
-<h1 *ngIf="data.organisation != null" class="update-event-title" mat-dialog-title>Création d'un Évènement
+<h1 *ngIf="data.organisation != null" class="update-event-title" mat-dialog-title>Création d'un événement
   par {{data.organisation.name}}</h1>
-<h1 *ngIf="data.organisation === null" class="update-event-title" mat-dialog-title>Création d'un Évènement
+<h1 *ngIf="data.organisation === null" class="update-event-title" mat-dialog-title>Création d'un événement
   par {{data.userSession.username}}</h1>
 <mat-divider></mat-divider>
 <form #it="ngForm" (ngSubmit)="onClickSubmit(it)">
@@ -22,13 +22,24 @@
       </div>
       <div class="form-field-address">
         <mat-form-field appearance="fill">
-          <mat-label>Adresse de l'Évènement</mat-label>
-          <input [(ngModel)]="postalAddress" matInput placeholder="Adresse" name="postalAddress"required>
+          <mat-label>Adresse de l'événement</mat-label>
+          <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
+            <label>
+              <input (input)="searchAddress($event)" [matAutocompleteConnectedTo]="origin" [matAutocomplete]="auto" formControlName="address"
+                     matInput placeholder="Adresse" required>
+            </label>
+          </div>
+          <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
+            <mat-option *ngFor="let option of addresses"
+                        [value]="option?.address?.house_number + option?.address?.road+ option?.address?.town + option?.address?.postcode+ option?.address?.country">{{option?.address?.house_number}} {{option?.address?.road}}
+              , {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
+          </mat-autocomplete>
+
         </mat-form-field>
       </div>
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
-          <mat-label>Nb. de participant Max</mat-label>
+          <mat-label>Limite de participants</mat-label>
           <input [(ngModel)]="newEvent.participantsLimit" name="participantsLimit" matInput min="2"
                  placeholder="Ex. 30" required type="number">
           <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
@@ -36,7 +47,7 @@
       </div>
       <div class="form-field-categories">
         <mat-form-field appearance="fill">
-          <mat-label>Categories:</mat-label>
+          <mat-label>Catégorie</mat-label>
           <mat-select [(ngModel)]="newEvent.category.id"  name="category" matNativeControl required>
             <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}
             </mat-option>
@@ -81,7 +92,7 @@
   <div class="dialog-actions-update-event" mat-dialog-actions>
     <div class="button-grid-update-event">
       <div class="button-cancel">
-        <button (click)="onNoClick()" mat-button>Annuler</button>
+        <button (click)="onNoClick()" mat-button type="button">Annuler</button>
       </div>
       <div class="button-send">
         <button class="button-send" mat-raised-button type="submit">Envoyer</button>

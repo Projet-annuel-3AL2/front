@@ -5,7 +5,7 @@
          class="rounded-circle" width="50">
   </div>
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
-    <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
+    <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
   </p>
   <div class="spacer"></div>
   <button [matMenuTriggerFor]="menu" mat-button *ngIf="user.username !== _authService.getCurrentUsername()">Gestion</button >

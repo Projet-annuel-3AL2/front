@@ -1,0 +1,33 @@
+<div [routerLink]="'/post/'+post?.id" class="card">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <div [routerLink]="'/user/'+post?.creator?.username"
+           class="d-flex justify-content-between align-items-center user-infos">
+        <div class="mr-2">
+          <img [src]="post?.creator?.profilePicture?.link || 'https://picsum.photos/50/50'" alt=""
+               class="rounded-circle"
+               width="50">
+        </div>
+        <div class="ms-2">
+          <div class="h6 m-0">{{post?.creator?.username}}
+            <fa-icon *ngIf="post?.creator?.certification" [icon]="faCheckCircle"></fa-icon>
+          </div>
+          <div class="h7 text-muted">{{post?.creator?.lastname}} {{post?.creator?.firstname}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+      {{post?.text}}
+    </p>
+    <div *ngIf="post?.event" class="event-card">
+      <img alt="" class="rounded" height="300px"
+           src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
+           style="object-fit: none" width="100%">
+      <div class="event-card-infos">
+        <p>{{post.event?.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>

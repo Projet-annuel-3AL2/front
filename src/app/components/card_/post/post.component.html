@@ -2,9 +2,11 @@
   <div class="card">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex justify-content-between align-items-center user-infos" [routerLink]="'/user/'+post?.creator?.username">
+        <div [routerLink]="'/user/'+post?.creator?.username"
+             class="d-flex justify-content-between align-items-center user-infos">
           <div class="mr-2">
-            <img [src]="post?.creator?.profilePicture?.link || 'https://picsum.photos/50/50'" alt="" class="rounded-circle"
+            <img [src]="post?.creator?.profilePicture?.link || 'https://picsum.photos/50/50'" alt=""
+                 class="rounded-circle"
                  width="50">
           </div>
           <div class="ms-2">
@@ -23,16 +25,25 @@
             </button>
             <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
               <button (click)="showDialogReport()" mat-menu-item>Signaler</button>
-              <button *ngIf="post?.creator?.username === _authService.getCurrentUsername()" (click)="deletePost()" class="text-danger" mat-menu-item>Supprimer</button>
+              <button (click)="deletePost()" *ngIf="post?.creator?.username === _authService.getCurrentUsername()"
+                      class="text-danger" mat-menu-item>Supprimer
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="card-body">
+    <div [routerLink]="'/post/'+post?.id" class="card-body">
       <p class="card-text">
         {{post?.text}}
       </p>
+      <div class="d-inline-block">
+        <img *ngFor="let media of post.medias" [src]="env.baseUrl + '/' + media.link" alt="" class="h-50 w-50">
+      </div>
+
+      <div *ngIf="post.sharesPost">
+        <app-post-share-card [post]="post.sharesPost"></app-post-share-card>
+      </div>
       <div *ngIf="post?.event" class="event-card">
         <img alt="" class="rounded" height="300px"
              src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
@@ -51,11 +62,11 @@
         <fa-icon [icon]="faThumbsUp" flip="horizontal"></fa-icon>
         {{post?.likes?.length || 0}} Ne plus aimer
       </div>
-      <div class="card-link text-decoration-none" [routerLink]="'/post/'+post?.id" style="cursor: pointer">
+      <div [routerLink]="'/post/'+post?.id" class="card-link text-decoration-none" style="cursor: pointer">
         <fa-icon [icon]="faComment" flip="horizontal"></fa-icon>
         {{post?.commentCount || 0}} Commenter
       </div>
-      <div class="card-link text-decoration-none pull-right" (click)="sharePost()" style="cursor: pointer">
+      <div (click)="sharePost()" class="card-link text-decoration-none pull-right" style="cursor: pointer">
         <fa-icon [icon]="faShare" flip="horizontal"></fa-icon>
         {{post?.shareCount || 0}} Partager
       </div>
