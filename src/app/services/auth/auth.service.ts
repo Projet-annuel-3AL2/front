@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, timer} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
+import {CookieService} from "ngx-cookie-service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class AuthService {
   public user: Observable<User>;
   private userSubject: BehaviorSubject<User>;
 
-  constructor(private http: HttpClient) {
-    this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('user')));
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    this.userSubject = new BehaviorSubject<User>(null);
     this.user = this.userSubject.asObservable();
     timer(0, 30000).subscribe(() => this.updateUser());
   }
@@ -25,32 +26,32 @@ export class AuthService {
   }
 
   public register(mail: string, username: string, password: string) {
-    return this.http.post<User>(`${environment.baseUrl}/auth/register`, {
+    return this.http.post<User>(`${environment.apiBaseUrl}/auth/register`, {
       username,
       password,
       mail
     })
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user.username));
-        this.getCurrentUser();
+        this.cookieService.set('user', user.username,3,"",environment.domain,false,'Strict');
+        this.updateUser();
         return user;
       }));
   }
 
   public login(username: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.baseUrl}/auth/login`, {
+    return this.http.post<User>(`${environment.apiBaseUrl}/auth/login`, {
       username,
       password
     })
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user.username));
-        this.getCurrentUser()
+        this.cookieService.set('user', user.username,3,"",environment.domain,false,'Strict');
+        this.updateUser();
         return user;
       }));
   }
 
   public getCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${this.getCurrentUsername()}`)
+    return this.http.get<User>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}`)
       .pipe(map(user => {
         this.userSubject.next(user);
         return user;
@@ -58,21 +59,21 @@ export class AuthService {
   }
 
   public forgotPassword(username: string): Observable<void> {
-    return this.http.get<void>(`${environment.baseUrl}/auth/forgot-password/${username}`);
+    return this.http.get<void>(`${environment.apiBaseUrl}/auth/forgot-password/${username}`);
   }
 
   public isValidToken(resetToken: string, username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/auth/is-valid-token/${username}/${resetToken}`);
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/auth/is-valid-token/${username}/${resetToken}`);
   }
 
   public resetPassword(resetToken: string, username: string, password: string) {
-    return this.http.post<void>(`${environment.baseUrl}/auth/reset-password/${username}/${resetToken}`, {password});
+    return this.http.post<void>(`${environment.apiBaseUrl}/auth/reset-password/${username}/${resetToken}`, {password});
   }
 
   public logout(): Observable<unknown> {
     this.userSubject.next(null);
-    localStorage.removeItem('user');
-    return this.http.delete(`${environment.baseUrl}/auth/logout`);
+    this.cookieService.delete('user');
+    return this.http.delete(`${environment.apiBaseUrl}/auth/logout`);
   }
 
   public isAuthenticated(): boolean {
@@ -81,6 +82,6 @@ export class AuthService {
   }
 
   public getCurrentUsername(): string {
-    return JSON.parse(localStorage.getItem('user'));
+    return this.cookieService.get('user');
   }
 }

@@ -13,6 +13,6 @@ export class SearchService {
   }
 
   searchData(data: string): Observable<SearchResult> {
-    return this.http.get<SearchResult>(`${environment.baseUrl}/search/${data}`);
+    return this.http.get<SearchResult>(`${environment.apiBaseUrl}/search/${data}`);
   }
 }

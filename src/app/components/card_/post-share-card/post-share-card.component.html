@@ -21,6 +21,9 @@
     <p class="card-text">
       {{post?.text}}
     </p>
+    <div class="d-inline-block">
+      <img *ngFor="let media of post.medias" [src]="env.apiBaseUrl + '/' + media.link" alt="" class="h-50 w-50">
+    </div>
     <div *ngIf="post?.event" class="event-card">
       <img alt="" class="rounded" height="300px"
            src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"

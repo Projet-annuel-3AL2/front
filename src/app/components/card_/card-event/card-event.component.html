@@ -1,21 +1,21 @@
-<mat-card *ngIf="canShow" class="event-card-list">
+<mat-card class="event-card-list">
   <div class="img-card-event">
-    <a [routerLink]="['/event/' + event.id]">
+    <a [routerLink]="['/event/' + event?.id]">
       <img
-        [src]="event.picture != undefined? event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+        [src]="event?.picture?.link||'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
         alt="" class="rounded"
         style="">
     </a>
   </div>
   <div class="titre-card-event">
-    <a [routerLink]="['/event/' + event.id]">
-      <p>{{event.name}}</p>
+    <a [routerLink]="['/event/' + event?.id]">
+      <p>{{event?.name}}</p>
     </a>
   </div>
   <div class="orga-card-event">
-    <p *ngIf="event.organisation != null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.organisation.name}}</p>
-    <p *ngIf="event.organisation === null"><i aria-hidden="true" class="fa fa-user"></i>  {{event.user.username}}
-      <fa-icon *ngIf="event.user.certification" [icon]="faCheckCircle"></fa-icon>
+    <p *ngIf="event?.organisation !== null"><i aria-hidden="true" class="fa fa-user"></i>  {{event?.organisation?.name}}</p>
+    <p *ngIf="event?.organisation === null"><i aria-hidden="true" class="fa fa-user"></i>  {{event?.user?.username}}
+      <fa-icon *ngIf="event?.user?.certification" [icon]="faCheckCircle"></fa-icon>
     </p>
   </div>
   <div class="date-card-event">
@@ -25,16 +25,16 @@
       -- {{event.endDate.toString() | slice: 11 : 16}}</p>
   </div>
   <div class="category-card-event">
-    <p><i class="fas fa-tags"></i> {{event.category.name}}</p>
+    <p><i class="fas fa-tags"></i> {{event?.category?.name}}</p>
   </div>
   <div class="localisation-card-event">
     <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
   </div>
   <div class="button-join">
-    <button (click)="this.joinEvent(event.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event" mat-raised-button>
+    <button (click)="this.joinEvent(event?.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event" mat-raised-button>
       Rejoindre
     </button>
-    <button (click)="this.leaveEvent(event.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
+    <button (click)="this.leaveEvent(event?.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
             mat-raised-button>Quitter
     </button>
   </div>

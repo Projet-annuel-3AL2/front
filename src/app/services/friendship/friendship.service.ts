@@ -14,31 +14,31 @@ export class FriendshipService {
   }
 
   sendFriendRequest(username: string): Observable<Friendship> {
-    return this.http.post<Friendship>(`${environment.baseUrl}/friendship/${username}`, {});
+    return this.http.post<Friendship>(`${environment.apiBaseUrl}/friendship/${username}`, {});
   }
 
   acceptFriendship(username: string): Observable<Friendship> {
-    return this.http.put<Friendship>(`${environment.baseUrl}/friendship/${username}`, {});
+    return this.http.put<Friendship>(`${environment.apiBaseUrl}/friendship/${username}`, {});
   }
 
   rejectFriendRequest(username: string) {
-    return this.http.delete(`${environment.baseUrl}/friendship/${username}/reject`);
+    return this.http.delete(`${environment.apiBaseUrl}/friendship/${username}/reject`);
   }
 
   removeFriendship(username: string): Observable<any> {
-    return this.http.delete(`${environment.baseUrl}/friendship/${username}/remove`);
+    return this.http.delete(`${environment.apiBaseUrl}/friendship/${username}/remove`);
   }
 
   cancelFriendRequest(username: string) {
-    return this.http.delete(`${environment.baseUrl}/friendship/${username}/cancel`);
+    return this.http.delete(`${environment.apiBaseUrl}/friendship/${username}/cancel`);
   }
 
   isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
-    return this.http.get<FriendRequestStatus>(`${environment.baseUrl}/friendship/${username}/friendship-status`);
+    return this.http.get<FriendRequestStatus>(`${environment.apiBaseUrl}/friendship/${username}/friendship-status`);
   }
 
   getSentFriendshipRequest(): Observable<Friendship> {
-    return this.http.get<Friendship>(`${environment.baseUrl}/friendship/sent-friendship-request`);
+    return this.http.get<Friendship>(`${environment.apiBaseUrl}/friendship/sent-friendship-request`);
   }
 
 }
