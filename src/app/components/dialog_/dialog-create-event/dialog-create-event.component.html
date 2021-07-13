@@ -63,19 +63,19 @@
       </div>
     </div>
     <div class="form-field-update-picture">
-      <img alt="" class="rounded" height="300px"
-           *ngIf="updatedPicture === undefined"
-           [src]="newEvent.picture != undefined? newEvent.picture.link: '../../../../assets/images/no-image.png'"
-           style="object-fit: none" width="100%">
-      <img alt="" class="rounded" height="300px"
-           *ngIf="updatedPicture != undefined"
-           [src]="updatedPicture"
-           style="object-fit: none" width="100%">
-    </div>
-    <div class="form-field-update-picture-button">
-      <button type="button" mat-raised-button (click)="pictureInput.click()">Choisissez une photo de Bannière</button>
+      <a (click)="pictureInput.click()">
+        <img alt="" class="rounded" height="300px"
+             *ngIf="updatedPicture === undefined"
+             [src]="newEvent.picture != undefined? newEvent.picture.link: '../../../../assets/images/no-image.png'"
+             style="object-fit: none" width="100%">
+        <img alt="" class="rounded" height="300px"
+             *ngIf="updatedPicture != undefined"
+             [src]="updatedPicture"
+             style="object-fit: none" width="100%">
+      </a>
       <input hidden (change)="onPictureSelected()" #pictureInput type="file" id="picture">
     </div>
+
   </div>
   <mat-divider></mat-divider>
   <div class="dialog-actions-update-event" mat-dialog-actions>

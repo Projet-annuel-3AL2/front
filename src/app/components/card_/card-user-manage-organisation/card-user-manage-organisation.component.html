@@ -4,7 +4,6 @@
          [src]="user.profilePicture != undefined? user.profilePicture.link :'https://picsum.photos/50/50'" alt=""
          class="rounded-circle" width="50">
   </div>
-  <div class="spacer"></div>
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
     <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
   </p>

@@ -58,7 +58,7 @@ export class EventService {
   }
 
   getEventMembers(eventId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/event/${eventId}/getMembers`);
+    return this.http.get<User[]>(`${environment.baseUrl}/event/${eventId}/participants`);
   }
 
   getNotEndEvent(): Observable<Event[]> {

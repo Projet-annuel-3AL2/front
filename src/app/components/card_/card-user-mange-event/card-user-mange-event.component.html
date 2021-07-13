@@ -4,19 +4,19 @@
          alt=""
          class="rounded-circle" width="50">
   </div>
-  <div class="spacer"></div>
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
     <fa-icon [icon]="faCheckCircle" *ngIf="user.certification != null"></fa-icon>
   </p>
   <div class="spacer"></div>
-  <button [matMenuTriggerFor]="menu" mat-button>Gestion</button>
-  <mat-menu #menu="matMenu">
-    <div *ngIf="user.username !== _authService.getCurrentUsername()">
+  <button [matMenuTriggerFor]="menu" mat-button *ngIf="user.username !== _authService.getCurrentUsername()">Gestion</button >
+  <mat-menu #menu="matMenu" >
+    <div >
       <button (click)="this.askFriend(user.username)" *ngIf="canAdd(user.id)" mat-menu-item>Ajouter amis</button>
       <button (click)="this.dellFriend(user.username)" *ngIf="!canAdd(user.id)" mat-menu-item
               matTooltip="Enlever de la list d'amis">Enlever amis
       </button>
+      <button (click)="this.deleteParticipantEvent(user.id)" mat-menu-item>Retirer Participant</button>
     </div>
-    <button (click)="this.deleteParticipantEvent(user.id)" mat-menu-item>Retirer Participant</button>
+
   </mat-menu>
 </div>

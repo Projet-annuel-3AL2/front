@@ -19,13 +19,14 @@ export class DialogUpdateUserComponent implements OnInit {
   private oldUsername: string;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateUserComponent>,
-              private _userService: UserService,
+              public _userService: UserService,
               @Inject(MAT_DIALOG_DATA) public data: {user: User}) { }
 
   ngOnInit(): void {
     this.updatedUser = this.data.user;
     this.oldUsername = this.data.user.username;
   }
+
 
   onNoClick(): void {
     this.dialogRef.close();

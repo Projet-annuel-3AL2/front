@@ -4,6 +4,7 @@ import {Organisation} from "./organisation.model";
 export class OrganisationMembership {
   user: User;
   organisation: Organisation;
+  isOwner: boolean;
   isAdmin: boolean;
 
 
