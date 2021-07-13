@@ -17,7 +17,7 @@ export class OrganisationService {
   }
 
   postOrganisation(organisation: Organisation) {
-    this.http.post(`${environment.baseUrl}/organisation/`, JSON.stringify(organisation)).subscribe({
+    this.http.post(`${environment.apiBaseUrl}/organisation/`, JSON.stringify(organisation)).subscribe({
         error: err => {
           if (!environment.production) {
             console.log(err);
@@ -28,27 +28,27 @@ export class OrganisationService {
   }
 
   getAllOrganisation(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`);
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/`);
   }
 
   getOrganisation(organisationId: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`);
+    return this.http.get<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}`);
   }
 
   getOrganisationPosts(organisationId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${organisationId}/posts`);
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/posts`);
   }
 
   putOrganisationPost(organisationId: string, post: Post): Observable<Post> {
-    return this.http.put<Post>(`${environment.baseUrl}/organisation/${organisationId}/post`, post)
+    return this.http.put<Post>(`${environment.apiBaseUrl}/organisation/${organisationId}/post`, post)
   }
 
   putOrganisation(organisationId: string, organisation: Organisation): Observable<Organisation> {
-    return this.http.put<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`, organisation);
+    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}`, organisation);
   }
 
   deleteOrganisation(organisationId: string) {
-    this.http.delete(`${environment.baseUrl}/organisation/${organisationId}`).subscribe({
+    this.http.delete(`${environment.apiBaseUrl}/organisation/${organisationId}`).subscribe({
         error: err => {
           if (!environment.production) {
             console.log(err);
@@ -60,55 +60,55 @@ export class OrganisationService {
 
   // MemberOrganisation
   deleteOrganisationMembership(userId: string, organisationId: string) {
-    return this.http.delete(`${environment.baseUrl}/organisation/${organisationId}/member/${userId}`);
+    return this.http.delete(`${environment.apiBaseUrl}/organisation/${organisationId}/member/${userId}`);
   }
 
   giveAdminToMember(userId: string, organisationId: string): Observable<void> {
-    return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/add-admin/${userId}`, {});
+    return this.http.put<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/add-admin/${userId}`, {});
   }
 
   removeAdminToAdminMember(userId: string, organisationId: string): Observable<void> {
-    return this.http.put<void>(`${environment.baseUrl}/organisation/${organisationId}/remove-admin/${userId}`, {});
+    return this.http.put<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/remove-admin/${userId}`, {});
   }
 
   getSuggestionOrganisation(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/suggestions`);
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/suggestions`);
   }
 
   getMemberOrganisation(organisationId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/organisation/${organisationId}/members`);
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/members`);
   }
 
   isAdmin(id: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${id}/is-admin`)
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/organisation/${id}/is-admin`)
   }
 
   isOwner(id: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${id}/is-owner`)
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/organisation/${id}/is-owner`)
   }
 
   // TODO : get Event created par organisationId
   getEventCreated(organisationId: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/organisation/${organisationId}/events`)
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/events`)
   }
 
   unfollowOrganisation(id: string): Observable<void> {
-    return this.http.delete<void>(`${environment.baseUrl}/organisation/${id}/unfollow`);
+    return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${id}/unfollow`);
   }
 
   followOrganisation(id: string): Observable<void> {
-    return this.http.put<void>(`${environment.baseUrl}/organisation/${id}/follow`, {});
+    return this.http.put<void>(`${environment.apiBaseUrl}/organisation/${id}/follow`, {});
   }
 
   isUserAdmin(organisationId: string, username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-admin/${username}`)
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/organisation/${organisationId}/is-user-admin/${username}`)
   }
 
   isUserOwner(organisationId: string, username: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/organisation/${organisationId}/is-user-owner/${username}`)
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/organisation/${organisationId}/is-user-owner/${username}`)
   }
 
   sendReport(id: string, report: Report): Observable<any> {
-    return this.http.put<any>(`${environment.baseUrl}/organisation/${id}/report`, report)
+    return this.http.put<any>(`${environment.apiBaseUrl}/organisation/${id}/report`, report)
   }
 }

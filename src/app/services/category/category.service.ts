@@ -13,14 +13,14 @@ export class CategoryService {
   }
 
   getAllCategory(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${environment.baseUrl}/category/`);
+    return this.http.get<Category[]>(`${environment.apiBaseUrl}/category/`);
   }
 
   getCategoryById(categoryId: string): Observable<Category[]> {
-    return this.http.get<Category[]>(`${environment.baseUrl}/category/${categoryId}`);
+    return this.http.get<Category[]>(`${environment.apiBaseUrl}/category/${categoryId}`);
   }
 
   getEventByCategory(categoryId: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/category/${categoryId}/events`);
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/category/${categoryId}/events`);
   }
 }

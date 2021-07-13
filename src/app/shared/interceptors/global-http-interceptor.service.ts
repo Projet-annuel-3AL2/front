@@ -17,7 +17,7 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
     if (request.url.search("https://nominatim.openstreetmap.org/") === -1) {
       request = request.clone({
         withCredentials: true,
-        headers: request.headers.set('Access-Control-Allow-Origin', environment.baseUrl)
+        headers: request.headers.set('Access-Control-Allow-Origin', environment.apiBaseUrl)
       });
     } else {
       request = request.clone({

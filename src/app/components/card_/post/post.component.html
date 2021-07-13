@@ -38,7 +38,7 @@
         {{post?.text}}
       </p>
       <div class="d-inline-block">
-        <img *ngFor="let media of post.medias" [src]="env.baseUrl + '/' + media.link" alt="" class="h-50 w-50">
+        <img *ngFor="let media of post.medias" [src]="env.apiBaseUrl + '/' + media.link" alt="" class="h-50 w-50">
       </div>
 
       <div *ngIf="post.sharesPost">

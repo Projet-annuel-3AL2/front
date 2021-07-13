@@ -13,14 +13,14 @@ export class ConversationService {
   }
 
   getMessages(conversationId: string): Observable<Message[]> {
-    return this.http.get<Message[]>(`${environment.baseUrl}/conversation/${conversationId}/messages`);
+    return this.http.get<Message[]>(`${environment.apiBaseUrl}/conversation/${conversationId}/messages`);
   }
 
   getLastMessage(conversationId: string): Observable<Message> {
-    return this.http.get<Message>(`${environment.baseUrl}/conversation/${conversationId}/last-message`);
+    return this.http.get<Message>(`${environment.apiBaseUrl}/conversation/${conversationId}/last-message`);
   }
 
   sendMessage(conversationId: string, message: Message): Observable<void> {
-    return this.http.post<void>(`${environment.baseUrl}/conversation/${conversationId}/message`, message);
+    return this.http.post<void>(`${environment.apiBaseUrl}/conversation/${conversationId}/message`, message);
   }
 }
