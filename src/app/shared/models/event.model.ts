@@ -8,7 +8,6 @@ export class Event {
   id: string;
   name: String;
   description: String;
-  user: User;
   startDate: Date;
   endDate: Date;
   latitude: number;
@@ -17,7 +16,7 @@ export class Event {
   organisation: Organisation;
   category: Category;
   picture: Media;
-  owner: User;
+  user: User;
   participants: User[];
   posts: Post[];
   isMember: boolean;
