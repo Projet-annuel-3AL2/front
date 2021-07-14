@@ -17,11 +17,13 @@ export class CardUserMangeEventComponent implements OnInit {
   @Input('user') user: User = new User();
   @Input('eventId') eventId: string;
   faCheckCircle = faCheckCircle;
+  env: any;
 
   constructor(private _friendshipService: FriendshipService,
               private _eventService: EventService,
               public _userService: UserService,
               public _authService: AuthService) {
+    this.env = environment
   }
 
   ngOnInit(): void {

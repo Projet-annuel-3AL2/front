@@ -125,7 +125,7 @@ import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-or
     ForgotPasswordComponent,
     DialogUpdateUserComponent,
     DialogAskCertificationComponent,
-    DialogAskOrganisationComponent
+    DialogAskOrganisationComponent,
     ForgotPasswordComponent,
     MapComponent
   ],

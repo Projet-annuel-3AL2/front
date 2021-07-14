@@ -28,12 +28,14 @@ export class CardUserManageOrganisationComponent implements OnInit {
   userIsAdmin: boolean = false;
   allFriendRequestStatus = FriendRequestStatus;
   userIsOwner: Boolean = false;
+  env: any;
 
   constructor(private _friendshipService: FriendshipService,
               private _authService: AuthService,
               private _userService: UserService,
               private _organisationService: OrganisationService,
               public dialog: MatDialog) {
+    this.env = environment;
   }
 
   ngOnInit(): void {
