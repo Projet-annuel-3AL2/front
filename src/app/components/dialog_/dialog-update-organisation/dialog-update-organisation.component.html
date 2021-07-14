@@ -1,42 +1,48 @@
 <h1 class="dialog-title-update-orga" mat-dialog-title>Modification de l'Organisation</h1>
 <mat-divider></mat-divider>
-<form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
+<form (ngSubmit)="onClickSubmit()">
   <div mat-dialog-content>
     <div class="update-organisation-grid">
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input [(ngModel)]="data.organisation.name" formControlName="name" matInput
+          <input [(ngModel)]="data.organisation.name" name="name" matInput
                  placeholder="Nom de l'Organisation" required>
         </mat-form-field>
+
       </div>
+      <mat-divider class="mat-divider-1"></mat-divider>
       <div class="form-field-update-profilePicture">
+        <p> Photo de Profil</p>
         <div class="mr-2">
-          <img *ngIf="updatedProfilPicture === undefined" [src]="data.organisation.profilePicture != undefined? data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
+          <a (click)="profilePictureInput.click()">
+          <img *ngIf="updatedProfilePicture === null"
+               [src]="data.organisation.profilePicture != undefined? env.baseUrl + '/' + data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
                alt="" class="rounded-circle"
-               width="50">
-          <img *ngIf="updatedProfilPicture != undefined" [src]="updatedProfilPicture"
+               width="150px">
+          <img *ngIf="updatedProfilePicture !== null"
+               [src]="updatedProfilPictureURL"
                alt="" class="rounded-circle"
-               width="50">
+               width="150px">
+            <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
+          </a>
+
         </div>
       </div>
-      <div class="form-field-update-profilePicture-button">
-        <button type="button" mat-raised-button (click)="profilePictureInput.click()">Choisir une photo de Profile</button>
-        <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
-      </div>
+      <mat-divider  class="mat-divider-2"></mat-divider>
       <div class="form-field-update-bannerPicture">
-        <img alt="" class="rounded" height="300px"
-             *ngIf="updatedBannerPicture === undefined"
-             [src]="data.organisation.bannerPicture != undefined? data.organisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
-             style="object-fit: none" width="100%">
-        <img alt="" class="rounded" height="300px"
-             *ngIf="updatedBannerPicture != undefined"
-             [src]="updatedBannerPicture"
-             style="object-fit: none" width="100%">
-      </div>
-      <div class="form-field-update-bannerPicture-button">
-        <button type="button" mat-raised-button (click)="profileBannerInput.click()">Choisissez une photo de Bannière</button>
-        <input hidden (change)="onProfileBannerSelected()" #profileBannerInput type="file" id="profileBanner">
+        <p> Photo de Bannière</p>
+        <a (click)="profileBannerInput.click()">
+          <img alt="" class="rounded" height="300px"
+               *ngIf="updatedBannerPicture === null"
+               [src]="data.organisation.bannerPicture != undefined? data.organisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
+               style="object-fit: none" width="100%">
+          <img alt="" class="rounded" height="300px"
+               *ngIf="updatedBannerPicture != null"
+               [src]="updatedBannerPictureURL"
+               style="object-fit: none" width="100%">
+          <input hidden (change)="onProfileBannerSelected()" #profileBannerInput type="file" id="profileBanner">
+        </a>
       </div>
     </div>
   </div>
