@@ -35,7 +35,7 @@
                   </button>
                   <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                    <div *ngIf="isOwnerB || isAdminB">
+                    <div *ngIf="(_eventService.event|async)?.isOwner">
                       <button (click)="showDialogueUpdateEvent()" mat-menu-item>Modifier</button>
                     </div>
                   </div>
@@ -66,12 +66,12 @@
             <app-event-infos *ngIf="(_eventService.event|async)" [event]="(_eventService.event|async)"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
-            <div *ngIf="!isOwnerB && !isAdminB" class="my-3">
+            <div *ngIf="!(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
                 <app-user-card [user]="user" class="m-0"></app-user-card>
               </div>
             </div>
-            <div *ngIf="isOwnerB || isAdminB" class="my-3">
+            <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
                 <app-card-user-mange-event [eventId]="eventId" [userSession]="(_authService.user|async)" [user]="user"
                                            class="m-0"></app-card-user-mange-event>

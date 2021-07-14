@@ -18,8 +18,6 @@ import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dial
 export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
-  isOwnerB: boolean = false;
-  isAdminB: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -54,7 +52,7 @@ export class PageEventComponent implements OnInit {
   }
 
   leaveEvent() {
-    this._eventService.deleteParticipation(this.eventId).subscribe();
+    this._eventService.leaveEvent(this.eventId).subscribe();
   }
 
   showDialogueReport() {

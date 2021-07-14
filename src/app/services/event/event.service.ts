@@ -59,7 +59,7 @@ export class EventService {
     })
   }
 
-  deleteParticipation(eventId: string): Observable<void> {
+  leaveEvent(eventId: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiBaseUrl}/event/${eventId}/participant`);
   }
 
