@@ -12,10 +12,10 @@
           style="object-fit: none" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
-            <div class="titre-event" flflex="60">
+            <div class="titre-event">
               <p>{{(_eventService.event|async)?.name}}</p>
             </div>
-            <div class="button-join" flflex="20">
+            <div class="button-join">
               <button (click)="this.joinEvent(eventId)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
                       mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
               </button>
@@ -24,7 +24,7 @@
               </button>
             </div>
 
-            <div class="dropdown-event" flflex="20">
+            <div class="dropdown-event">
               <div class="dropdown" dropdown>
                 <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
                         data-toggle="dropdown"
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="description-area-event">
-            <div class="description-event" flflex="30">
+            <div class="description-event">
               <p>{{(_eventService.event|async)?.description | slice:0:200}}...</p>
             </div>
           </div>
@@ -61,7 +61,7 @@
             <app-list-post [posts]="(_eventService.event|async)?.posts"></app-list-post>
           </mat-tab>
           <mat-tab label="Infos">
-            <app-event-infos [event]="(_eventService.event|async)"></app-event-infos>
+            <app-event-infos *ngIf="(_eventService.event|async)" [event]="(_eventService.event|async)"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
             <div *ngIf="!isOwnerB && !isAdminB" class="my-3">
