@@ -14,22 +14,16 @@ import {AuthService} from "../../../services/auth/auth.service";
 })
 export class PageListEventComponent implements OnInit, AfterViewInit {
 
-  events$: Event[];
   eventsFilter$: Event[] = undefined;
-  userSession$: User;
   @ViewChild(EventFilterComponent) eventFilterComponent;
 
-
-  constructor(private _eventService: EventService,
+  constructor(public _eventService: EventService,
               private _userService: UserService,
               private _authService: AuthService
   ) {
   }
 
   ngOnInit(): void {
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
-      this.userSession$ = user;
-    });
     // TODO: en lien avec event-filter, faut réfléchir a la logique derriere
     this.getNotEndEvents();
   }
@@ -40,9 +34,6 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
 
   private getNotEndEvents() {
     this._eventService.isEventFinished().subscribe({
-      next: data => {
-        this.events$ = data;
-      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
