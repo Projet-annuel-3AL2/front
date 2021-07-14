@@ -8,6 +8,8 @@ import {Event} from "../../../shared/models/event.model";
 import {CategoryService} from "../../../services/category/category.service";
 import {Category} from "../../../shared/models/category.model";
 import {environment} from "../../../../environments/environment";
+import {AuthService} from "../../../services/auth/auth.service";
+import {MapService} from "../../../services/map/map.service";
 
 @Component({
   selector: 'app-dialog-update-event',
@@ -16,36 +18,49 @@ import {environment} from "../../../../environments/environment";
 })
 export class DialogUpdateEventComponent implements OnInit {
 
-  formData: NgForm;
-  listCategory$: Category[];
-  postalAddress: string;
-  updatedPicture: any;
+  addresses: unknown[];
+  addressSearchTimeOut: number;
+  formData: FormGroup;
+  limitParticipant = new FormControl(2, Validators.min(2));
   updateEvent: Event;
+  postalAddress: any;
+  media: File;
+  mediaURL: string;
+
+
   constructor(public dialogRef: MatDialogRef<DialogUpdateEventComponent>,
-              private _eventService: EventService,
+              public _eventService: EventService,
               private _organisationService: OrganisationService,
-              private _categoryService: CategoryService,
+              public _categoryService: CategoryService,
+              public _authService: AuthService,
+              private _mapService: MapService,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
   }
 
   ngOnInit(): void {
+   this.updateData()
+
+  }
+
+  private async updateData(): Promise<void> {
     this.getAllCategories();
-    this.updateEvent = this.data.event;
+    this.getCategory();
+    this.postalAddress = null;
+    this.updateEvent = new Event();
+    this.media = null;
+    this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
+    await this._authService.user.subscribe( user => {
+      this.updateEvent.user = user;
+    });
+
+    await this._eventService.event.subscribe(event => {
+      this.updateEvent = event
+    })
     this.postalAddress = null;
   }
 
-  onClickSubmit(data: NgForm) {
-
-
-    // TODO : convertir address en coordonées gps et gestion fichier
-    // updateEvent.picture = data.pictureFile;
-    // updateEvent.latitude = data.latitudeEvent;
-    // updateEvent.longitude = data.longitudeEvent;
-    console.log(this.updateEvent)
-    console.log(this.updatedPicture)
-    this._eventService.putEvent(this.updateEvent).subscribe({
-
-    this._eventService.updateEvent(updateEvent).subscribe({
+  onClickSubmit() {
+    this._eventService.updateEvent(this.updateEvent).subscribe({
 
       next: () => {
         this.dialogRef.close()
@@ -62,24 +77,60 @@ export class DialogUpdateEventComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe(categories => {
-      this.listCategory$ = categories
-    })
+  searchAddress($event: any) {
+    clearTimeout(this.addressSearchTimeOut);
+    this.addressSearchTimeOut = setTimeout(() => {
+      if ($event.target.value === undefined || $event.target.value === '') {
+        this.addresses = undefined;
+        return;
+      }
+      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+    }, 500);
   }
 
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
 
   onPictureSelected() {
     const inputNode: any = document.querySelector('#picture');
-
     if (typeof (FileReader) !== 'undefined') {
+
       const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.updatedPicture = e.target.result;
-      };
-
       reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string =  e.target.result
+        if ( file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.mediaURL = file;
+          this.media = inputNode.files[0];
+        }
+      };
     }
   }
+
+
+  private getCategory() {
+    this._eventService.getCategory(this.data.event.id).subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
 }
