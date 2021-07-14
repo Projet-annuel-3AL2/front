@@ -19,7 +19,6 @@ import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dial
 export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
-  isAbleToJoin: boolean = true;
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
 
@@ -50,21 +49,12 @@ export class PageEventComponent implements OnInit {
     await this._eventService.isMember(this.eventId).toPromise();
   }
 
-  joinEvent(id: string) {
-    this._eventService.joinEvent(id).subscribe();
+  joinEvent() {
+    this._eventService.joinEvent(this.eventId).subscribe();
   }
 
-  leaveEvent(id: string) {
-    this._eventService.deleteParticipation(id).subscribe({
-      next: () => {
-        this.isAbleToJoin = true;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    });
+  leaveEvent() {
+    this._eventService.deleteParticipation(this.eventId).subscribe();
   }
 
   showDialogueReport() {
