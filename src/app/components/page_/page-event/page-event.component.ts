@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventService} from "../../../services/event/event.service";
+import {Event} from "../../../shared/models/event.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +21,9 @@ export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
   isAbleToJoin: boolean = true;
-  isOwnerB: boolean = false;
+
+  // TODO : les rendres dynamiques
+  isOwnerB: boolean = true;
   isAdminB: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -48,6 +51,7 @@ export class PageEventComponent implements OnInit {
     await this._eventService.getCategory(this.eventId).toPromise();
     await this._eventService.getOrganisation(this.eventId).toPromise();
     await this._eventService.isMember(this.eventId).toPromise();
+
   }
 
   joinEvent(id: string) {
@@ -78,15 +82,15 @@ export class PageEventComponent implements OnInit {
   }
 
   showDialogueUpdateEvent() {
-    this._eventService.event.subscribe(event => {
-      this._authService.getCurrentUser().subscribe(user => {
-        const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
-          width: '900px',
-          data: {event: event, userSession: user}
-        });
-        dialogRef.afterClosed().subscribe(() => {
-        });
-      });
+    let event: Event;
+    this._eventService.event.subscribe(eventR => {
+      event = eventR
+    });
+    const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
+      width: '600px',
+      data: {event: event}
+    });
+    dialogRef.afterClosed().subscribe(() => {
     });
   }
 }

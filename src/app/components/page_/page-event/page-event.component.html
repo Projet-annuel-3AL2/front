@@ -33,7 +33,7 @@
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                   <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                  <div *ngIf="isOwnerB || isAdminB">
+                  <div *ngIf="isAdminB || isOwnerB">
                     <button (click)="showDialogueUpdateEvent()" mat-menu-item>Modifier</button>
                   </div>
                 </div>
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="tab-event">
-        <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C"
+        <mat-tab-group class="mat-tab-event" color="#00643C"
                        mat-align-tabs="center">
           <mat-tab label="Accueil">
             <app-list-post [posts]="(_eventService.event|async)?.posts"></app-list-post>
@@ -71,7 +71,7 @@
             </div>
             <div *ngIf="isOwnerB || isAdminB" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
-                <app-card-user-mange-event [eventId]="eventId" [userSession]="(_authService.user|async)" [user]="user"
+                <app-card-user-mange-event [eventId]="eventId" [user]="user"
                                            class="m-0"></app-card-user-mange-event>
               </div>
             </div>
