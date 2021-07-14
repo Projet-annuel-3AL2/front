@@ -75,6 +75,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {DialogUpdateUserComponent} from "./components/dialog_/dialog-update-user/dialog-update-user.component";
 import {DialogAskCertificationComponent} from "./components/dialog_/dialog-ask-certification/dialog-ask-certification.component";
 import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -157,7 +158,7 @@ import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-or
     LeafletModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [
+  providers: [CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: GlobalHttpInterceptor,

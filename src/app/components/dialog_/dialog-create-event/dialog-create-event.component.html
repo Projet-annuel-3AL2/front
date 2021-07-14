@@ -30,10 +30,10 @@
                      matInput placeholder="Adresse" required>
             </label>
           </div>
-          <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
+          <mat-autocomplete #auto="matAutocomplete" class="user-select-none" >
             <mat-option *ngFor="let option of addresses"
-                        [value]="option?.address?.house_number + option?.address?.road+ option?.address?.town + option?.address?.postcode+ option?.address?.country">{{option?.address?.house_number}} {{option?.address?.road}}
-              , {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
+                        [value]="option?.address?.house_number + ' ' + option?.address?.road + ', ' + option?.address?.town +' '+ option?.address?.postcode+', '+ option?.address?.country">
+              {{option?.address?.house_number}} {{option?.address?.road}}, {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
           </mat-autocomplete>
 
         </mat-form-field>

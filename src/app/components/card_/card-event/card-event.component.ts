@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../shared/models/event.model";
 import {UserService} from "../../../services/user/user.service";
-import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
@@ -18,7 +17,6 @@ export class CardEventComponent implements OnInit {
 
   @Input("event") event: Event = new Event();
   isAbleToJoin: boolean = true;
-  canShow: boolean = false;
   faCheckCircle = faCheckCircle;
   userSession: User;
   env = environment;
@@ -87,7 +85,6 @@ export class CardEventComponent implements OnInit {
     this._eventService.getProfile(this.event.id).subscribe({
       next: event => {
         this.event = event;
-        this.canShow = true;
       },
       error: error => {
         if (!environment.production) {

@@ -29,6 +29,6 @@ export class CategoryService {
   }
 
   getEventByCategory(categoryId: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/category/${categoryId}/events`);
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/category/${categoryId}/events`);
   }
 }
