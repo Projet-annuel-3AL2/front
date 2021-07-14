@@ -19,12 +19,14 @@
                 </div>
               </div>
               <div fxLayoutAlign="row center end">
-                <button (click)="this.joinEvent(eventId)" *ngIf="!(_eventService.event|async)?.isMember" class="ml-auto"
-                        mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
-                </button>
-                <button (click)="this.leaveEvent(eventId)" *ngIf="(_eventService.event|async)?.isMember" class="ml-auto"
-                        mat-raised-button> Quitter
-                </button>
+                <div *ngIf="!(_eventService.event|async)?.isOwner">
+                  <button (click)="this.joinEvent()" *ngIf="!(_eventService.event|async)?.isMember" class="ml-auto"
+                          mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
+                  </button>
+                  <button (click)="this.leaveEvent()" *ngIf="(_eventService.event|async)?.isMember" class="ml-auto"
+                          mat-raised-button> Quitter
+                  </button>
+                </div>
                 <div class="dropdown" dropdown>
                   <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
                           data-toggle="dropdown"
