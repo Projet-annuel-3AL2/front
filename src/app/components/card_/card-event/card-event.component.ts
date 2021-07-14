@@ -52,7 +52,7 @@ export class CardEventComponent implements OnInit {
   }
 
   leaveEvent(id: string) {
-    this._eventService.deleteParticipation(id).subscribe({
+    this._eventService.leaveEvent(id).subscribe({
       next: () => {
         this.isAbleToJoin = true;
       },

@@ -59,7 +59,7 @@ export class EventService {
     })
   }
 
-  deleteParticipation(eventId: string): Observable<void> {
+  leaveEvent(eventId: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiBaseUrl}/event/${eventId}/participant`);
   }
 
@@ -156,6 +156,17 @@ export class EventService {
         this.eventSubject.next(event);
       }
       return isMember;
+    }));
+  }
+
+  isOwner(eventId: string) {
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-owner`).pipe(map(isOwner => {
+      if(this.eventSubject.getValue()) {
+        let event = this.eventSubject.getValue();
+        event.isOwner = isOwner;
+        this.eventSubject.next(event);
+      }
+      return isOwner;
     }));
   }
 }
