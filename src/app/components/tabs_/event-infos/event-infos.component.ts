@@ -13,10 +13,7 @@ export class EventInfosComponent implements OnInit {
 
   @Input('event') event: Event = new Event();
   @Input('participantsNumber') participantNumber: number;
-  organisation$: Organisation;
-  listUser: User[] = [];
-  isFollowing: boolean = false;
-  isOrganisation: boolean = true;
+
   constructor(private _organisationService: OrganisationService,
               public _authService: AuthService,
               private _userService: UserService) {
@@ -24,12 +21,6 @@ export class EventInfosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.event.organisation != undefined){
-      this.organisation$ = this.event.organisation;
-      this.getOrganisationMembers();
-    }else{
-      this.isOrganisation = false;
-    }
   }
 
 
