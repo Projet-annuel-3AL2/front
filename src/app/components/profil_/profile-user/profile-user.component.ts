@@ -78,10 +78,10 @@ export class ProfileUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.updateUser());
   }
 
-  async showDialogueCreateEvent() {
+  showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
-      width: '900px',
-      data: {isUser: true, isOrga: null}
+      width: '600px',
+      data: {organisation: null}
     });
 
     dialogRef.afterClosed().subscribe(() => this.updateUser());
@@ -100,10 +100,10 @@ export class ProfileUserComponent implements OnInit {
   }
 
   // TODO : ne fonctionne pas
-  async showDialogAskCertification(user: Observable<User>) {
+  async showDialogAskCertification() {
     const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
       width: '950px',
-      data: {user: user }
+      data: {user: await this._userService.user.toPromise()}
     });
 
     dialogRef.afterClosed().subscribe(() => {
