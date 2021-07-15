@@ -12,9 +12,11 @@ import {NegateAuthGuardService} from "./services/auth/negate-auth-guard";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
+import {FriendsPageComponent} from "./components/page_/friends-page/friends-page.component";
 
 const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
+  {path: 'friends', component: FriendsPageComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent, canActivate: [NegateAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [NegateAuthGuardService]},
   {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NegateAuthGuardService]},

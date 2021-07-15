@@ -9,13 +9,8 @@
       </a>
     </div>
     <div *ngIf="_authService.isAuthenticated()">
-      <a class="m-4" href="#" matRipple>
+      <a class="m-4" [routerLink]="['/friends']" matRipple>
         <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
-      </a>
-    </div>
-    <div *ngIf="_authService.isAuthenticated()">
-      <a class="m-4" href="#" matRipple>
-        <fa-icon [icon]="faComments" size="2x"></fa-icon>
       </a>
     </div>
   </div>
@@ -40,6 +35,9 @@
         <button mat-menu-item routerLink="/settings">
           <span>Paramètres</span>
         </button>
+        <a mat-menu-item [href]="env.backBaseUrl">
+          <span>Administration</span>
+        </a>
         <button (click)="onDisconnect()" mat-menu-item>
           <span>Déconnexion</span>
         </button>

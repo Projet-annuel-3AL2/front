@@ -24,7 +24,8 @@ export class MapComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked() {
-    this.map?.invalidateSize();
+    this.map.invalidateSize();
+    this.map.panTo(latLng(this.latitude,this.longitude));
   }
 
   getOptions(): MapOptions {
