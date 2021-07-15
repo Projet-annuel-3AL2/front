@@ -4,13 +4,13 @@
       <div class="mb-3">
         <div class="px-4">
           <h2>Infos</h2>
-          <p><span><i class="fas fa-user-check"></i> {{event?.participants?.length}} </span><span
-            *ngIf="event?.participantsLimit>0"> / {{event?.participantsLimit}}</span><span>participants</span></p>
-          <p><i class="fas fa-clock"></i> {{event?.startDate | date:"dd/MM/YYYY HH:MM"}}</p>
-          <p><i class="fas fa-clock"></i> {{event?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
-          <p><i class="fas fa-tags"></i> {{event?.category?.name}}</p>
-          <div *ngIf="event?.organisation">
-            <app-card-organisation [organisation]="event?.organisation"></app-card-organisation>
+          <p><span><i class="fas fa-user-check"></i> {{event.participants?.length}} </span><span
+            *ngIf="event.participantsLimit>0"> / {{event.participantsLimit}}</span><span>participants</span></p>
+          <p><i class="fas fa-clock"></i> {{event.startDate | date:"dd/MM/YYYY HH:MM"}}</p>
+          <p><i class="fas fa-clock"></i> {{event.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
+          <p><i class="fas fa-tags"></i> {{event.category?.name}}</p>
+          <div *ngIf="event.organisation">
+            <app-card-organisation [organisation]="event.organisation"></app-card-organisation>
           </div>
         </div>
       </div>
@@ -19,10 +19,10 @@
   <div class="grid-item item2">
     <div class="border rounded-3 d-flex flex-column p-2 event-infos-map">
       <div class="px-4 h-100 w-100">
-        <h2><i class="fas fa-map-marker-alt"></i> <strong>Dieppe</strong> (76200)</h2>
+        <h2><i class="fas fa-map-marker-alt"></i> {{address?.address?.town}} ({{address?.address?.postcode}})</h2>
       </div>
       <div style="width: 100%;height:200px;">
-        <app-map [dragging]="true" [latitude]="event?.latitude" [longitude]="event?.longitude"
+        <app-map [dragging]="true" [latitude]="event.latitude" [longitude]="event.longitude"
                  [zoomControl]="true"></app-map>
       </div>
     </div>
@@ -32,12 +32,12 @@
       <div class="m-3">
         <div class="px-4">
           <mat-list>
-            <h2>Organisateurs</h2>
-            <div *ngIf="event?.organisation">
-              <app-card-organisation [organisation]="event?.organisation"></app-card-organisation>
+            <h2>Organisateur</h2>
+            <div *ngIf="event.organisation">
+              <app-card-organisation [organisation]="event.organisation"></app-card-organisation>
             </div>
-            <div *ngIf="event?.owner">
-              <app-user-card [user]="event?.owner"></app-user-card>
+            <div *ngIf="event.owner">
+              <app-user-card [user]="event.owner"></app-user-card>
             </div>
           </mat-list>
         </div>

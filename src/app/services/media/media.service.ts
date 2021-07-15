@@ -13,6 +13,6 @@ export class MediaService {
   }
 
   public getPostMedias(postId: string): Observable<Media[]> {
-    return this.http.get<Media[]>(`${environment.baseUrl}/media/post/${postId}`);
+    return this.http.get<Media[]>(`${environment.apiBaseUrl}/media/post/${postId}`);
   }
 }

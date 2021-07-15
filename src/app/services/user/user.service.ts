@@ -23,7 +23,7 @@ export class UserService {
   }
 
   getByUsername(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.baseUrl}/user/${username}`)
+    return this.http.get<User>(`${environment.apiBaseUrl}/user/${username}`)
       .pipe(map(user => {
         this.userSubject.next(user);
         return user;
@@ -31,11 +31,11 @@ export class UserService {
   }
 
   getGroups(username: string): Observable<Group[]> {
-    return this.http.get<Group[]>(`${environment.baseUrl}/user/${username}/groups`);
+    return this.http.get<Group[]>(`${environment.apiBaseUrl}/user/${username}/groups`);
   }
 
   getPosts(username: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/user/${username}/posts`)
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/user/${username}/posts`)
       .pipe(map(posts => {
         let user = this.userSubject.getValue();
         user.createdPosts = posts;
@@ -45,24 +45,30 @@ export class UserService {
   }
 
   deleteUser(username: string): Observable<any> {
-    return this.http.delete(`${environment.baseUrl}/user/${username}`)
+    return this.http.delete(`${environment.apiBaseUrl}/user/${username}`)
   }
 
   // TODO: getUserFriends() pas implémenter sur l'API
   getUserFriends(username: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/user/getFriendship/${username}`);
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/user/getFriendship/${username}`);
   }
 
   putUser(user: User): Observable<any> {
-    return this.http.put(`${environment.baseUrl}/user/${user.username}`, user);
+    return this.http.put(`${environment.apiBaseUrl}/user/${user.username}`, user);
   }
 
   getParticipations(username: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/user/${username}/participation`);
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/user/${username}/participation`)
+      .pipe(map(participations => {
+        let user = this.userSubject.getValue();
+        user.eventsParticipation = participations;
+        this.userSubject.next(user);
+        return participations;
+      }));
   }
 
   getFriends(username: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/user/${username}/friends`)
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/user/${username}/friends`)
       .pipe(map(friends => {
         let user = this.userSubject.getValue();
         user.friends = friends;
@@ -72,14 +78,14 @@ export class UserService {
   }
 
   getConversations(): Observable<Conversation[]> {
-    return this.http.get<Conversation[]>(`${environment.baseUrl}/user/conversations`);
+    return this.http.get<Conversation[]>(`${environment.apiBaseUrl}/user/conversations`);
   }
 
   isFollowingOrganisation(id: string): Observable<boolean> {
-    return this.http.get<boolean>(`${environment.baseUrl}/user/is-following-orga/${id}`)
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/user/is-following-orga/${id}`)
   }
 
   sendReport(id: string, report: Report): Observable<any> {
-    return this.http.put<any>(`${environment.baseUrl}/user/${id}/report`, report)
+    return this.http.put<any>(`${environment.apiBaseUrl}/user/${id}/report`, report)
   }
 }

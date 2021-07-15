@@ -72,6 +72,7 @@ import {VirtualScrollerModule} from "ngx-virtual-scroller";
 import {PostShareCardComponent} from "./components/card_/post-share-card/post-share-card.component";
 import {MapComponent} from "./components/map/map.component";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {CookieService} from "ngx-cookie-service";
 
 @NgModule({
   declarations: [
@@ -154,7 +155,7 @@ import {LeafletModule} from "@asymmetrik/ngx-leaflet";
     LeafletModule
   ],
   exports: [BsDropdownModule, TooltipModule, ModalModule, MaterialModule],
-  providers: [
+  providers: [CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: GlobalHttpInterceptor,

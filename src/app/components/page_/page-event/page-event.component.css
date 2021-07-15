@@ -12,37 +12,20 @@
 }
 
 .titre-event {
-  flex: 1 1 0%;
   box-sizing: border-box;
-  max-width: 80%;
+  text-align: start;
   font-size: 46px;
   font-family: Roboto, serif;
   color: #00643C;
   font-weight: bold;
 }
 
-.button-join {
-  flex: 1 2 80%;
-  box-sizing: border-box;
-  max-width: 15%;
-  padding-top: 5px;
-  padding-left: 20px;
-}
-
-.dropdown-event {
-  flex: 1 1 100%;
-  box-sizing: border-box;
-  max-width: 5%;
-  padding-top: 5px;
-  color: #00643C;
-}
-
 .dates-event {
-  flex: 1 1 0%;
+  flex: 1 1 0;
   box-sizing: border-box;
-  max-width: 30%;
+  max-width: 100%;
   color: black;
-  text-align: center;
+  text-align: right;
 }
 
 .description-event {
@@ -127,5 +110,10 @@
   margin-right: auto;
   width: 50%;
 }
-
+.display-list-event {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 

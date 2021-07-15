@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Event} from "../../../shared/models/event.model";
 import {UserService} from "../../../services/user/user.service";
-import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
@@ -14,10 +13,9 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 })
 export class CardEventComponent implements OnInit {
 
-  @Input("event") event: Event = new Event();
-  @Input('userSession') userSession: User;
+  @Input()
+  event: Event = new Event();
   isAbleToJoin: boolean = true;
-  canShow: boolean = false;
   faCheckCircle = faCheckCircle;
 
   constructor(
@@ -54,7 +52,7 @@ export class CardEventComponent implements OnInit {
   }
 
   leaveEvent(id: string) {
-    this._eventService.deleteParticipation(id).subscribe({
+    this._eventService.leaveEvent(id).subscribe({
       next: () => {
         this.isAbleToJoin = true;
       },
@@ -68,12 +66,9 @@ export class CardEventComponent implements OnInit {
   }
 
   canJoin() {
-    this._eventService.getEventMembers(this.event.id).subscribe(users => {
-      users.forEach(user => {
-        if (user.id == this.userSession.id) {
-          this.isAbleToJoin = false;
-        }
-      })
+    if(this.event)
+    this._eventService.isMember(this.event.id).subscribe(isMember => {
+      this.isAbleToJoin = !isMember;
     });
   }
 
@@ -81,7 +76,6 @@ export class CardEventComponent implements OnInit {
     this._eventService.getProfile(this.event.id).subscribe({
       next: event => {
         this.event = event;
-        this.canShow = true;
       },
       error: error => {
         if (!environment.production) {

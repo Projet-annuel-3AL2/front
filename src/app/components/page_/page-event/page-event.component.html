@@ -12,44 +12,46 @@
           style="object-fit: none" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
-            <div class="titre-event" flflex="60">
-              <p>{{(_eventService.event|async)?.name}}</p>
-            </div>
-            <div class="button-join" flflex="20">
-              <button (click)="this.joinEvent(eventId)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
-                      mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
-              </button>
-              <button (click)="this.leaveEvent(eventId)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
-                      mat-raised-button> Quitter
-              </button>
-            </div>
-
-            <div class="dropdown-event" flflex="20">
-              <div class="dropdown" dropdown>
-                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
-                        data-toggle="dropdown"
-                        dropdownToggle type="button">
-                  <fa-icon [icon]="faEllipsisH"></fa-icon>
-                </button>
-                <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-                  <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                  <div *ngIf="isOwnerB || isAdminB">
-                    <button (click)="showDialogueUpdateEvent()" mat-menu-item>Modifier</button>
+            <div fxFlex fxLayoutAlign="row">
+              <div fxFlex fxLayoutAlign="row start center">
+                <div class="titre-event">
+                  <p>{{(_eventService.event|async)?.name}}</p>
+                </div>
+              </div>
+              <div fxLayoutAlign="row center end">
+                <div *ngIf="!(_eventService.event|async)?.isOwner">
+                  <button (click)="this.joinEvent()" *ngIf="!(_eventService.event|async)?.isMember" class="ml-auto"
+                          mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
+                  </button>
+                  <button (click)="this.leaveEvent()" *ngIf="(_eventService.event|async)?.isMember" class="ml-auto"
+                          mat-raised-button> Quitter
+                  </button>
+                </div>
+                <div class="dropdown" dropdown>
+                  <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                          data-toggle="dropdown"
+                          dropdownToggle type="button">
+                    <fa-icon [icon]="faEllipsisH"></fa-icon>
+                  </button>
+                  <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+                    <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
+                    <div *ngIf="(_eventService.event|async)?.isOwner">
+                      <button (click)="showDialogueUpdateEvent()" mat-menu-item>Modifier</button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
           <div class="description-area-event">
-            <div class="description-event" flflex="30">
+            <div class="description-event">
               <p>{{(_eventService.event|async)?.description | slice:0:200}}...</p>
             </div>
           </div>
           <div class="date-area-event">
             <div class="dates-event">
-              <p><i class="fas fa-clock"></i>
-                {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}}
-                -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
+              <p><i class="fas fa-clock"></i> {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}} -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
             </div>
           </div>
         </div>
@@ -61,15 +63,15 @@
             <app-list-post [posts]="(_eventService.event|async)?.posts"></app-list-post>
           </mat-tab>
           <mat-tab label="Infos">
-            <app-event-infos [event]="(_eventService.event|async)"></app-event-infos>
+            <app-event-infos *ngIf="(_eventService.event|async)" [event]="(_eventService.event|async)"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
-            <div *ngIf="!isOwnerB && !isAdminB" class="my-3">
+            <div *ngIf="!(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
                 <app-user-card [user]="user" class="m-0"></app-user-card>
               </div>
             </div>
-            <div *ngIf="isOwnerB || isAdminB" class="my-3">
+            <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
                 <app-card-user-mange-event [eventId]="eventId" [userSession]="(_authService.user|async)" [user]="user"
                                            class="m-0"></app-card-user-mange-event>

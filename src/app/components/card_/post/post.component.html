@@ -38,18 +38,19 @@
         {{post?.text}}
       </p>
       <div class="d-inline-block">
-        <img *ngFor="let media of post.medias" [src]="env.baseUrl + '/' + media.link" alt="" class="h-50 w-50">
+        <img *ngFor="let media of post.medias" [src]="env.apiBaseUrl + '/' + media.link" alt="" class="h-50 w-50">
       </div>
 
       <div *ngIf="post.sharesPost">
         <app-post-share-card [post]="post.sharesPost"></app-post-share-card>
       </div>
-      <div *ngIf="post?.event" class="event-card">
+      <div *ngIf="post?.sharedEvent" class="event-card" [routerLink]="'/event/'+post?.sharedEvent.id">
         <img alt="" class="rounded" height="300px"
              src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
              style="object-fit: none" width="100%">
         <div class="event-card-infos">
-          <p>{{post.event?.description}}</p>
+          <p>{{post.sharedEvent?.name}}</p>
+          <p>{{post.sharedEvent?.description}}</p>
         </div>
       </div>
     </div>
