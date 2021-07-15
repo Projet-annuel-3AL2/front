@@ -24,17 +24,21 @@ const appRoutes: Routes = [
     canActivate: [NegateAuthGuardService]
   },
   {path: 'events', component: PageListEventComponent},
+  {path: '**', redirectTo: "/"},
+];
+
+const profileRoutes: Routes = [
   {path: 'event/:eventId', component: PageEventComponent},
   {path: 'user/:username', component: ProfileUserComponent},
   {path: 'organisation/:id', component: ProfilOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
-  {path: '**', redirectTo: "/"},
-];
+]
 
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(profileRoutes,{onSameUrlNavigation:"reload"}),
+    RouterModule.forRoot(appRoutes),
   ],
   exports: [
     RouterModule

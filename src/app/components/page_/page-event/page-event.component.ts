@@ -2,7 +2,6 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventService} from "../../../services/event/event.service";
 import {Event} from "../../../shared/models/event.model";
 import {ActivatedRoute, Router} from "@angular/router";
-import {environment} from "../../../../environments/environment";
 import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from "../../../services/auth/auth.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
@@ -51,24 +50,15 @@ export class PageEventComponent implements OnInit {
     await this._eventService.getCategory(this.eventId).toPromise();
     await this._eventService.getOrganisation(this.eventId).toPromise();
     await this._eventService.isMember(this.eventId).toPromise();
-
+    await this._eventService.isOwner(this.eventId).toPromise();
   }
 
-  joinEvent(id: string) {
-    this._eventService.joinEvent(id).subscribe();
+  joinEvent() {
+    this._eventService.joinEvent(this.eventId).subscribe();
   }
 
-  leaveEvent(id: string) {
-    this._eventService.deleteParticipation(id).subscribe({
-      next: () => {
-        this.isAbleToJoin = true;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    });
+  leaveEvent() {
+    this._eventService.leaveEvent(this.eventId).subscribe();
   }
 
   showDialogueReport() {
