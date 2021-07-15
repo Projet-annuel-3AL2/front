@@ -42,7 +42,7 @@ export class OrganisationService {
   }
 
   getSuggestions(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.baseUrl}/organisation/`)
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/`)
       .pipe(map( organisations => {
         this.organisationSuggestionSubject.next(organisations);
         return organisations;
@@ -50,7 +50,7 @@ export class OrganisationService {
   }
 
   getOrganisation(organisationId: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.baseUrl}/organisation/${organisationId}`)
+    return this.http.get<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}`)
       .pipe(map(organisation => {
         this.organisationSubject.next(organisation);
         return organisation;
@@ -58,7 +58,7 @@ export class OrganisationService {
   }
 
   getOrganisationPosts(organisationId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/organisation/${organisationId}/posts`)
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/posts`)
       .pipe(map( posts => {
         this.postsSubject.next(posts);
         return posts;
@@ -66,7 +66,7 @@ export class OrganisationService {
   }
 
   getMemberOrganisation(organisationId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/organisation/${organisationId}/members`)
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/members`)
       .pipe(map( users => {
         this.membersSubject.next(users);
         return users;
@@ -74,7 +74,7 @@ export class OrganisationService {
   }
 
   getEventCreated(organisationId: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/organisation/${organisationId}/events`)
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/events`)
       .pipe(map( events => {
         this.eventsCreatedSubject.next(events);
         return events;
@@ -88,7 +88,7 @@ export class OrganisationService {
       const formData = new FormData()
       formData.append("profilePicture", updatedProfilePicture)
       console.log(formData)
-      this.http.put(`${environment.baseUrl}/organisation/${organisation.id}/profile-picture`, formData).subscribe({
+      this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/profile-picture`, formData).subscribe({
         next: () => {
           console.log("ça passer pour profile")
         },
@@ -100,7 +100,7 @@ export class OrganisationService {
     if (updatedBannerPicture !== null) {
       const formData = new FormData()
       formData.append("bannerPicture", updatedBannerPicture)
-      this.http.put(`${environment.baseUrl}/organisation/${organisation.id}/banner-picture`, formData).subscribe({
+      this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/banner-picture`, formData).subscribe({
         next: () => {
           console.log("ça passe pour banner")
         },
@@ -109,7 +109,7 @@ export class OrganisationService {
         }
       });
     }
-    return this.http.put<Organisation>(`${environment.baseUrl}/organisation/${organisation.id}`, organisation);
+    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisation.id}`, organisation);
   }
 
   deleteOrganisation(organisationId: string) {
@@ -164,6 +164,6 @@ export class OrganisationService {
   }
 
   postOrganisationRequest(organisationRequest: OrganisationRequest): Observable<void> {
-    return this.http.post<void>(`${environment.baseUrl}/organisation/request-creation`, organisationRequest, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.post<void>(`${environment.apiBaseUrl}/organisation/request-creation`, organisationRequest, {headers: {'Access-Control-Allow-Origin': '*'}})
   }
 }

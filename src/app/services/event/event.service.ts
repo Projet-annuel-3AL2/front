@@ -50,7 +50,7 @@ export class EventService {
     if ( file !== undefined){
       formData.append("event_media", file);
     }
-    return this.http.post<Event>(`${environment.baseUrl}/event/`, formData);
+    return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, formData);
   }
 
   joinEvent(eventId: string): Observable<void> {
@@ -96,11 +96,11 @@ export class EventService {
   }
 
   getEventMembers(eventId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/event/${eventId}/participants`);
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/event/${eventId}/participants`);
   }
 
   isEventFinished(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.baseUrl}/event/is-finished`)
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/is-finished`)
       .pipe(map( events => {
         this.eventsSubject.next(events);
         return events;

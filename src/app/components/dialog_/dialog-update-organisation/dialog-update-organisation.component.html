@@ -17,7 +17,7 @@
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
           <img *ngIf="updatedProfilePicture === null"
-               [src]="data.organisation.profilePicture != undefined? env.baseUrl + '/' + data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
+               [src]="data.organisation.profilePicture != undefined? env.apiBaseUrl + '/' + data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
                alt="" class="rounded-circle"
                width="150px">
           <img *ngIf="updatedProfilePicture !== null"

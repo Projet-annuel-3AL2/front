@@ -7,6 +7,7 @@ import {environment} from "../../../../environments/environment";
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
 import {map} from "rxjs/operators";
+import {User} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-card-event',

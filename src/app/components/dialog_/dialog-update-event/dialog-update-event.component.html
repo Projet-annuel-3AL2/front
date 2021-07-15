@@ -75,7 +75,7 @@
       <a (click)="pictureInput.click()">
         <img alt="" class="rounded" height="300px"
              *ngIf="media === null"
-             [src]="updateEvent.picture != undefined? updateEvent.picture.link: '../../../../assets/images/no-image.png'"
+             [src]="updateEvent.picture != undefined? env.apiBaseUrl + '/' + updateEvent.picture.link: '../../../../assets/images/no-image.png'"
              style="object-fit: none" width="100%">
         <img alt="" class="rounded" height="300px"
              *ngIf="media !== null"

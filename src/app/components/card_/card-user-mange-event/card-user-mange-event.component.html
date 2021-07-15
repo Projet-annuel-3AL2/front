@@ -1,7 +1,7 @@
 <div class="rounded-pill border d-flex p-2 card-user my-3">
   <div class="mr-2">
     <img [routerLink]="['/user/' + user.username]" [src]="
-    user.profilePicture !== undefined? env.baseUrl + '/' + user.profilePicture: 'https://picsum.photos/50/50'"
+    user.profilePicture !== undefined? env.apiBaseUrl + '/' + user.profilePicture: 'https://picsum.photos/50/50'"
          alt=""
          class="rounded-circle" width="50">
   </div>

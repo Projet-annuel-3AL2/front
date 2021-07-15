@@ -21,7 +21,7 @@ export class CategoryService {
   }
 
   getAllCategory(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${environment.baseUrl}/category/`)
+    return this.http.get<Category[]>(`${environment.apiBaseUrl}/category/`)
       .pipe(map( categories => {
         this.categoriesSubject.next(categories);
         return categories;
