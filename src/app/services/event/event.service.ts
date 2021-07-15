@@ -12,6 +12,7 @@ import {map} from "rxjs/operators";
 import {Category} from "../../shared/models/category.model";
 import {Organisation} from "../../shared/models/organisation.model";
 import {AuthService} from "../auth/auth.service";
+import {SearchEventProps} from "../../components/event-filter/event-filter.component";
 
 @Injectable({
   providedIn: 'root'
@@ -196,6 +197,22 @@ export class EventService {
       }
       return isOwner;
     }));
+  }
+
+  getEventsSearch(searchEventProps: SearchEventProps): Observable<Event[]> {
+    return this.http.get<Event[]>(
+      `${environment.apiBaseUrl}/event/search`
+      +`/${searchEventProps.longitude}`
+      + `/${searchEventProps.latitude}`
+      +`/${searchEventProps.range}`
+      +`/${searchEventProps.startDate}`
+      +`/${searchEventProps.endDate}`
+      +`/${searchEventProps.categoryId}`)
+      .pipe(map(events => {
+        console.log(events);
+        this.eventsSubject.next(events);
+        return events;
+      }))
   }
 }
 
