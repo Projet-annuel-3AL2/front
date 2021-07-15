@@ -3,6 +3,7 @@ import {faBell, faCalendarAlt, faComments, faUserFriends} from '@fortawesome/fre
 import {AuthService} from "../../services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user/user.service";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +15,13 @@ export class NavbarComponent implements OnInit {
   faBell = faBell;
   faUserFriends = faUserFriends;
   faComments = faComments;
+  env:any;
 
   constructor(private _activatedRoute: ActivatedRoute,
               public _authService: AuthService,
               private _userService: UserService,
               private _router: Router) {
+    this.env = environment;
   }
 
   ngOnInit(): void {

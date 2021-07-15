@@ -40,6 +40,9 @@
         <button mat-menu-item routerLink="/settings">
           <span>Paramètres</span>
         </button>
+        <a mat-menu-item [href]="env.backBaseUrl">
+          <span>Administration</span>
+        </a>
         <button (click)="onDisconnect()" mat-menu-item>
           <span>Déconnexion</span>
         </button>
