@@ -73,6 +73,7 @@ import {PostShareCardComponent} from "./components/card_/post-share-card/post-sh
 import {MapComponent} from "./components/map/map.component";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {CookieService} from "ngx-cookie-service";
+import {FriendsPageComponent} from "./components/page_/friends-page/friends-page.component";
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import {CookieService} from "ngx-cookie-service";
     CommentComponent,
     PasswordRecoveryComponent,
     ForgotPasswordComponent,
-    MapComponent
+    MapComponent,
+    FriendsPageComponent
   ],
   imports: [
     BrowserModule,

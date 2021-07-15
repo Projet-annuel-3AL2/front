@@ -1,0 +1,48 @@
+<div class="row m-0">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4">
+    <div>
+      <h2 class="text-center">Demandes d'amis</h2>
+      <div *ngIf="(_friendshipService.friendRequests|async)?.length === 0">
+        <p class="text-center">Vous n'avez aucune demande d'amis pour le moment.</p>
+      </div>
+      <div *ngIf="(_friendshipService.friendRequests|async)?.length > 0">
+        <div *ngFor="let friendRequest of (_friendshipService.friendRequests|async)" class="mt-3">
+          <app-user-card [user]="friendRequest.sender"></app-user-card>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-center">Demandes envoyés</h2>
+      <div *ngIf="(_friendshipService.sentFriendRequests|async)?.length === 0">
+        <p class="text-center">Vous n'avez envoyé aucune demande pour le moment.</p>
+      </div>
+      <div *ngIf="(_friendshipService.sentFriendRequests|async)?.length > 0">
+        <div *ngFor="let friendRequest of (_friendshipService.sentFriendRequests|async)" class="mt-3">
+          <app-user-card [user]="friendRequest.user"></app-user-card>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <h2 class="text-center">Amis</h2>
+      <div *ngIf="(_authService.user|async)?.friends?.length === 0">
+        <p class="text-center"> Vous n'avez aucun amis pour le moment.</p>
+      </div>
+      <div *ngIf="(_authService.user|async)?.friends?.length > 0">
+        <virtual-scroller #scroll [enableUnequalChildrenSizes]="true" [items]="(_authService.user|async)?.friends"
+                          [parentScroll]="scroll.window">
+          <div *ngFor="let user of scroll.viewPortItems">
+            <app-user-card [user]="user"></app-user-card>
+          </div>
+        </virtual-scroller>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 my-3">
+    <div class="position-fixed">
+      <app-list-event-suggestion></app-list-event-suggestion>
+      <app-list-organisation-suggestion></app-list-organisation-suggestion>
+    </div>
+  </div>
+</div>
