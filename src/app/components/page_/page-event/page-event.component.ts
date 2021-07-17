@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventService} from "../../../services/event/event.service";
-import {Event} from "../../../shared/models/event.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from "../../../services/auth/auth.service";
@@ -9,6 +8,7 @@ import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.c
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dialog-update-event.component";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-page-event',
@@ -19,11 +19,6 @@ import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dial
 export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
-  isAbleToJoin: boolean = true;
-
-  // TODO : les rendres dynamiques
-  isOwnerB: boolean = true;
-  isAdminB: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,

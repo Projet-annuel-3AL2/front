@@ -15,10 +15,8 @@
         <mat-form-field appearance="fill">
           <mat-label>Adresse de l'événement</mat-label>
           <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
-            <label>
               <input (input)="searchAddress($event)" [matAutocompleteConnectedTo]="origin" [matAutocomplete]="auto" [(ngModel)]="postalAddress" name="postalAddress"
                      matInput placeholder="Adresse" required>
-            </label>
           </div>
           <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
             <mat-option *ngFor="let option of addresses"
