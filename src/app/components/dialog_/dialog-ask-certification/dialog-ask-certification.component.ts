@@ -15,7 +15,7 @@ export class DialogAskCertificationComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogAskCertificationComponent>,
               private _certificationService: CertificationService,
-              @Inject(MAT_DIALOG_DATA) public data: {user: User}) { }
+              @Inject(MAT_DIALOG_DATA) public data: {user: string}) { }
 
   ngOnInit(): void {
     this.certificationRequest = new CertificationRequest();

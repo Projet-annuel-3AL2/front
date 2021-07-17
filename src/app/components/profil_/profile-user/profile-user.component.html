@@ -62,10 +62,10 @@
                     <div *ngIf="username === _authService.getCurrentUsername()">
                       <button (click)="showDialogUpdateUser()" mat-menu-item>Modifier Profile</button>
                     </div>
-                    <div *ngIf="username === _authService.getCurrentUsername() && (_userService.user|async).certification === undefined">
+                    <div *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async).certification === undefined">
                       <button (click)="showDialogAskCertification()" mat-menu-item>Demander la certification</button>
                     </div>
-                    <div *ngIf="username === _authService.getCurrentUsername() && (_userService.user|async).certification !== undefined">
+                    <div *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async).certification !== undefined">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Demander de créer une Organisation</button>
                     </div>
                   </div>
