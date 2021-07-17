@@ -24,6 +24,7 @@ export class AuthService {
     if (this.getCurrentUsername()) {
       await this.getCurrentUser().toPromise();
       await this.getParticipations().toPromise();
+      await this.getFriends().toPromise();
     }
   }
 
@@ -67,6 +68,16 @@ export class AuthService {
         user.eventsParticipation = participations;
         this.userSubject.next(user);
         return participations;
+      }));
+  }
+
+  public getFriends(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/friends`)
+      .pipe(map(friends => {
+        let user = this.userSubject.getValue();
+        user.friends = friends;
+        this.userSubject.next(user);
+        return friends;
       }));
   }
 

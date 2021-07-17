@@ -109,7 +109,12 @@ export class EventService {
   }
 
   getEventPosts(eventId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiBaseUrl}/event/${eventId}/posts`);
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/event/${eventId}/posts`).pipe(map(posts => {
+      let event = this.eventSubject.getValue();
+      event.posts = posts;
+      this.eventSubject.next(event);
+      return posts;
+    }));
   }
 
   // TODO : Les fonctions sont implémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
