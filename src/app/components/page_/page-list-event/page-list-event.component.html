@@ -8,11 +8,10 @@
     </div>
   </div>
   <div class="col-md-5 my-5">
-    <div *ngIf="eventsFilter$ == undefined">
-      <app-event-list-display [events]="events$" [userSession]="userSession$"></app-event-list-display>
-    </div>
-    <div *ngIf="eventsFilter$ != undefined">
-      <app-event-list-display [events]="eventsFilter$"></app-event-list-display>
+    <div *ngFor="let event of (_eventService.events|async);">
+      <div *ngIf="event != undefined" class="event-list-item m-2">
+        <app-card-event [event]="event"></app-card-event>
+      </div>
     </div>
   </div>
   <div class="col-md-4 my-3 d-none d-sm-block d-sm-block d-sm-none d-md-block">

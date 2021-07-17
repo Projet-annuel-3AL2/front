@@ -13,8 +13,7 @@ export class ListOrganisationSuggestionComponent implements OnInit {
 
   listOrganisation$: Organisation[];
 
-  constructor(private _organisationService: OrganisationService,
-              private _eventService: EventService) {
+  constructor(public _organisationService: OrganisationService) {
   }
 
   ngOnInit(): void {
@@ -22,11 +21,7 @@ export class ListOrganisationSuggestionComponent implements OnInit {
   }
 
   private getSuggestionOrganisation() {
-    // TODO: getSuggestionOrganisation
-    this._organisationService.getAllOrganisation().subscribe({
-      next: organisations => {
-        this.listOrganisation$ = organisations;
-      },
+    this._organisationService.getSuggestions().subscribe({
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);

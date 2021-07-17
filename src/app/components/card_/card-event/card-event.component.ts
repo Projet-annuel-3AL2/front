@@ -5,6 +5,9 @@ import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
+import {map} from "rxjs/operators";
+import {User} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'app-card-event',
@@ -13,11 +16,11 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 })
 export class CardEventComponent implements OnInit {
 
-  @Input()
-  event: Event = new Event();
+  @Input("event") event: Event = new Event();
   isAbleToJoin: boolean = true;
   faCheckCircle = faCheckCircle;
-
+  userSession: User;
+  env = environment;
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
@@ -25,8 +28,9 @@ export class CardEventComponent implements OnInit {
   ) {
   }
 
-  ngOnInit(): void {
-    this.getEvent();
+  async ngOnInit(): Promise<void> {
+    this.updateData();
+
     this.canJoin();
   }
 
@@ -37,7 +41,7 @@ export class CardEventComponent implements OnInit {
   }
 
 
-  joinEvent(id: string) {
+  async joinEvent(id: string) {
     this._eventService.joinEvent(id).subscribe({
       next: () => {
         this.isAbleToJoin = false;
@@ -48,7 +52,7 @@ export class CardEventComponent implements OnInit {
         }
       }
     });
-    this.canJoin();
+    this.canJoin()
   }
 
   leaveEvent(id: string) {
@@ -65,11 +69,17 @@ export class CardEventComponent implements OnInit {
 
   }
 
-  canJoin() {
-    if(this.event)
-    this._eventService.isMember(this.event.id).subscribe(isMember => {
-      this.isAbleToJoin = !isMember;
-    });
+  async canJoin() {
+    await this._authService.user.subscribe(user => {
+      this._eventService.getEventMembers(this.event.id).subscribe(users => {
+        users.forEach(user => {
+          if (user.id == user.id) {
+            this.isAbleToJoin = false;
+          }
+        })
+      });
+    })
+
   }
 
   private getEvent() {
@@ -83,5 +93,10 @@ export class CardEventComponent implements OnInit {
         }
       }
     })
+  }
+
+  private updateData() {
+    this.getEvent();
+
   }
 }

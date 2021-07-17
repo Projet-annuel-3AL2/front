@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventService} from "../../../services/event/event.service";
+import {Event} from "../../../shared/models/event.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from "../../../services/auth/auth.service";
@@ -18,6 +19,11 @@ import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dial
 export class PageEventComponent implements OnInit {
   eventId: string;
   faEllipsisH = faEllipsisH;
+  isAbleToJoin: boolean = true;
+
+  // TODO : les rendres dynamiques
+  isOwnerB: boolean = true;
+  isAdminB: boolean = false;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
@@ -66,15 +72,15 @@ export class PageEventComponent implements OnInit {
   }
 
   showDialogueUpdateEvent() {
-    this._eventService.event.subscribe(event => {
-      this._authService.getCurrentUser().subscribe(user => {
-        const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
-          width: '900px',
-          data: {event: event, userSession: user}
-        });
-        dialogRef.afterClosed().subscribe(() => {
-        });
-      });
+    let event: Event;
+    this._eventService.event.subscribe(eventR => {
+      event = eventR
+    });
+    const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
+      width: '600px',
+      data: {event: event}
+    });
+    dialogRef.afterClosed().subscribe(() => {
     });
   }
 }

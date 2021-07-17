@@ -12,6 +12,7 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MapService} from "../../../services/map/map.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-dialog-create-event',
@@ -22,45 +23,37 @@ export class DialogCreateEventComponent implements OnInit {
 
   addresses: unknown[];
   addressSearchTimeOut: number;
-
   formData: FormGroup;
-  listCategory$: Category[];
-  listMembership$: OrganisationMembership[];
   limitParticipant = new FormControl(2, Validators.min(2));
-  wrongDate: boolean = false;
+  newEvent: Event;
+  postalAddress: any;
+  media: File;
+  mediaURL: string;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
-              private _categoryService: CategoryService,
+              public _authService: AuthService,
+              public _categoryService: CategoryService,
               private _organisationService: OrganisationService,
               private _snackBar: MatSnackBar,
               private _mapService: MapService,
-              @Inject(MAT_DIALOG_DATA) public data: { userSession: User, organisation: Organisation }) {
+              @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
+
   }
 
   ngOnInit(): void {
-    this.initialiseFormGroup();
-    this.getAllCategories();
+    this.newEvent = new Event();
+    this.newEvent.category = new Category();
+    this.media = null;
+    this.updateData();
   }
 
-  onClickSubmit(data) {
-    if (data.startDateEvent < data.endDateEvent) {
-
-      let newEvent = new Event();
-      newEvent.name = data.nameEvent;
-      newEvent.startDate = data.startDateEvent;
-      newEvent.endDate = data.endDateEvent;
-      newEvent.participantsLimit = data.participantsLimitEvent;
-      newEvent.category = data.categoryEvent;
-      newEvent.user = this.data.userSession;
-      newEvent.description = data.descriptionEvent;
-      newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
-
-      this._mapService.getAddressInfos(data.address).subscribe(address => {
-        newEvent.latitude = address.lat;
-        newEvent.longitude = address.lon;
-        this._eventService.createEvent(newEvent).subscribe({
-
+  onClickSubmit() {
+    if (this.newEvent.startDate < this.newEvent.endDate) {
+      this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
+        this.newEvent.latitude = 48.79643969643021;
+        this.newEvent.longitude = 2.128967056048809;
+        this._eventService.createEvent(this.newEvent, this.media).subscribe({
           next: () => {
             this.dialogRef.close()
           },
@@ -94,22 +87,44 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe(categories => {
-      this.listCategory$ = categories
-    })
+    this._categoryService.getAllCategory().subscribe({
+      next: () => {
+    },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
   }
 
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      nameEvent: new FormControl(),
-      descriptionEvent: new FormControl(),
-      startDateEvent: new FormControl(),
-      endDateEvent: new FormControl(),
-      address: new FormControl(),
-      participantsLimitEvent: new FormControl(),
-      categoryEvent: new FormControl(),
-      pictureFile: new FormControl(),
-      organisationEvent: new FormControl(),
+  onPictureSelected() {
+
+    const inputNode: any = document.querySelector('#picture');
+    if (typeof (FileReader) !== 'undefined') {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string =  e.target.result
+        if ( file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.mediaURL = file;
+          this.media = inputNode.files[0];
+        }
+      };
+    }
+  }
+
+  private async updateData(): Promise<void> {
+    this.getAllCategories();
+    this.postalAddress = null;
+    await this._authService.user.subscribe( user => {
+      this.newEvent.user = user;
     });
+    this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
   }
 }

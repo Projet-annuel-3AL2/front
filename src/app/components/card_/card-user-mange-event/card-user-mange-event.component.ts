@@ -5,6 +5,7 @@ import {EventService} from "../../../services/event/event.service";
 import {UserService} from "../../../services/user/user.service";
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-card-user-mange-event',
@@ -15,12 +16,14 @@ export class CardUserMangeEventComponent implements OnInit {
 
   @Input('user') user: User = new User();
   @Input('eventId') eventId: string;
-  @Input('userSession') userSession: User;
   faCheckCircle = faCheckCircle;
+  env: any;
 
   constructor(private _friendshipService: FriendshipService,
               private _eventService: EventService,
-              private _userService: UserService) {
+              public _userService: UserService,
+              public _authService: AuthService) {
+    this.env = environment
   }
 
   ngOnInit(): void {

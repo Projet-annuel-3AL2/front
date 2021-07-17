@@ -57,11 +57,7 @@ import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-exper
 import {DialogUpdateOrganisationComponent} from "./components/dialog_/dialog-update-organisation/dialog-update-organisation.component";
 import {DialogUpdateEventComponent} from "./components/dialog_/dialog-update-event/dialog-update-event.component";
 import {DialogCreateEventComponent} from "./components/dialog_/dialog-create-event/dialog-create-event.component";
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  NgxMatTimepickerModule
-} from '@angular-material-components/datetime-picker';
+import {NgxMatDatetimePickerModule,NgxMatNativeDateModule,NgxMatTimepickerModule} from '@angular-material-components/datetime-picker';
 import {SearchBarComponent} from "./components/search-bar/search-bar.component";
 import {PostPageComponent} from "./components/page_/post-page/post-page.component";
 import {CommentComponent} from "./components/card_/comment/comment.component";
@@ -72,6 +68,9 @@ import {VirtualScrollerModule} from "ngx-virtual-scroller";
 import {PostShareCardComponent} from "./components/card_/post-share-card/post-share-card.component";
 import {MapComponent} from "./components/map/map.component";
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import {DialogUpdateUserComponent} from "./components/dialog_/dialog-update-user/dialog-update-user.component";
+import {DialogAskCertificationComponent} from "./components/dialog_/dialog-ask-certification/dialog-ask-certification.component";
+import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {CookieService} from "ngx-cookie-service";
 import {FriendsPageComponent} from "./components/page_/friends-page/friends-page.component";
 
@@ -122,6 +121,11 @@ import {FriendsPageComponent} from "./components/page_/friends-page/friends-page
     CommentComponent,
     PasswordRecoveryComponent,
     ForgotPasswordComponent,
+    DialogUpdateUserComponent,
+    DialogAskCertificationComponent,
+    DialogAskOrganisationComponent,
+    ForgotPasswordComponent,
+    MapComponent,
     MapComponent,
     FriendsPageComponent
   ],
@@ -138,10 +142,6 @@ import {FriendsPageComponent} from "./components/page_/friends-page/friends-page
     ModalModule.forRoot(),
     CollapseModule.forRoot(),
     MaterialModule,
-    AppRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
     A11yModule,
     AppRoutingModule,
     ReactiveFormsModule,

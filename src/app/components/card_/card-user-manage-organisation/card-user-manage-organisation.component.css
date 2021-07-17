@@ -1,0 +1,46 @@
+.button-add-friend {
+
+}
+
+
+.button-add-friend-disable {
+  color: grey;
+
+}
+
+.button-add-friend-disable:hover span {
+  display: none
+}
+
+.button-add-friend-disable:hover:before {
+  content: "Annuler la demande"
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.center {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.card-user {
+  width: 100%;
+  margin: auto;
+}
+
+p {
+
+}
+
+p a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  font-family: Roboto, serif;
+}
+
+.button-gestion {
+  padding-top: 10px;
+}

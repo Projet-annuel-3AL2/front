@@ -53,8 +53,8 @@ export class UserService {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/user/getFriendship/${username}`);
   }
 
-  putUser(user: User): Observable<any> {
-    return this.http.put(`${environment.apiBaseUrl}/user/${user.username}`, user);
+  putUser(oldUsername: string, user: User): Observable<User> {
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/${oldUsername}`, user);
   }
 
   getParticipations(username: string): Observable<Event[]> {

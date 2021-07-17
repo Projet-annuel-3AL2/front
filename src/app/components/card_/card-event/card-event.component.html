@@ -2,7 +2,7 @@
   <div class="img-card-event">
     <a [routerLink]="['/event/' + event?.id]">
       <img
-        [src]="event?.picture?.link||'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+        [src]="event.picture != undefined? env.apiBaseUrl + '/' + event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
         alt="" class="rounded"
         style="">
     </a>
@@ -19,10 +19,9 @@
     </p>
   </div>
   <div class="date-card-event">
-    <p><i class="fas fa-clock"></i> {{event.startDate.toString() | slice: 8: 10 }}
-      /{{event.startDate.toString() | slice: 5: 7}}
-      /{{event.startDate.toString() | slice: 0: 4}} {{event.startDate.toString() | slice: 11 : 16}}
-      -- {{event.endDate.toString() | slice: 11 : 16}}</p>
+    <p style="font-size: 13px"><i class="fas fa-clock"></i>
+      {{event.startDate | date:"dd/MM/YYYY HH:MM"}}
+      -- {{event.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
   </div>
   <div class="category-card-event">
     <p><i class="fas fa-tags"></i> {{event?.category?.name}}</p>

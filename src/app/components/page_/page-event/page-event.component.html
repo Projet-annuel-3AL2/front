@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="tab-event">
-        <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C"
+        <mat-tab-group class="mat-tab-event" color="#00643C"
                        mat-align-tabs="center">
           <mat-tab label="Accueil">
             <div #divContent style="height: 450px">
@@ -80,7 +80,7 @@
             </div>
             <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
-                <app-card-user-mange-event [eventId]="eventId" [userSession]="(_authService.user|async)" [user]="user"
+                <app-card-user-mange-event [eventId]="eventId" [user]="user"
                                            class="m-0"></app-card-user-mange-event>
               </div>
             </div>

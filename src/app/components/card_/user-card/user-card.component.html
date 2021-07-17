@@ -1,6 +1,7 @@
 <div class="rounded-pill border d-flex p-2 card-user my-3" fxFlex fxLayoutAlign="row">
   <div class="mr-2" fxFlex fxLayoutAlign="row start center">
-    <img [routerLink]="['/user/' + user.username]" [src]="user.profilePicture || 'https://picsum.photos/50/50'"
+    <img [routerLink]="['/user/' + user.username]" [src]="
+      user.profilePicture !== undefined? env.apiBaseUrl + '/' + user.profilePicture.link: 'https://picsum.photos/50/50'"
          alt=""
          class="rounded-circle me-2" width="50">
     <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
