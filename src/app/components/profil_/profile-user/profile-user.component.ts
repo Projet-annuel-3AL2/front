@@ -102,7 +102,7 @@ export class ProfileUserComponent implements OnInit {
   async showDialogAskCertification() {
     const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
       width: '950px',
-      data: {user: await this._userService.user.toPromise()}
+      data: {user: this.username}
     });
 
     dialogRef.afterClosed().subscribe(() => {
