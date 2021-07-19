@@ -12,9 +12,8 @@ import {map} from "rxjs/operators";
 })
 export class FriendshipService {
   public friendRequests: Observable<FriendRequest[]>;
-  private friendRequestsSubject: BehaviorSubject<FriendRequest[]>;
-
   public sentFriendRequests: Observable<FriendRequest[]>;
+  private friendRequestsSubject: BehaviorSubject<FriendRequest[]>;
   private sentFriendRequestsSubject: BehaviorSubject<FriendRequest[]>;
 
   constructor(private http: HttpClient) {
@@ -50,17 +49,17 @@ export class FriendshipService {
   }
 
   getSentFriendshipRequest(): Observable<FriendRequest[]> {
-    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/sent-friendship-request`).pipe(map(requests=>{
+    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/sent-friendship-request`).pipe(map(requests => {
       this.sentFriendRequestsSubject.next(requests);
       return requests;
     }));
   }
 
   getReceivedFriendshipRequest(): Observable<FriendRequest[]> {
-    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/received-friendship-request`).pipe(map(requests=>{
+    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/received-friendship-request`).pipe(map(requests => {
       this.friendRequestsSubject.next(requests);
       return requests;
-  }));
+    }));
   }
 
 }

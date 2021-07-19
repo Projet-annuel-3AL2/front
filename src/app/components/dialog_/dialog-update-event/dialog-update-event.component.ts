@@ -2,12 +2,12 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../../services/event/event.service";
-import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Event} from "../../../shared/models/event.model";
 import {CategoryService} from "../../../services/category/category.service";
-import {Category} from "../../../shared/models/category.model";
 import {environment} from "../../../../environments/environment";
+import {AuthService} from "../../../services/auth/auth.service";
+import {MapService} from "../../../services/map/map.service";
 
 @Component({
   selector: 'app-dialog-update-event',
@@ -16,40 +16,32 @@ import {environment} from "../../../../environments/environment";
 })
 export class DialogUpdateEventComponent implements OnInit {
 
+  addresses: unknown[];
+  addressSearchTimeOut: number;
   formData: FormGroup;
   limitParticipant = new FormControl(2, Validators.min(2));
-  listCategory$: Category[];
+  updateEvent: Event;
+  postalAddress: any;
+  media: File;
+  mediaURL: string;
+
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateEventComponent>,
-              private _eventService: EventService,
+              public _eventService: EventService,
               private _organisationService: OrganisationService,
-              private _categoryService: CategoryService,
-              @Inject(MAT_DIALOG_DATA) public data: { event: Event, userSession: User }) {
+              public _categoryService: CategoryService,
+              public _authService: AuthService,
+              private _mapService: MapService,
+              @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
   }
 
   ngOnInit(): void {
-    this.initialiseFormGroup();
-    this.getAllCategories();
+    this.updateData()
+
   }
 
-  onClickSubmit(data) {
-    let updateEvent = new Event();
-    updateEvent.id = this.data.event.id;
-    updateEvent.name = data.nameEvent;
-    updateEvent.startDate = data.startDateEvent;
-    updateEvent.endDate = data.endDateEvent;
-    updateEvent.participantsLimit = data.participantsLimitEvent;
-    updateEvent.category = data.categoryEvent;
-    updateEvent.user = this.data.userSession;
-    updateEvent.description = data.descriptionEvent;
-
-
-    // TODO : convertir address en coordonées gps et gestion fichier
-    // updateEvent.picture = data.pictureFile;
-    // updateEvent.latitude = data.latitudeEvent;
-    // updateEvent.longitude = data.longitudeEvent;
-
-    this._eventService.updateEvent(updateEvent).subscribe({
+  onClickSubmit() {
+    this._eventService.updateEvent(this.updateEvent).subscribe({
 
       next: () => {
         this.dialogRef.close()
@@ -66,23 +58,75 @@ export class DialogUpdateEventComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe(categories => {
-      this.listCategory$ = categories
-    })
+  searchAddress($event: any) {
+    clearTimeout(this.addressSearchTimeOut);
+    this.addressSearchTimeOut = setTimeout(() => {
+      if ($event.target.value === undefined || $event.target.value === '') {
+        this.addresses = undefined;
+        return;
+      }
+      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+    }, 500);
   }
 
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      nameEvent: new FormControl(),
-      descriptionEvent: new FormControl(),
-      startDateEvent: new FormControl(),
-      endDateEvent: new FormControl(),
-      address: new FormControl(),
-      participantsLimitEvent: new FormControl(),
-      categoryEvent: new FormControl(),
-      pictureFile: new FormControl(),
-      organisationEvent: new FormControl(),
+  onPictureSelected() {
+    const inputNode: any = document.querySelector('#picture');
+    if (typeof (FileReader) !== 'undefined') {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.mediaURL = file;
+          this.media = inputNode.files[0];
+        }
+      };
+    }
+  }
+
+  private async updateData(): Promise<void> {
+    this.getAllCategories();
+    this.getCategory();
+    this.postalAddress = null;
+    this.updateEvent = new Event();
+    this.media = null;
+    this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
+    await this._authService.user.subscribe(user => {
+      this.updateEvent.user = user;
+    });
+
+    await this._eventService.event.subscribe(event => {
+      this.updateEvent = event
+    })
+    this.postalAddress = null;
+  }
+
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  private getCategory() {
+    this._eventService.getCategory(this.data.event.id).subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
     });
   }
 

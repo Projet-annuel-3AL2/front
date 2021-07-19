@@ -1,6 +1,6 @@
 <div class="border rounded-3 d-flex flex-column p-2 event-list-filter">
   <div class="mb-3 my-3">
-    <div (ngSubmit)="onclickSubmit(formData.value)" [formGroup]="formData">
+    <form (ngSubmit)="onclickSubmit()">
       <div class="px-4">
         <h2>Filtre</h2>
         <mat-divider></mat-divider>
@@ -19,48 +19,46 @@
             </div>
           </div>
         </div>
-        <div class="row m-1" style="padding-top: 15px">
+        <div class="row m-1">
+          <mat-divider></mat-divider>
+          <h3>Distance (km)</h3>
+          <p style="font-size: 13px">* Vous devez vous localiser pour choisir une distance</p>
+          <mat-slider
+            [(ngModel)]="searchEventProps.range"
+            [displayWith]="formatLabel"
+            aria-label="units"
+            class="range-picker"
+            max="5000"
+            min="2"
+            name="range"
+            step="1"
+            thumbLabel tickInterval="10"></mat-slider>
+        </div>
+        <div class="row m-2" style="padding-top: 15px">
           <mat-divider></mat-divider>
           <h3>Période</h3>
           <mat-form-field appearance="fill">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [rangePicker]="picker">
-              <input formControlName="startDate" matStartDate placeholder="Date de début" required>
-              <input formControlName="endDate" matEndDate placeholder="Date de fin" required>
+              <input [(ngModel)]="searchEventProps.startDate" matStartDate name="startDate" placeholder="Date de début">
+              <input [(ngModel)]="searchEventProps.endDate" matEndDate name="endDate" placeholder="Date de fin">
             </mat-date-range-input>
             <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
         </div>
-        <div class="row m-2">
-          <mat-divider></mat-divider>
-          <h3>Distance (km)</h3>
-          <mat-slider
-            [displayWith]="formatLabel"
-            aria-label="units"
-            class="range-picker"
-            formControlName="range"
-            max="5000"
-            min="0"
-            required
-            step="10"
-            thumbLabel tickInterval="10"></mat-slider>
-        </div>
         <div class="row m-3">
           <mat-divider></mat-divider>
           <h3>Type d'évènement</h3>
           <mat-form-field class="section-checkbox">
-            <mat-select formControlName="category" required>
-              <ul>
-                <li *ngFor="let category of listCategories$">
-                  <mat-option class="mat-checkbox" value="{{category.id}}">{{category.name}}</mat-option>
-                </li>
-              </ul>
+            <mat-select [(ngModel)]="searchEventProps.categoryId" matNativeControl name="categoryId">
+              <mat-option *ngFor="let category of (_categoryService.categories|async)"
+                          value="{{category.id}}">{{category.name}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
       <button class="button-validate rounded-pill" mat-raised-button type="submit">Rechercher</button>
-    </div>
+    </form>
   </div>
 </div>

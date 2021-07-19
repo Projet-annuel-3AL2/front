@@ -8,6 +8,7 @@ import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.c
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dialog-update-event.component";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-page-event',
@@ -66,15 +67,15 @@ export class PageEventComponent implements OnInit {
   }
 
   showDialogueUpdateEvent() {
-    this._eventService.event.subscribe(event => {
-      this._authService.getCurrentUser().subscribe(user => {
-        const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
-          width: '900px',
-          data: {event: event, userSession: user}
-        });
-        dialogRef.afterClosed().subscribe(() => {
-        });
-      });
+    let event: Event;
+    this._eventService.event.subscribe(eventR => {
+      event = eventR
+    });
+    const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
+      width: '600px',
+      data: {event: event}
+    });
+    dialogRef.afterClosed().subscribe(() => {
     });
   }
 }

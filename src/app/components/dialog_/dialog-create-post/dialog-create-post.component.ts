@@ -21,16 +21,17 @@ export class DialogCreatePostComponent implements OnInit {
   faUserFriends = faUserFriends;
   medias: File[];
   mediasURL: string[];
-  caretPosition: number=0;
+  caretPosition: number = 0;
   showPopup: boolean = false;
   text: string;
   events: Event[];
+
   constructor(public _authService: AuthService,
               private _postService: PostService,
               private _searchService: SearchService,
               public dialogRef: MatDialogRef<DialogCreatePostComponent>,
               private _snackBar: MatSnackBar,
-              @Inject(MAT_DIALOG_DATA) public data: {sharedEvent: Event, sharesPost: Post }) {
+              @Inject(MAT_DIALOG_DATA) public data: { sharedEvent: Event, sharesPost: Post }) {
   }
 
   ngOnInit(): void {
@@ -42,12 +43,12 @@ export class DialogCreatePostComponent implements OnInit {
       return;
     }
     this.text = [this.text.slice(0, this.caretPosition), $event.emoji.native, this.text.slice(this.caretPosition)].join('');
-    this.caretPosition+=$event.emoji.native.length;
+    this.caretPosition += $event.emoji.native.length;
   }
 
   sendPost() {
     console.log(this.data)
-    if(this.text === undefined && this.text === '' && this.medias.length <= 0 && this.data.sharesPost === undefined && this.data.sharedEvent === undefined) {
+    if (this.text === undefined && this.text === '' && this.medias.length <= 0 && this.data.sharesPost === undefined && this.data.sharedEvent === undefined) {
       this._snackBar.open("Vous ne pouvez créer un poste s'il est vide.", "Fermer");
       return;
     }
@@ -69,7 +70,7 @@ export class DialogCreatePostComponent implements OnInit {
 
   addImages($event: any) {
     const files: File[] = Array.from($event.target.files);
-    if(files.length > 4){
+    if (files.length > 4) {
       this._snackBar.open("Vous ne pouvez ajouter que 4 medias au maximum.", "Fermer");
       return;
     }
@@ -91,7 +92,7 @@ export class DialogCreatePostComponent implements OnInit {
   }
 
   searchEvents($event: any) {
-    this._searchService.searchEvent($event.target.value).subscribe(events=> {
+    this._searchService.searchEvent($event.target.value).subscribe(events => {
       console.log(events)
       this.events = events;
     });

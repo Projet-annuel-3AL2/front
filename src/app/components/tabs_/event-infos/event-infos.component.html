@@ -36,8 +36,8 @@
             <div *ngIf="event.organisation">
               <app-card-organisation [organisation]="event.organisation"></app-card-organisation>
             </div>
-            <div *ngIf="event.owner">
-              <app-user-card [user]="event.owner"></app-user-card>
+            <div *ngIf="event?.user">
+              <app-user-card [user]="event?.user"></app-user-card>
             </div>
           </mat-list>
         </div>

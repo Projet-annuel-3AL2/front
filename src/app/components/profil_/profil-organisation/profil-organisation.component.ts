@@ -7,10 +7,6 @@ import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
-import {EventService} from "../../../services/event/event.service";
-import {PostService} from "../../../services/post/post.service";
-import {Post} from "../../../shared/models/post.model";
-import {Event} from "../../../shared/models/event.model";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
@@ -25,36 +21,35 @@ import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dial
 export class ProfilOrganisationComponent implements OnInit {
 
   faCheckCircle = faCheckCircle;
-  organisation$: Organisation;
   organisationId: string;
   faEllipsisH = faEllipsisH;
   userSession$: User;
-  listMember$: User[] = [];
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
   isFollowing: boolean = false;
-  listPosts$: Post[] = [];
-  listEvent$: Event[] = [];
+  env: any;
+  private organisation$: Organisation;
 
-  constructor(private _organisationService: OrganisationService,
+  constructor(public _organisationService: OrganisationService,
               private route: ActivatedRoute,
               private _userService: UserService,
               private _authService: AuthService,
-              private _eventService: EventService,
-              private _postService: PostService,
               public dialogReport: MatDialog,
               public dialogUpdateOrganisation: MatDialog,
               public dialogCreateEvent: MatDialog
   ) {
+    this.env = environment;
   }
 
   ngOnInit(): void {
-
     this.organisationId = this.route.snapshot.params['id']
-    this._userService.getByUsername(this._authService.getCurrentUsername()).subscribe(user => {
+    this._authService.user.subscribe(user => {
       this.userSession$ = user;
     });
-    this.getOrganisation();
+    this.updateData();
+    this._organisationService.organisation.subscribe(organisation => {
+      this.organisation$ = organisation;
+    })
   }
 
   isOwner() {
@@ -124,7 +119,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
-      width: '500px',
+      width: '600px',
       data: {id: this.organisation$.id, reportType: ReportTypeEnum.ORGANISATION}
     });
 
@@ -142,28 +137,28 @@ export class ProfilOrganisationComponent implements OnInit {
     })
   }
 
-  // TODO : Trouver un endroit ou mettre le bouton
   showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
-      width: '900px',
-      data: {userSession: this.userSession$, organisation: this.organisation$,}
+      width: '600px',
+      data: {organisation: this.organisation$}
     });
 
     dialogRef.afterClosed().subscribe(() => {
     })
   }
 
+  private updateData() {
+    this.getOrganisation();
+    this.getOrganisationMember();
+    this.getListEvent()
+    this.canFollow();
+    this.isOwner();
+    this.isAdmin();
+    this.getPostsOrganisation();
+  }
+
   private getOrganisation() {
     this._organisationService.getOrganisation(this.organisationId).subscribe({
-      next: organisation => {
-        this.organisation$ = organisation;
-        this.getOrganisationMember();
-        this.canFollow();
-        this.isOwner();
-        this.isAdmin();
-        // this.getListEvent();
-        this.getPostsOrganisation();
-      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
@@ -174,9 +169,6 @@ export class ProfilOrganisationComponent implements OnInit {
 
   private getOrganisationMember() {
     this._organisationService.getMemberOrganisation(this.organisationId).subscribe({
-      next: users => {
-        this.listMember$ = users;
-      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
@@ -187,9 +179,6 @@ export class ProfilOrganisationComponent implements OnInit {
 
   private getListEvent() {
     this._organisationService.getEventCreated(this.organisationId).subscribe({
-      next: events => {
-        this.listEvent$ = events;
-      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
@@ -200,9 +189,6 @@ export class ProfilOrganisationComponent implements OnInit {
 
   private getPostsOrganisation() {
     this._organisationService.getOrganisationPosts(this.organisationId).subscribe({
-      next: posts => {
-        this.listPosts$ = posts;
-      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);

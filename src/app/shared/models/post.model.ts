@@ -3,6 +3,7 @@ import {Media} from "./media.model";
 import {Organisation} from "./organisation.model";
 import {Group} from "./group.model";
 import {Event} from "./event.model";
+import {Comment} from "./comment.model";
 
 export class Post {
   id: string;

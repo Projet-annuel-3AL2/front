@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
@@ -15,25 +15,26 @@ export class DialogUpdateOrganisationComponent implements OnInit {
 
   formData: FormGroup;
   updateOrganisation: Organisation;
+  updatedProfilePicture: any;
+  updatedBannerPicture: any;
+  updatedProfilPictureURL: any;
+  updatedBannerPictureURL: any;
+  env: any;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateOrganisationComponent>,
               private _organisationService: OrganisationService,
               @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation, userSession: User }) {
+    this.env = environment
   }
 
   ngOnInit(): void {
-    this.initialiseFormGroup();
-    this.updateOrganisation = this.data.organisation
+    this.updateOrganisation = this.data.organisation;
+    this.updatedProfilePicture = null;
+    this.updatedBannerPicture = null;
   }
 
-  onClickSubmit(data) {
-    let updateOrganisation: Organisation = new Organisation();
-    updateOrganisation.name = data.name;
-    // TODO : implémenter l'ajout de fichier
-    // updateOrganisation.profilePicture = data.profilPicture;
-    // updateOrganisation.bannerPicture = data.bannerPicture;
-
-    this._organisationService.putOrganisation(this.data.organisation.id, updateOrganisation).subscribe(
+  onClickSubmit() {
+    this._organisationService.putOrganisation(this.updateOrganisation, this.updatedProfilePicture, this.updatedBannerPicture).subscribe(
       {
         next: () => {
           this.dialogRef.close()
@@ -51,11 +52,43 @@ export class DialogUpdateOrganisationComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  private initialiseFormGroup() {
-    this.formData = new FormGroup({
-      name: new FormControl(),
-      profilPicture: new FormControl(),
-      bannerPicture: new FormControl()
-    });
+  onProfilePictureSelected() {
+    const inputNode: any = document.querySelector('#profilePicture');
+    if (typeof (FileReader) !== 'undefined') {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.updatedProfilPictureURL = file;
+          this.updatedProfilePicture = inputNode.files[0];
+        }
+      };
+    }
+  }
+
+  onProfileBannerSelected() {
+    const inputNode: any = document.querySelector('#profileBanner');
+    if (typeof (FileReader) !== 'undefined') {
+
+      const reader = new FileReader();
+      reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.updatedBannerPictureURL = file;
+          this.updatedBannerPicture = inputNode.files[0];
+        }
+      };
+    }
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
 import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +12,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
+import {DialogUpdateUserComponent} from "../../dialog_/dialog-update-user/dialog-update-user.component";
+import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certification/dialog-ask-certification.component";
+import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 
 @Component({
   selector: 'app-profile-user',
@@ -32,7 +35,10 @@ export class ProfileUserComponent implements OnInit {
               public _authService: AuthService,
               public dialog: MatDialog,
               public dialogReport: MatDialog,
-              public dialogCreateEvent: MatDialog
+              public dialogCreateEvent: MatDialog,
+              public dialogAskOrganisation: MatDialog,
+              public dialogAskCertification: MatDialog,
+              public dialogUpdateUser: MatDialog
   ) {
   }
 
@@ -70,11 +76,48 @@ export class ProfileUserComponent implements OnInit {
 
   showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
-      width: '900px',
-      data: {userSession: this.username, organisation: null}
+      width: '600px',
+      data: {organisation: null}
     });
 
     dialogRef.afterClosed().subscribe(() => this.updateUser());
+  }
+
+  async showDialogUpdateUser() {
+    let usr;
+    this._userService.user.subscribe(user => {
+      usr = user
+    });
+    const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
+      width: '950px',
+      data: {usr}
+    });
+
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  // TODO : ne fonctionne pas
+  async showDialogAskCertification() {
+    const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
+      width: '950px',
+      data: {user: this.username}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
+  }
+
+  // TODO : ne fonctionne pas
+  showDialogAskOrganisation() {
+    const dialogRef = this.dialogAskOrganisation.open(DialogAskOrganisationComponent, {
+      width: '950px',
+      data: {user: this.username}
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+    })
   }
 
   removeFriend() {

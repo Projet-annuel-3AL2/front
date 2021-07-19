@@ -22,6 +22,6 @@ export class CreatePostComponent implements OnInit {
   }
 
   openPopup() {
-    this.dialogReport.open(DialogCreatePostComponent, {minWidth: "500px", minHeight: "121px",data:{}});
+    this.dialogReport.open(DialogCreatePostComponent, {minWidth: "500px", minHeight: "121px", data: {}});
   }
 }

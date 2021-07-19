@@ -31,23 +31,25 @@
   <hr class="my-0">
   <div class="create-post-options m-2" fxFlex fxLayout="row">
     <div fxFlex fxLayoutAlign="start center">
-      <input (change)="addImages($event)" accept="image/png, image/jpeg" id="file-selector" multiple style="display: none"
+      <input (change)="addImages($event)" accept="image/png, image/jpeg" id="file-selector" multiple
+             style="display: none"
              type="file">
       <fa-icon (click)="openFileSelector()" [icon]="faImage" class="mx-1" size="2x"></fa-icon>
-      <fa-icon [matMenuTriggerFor]="emojiPicker" [icon]="faSmile" class="mx-1" size="2x"></fa-icon>
-      <mat-menu #emojiPicker class="w-100" yPosition="below" overlapTrigger>
-        <emoji-mart (click) = "$event.stopPropagation()" (emojiSelect)="addEmoji($event)"></emoji-mart>
+      <fa-icon [icon]="faSmile" [matMenuTriggerFor]="emojiPicker" class="mx-1" size="2x"></fa-icon>
+      <mat-menu #emojiPicker class="w-100" overlapTrigger yPosition="below">
+        <emoji-mart (click)="$event.stopPropagation()" (emojiSelect)="addEmoji($event)"></emoji-mart>
       </mat-menu>
-      <fa-icon [icon]="faCalendarAlt" class="mx-1" size="2x" matSuffix [matMenuTriggerFor]="eventPicker"></fa-icon>
+      <fa-icon [icon]="faCalendarAlt" [matMenuTriggerFor]="eventPicker" class="mx-1" matSuffix size="2x"></fa-icon>
       <mat-menu #eventPicker>
-        <input matInput
-               (click) = "$event.stopPropagation()" (keyup)="searchEvents($event)"
+        <input (click)="$event.stopPropagation()"
+               (keyup)="searchEvents($event)" matInput
                placeholder="Chercher un événement" type="text">
         <p>Vos événements</p>
-        <button *ngFor="let event of (_authService.user|async)?.eventsParticipation" (click)="data.sharedEvent=event" mat-menu-item>{{event.name}}</button>
+        <button (click)="data.sharedEvent=event" *ngFor="let event of (_authService.user|async)?.eventsParticipation"
+                mat-menu-item>{{event.name}}</button>
         <div *ngIf="events?.length > 0">
           <p class="text-center fw-bold">Autres événements</p>
-          <button *ngFor="let option of events" (click)="data.sharedEvent=option" mat-menu-item>{{option.name}}</button>
+          <button (click)="data.sharedEvent=option" *ngFor="let option of events" mat-menu-item>{{option.name}}</button>
         </div>
       </mat-menu>
     </div>

@@ -11,22 +11,47 @@ import {Report} from "../../shared/models/report.model";
 import {map} from "rxjs/operators";
 import {Category} from "../../shared/models/category.model";
 import {Organisation} from "../../shared/models/organisation.model";
+import {AuthService} from "../auth/auth.service";
+import {SearchEventProps} from "../../components/event-filter/event-filter.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
   public event: Observable<Event>;
+  public events: Observable<Event[]>;
+
+  private eventsSubject: BehaviorSubject<Event[]>;
   private eventSubject: BehaviorSubject<Event>;
 
   constructor(private userService: UserService,
+              private _authService: AuthService,
               private http: HttpClient) {
     this.eventSubject = new BehaviorSubject<Event>(null);
+    this.eventsSubject = new BehaviorSubject<Event[]>(null);
+    this.events = this.eventsSubject.asObservable();
     this.event = this.eventSubject.asObservable();
   }
 
-  createEvent(newEvent: Event): Observable<Event> {
-    return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, newEvent);
+  createEvent(newEvent: Event, file: File): Observable<Event> {
+    const formData = new FormData();
+
+    formData.append("name", JSON.stringify(newEvent.name));
+    formData.append("description", JSON.stringify(newEvent.description));
+    formData.append("user", JSON.stringify(newEvent.user));
+    formData.append("startDate", JSON.stringify(newEvent.startDate.toString()));
+    formData.append("endDate", JSON.stringify(newEvent.endDate.toString()));
+    formData.append("latitude", JSON.stringify(newEvent.latitude));
+    formData.append("longitude", JSON.stringify(newEvent.longitude));
+    formData.append("participantsLimit", JSON.stringify(newEvent.participantsLimit));
+    formData.append("category", JSON.stringify(newEvent.category));
+    if (newEvent.organisation !== undefined) {
+      formData.append("organisation", JSON.stringify(newEvent.organisation));
+    }
+    if (file !== undefined) {
+      formData.append("event_media", file);
+    }
+    return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, formData);
   }
 
   joinEvent(eventId: string): Observable<void> {
@@ -72,11 +97,15 @@ export class EventService {
   }
 
   getEventMembers(eventId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiBaseUrl}/event/${eventId}/getMembers`);
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/event/${eventId}/participants`);
   }
 
   isEventFinished(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/is-finished`);
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/is-finished`)
+      .pipe(map(events => {
+        this.eventsSubject.next(events);
+        return events;
+      }));
   }
 
   getEventPosts(eventId: string): Observable<Post[]> {
@@ -120,7 +149,7 @@ export class EventService {
   getOwner(eventId: string): Observable<User> {
     return this.http.get<User>(`${environment.apiBaseUrl}/event/${eventId}/owner`).pipe(map(owner => {
       let event = this.eventSubject.getValue();
-      event.owner = owner;
+      event.user = owner;
       this.eventSubject.next(event);
       return owner;
     }));
@@ -155,7 +184,7 @@ export class EventService {
 
   isMember(eventId: string) {
     return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-member`).pipe(map(isMember => {
-      if(this.eventSubject.getValue()) {
+      if (this.eventSubject.getValue()) {
         let event = this.eventSubject.getValue();
         event.isMember = isMember;
         this.eventSubject.next(event);
@@ -166,13 +195,29 @@ export class EventService {
 
   isOwner(eventId: string) {
     return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-owner`).pipe(map(isOwner => {
-      if(this.eventSubject.getValue()) {
+      if (this.eventSubject.getValue()) {
         let event = this.eventSubject.getValue();
         event.isOwner = isOwner;
         this.eventSubject.next(event);
       }
       return isOwner;
     }));
+  }
+
+  getEventsSearch(searchEventProps: SearchEventProps): Observable<Event[]> {
+    return this.http.get<Event[]>(
+      `${environment.apiBaseUrl}/event/search`
+      + `/${searchEventProps.longitude}`
+      + `/${searchEventProps.latitude}`
+      + `/${searchEventProps.range}`
+      + `/${searchEventProps.startDate}`
+      + `/${searchEventProps.endDate}`
+      + `/${searchEventProps.categoryId}`)
+      .pipe(map(events => {
+        console.log(events);
+        this.eventsSubject.next(events);
+        return events;
+      }))
   }
 }
 

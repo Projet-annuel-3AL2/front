@@ -13,16 +13,20 @@ import {map} from "rxjs/operators";
 })
 export class PostService {
   public posts: Observable<Post[]>;
+  public post: Observable<Post>;
   private postsSubject: BehaviorSubject<Post[]>;
+  private postSubject: BehaviorSubject<Post>;
 
   constructor(private http: HttpClient) {
     this.postsSubject = new BehaviorSubject<Post[]>([]);
     this.posts = this.postsSubject.asObservable();
+    this.postSubject = new BehaviorSubject<Post>(null);
+    this.post = this.postSubject.asObservable();
   }
 
   createPost(text: string, sharesPost: string, sharedEvent: string, files: File[]) {
     const formData = new FormData();
-    if(text===undefined) {
+    if (text === undefined) {
       text = "";
     }
     formData.append("text", text);
@@ -32,7 +36,7 @@ export class PostService {
     if (sharedEvent !== undefined && sharedEvent !== null) {
       formData.append("sharedEvent", sharedEvent);
     }
-    if(files){
+    if (files) {
       for (let file of files) {
         formData.append("post_medias", file);
       }
@@ -44,7 +48,10 @@ export class PostService {
   }
 
   getPostById(postId: string): Observable<Post> {
-    return this.http.get<Post>(`${environment.apiBaseUrl}/post/${postId}`);
+    return this.http.get<Post>(`${environment.apiBaseUrl}/post/${postId}`).pipe(map(post => {
+      this.postSubject.next(post);
+      return post;
+    }));
   }
 
   getTimeline(): Observable<Post[]> {
@@ -76,11 +83,23 @@ export class PostService {
   }
 
   getComments(postId: string): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${environment.apiBaseUrl}/post/${postId}/comments`);
+    return this.http.get<Comment[]>(`${environment.apiBaseUrl}/post/${postId}/comments`).pipe(map(comments => {
+      let post = this.postSubject.getValue();
+      post.comments = comments;
+      return comments;
+    }));
   }
 
   sendComment(postId: string, text: string): Observable<Comment> {
-    return this.http.post<Comment>(`${environment.apiBaseUrl}/post/${postId}/comment`, {text});
+    return this.http.post<Comment>(`${environment.apiBaseUrl}/post/${postId}/comment`, {text}).pipe(map(comment => {
+      let post = this.postSubject.getValue();
+      if (post.comments === undefined) {
+        post.comments = [];
+      }
+      post.comments = [comment].concat(post.comments);
+      this.postSubject.next(post);
+      return comment;
+    }));
   }
 
   deletePost(postId: string): Observable<void> {

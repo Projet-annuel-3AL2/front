@@ -1,59 +1,49 @@
-<h1 *ngIf="data.organisation != null" class="update-event-title" mat-dialog-title>Création d'un événement
+<h1 *ngIf="data.organisation != null" class="create-event-title" mat-dialog-title>Création d'un événement
   par {{data.organisation.name}}</h1>
-<h1 *ngIf="data.organisation === null" class="update-event-title" mat-dialog-title>Création d'un événement
-  par {{data.userSession.username}}</h1>
-<form (ngSubmit)="onClickSubmit(formData.value)" [formGroup]="formData">
+<h1 *ngIf="data.organisation === null" class="create-event-title" mat-dialog-title>Création d'un événement
+  par {{(_authService.user|async).username}}</h1>
+<mat-divider></mat-divider>
+<form #it="ngForm" (ngSubmit)="onClickSubmit()">
   <div mat-dialog-content>
-    <div class="update-event-grid">
+    <div class="create-event-grid">
       <div class="form-field-name-event">
         <mat-form-field appearance="fill">
-          <mat-label>Nom de l'événement</mat-label>
-          <input formControlName="nameEvent" matInput placeholder="Nom de l'événement" required>
-        </mat-form-field>
-      </div>
-      <div class="form-field-description">
-        <mat-form-field>
-          <mat-label>Description de l'événement</mat-label>
-          <textarea class="textarea-description" formControlName="descriptionEvent" matInput
-                    placeholder="Ex. L'événement se ..."></textarea>
-        </mat-form-field>
-      </div>
-      <div class="form-field-address">
-        <mat-form-field appearance="fill">
-          <mat-label>Adresse de l'événement</mat-label>
-          <div #origin="matAutocompleteOrigin" class="form-group w-4" matAutocompleteOrigin>
-              <input (input)="searchAddress($event)" [matAutocompleteConnectedTo]="origin" [matAutocomplete]="auto" formControlName="address"
-                     matInput placeholder="Adresse" required class="form-field-address">
-          </div>
-          <mat-autocomplete #auto="matAutocomplete" class="user-select-none" >
-            <mat-option *ngFor="let option of addresses"
-                        [value]="option?.address?.house_number + ' ' + option?.address?.road + ', ' + option?.address?.town +' '+ option?.address?.postcode+', '+ option?.address?.country">
-              {{option?.address?.house_number}} {{option?.address?.road}}, {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
-          </mat-autocomplete>
-
+          <mat-label>Nom de l'Évènement</mat-label>
+          <input [(ngModel)]="newEvent.name" matInput name="name" placeholder="Nom de l'Évènement"
+                 required>
         </mat-form-field>
       </div>
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
           <mat-label>Limite de participants</mat-label>
-          <input [formControl]="limitParticipant" formControlName="participantsLimitEvent" matInput min="2"
-                 placeholder="Ex. 30"
-                 required type="number">
+          <input [(ngModel)]="newEvent.participantsLimit" matInput min="2" name="participantsLimit"
+                 placeholder="Ex. 30" required type="number">
           <mat-error *ngIf="limitParticipant.invalid">Min: 2</mat-error>
         </mat-form-field>
       </div>
-      <div class="form-field-categories">
+      <div class="form-field-address">
         <mat-form-field appearance="fill">
-          <mat-label>Catégorie</mat-label>
-          <mat-select formControlName="categoryEvent" matNativeControl required>
-            <mat-option *ngFor="let category of listCategory$" value="{{category.id}}">{{category.name}}</mat-option>
-          </mat-select>
+          <mat-label>Adresse de l'événement</mat-label>
+          <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
+            <label>
+              <input (input)="searchAddress($event)" [(ngModel)]="postalAddress" [matAutocompleteConnectedTo]="origin"
+                     [matAutocomplete]="auto" matInput
+                     name="postalAddress" placeholder="Adresse" required>
+            </label>
+          </div>
+          <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
+            <mat-option *ngFor="let option of addresses"
+                        [value]="option?.address?.house_number + ' ' + option?.address?.road + ', ' + option?.address?.town +' '+ option?.address?.postcode+', '+ option?.address?.country">
+              {{option?.address?.house_number}} {{option?.address?.road}}
+              , {{option?.address?.town}} {{option?.address?.postcode}}, {{option?.address?.country}}</mat-option>
+          </mat-autocomplete>
+
         </mat-form-field>
       </div>
       <div class="form-field-date-picker-start">
         <mat-form-field appearance="fill">
           <mat-label>Date de début</mat-label>
-          <input [ngxMatDatetimePicker]="pickerFrom" formControlName="startDateEvent" matInput
+          <input [(ngModel)]="newEvent.startDate" [ngxMatDatetimePicker]="pickerFrom" matInput name="startDate"
                  placeholder="Date de début" required>
           <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #pickerFrom></ngx-mat-datetime-picker>
@@ -62,20 +52,52 @@
       <div class="form-field-date-picker-end">
         <mat-form-field appearance="fill">
           <mat-label>Date de fin</mat-label>
-          <input [ngxMatDatetimePicker]="pickerTo" formControlName="endDateEvent" matInput placeholder="Date de fin"
+          <input [(ngModel)]="newEvent.endDate" [ngxMatDatetimePicker]="pickerTo" matInput name="endDate"
+                 placeholder="Date de fin"
                  required>
           <mat-datepicker-toggle [for]="pickerTo" matSuffix></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #pickerTo></ngx-mat-datetime-picker>
         </mat-form-field>
       </div>
-      <div class="form-field-file">
-        <label for="myfile">Choisissez une image :</label>
-        <input data-max-size="2048" formControlName="pictureFile" id="myfile" name="myfile" type="file">
-      </div>
     </div>
+    <div class="form-field-categories">
+      <mat-form-field appearance="fill">
+        <mat-label>Catégorie</mat-label>
+        <mat-select [(ngModel)]="newEvent.category.id" matNativeControl name="category" required>
+          <mat-option *ngFor="let category of (_categoryService.categories|async)"
+                      value="{{category.id}}">{{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form-field-description">
+      <mat-form-field>
+        <mat-label>Description de l'Évènement</mat-label>
+        <textarea [(ngModel)]="newEvent.description" class="textarea-description" matInput
+                  name="description" placeholder="Ex. L'Évènement se ..."></textarea>
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form-field-create-picture">
+      <a (click)="pictureInput.click()">
+        <img *ngIf=" media === null" [src]="newEvent.picture != undefined? newEvent.picture.link: '../../../../assets/images/no-image.png'" alt=""
+             class="rounded"
+             height="300px"
+             style="object-fit: none" width="100%">
+        <img *ngIf="media !== null" [src]="mediaURL" alt=""
+             class="rounded"
+             height="300px"
+             style="object-fit: none" width="100%">
+      </a>
+      <input #pictureInput (change)="onPictureSelected()" [ngModel]="newEvent.picture" hidden id="picture" name="picture"
+             type="file">
+    </div>
+
   </div>
-  <div class="dialog-actions-update-event" mat-dialog-actions>
-    <div class="button-grid-update-event">
+  <mat-divider></mat-divider>
+  <div class="dialog-actions-create-event" mat-dialog-actions>
+    <div class="button-grid-create-event">
       <div class="button-cancel">
         <button (click)="onNoClick()" mat-button type="button">Annuler</button>
       </div>
@@ -85,4 +107,3 @@
     </div>
   </div>
 </form>
-

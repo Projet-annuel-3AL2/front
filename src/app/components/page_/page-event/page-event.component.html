@@ -51,18 +51,19 @@
           </div>
           <div class="date-area-event">
             <div class="dates-event">
-              <p><i class="fas fa-clock"></i> {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}} -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
+              <p><i class="fas fa-clock"></i> {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}}
+                -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
             </div>
           </div>
         </div>
       </div>
       <div class="tab-event">
-        <mat-tab-group backgroundColor="#00643C" class="mat-tab-event" color="#00643C"
+        <mat-tab-group class="mat-tab-event" color="#00643C"
                        mat-align-tabs="center">
           <mat-tab label="Accueil">
             <div #divContent style="height: 450px">
               <virtual-scroller #scroll [enableUnequalChildrenSizes]="true" [items]="(_eventService.event|async)?.posts"
-                                [parentScroll]="divContent" class="w-100 h-100" childHeight="1">
+                                [parentScroll]="divContent" childHeight="1" class="w-100 h-100">
                 <div *ngFor="let post of scroll.viewPortItems" class="mt-3 ">
                   <post [post]="post"></post>
                 </div>
@@ -70,7 +71,8 @@
             </div>
           </mat-tab>
           <mat-tab label="Infos">
-            <app-event-infos *ngIf="(_eventService.event|async)" [event]="(_eventService.event|async)"></app-event-infos>
+            <app-event-infos *ngIf="(_eventService.event|async)"
+                             [event]="(_eventService.event|async)"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
             <div *ngIf="!(_eventService.event|async)?.isOwner" class="my-3">
@@ -80,7 +82,7 @@
             </div>
             <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
-                <app-card-user-mange-event [eventId]="eventId" [userSession]="(_authService.user|async)" [user]="user"
+                <app-card-user-mange-event [eventId]="eventId" [user]="user"
                                            class="m-0"></app-card-user-mange-event>
               </div>
             </div>

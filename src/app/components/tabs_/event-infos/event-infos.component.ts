@@ -15,7 +15,7 @@ export class EventInfosComponent implements OnInit {
   @Input()
   event: Event = new Event();
   isFollowing: boolean = false;
-  address:any;
+  address: any;
 
   constructor(private _organisationService: OrganisationService,
               public _authService: AuthService,
@@ -24,7 +24,7 @@ export class EventInfosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).subscribe(address=>this.address=address);
+    this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).subscribe(address => this.address = address);
   }
 
 
