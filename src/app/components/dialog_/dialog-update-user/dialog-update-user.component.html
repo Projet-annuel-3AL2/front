@@ -5,10 +5,10 @@
     <div class="grid-update-user">
       <div class="form-field-update-profilePicture">
         <div class="mr-2">
-          <img *ngIf="updatedProfilPicture === undefined" [src]="data.user.profilePicture != undefined? data.user.profilePicture.link: '../../../../assets/images/no-image.png'"
+          <img *ngIf="updatedProfilePicture === undefined" [src]="data.user.profilePicture != undefined? data.user.profilePicture.link: '../../../../assets/images/no-image.png'"
                alt="" class="rounded-circle"
                width="50">
-          <img *ngIf="updatedProfilPicture != undefined" [src]="updatedProfilPicture"
+          <img *ngIf="updatedProfilePicture != undefined" [src]="updatedProfilePicture"
                alt="" class="rounded-circle"
                width="50">
         </div>

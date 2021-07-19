@@ -14,7 +14,7 @@ export class DialogUpdateUserComponent implements OnInit {
 
   formData: NgForm;
   updatedUser: User;
-  updatedProfilPicture: any;
+  updatedProfilePicture: any;
   updatedBannerPicture: any;
   private oldUsername: string;
 
@@ -42,10 +42,7 @@ export class DialogUpdateUserComponent implements OnInit {
     // this.updatedUser.profilePicture = data.profilePicture;
     // this.updatedUser.bannerPicture = data.bannerPicture;
 
-    console.log(this.updatedUser)
-    console.log(this.updatedProfilPicture)
-    console.log(this.updatedBannerPicture)
-    this._userService.putUser(this.oldUsername, this.updatedUser).subscribe({
+    this._userService.putUser(this.oldUsername, data.value.username, data.value.bio, data.value.firstname, data.value.lastname, data.value.mail, data.value.profilePicture, data.value.bannerPicture).subscribe({
       next: () => {
         console.log("ok")
         this.dialogRef.close()
@@ -65,7 +62,7 @@ export class DialogUpdateUserComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        this.updatedProfilPicture = e.target.result;
+        this.updatedProfilePicture = e.target.result;
       };
 
       reader.readAsDataURL(inputNode.files[0]);

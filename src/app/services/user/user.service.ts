@@ -53,8 +53,30 @@ export class UserService {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/user/getFriendship/${username}`);
   }
 
-  putUser(oldUsername: string, user: User): Observable<User> {
-    return this.http.put<User>(`${environment.apiBaseUrl}/user/${oldUsername}`, user);
+  putUser(oldUsername: string, username: string, bio:string, firstname:string, lastname:string, mail:string, profilePicture:File, bannerPicture:File): Observable<User> {
+    const formData = new FormData();
+    if (username !== undefined && username !== null) {
+      formData.append("username", username);
+    }
+    if (bio !== undefined && bio !== null) {
+      formData.append("bio", bio);
+    }
+    if (firstname !== undefined && firstname !== null) {
+      formData.append("firstname", firstname);
+    }
+    if (lastname !== undefined && lastname !== null) {
+      formData.append("lastname", lastname);
+    }
+    if (mail !== undefined && mail !== null) {
+      formData.append("mail", mail);
+    }
+    if (profilePicture !== undefined && profilePicture !== null) {
+      formData.append("profilePicture", profilePicture);
+    }
+    if (bannerPicture !== undefined && bannerPicture !== null) {
+      formData.append("bannerPicture", bannerPicture);
+    }
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/${oldUsername}`, formData);
   }
 
   getParticipations(username: string): Observable<Event[]> {

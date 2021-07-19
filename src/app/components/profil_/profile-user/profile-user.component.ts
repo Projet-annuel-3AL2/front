@@ -18,6 +18,7 @@ import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisat
 import {User} from "../../../shared/models/user.model";
 import {Certification} from "../../../shared/models/certification.model";
 import {Observable} from "rxjs";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-profile-user',
@@ -86,11 +87,14 @@ export class ProfileUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.updateUser());
   }
 
-  // TODO : ne fonctionne pas
   async showDialogUpdateUser() {
+    let usr;
+    this._userService.user.subscribe(user => {
+      usr = user
+    });
     const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
       width: '950px',
-      data: {user: await this._userService.user.toPromise()}
+      data: {usr}
     });
 
 

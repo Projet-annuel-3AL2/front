@@ -23,6 +23,8 @@ export class AuthService {
   async updateUser() {
     if (this.getCurrentUsername()) {
       await this.getCurrentUser().toPromise();
+    }
+    if(this.getCurrentUsername() && this.userSubject.getValue()){
       await this.getParticipations().toPromise();
       await this.getFriends().toPromise();
     }
@@ -65,8 +67,10 @@ export class AuthService {
     return this.http.get<Event[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/participation`)
       .pipe(map(participations => {
         let user = this.userSubject.getValue();
-        user.eventsParticipation = participations;
-        this.userSubject.next(user);
+        if(user) {
+          user.eventsParticipation = participations;
+          this.userSubject.next(user);
+        }
         return participations;
       }));
   }
@@ -75,8 +79,10 @@ export class AuthService {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/friends`)
       .pipe(map(friends => {
         let user = this.userSubject.getValue();
-        user.friends = friends;
-        this.userSubject.next(user);
+        if(user) {
+          user.friends = friends;
+          this.userSubject.next(user);
+        }
         return friends;
       }));
   }
