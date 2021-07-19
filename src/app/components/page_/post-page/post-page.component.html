@@ -3,7 +3,7 @@
   </div>
   <div class="col-md-4" fxFlex
        fxLayout="column">
-    <post *ngIf="post" [post]="post" class="w-100"></post>
+    <post *ngIf="(_postService.post|async)" [post]="(_postService.post|async)" class="w-100"></post>
     <div class="my-2 w-100"
          fxFlex fxLayout="row">
       <div class="rounded-circle profile-picture">
@@ -29,7 +29,7 @@
       </button>
     </div>
     <div>
-      <div *ngFor="let comment of comments" class="w-100 my-2">
+      <div *ngFor="let comment of (_postService.post|async).comments" class="w-100 my-2">
         <app-comment [comment]="comment"></app-comment>
       </div>
     </div>

@@ -13,8 +13,7 @@ import {AuthService} from "../../../services/auth/auth.service";
   styleUrls: ['./post-page.component.css']
 })
 export class PostPageComponent implements OnInit {
-  post: Post;
-  comments: Comment[];
+  postId: string;
   faTimes = faTimes;
   faImage = faImage;
   faSmile = faSmile;
@@ -25,24 +24,21 @@ export class PostPageComponent implements OnInit {
   text: string;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _postService: PostService,
+              public _postService: PostService,
               public _userService: UserService,
               public _authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this.update();
+    this._activatedRoute.params.subscribe(params => {
+      this.postId = params["postId"];
+      this.update();
+    });
   }
 
   update(): void {
-    this._postService.getPostById(this._activatedRoute.snapshot.paramMap.get("postId"))
-      .subscribe(post => {
-        this.post = post;
-      });
-    this._postService.getComments(this._activatedRoute.snapshot.paramMap.get("postId"))
-      .subscribe(comments => {
-        this.comments = comments;
-      });
+    this._postService.getPostById(this.postId).subscribe();
+    this._postService.getComments(this.postId).subscribe();
   }
 
   addEmoji($event: any) {
@@ -54,7 +50,6 @@ export class PostPageComponent implements OnInit {
   }
 
   sendComment(): void {
-    this._postService.sendComment(this.post.id, this.text)
-      .subscribe(comment => this.comments.concat(comment));
+    this._postService.sendComment(this.postId, this.text).subscribe();
   }
 }
