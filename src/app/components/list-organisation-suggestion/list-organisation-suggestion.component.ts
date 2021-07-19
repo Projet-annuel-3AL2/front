@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {OrganisationService} from "../../services/organisation/organisation.service";
 import {Organisation} from "../../shared/models/organisation.model";
 import {environment} from "../../../environments/environment";
-import {EventService} from "../../services/event/event.service";
 
 @Component({
   selector: 'app-list-organisation-suggestion',

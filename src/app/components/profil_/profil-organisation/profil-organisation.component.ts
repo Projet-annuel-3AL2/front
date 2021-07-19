@@ -7,10 +7,6 @@ import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
-import {EventService} from "../../../services/event/event.service";
-import {PostService} from "../../../services/post/post.service";
-import {Post} from "../../../shared/models/post.model";
-import {Event} from "../../../shared/models/event.model";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
@@ -31,8 +27,8 @@ export class ProfilOrganisationComponent implements OnInit {
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
   isFollowing: boolean = false;
-  private organisation$: Organisation;
   env: any;
+  private organisation$: Organisation;
 
   constructor(public _organisationService: OrganisationService,
               private route: ActivatedRoute,
@@ -54,16 +50,6 @@ export class ProfilOrganisationComponent implements OnInit {
     this._organisationService.organisation.subscribe(organisation => {
       this.organisation$ = organisation;
     })
-  }
-
-  private updateData() {
-    this.getOrganisation();
-    this.getOrganisationMember();
-    this.getListEvent()
-    this.canFollow();
-    this.isOwner();
-    this.isAdmin();
-    this.getPostsOrganisation();
   }
 
   isOwner() {
@@ -154,11 +140,21 @@ export class ProfilOrganisationComponent implements OnInit {
   showDialogueCreateEvent() {
     const dialogRef = this.dialogCreateEvent.open(DialogCreateEventComponent, {
       width: '600px',
-      data: { organisation: this.organisation$}
+      data: {organisation: this.organisation$}
     });
 
     dialogRef.afterClosed().subscribe(() => {
     })
+  }
+
+  private updateData() {
+    this.getOrganisation();
+    this.getOrganisationMember();
+    this.getListEvent()
+    this.canFollow();
+    this.isOwner();
+    this.isAdmin();
+    this.getPostsOrganisation();
   }
 
   private getOrganisation() {

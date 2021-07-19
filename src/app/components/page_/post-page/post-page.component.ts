@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {faCalendarAlt, faImage, faPaperPlane, faSmile, faTimes, faUserFriends} from '@fortawesome/free-solid-svg-icons';
 import {ActivatedRoute} from "@angular/router";
-import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
-import {Comment} from "../../../shared/models/comment.model";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
 

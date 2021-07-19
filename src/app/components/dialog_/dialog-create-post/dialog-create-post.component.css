@@ -36,9 +36,10 @@
   background-color: transparent;
 }
 
-fa-icon{
+fa-icon {
   cursor: pointer;
 }
+
 ::ng-deep.mat-menu-panel {
   max-width: none !important;
 }

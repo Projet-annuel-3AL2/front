@@ -39,7 +39,7 @@ const profileRoutes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
-    RouterModule.forRoot(profileRoutes,{onSameUrlNavigation:"reload"}),
+    RouterModule.forRoot(profileRoutes, {onSameUrlNavigation: "reload"}),
     RouterModule.forRoot(appRoutes),
   ],
   exports: [

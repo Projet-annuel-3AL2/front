@@ -20,9 +20,11 @@
   grid-area: 1 / 1 / 1 / 1;
   margin: auto;
 }
+
 .mat-divider-1 {
   grid-area: 2 / 1 / 2 / 1;
 }
+
 .form-field-update-profilePicture {
   text-align: start;
   margin-top: 15px;
@@ -33,9 +35,11 @@
   color: #00643C;
   height: 200px;
 }
+
 .form-field-update-profilePicture a {
   padding-left: 170px;
 }
+
 .mat-divider-2 {
   grid-area: 4 / 1 / 4 / 1;
 }

@@ -4,7 +4,6 @@ import {EventService} from "../../../services/event/event.service";
 import {EventFilterComponent} from "../../event-filter/event-filter.component";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
-import {User} from "../../../shared/models/user.model";
 import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({

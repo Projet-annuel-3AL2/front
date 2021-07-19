@@ -5,8 +5,6 @@ import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
-import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
-import {map} from "rxjs/operators";
 import {User} from "../../../shared/models/user.model";
 
 @Component({
@@ -21,6 +19,7 @@ export class CardEventComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   userSession: User;
   env = environment;
+
   constructor(
     private _userService: UserService,
     private _eventService: EventService,

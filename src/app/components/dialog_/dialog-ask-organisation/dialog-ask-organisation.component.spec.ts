@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DialogAskOrganisationComponent } from './dialog-ask-organisation.component';
+import {DialogAskOrganisationComponent} from './dialog-ask-organisation.component';
 
 describe('DialogAskOrganisationComponent', () => {
   let component: DialogAskOrganisationComponent;
@@ -8,9 +8,9 @@ describe('DialogAskOrganisationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogAskOrganisationComponent ]
+      declarations: [DialogAskOrganisationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

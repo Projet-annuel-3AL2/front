@@ -1,9 +1,9 @@
 <h1 class="dialog-title-certification" mat-dialog-title>Demander une Certification</h1>
-<form (ngSubmit)="onClickSubmit()" >
+<form (ngSubmit)="onClickSubmit()">
   <div mat-dialog-content>
     <mat-form-field class="dialog-certification-text">
       <mat-label>Décrire votre demande</mat-label>
-      <textarea class="text-area-certification" [(ngModel)]="certificationRequest.comment" name="comment" matInput
+      <textarea [(ngModel)]="certificationRequest.comment" class="text-area-certification" matInput name="comment"
                 placeholder="Ex. je souhaite recevoir la certification car..."></textarea>
     </mat-form-field>
   </div>

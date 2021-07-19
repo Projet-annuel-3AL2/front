@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
@@ -59,8 +59,8 @@ export class DialogUpdateOrganisationComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(inputNode.files[0]);
       reader.onload = (e: any) => {
-        const file: string =  e.target.result
-        if ( file.match(/image\/*/) === null) {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
           console.log('invalid file input');
           return;
         }

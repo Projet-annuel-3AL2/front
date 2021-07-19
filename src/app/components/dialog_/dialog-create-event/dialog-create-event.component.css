@@ -55,6 +55,7 @@
 .form-field-file {
   grid-area: 6 / 1 / 6 / span 5;
 }
+
 .form-field-create-picture {
   grid-area: 7 / 1 / 7 / span 5;
   margin-top: 20px;

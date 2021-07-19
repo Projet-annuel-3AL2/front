@@ -64,14 +64,16 @@
             </div>
             <div *ngIf="isAdminB && !isOwnerB" class="my-3">
               <div *ngFor="let member of (_organisationService.members|async);" class="display-list-user">
-                <app-card-user-manage-organisation [isOwner]="false" [organisation]="(_organisationService.organisation|async)"
+                <app-card-user-manage-organisation [isOwner]="false"
+                                                   [organisation]="(_organisationService.organisation|async)"
                                                    [userSession]="userSession$" [user]="member"
                                                    class="m-0"></app-card-user-manage-organisation>
               </div>
             </div>
             <div *ngIf="isOwnerB" class="my-3">
               <div *ngFor="let member of (_organisationService.members|async);" class="display-list-user">
-                <app-card-user-manage-organisation [isOwner]="true" [organisation]="(_organisationService.organisation|async)"
+                <app-card-user-manage-organisation [isOwner]="true"
+                                                   [organisation]="(_organisationService.organisation|async)"
                                                    [userSession]="userSession$" [user]="member"
                                                    class="m-0"></app-card-user-manage-organisation>
               </div>

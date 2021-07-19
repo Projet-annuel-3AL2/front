@@ -53,7 +53,7 @@ export class UserService {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/user/getFriendship/${username}`);
   }
 
-  putUser(oldUsername: string, username: string, bio:string, firstname:string, lastname:string, mail:string, profilePicture:File, bannerPicture:File): Observable<User> {
+  putUser(oldUsername: string, username: string, bio: string, firstname: string, lastname: string, mail: string, profilePicture: File, bannerPicture: File): Observable<User> {
     const formData = new FormData();
     if (username !== undefined && username !== null) {
       formData.append("username", username);

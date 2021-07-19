@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   faBell = faBell;
   faUserFriends = faUserFriends;
   faComments = faComments;
-  env:any;
+  env: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
               public _authService: AuthService,

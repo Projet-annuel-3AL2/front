@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, NgForm} from "@angular/forms";
+import {NgForm} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
@@ -20,7 +20,8 @@ export class DialogUpdateUserComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateUserComponent>,
               public _userService: UserService,
-              @Inject(MAT_DIALOG_DATA) public data: {user: User}) { }
+              @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
+  }
 
   ngOnInit(): void {
     this.updatedUser = this.data.user;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 
@@ -9,13 +9,14 @@ import {FriendshipService} from "../../../services/friendship/friendship.service
 })
 export class FriendsPageComponent implements OnInit {
 
-  constructor(public _authService: AuthService, public _friendshipService: FriendshipService) { }
+  constructor(public _authService: AuthService, public _friendshipService: FriendshipService) {
+  }
 
   ngOnInit(): void {
     this.update();
   }
 
-  update(){
+  update() {
     this._friendshipService.getReceivedFriendshipRequest().subscribe();
     this._friendshipService.getSentFriendshipRequest().subscribe();
   }

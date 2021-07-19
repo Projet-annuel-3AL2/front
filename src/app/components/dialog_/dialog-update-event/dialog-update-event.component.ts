@@ -1,12 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../../services/event/event.service";
-import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Event} from "../../../shared/models/event.model";
 import {CategoryService} from "../../../services/category/category.service";
-import {Category} from "../../../shared/models/category.model";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {MapService} from "../../../services/map/map.service";
@@ -38,25 +36,8 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   this.updateData()
+    this.updateData()
 
-  }
-
-  private async updateData(): Promise<void> {
-    this.getAllCategories();
-    this.getCategory();
-    this.postalAddress = null;
-    this.updateEvent = new Event();
-    this.media = null;
-    this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
-    await this._authService.user.subscribe( user => {
-      this.updateEvent.user = user;
-    });
-
-    await this._eventService.event.subscribe(event => {
-      this.updateEvent = event
-    })
-    this.postalAddress = null;
   }
 
   onClickSubmit() {
@@ -88,18 +69,6 @@ export class DialogUpdateEventComponent implements OnInit {
     }, 500);
   }
 
-  private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      next: () => {
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
-  }
-
   onPictureSelected() {
     const inputNode: any = document.querySelector('#picture');
     if (typeof (FileReader) !== 'undefined') {
@@ -107,8 +76,8 @@ export class DialogUpdateEventComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(inputNode.files[0]);
       reader.onload = (e: any) => {
-        const file: string =  e.target.result
-        if ( file.match(/image\/*/) === null) {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
           console.log('invalid file input');
           return;
         }
@@ -120,6 +89,34 @@ export class DialogUpdateEventComponent implements OnInit {
     }
   }
 
+  private async updateData(): Promise<void> {
+    this.getAllCategories();
+    this.getCategory();
+    this.postalAddress = null;
+    this.updateEvent = new Event();
+    this.media = null;
+    this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
+    await this._authService.user.subscribe(user => {
+      this.updateEvent.user = user;
+    });
+
+    await this._eventService.event.subscribe(event => {
+      this.updateEvent = event
+    })
+    this.postalAddress = null;
+  }
+
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
 
   private getCategory() {
     this._eventService.getCategory(this.data.event.id).subscribe({

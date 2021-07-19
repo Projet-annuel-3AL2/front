@@ -43,7 +43,7 @@ export class OrganisationService {
 
   getSuggestions(): Observable<Organisation[]> {
     return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/`)
-      .pipe(map( organisations => {
+      .pipe(map(organisations => {
         this.organisationSuggestionSubject.next(organisations);
         return organisations;
       }));
@@ -59,7 +59,7 @@ export class OrganisationService {
 
   getOrganisationPosts(organisationId: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/posts`)
-      .pipe(map( posts => {
+      .pipe(map(posts => {
         this.postsSubject.next(posts);
         return posts;
       }));
@@ -67,7 +67,7 @@ export class OrganisationService {
 
   getMemberOrganisation(organisationId: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/members`)
-      .pipe(map( users => {
+      .pipe(map(users => {
         this.membersSubject.next(users);
         return users;
       }));
@@ -75,7 +75,7 @@ export class OrganisationService {
 
   getEventCreated(organisationId: string): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/events`)
-      .pipe(map( events => {
+      .pipe(map(events => {
         this.eventsCreatedSubject.next(events);
         return events;
       }));

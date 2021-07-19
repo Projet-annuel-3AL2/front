@@ -48,7 +48,7 @@ export class EventService {
     if (newEvent.organisation !== undefined) {
       formData.append("organisation", JSON.stringify(newEvent.organisation));
     }
-    if ( file !== undefined){
+    if (file !== undefined) {
       formData.append("event_media", file);
     }
     return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, formData);
@@ -102,7 +102,7 @@ export class EventService {
 
   isEventFinished(): Observable<Event[]> {
     return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/is-finished`)
-      .pipe(map( events => {
+      .pipe(map(events => {
         this.eventsSubject.next(events);
         return events;
       }));
@@ -184,7 +184,7 @@ export class EventService {
 
   isMember(eventId: string) {
     return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-member`).pipe(map(isMember => {
-      if(this.eventSubject.getValue()) {
+      if (this.eventSubject.getValue()) {
         let event = this.eventSubject.getValue();
         event.isMember = isMember;
         this.eventSubject.next(event);
@@ -195,7 +195,7 @@ export class EventService {
 
   isOwner(eventId: string) {
     return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-owner`).pipe(map(isOwner => {
-      if(this.eventSubject.getValue()) {
+      if (this.eventSubject.getValue()) {
         let event = this.eventSubject.getValue();
         event.isOwner = isOwner;
         this.eventSubject.next(event);
@@ -207,12 +207,12 @@ export class EventService {
   getEventsSearch(searchEventProps: SearchEventProps): Observable<Event[]> {
     return this.http.get<Event[]>(
       `${environment.apiBaseUrl}/event/search`
-      +`/${searchEventProps.longitude}`
+      + `/${searchEventProps.longitude}`
       + `/${searchEventProps.latitude}`
-      +`/${searchEventProps.range}`
-      +`/${searchEventProps.startDate}`
-      +`/${searchEventProps.endDate}`
-      +`/${searchEventProps.categoryId}`)
+      + `/${searchEventProps.range}`
+      + `/${searchEventProps.startDate}`
+      + `/${searchEventProps.endDate}`
+      + `/${searchEventProps.categoryId}`)
       .pipe(map(events => {
         console.log(events);
         this.eventsSubject.next(events);

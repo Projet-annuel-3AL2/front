@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {EventDialogMapsComponent} from "../dialog_/event-dialog-maps/event-dialog-maps.component";
 import {Event} from "../../shared/models/event.model";
 import {EventService} from "../../services/event/event.service";
 import {CategoryService} from "../../services/category/category.service";
-import {Category} from "../../shared/models/category.model";
 import {Search_eventModel} from "../../shared/models/search_event.model";
 import {environment} from "../../../environments/environment";
 
@@ -51,15 +50,6 @@ export class EventFilterComponent implements OnInit {
     this.updateData();
   }
 
-  private updateData() {
-    this.searchEventProps = new SearchEventProps();
-    this.getAllCategories()
-    this.isLocated = false;
-
-    this.searchEventProps.longitude = 48.79643969643021;
-    this.searchEventProps.latitude = 2.128967056048809;
-  }
-
   formatLabel(value: number) {
     if (value >= 10) {
       return Math.round(value / 10);
@@ -92,6 +82,15 @@ export class EventFilterComponent implements OnInit {
         }
       }
     })
+  }
+
+  private updateData() {
+    this.searchEventProps = new SearchEventProps();
+    this.getAllCategories()
+    this.isLocated = false;
+
+    this.searchEventProps.longitude = 48.79643969643021;
+    this.searchEventProps.latitude = 2.128967056048809;
   }
 
   private getAllCategories() {

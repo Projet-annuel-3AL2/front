@@ -22,7 +22,7 @@ export class CategoryService {
 
   getAllCategory(): Observable<Category[]> {
     return this.http.get<Category[]>(`${environment.apiBaseUrl}/category/`)
-      .pipe(map( categories => {
+      .pipe(map(categories => {
         this.categoriesSubject.next(categories);
         return categories;
       }));

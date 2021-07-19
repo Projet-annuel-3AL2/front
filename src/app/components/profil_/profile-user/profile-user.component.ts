@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
 import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
@@ -15,10 +15,6 @@ import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dial
 import {DialogUpdateUserComponent} from "../../dialog_/dialog-update-user/dialog-update-user.component";
 import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certification/dialog-ask-certification.component";
 import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
-import {User} from "../../../shared/models/user.model";
-import {Certification} from "../../../shared/models/certification.model";
-import {Observable} from "rxjs";
-import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-profile-user',

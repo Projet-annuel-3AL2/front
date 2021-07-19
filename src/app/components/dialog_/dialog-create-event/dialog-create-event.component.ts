@@ -3,13 +3,11 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../../../shared/models/event.model";
 import {environment} from "../../../../environments/environment";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {User} from "../../../shared/models/user.model";
 import {EventService} from "../../../services/event/event.service";
 import {CategoryService} from "../../../services/category/category.service";
 import {Category} from "../../../shared/models/category.model";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
-import {OrganisationMembership} from "../../../shared/models/organisation_membership.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MapService} from "../../../services/map/map.service";
 import {AuthService} from "../../../services/auth/auth.service";
@@ -86,18 +84,6 @@ export class DialogCreateEventComponent implements OnInit {
     }, 500);
   }
 
-  private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      next: () => {
-    },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
-  }
-
   onPictureSelected() {
 
     const inputNode: any = document.querySelector('#picture');
@@ -106,8 +92,8 @@ export class DialogCreateEventComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(inputNode.files[0]);
       reader.onload = (e: any) => {
-        const file: string =  e.target.result
-        if ( file.match(/image\/*/) === null) {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
           console.log('invalid file input');
           return;
         }
@@ -119,10 +105,22 @@ export class DialogCreateEventComponent implements OnInit {
     }
   }
 
+  private getAllCategories() {
+    this._categoryService.getAllCategory().subscribe({
+      next: () => {
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
   private async updateData(): Promise<void> {
     this.getAllCategories();
     this.postalAddress = null;
-    await this._authService.user.subscribe( user => {
+    await this._authService.user.subscribe(user => {
       this.newEvent.user = user;
     });
     this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;

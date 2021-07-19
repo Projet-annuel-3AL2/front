@@ -15,7 +15,8 @@ export class DialogAskOrganisationComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogAskOrganisationComponent>,
               private _organisationService: OrganisationService,
-              @Inject(MAT_DIALOG_DATA) public data: {user: User}) { }
+              @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
+  }
 
   ngOnInit(): void {
     this.organisationRequest = new OrganisationRequest();

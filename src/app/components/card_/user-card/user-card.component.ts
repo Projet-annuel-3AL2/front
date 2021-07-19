@@ -21,6 +21,7 @@ export class UserCardComponent implements OnInit {
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
   env: any;
+
   constructor(private _friendshipService: FriendshipService,
               public _authService: AuthService,
               public dialog: MatDialog) {

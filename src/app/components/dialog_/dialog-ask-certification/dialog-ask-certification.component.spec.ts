@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DialogAskCertificationComponent } from './dialog-ask-certification.component';
+import {DialogAskCertificationComponent} from './dialog-ask-certification.component';
 
 describe('DialogAskCertificationComponent', () => {
   let component: DialogAskCertificationComponent;
@@ -8,9 +8,9 @@ describe('DialogAskCertificationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogAskCertificationComponent ]
+      declarations: [DialogAskCertificationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

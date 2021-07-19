@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FriendsPageComponent } from './friends-page.component';
+import {FriendsPageComponent} from './friends-page.component';
 
 describe('FriendsPageComponent', () => {
   let component: FriendsPageComponent;
@@ -8,9 +8,9 @@ describe('FriendsPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FriendsPageComponent ]
+      declarations: [FriendsPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
