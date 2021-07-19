@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {CardUserMangeEventComponent} from './card-user-mange-event.component';
+import {CardUserManageEventComponent} from './card-user-manage-event.component';
 
 describe('CardUserMangeEventComponent', () => {
-  let component: CardUserMangeEventComponent;
-  let fixture: ComponentFixture<CardUserMangeEventComponent>;
+  let component: CardUserManageEventComponent;
+  let fixture: ComponentFixture<CardUserManageEventComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CardUserMangeEventComponent]
+      declarations: [CardUserManageEventComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CardUserMangeEventComponent);
+    fixture = TestBed.createComponent(CardUserManageEventComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
