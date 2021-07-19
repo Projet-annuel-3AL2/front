@@ -9,8 +9,8 @@ import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-card-user-mange-event',
-  templateUrl: './card-user-mange-event.component.html',
-  styleUrls: ['./card-user-mange-event.component.css']
+  templateUrl: './card-user-manage-event.component.html',
+  styleUrls: ['./card-user-manage-event.component.css']
 })
 export class CardUserMangeEventComponent implements OnInit {
 
