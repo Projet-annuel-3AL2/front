@@ -16,8 +16,7 @@ import {DialogUpdateUserComponent} from "../../dialog_/dialog-update-user/dialog
 import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certification/dialog-ask-certification.component";
 import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {User} from "../../../shared/models/user.model";
-import {Certification} from "../../../shared/models/certification.model";
-import {Observable} from "rxjs";
+import {OrganisationService} from "../../../services/organisation/organisation.service";
 
 @Component({
   selector: 'app-profile-user',
@@ -36,6 +35,7 @@ export class ProfileUserComponent implements OnInit {
               private _friendshipService: FriendshipService,
               private _eventService: EventService,
               public _authService: AuthService,
+              public _organisationService: OrganisationService,
               public dialog: MatDialog,
               public dialogReport: MatDialog,
               public dialogCreateEvent: MatDialog,
@@ -58,6 +58,7 @@ export class ProfileUserComponent implements OnInit {
     await this._userService.getFriends(this.username).toPromise();
     await this._userService.getParticipations(this.username).toPromise();
     await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
+    await this._organisationService.whereIsAdmin(this.username).toPromise();
   }
 
   showDialogueRespondFriendRequest() {
@@ -86,7 +87,6 @@ export class ProfileUserComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => this.updateUser());
   }
 
-  // TODO : ne fonctionne pas
   async showDialogUpdateUser() {
     const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
       width: '950px',
@@ -98,7 +98,6 @@ export class ProfileUserComponent implements OnInit {
     })
   }
 
-  // TODO : ne fonctionne pas
   async showDialogAskCertification() {
     const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
       width: '950px',
@@ -109,7 +108,6 @@ export class ProfileUserComponent implements OnInit {
     })
   }
 
-  // TODO : ne fonctionne pas
   showDialogAskOrganisation() {
     const dialogRef = this.dialogAskOrganisation.open(DialogAskOrganisationComponent, {
       width: '950px',
@@ -157,5 +155,22 @@ export class ProfileUserComponent implements OnInit {
         }
       }
     });
+  }
+
+  async sendJoinOrganisation(id: string) {
+    let user: User;
+    await this._userService.user.subscribe(userS => {
+      user = userS
+    });
+    this._organisationService.postInvitation(id, user.id).subscribe({
+      next: () => {
+        this.updateUser().then()
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
   }
 }

@@ -9,6 +9,7 @@ import {Event} from "../../shared/models/event.model";
 import {Report} from "../../shared/models/report.model";
 import {OrganisationRequest} from "../../shared/models/organisation_request.model";
 import {map} from "rxjs/operators";
+import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,14 @@ export class OrganisationService {
   public members: Observable<User[]>;
   public eventsCreated: Observable<Event[]>;
   public posts: Observable<Post[]>;
+  public organisationWhereAdmin: Observable<Organisation[]>;
 
   private organisationSubject: BehaviorSubject<Organisation>;
   private organisationSuggestionSubject: BehaviorSubject<Organisation[]>;
   private membersSubject: BehaviorSubject<User[]>;
   private eventsCreatedSubject: BehaviorSubject<Event[]>
   private postsSubject: BehaviorSubject<Post[]>;
+  private organisationWhereAdminSubject: BehaviorSubject<Organisation[]>;
 
   constructor(private http: HttpClient) {
     this.membersSubject = new BehaviorSubject<User[]>(null);
@@ -33,12 +36,14 @@ export class OrganisationService {
     this.organisationSuggestionSubject = new BehaviorSubject<Organisation[]>(null);
     this.eventsCreatedSubject = new BehaviorSubject<Event[]>(null);
     this.postsSubject = new BehaviorSubject<Post[]>(null);
+    this.organisationWhereAdminSubject = new BehaviorSubject<Organisation[]>(null);
 
     this.members = this.membersSubject.asObservable();
     this.organisation = this.organisationSubject.asObservable();
     this.organisationsSuggestion = this.organisationSuggestionSubject.asObservable();
     this.eventsCreated = this.eventsCreatedSubject.asObservable();
     this.posts = this.postsSubject.asObservable();
+    this.organisationWhereAdmin = this.organisationWhereAdminSubject.asObservable();
   }
 
   getSuggestions(): Observable<Organisation[]> {
@@ -81,16 +86,23 @@ export class OrganisationService {
       }));
   }
 
+  whereIsAdmin(username: string): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/membership/where-admin/${username}`)
+      .pipe(map( organisations => {
+        console.log(organisations)
+        this.organisationWhereAdminSubject.next(organisations)
+        return organisations;
+      }))
+  }
+
   putOrganisation(organisation: Organisation, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
 
-    console.log(updatedBannerPicture)
     if (updatedProfilePicture !== null) {
       const formData = new FormData()
       formData.append("profilePicture", updatedProfilePicture)
       console.log(formData)
       this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/profile-picture`, formData).subscribe({
         next: () => {
-          console.log("ça passer pour profile")
         },
         error: err => {
           console.log(err)
@@ -102,7 +114,7 @@ export class OrganisationService {
       formData.append("bannerPicture", updatedBannerPicture)
       this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/banner-picture`, formData).subscribe({
         next: () => {
-          console.log("ça passe pour banner")
+
         },
         error: err => {
           console.log(err)
@@ -164,6 +176,22 @@ export class OrganisationService {
   }
 
   postOrganisationRequest(organisationRequest: OrganisationRequest): Observable<void> {
-    return this.http.post<void>(`${environment.apiBaseUrl}/organisation/request-creation`, organisationRequest, {headers: {'Access-Control-Allow-Origin': '*'}})
+    return this.http.post<void>(`${environment.apiBaseUrl}/organisation/request-creation`, organisationRequest)
+  }
+
+  postInvitation(organisationId: string, userId: string): Observable<void> {
+    return this.http.post<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/invite/${userId}`, null)
+  }
+
+  deleteInvitation(organisationId: string, userId: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/cancel/${userId}`)
+  }
+
+  rejectInvitation(organisationId: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/invite/reject`)
+  }
+
+  acceptInvitation(organisationId: string): Observable<void> {
+    return this.http.put<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/invite/accept`, null)
   }
 }

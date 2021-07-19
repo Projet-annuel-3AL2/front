@@ -31,7 +31,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
   env: any;
 
   constructor(private _friendshipService: FriendshipService,
-              private _authService: AuthService,
+              public _authService: AuthService,
               private _userService: UserService,
               private _organisationService: OrganisationService,
               public dialog: MatDialog) {

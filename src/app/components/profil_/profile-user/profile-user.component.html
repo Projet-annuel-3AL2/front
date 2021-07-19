@@ -48,12 +48,12 @@
                   </button>
                 </div>
                 <div class="dropdown" dropdown>
-                  <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                  <button mat-button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
                           data-toggle="dropdown"
                           dropdownToggle type="button">
                     <fa-icon [icon]="faEllipsisH"></fa-icon>
                   </button>
-                  <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+                  <mat-menu #menu="matMenu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
                     <button
                       (click)="showDialogueCreateEvent()"
@@ -68,7 +68,15 @@
                     <div *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async).certification !== undefined">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Demander de créer une Organisation</button>
                     </div>
-                  </div>
+                    <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">
+                      <button mat-menu-item [matMenuTriggerFor]="organisationsWhereAdmin">Inviter</button>
+                    </div>
+                  </mat-menu>
+                  <mat-menu #organisationsWhereAdmin="matMenu">
+                    <div *ngFor="let organisation of (_organisationService.organisationWhereAdmin|async)">
+                      <button (click)="sendJoinOrganisation(organisation.id)" mat-menu-item>{{organisation.name}}</button>
+                    </div>
+                  </mat-menu>
                 </div>
               </div>
             </div>
