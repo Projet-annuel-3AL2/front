@@ -34,14 +34,16 @@ export class DialogUpdateOrganisationComponent implements OnInit {
   }
 
   onClickSubmit() {
-    this._organisationService.putOrganisation(this.updateOrganisation, this.updatedProfilePicture, this.updatedBannerPicture).subscribe(
-      {
+    console.log("clcik")
+    this._organisationService.putOrganisation(this.updateOrganisation, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
         next: () => {
+          console.log("click")
           this.dialogRef.close()
         },
         error: err => {
+          console.log("click")
           if (!environment.production) {
-            console.log(err);
+            console.error(err);
           }
         }
       }

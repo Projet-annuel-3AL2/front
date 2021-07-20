@@ -6,7 +6,7 @@
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input [(ngModel)]="data.organisation.name" name="name" matInput
+          <input [(ngModel)]="updateOrganisation.name" name="name" matInput
                  placeholder="Nom de l'Organisation" required>
         </mat-form-field>
 
@@ -17,7 +17,7 @@
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
           <img *ngIf="updatedProfilePicture === null"
-               [src]="data.organisation.profilePicture != undefined? env.apiBaseUrl + '/' + data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
+               [src]="updateOrganisation.profilePicture != undefined? env.apiBaseUrl + '/' + updateOrganisation.profilePicture.link: '../../../../assets/images/no-image.png'"
                alt="" class="rounded-circle"
                width="150px">
           <img *ngIf="updatedProfilePicture !== null"
@@ -35,7 +35,7 @@
         <a (click)="profileBannerInput.click()">
           <img alt="" class="rounded" height="300px"
                *ngIf="updatedBannerPicture === null"
-               [src]="data.organisation.bannerPicture != undefined? data.organisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
+               [src]="updateOrganisation.bannerPicture != undefined? updateOrganisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
                style="object-fit: none" width="100%">
           <img alt="" class="rounded" height="300px"
                *ngIf="updatedBannerPicture != null"

@@ -47,6 +47,7 @@ export class ProfilOrganisationComponent implements OnInit {
 
   ngOnInit(): void {
     this.organisationId = this.route.snapshot.params['id']
+    this._authService.getCurrentUser().subscribe()
     this._authService.user.subscribe(user => {
       this.userSession$ = user;
     });
