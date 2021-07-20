@@ -6,16 +6,18 @@
     <div class="profil-user-scroll">
       <div class="user-card-full">
         <img alt="" class="rounded" height="300px"
-             [src]="(_userService.user | async).bannerPicture !== null? env.apiBaseUrl + '/' + (_userService.user | async).bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+             [src]="(_userService.user | async).bannerPicture?.link | imageUrl:1360:900"
              style="object-fit: none" width="100%">
         <div class="user-card-display">
           <div class="user-card-div">
             <div fxFlex fxLayoutAlign="row">
               <div fxFlex fxLayoutAlign="row start center">
                 <div class="me-2">
-                  <img [src]="(_userService.user | async).profilePicture !== null? env.apiBaseUrl + '/' + (_userService.user | async).profilePicture.link: 'https://picsum.photos/50/50'"
+                  <img [src]="(_userService.user | async).profilePicture?.link | imageUrl"
                        alt=""
-                       class="rounded-circle" width="75">
+                       width="75"
+                       height="75"
+                       class="rounded-circle">
                 </div>
                 <div class="user-card-username">
                   <p>{{(_userService.user | async).username}}</p>
@@ -64,11 +66,11 @@
                       <button (click)="showDialogUpdateUser()" mat-menu-item>Edition du profil</button>
                     </div>
                     <div
-                      *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async).certification === undefined">
+                      *ngIf="username === _authService.getCurrentUsername() && ((_authService.user|async)?.certification === undefined || (_authService.user|async)?.certification === null)">
                       <button (click)="showDialogAskCertification()" mat-menu-item>Demander une certification</button>
                     </div>
                     <div
-                      *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async).certification !== undefined">
+                      *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async)?.certification">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Créer une organisation</button>
                     </div>
                     <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">

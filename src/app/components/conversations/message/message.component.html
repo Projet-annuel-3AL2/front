@@ -3,7 +3,7 @@
        fxFlex
        fxLayout="row">
     <div class="rounded-circle profile-picture" fxFlex>
-      <img [alt]="message.user.username" [src]="message.user.profilePicture || 'https://picsum.photos/50/50'"
+      <img [alt]="message.user.username" [src]="message?.user?.profilePicture?.link| imageUrl"
            class="rounded-circle profile-picture" size="10px">
     </div>
     <div class="bg-light rounded-3 mx-2 p-2 w-75">
@@ -22,7 +22,7 @@
         <span class="m-0 text-break date">{{message.createdAt | date:'MM/dd/yy, HH:mm'}}</span>
       </div>
       <div class="rounded-circle profile-picture" fxFlex fxLayoutAlign="end end">
-        <img [alt]="message.user.username" [src]="message.user.profilePicture || 'https://picsum.photos/50/50'"
+        <img [alt]="message.user.username" [src]="message?.user?.profilePicture?.link | imageUrl"
              class="rounded-circle profile-picture" size="10px">
       </div>
     </div>

@@ -6,7 +6,7 @@
     <div class="event-scroll">
       <div class="event-card-full">
         <img
-          [src]="(_eventService.event|async)?.picture?.link || 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
+          [src]="(_eventService.event|async)?.picture?.link | imageUrl:1360:906"
           alt="" class="rounded"
           height="300px"
           style="object-fit: none" width="100%">
@@ -82,8 +82,8 @@
             </div>
             <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
-                <app-card-user-mange-event [eventId]="eventId" [user]="user"
-                                           class="m-0"></app-card-user-mange-event>
+                <app-card-user-manage-event [eventId]="eventId" [user]="user"
+                                           class="m-0"></app-card-user-manage-event>
               </div>
             </div>
           </mat-tab>

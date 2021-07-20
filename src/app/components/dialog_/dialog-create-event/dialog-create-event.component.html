@@ -81,11 +81,7 @@
     <mat-divider></mat-divider>
     <div class="form-field-create-picture">
       <a (click)="pictureInput.click()">
-        <img *ngIf=" media === null" [src]="newEvent.picture != undefined? newEvent.picture.link: '../../../../assets/images/no-image.png'" alt=""
-             class="rounded"
-             height="300px"
-             style="object-fit: none" width="100%">
-        <img *ngIf="media !== null" [src]="mediaURL" alt=""
+        <img [src]="mediaURL || '../../../../assets/images/no-image.png'" alt=""
              class="rounded"
              height="300px"
              style="object-fit: none" width="100%">
