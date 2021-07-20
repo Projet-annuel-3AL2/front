@@ -81,6 +81,7 @@ import {UserJoinOrganisationComponent} from "./components/card_/user-join-organi
 import {PageAskJoinOrganisationComponent} from "./components/page_/page-ask-join-organisation/page-ask-join-organisation.component";
 import {UserAskJoinOrganisationComponent} from "./components/card_/user-ask-join-organisation/user-ask-join-organisation.component";
 import {ImageUrlPipe} from "./pipes/image-url/image-url.pipe";
+import {NotificationsComponent} from "./components/notifications/notifications.component";
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import {ImageUrlPipe} from "./pipes/image-url/image-url.pipe";
     UserJoinOrganisationComponent,
     PageAskJoinOrganisationComponent,
     UserAskJoinOrganisationComponent,
-    ImageUrlPipe
+    ImageUrlPipe,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,7 @@
       </div>
       <div *ngIf="(_authService.user|async)?.organisations?.length > 0">
         <div *ngFor="let organisation of (_authService.user|async)?.organisations" class="mt-3">
-          <app-user-ask-join-organisation [organisation]="organisation"></app-user-ask-join-organisation>
+          <app-card-organisation [organisation]="organisation"></app-card-organisation>
         </div>
       </div>
     </div>
