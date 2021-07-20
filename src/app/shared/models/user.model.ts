@@ -3,6 +3,7 @@ import {Media} from "./media.model";
 import {Certification} from "./certification.model";
 import {Event} from "./event.model";
 import {Comment} from "./comment.model";
+import {Organisation} from "./organisation.model";
 
 export class User {
   id: string;
@@ -20,4 +21,5 @@ export class User {
   certification?: Certification;
   eventsParticipation?: Event[];
   comments?: Comment[];
+  organisationInvitations?: Organisation[];
 }

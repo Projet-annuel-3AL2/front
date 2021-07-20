@@ -89,7 +89,6 @@ export class OrganisationService {
   whereIsAdmin(username: string): Observable<Organisation[]> {
     return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/membership/where-admin/${username}`)
       .pipe(map( organisations => {
-        console.log(organisations)
         this.organisationWhereAdminSubject.next(organisations)
         return organisations;
       }))
@@ -100,7 +99,6 @@ export class OrganisationService {
     if (updatedProfilePicture !== null) {
       const formData = new FormData()
       formData.append("profilePicture", updatedProfilePicture)
-      console.log(formData)
       this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/profile-picture`, formData).subscribe({
         next: () => {
         },
@@ -183,7 +181,7 @@ export class OrganisationService {
     return this.http.post<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/invite/${userId}`, null)
   }
 
-  deleteInvitation(organisationId: string, userId: string): Observable<void> {
+  cancelInvitation(organisationId: string, userId: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/cancel/${userId}`)
   }
 
@@ -193,5 +191,13 @@ export class OrganisationService {
 
   acceptInvitation(organisationId: string): Observable<void> {
     return this.http.put<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/invite/accept`, null)
+  }
+
+  getInvitedOrganisation(organisationId: string): Observable<Organisation> {
+    return this.http.get<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}/invited/user`)
+      .pipe(map( organisation => {
+        this.organisationSubject.next(organisation);
+        return organisation;
+      }))
   }
 }
