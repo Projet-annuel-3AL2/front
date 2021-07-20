@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../../services/user/user.service";
+import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
   selector: 'app-page-ask-join-organisation',
@@ -8,13 +8,9 @@ import {UserService} from "../../../services/user/user.service";
 })
 export class PageAskJoinOrganisationComponent implements OnInit {
 
-  constructor(public _userService: UserService) { }
+  constructor(public _authService: AuthService) { }
 
   ngOnInit(): void {
-    this.updateData();
   }
 
-  private updateData() {
-    this._userService.getInvitationsOrganisation().subscribe()
-  }
 }

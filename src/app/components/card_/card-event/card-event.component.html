@@ -1,10 +1,9 @@
 <mat-card class="event-card-list">
   <div class="img-card-event">
     <a [routerLink]="['/event/' + event?.id]">
-      <img
-        [src]="event.picture != undefined? env.apiBaseUrl + '/' + event.picture.link:'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
-        alt="" class="rounded"
-        style="">
+      <img [src]=" event?.picture?.link | imageUrl:1360:906"
+           style="object-fit: cover"
+           alt="" class="rounded">
     </a>
   </div>
   <div class="titre-card-event">

@@ -6,15 +6,15 @@
     <div class="profil-user-scroll">
       <div class="orga-card-full">
         <img alt="" class="rounded" height="300px"
-             src="{{(_organisationService.organisation|async).bannerPicture !== null? env.apiBaseUrl + '/' + (_organisationService.organisation|async).bannerPicture?.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
-             style="object-fit: none" width="100%">
+             [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906"
+             style="object-fit: cover" width="100%">
         <div class="orga-card-display">
           <div class="orga-card-div">
             <div class="orga-card-img-profil">
-              <img
-                [src]="(_organisationService.organisation|async).profilePicture !== null? env.apiBaseUrl + '/' + (_organisationService.organisation|async).profilePicture?.link: 'https://picsum.photos/50/50'"
+              <img [src]="(_organisationService.organisation|async).profilePicture?.link | imageUrl"
+                style="object-fit: cover"
                 alt=""
-                class="rounded-circle" width="75">
+                class="rounded-circle" width="75" height="75">
             </div>
             <div class="orga-card-name">
               <p>{{(_organisationService.organisation|async).name}}</p>
@@ -57,10 +57,10 @@
           </mat-tab>
           <mat-tab label="Membres">
             <div *ngIf="!isOwnerB && !isAdminB">
-              <mat-List-item *ngFor="let member of (_organisationService.members|async)"
+              <mat-list-item *ngFor="let member of (_organisationService.members|async)"
                              style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
                 <app-user-card [user]="member"></app-user-card>
-              </mat-List-item>
+              </mat-list-item>
             </div>
             <div *ngIf="isAdminB && !isOwnerB" class="my-3">
               <div *ngFor="let member of (_organisationService.members|async);" class="display-list-user">
@@ -88,10 +88,10 @@
           </mat-tab>
           <div *ngIf="isAdminB && isOwnerB">
             <mat-tab label="Gestion">
-              <mat-List-item *ngFor="let user of (_organisationService.organisation|async).invitedUsers"
+              <mat-list-item *ngFor="let user of (_organisationService.organisation|async).invitedUsers"
                              style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
                 <app-user-join-organisation [user]="user" [organisationId]="organisationId"></app-user-join-organisation>
-              </mat-List-item>
+              </mat-list-item>
               <div *ngIf="(_organisationService.organisation|async).invitedUsers?.length === 0">
                 <p style="text-align: center">Il n'y a pas de demande en cours</p>
               </div>

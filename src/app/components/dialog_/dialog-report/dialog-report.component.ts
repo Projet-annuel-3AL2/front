@@ -31,10 +31,6 @@ export class DialogReportComponent implements OnInit {
     this.initialiseFormReport();
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
   onClickSubmit(formData) {
     let newReport: Report = new Report();
     newReport.text = formData.text;

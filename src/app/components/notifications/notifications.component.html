@@ -1,0 +1,12 @@
+<div class="m-4">
+  <a class="rounded-circle" matRipple [matMenuTriggerFor]="menu">
+    <fa-icon [icon]="faBell" size="2x"></fa-icon>
+  </a>
+  <div>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <h3 fxLayoutAlign="center start" (click)="$event.stopPropagation()">Notifications</h3>
+      <app-user-ask-join-organisation (click)="$event.stopPropagation()" [organisation]="organisation" *ngFor="let organisation of (_authService.user|async)?.organisationInvitations"></app-user-ask-join-organisation>
+      <app-user-card (click)="$event.stopPropagation()" [user]="user.sender" *ngFor="let user of (_friendshipService.friendRequests|async)"></app-user-card>
+    </mat-menu>
+  </div>
+</div>

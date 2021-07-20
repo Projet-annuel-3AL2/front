@@ -17,12 +17,9 @@
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
           <img *ngIf="updatedProfilePicture === null"
-               [src]="updateOrganisation.profilePicture != undefined? env.apiBaseUrl + '/' + updateOrganisation.profilePicture.link: '../../../../assets/images/no-image.png'"
+               [src]="updatedProfilePictureURL || (updateOrganisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
                alt="" class="rounded-circle"
-               width="150px">
-          <img *ngIf="updatedProfilePicture !== null"
-               [src]="updatedProfilPictureURL"
-               alt="" class="rounded-circle"
+               style="object-fit: cover"
                width="150px">
             <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
           </a>
@@ -35,12 +32,8 @@
         <a (click)="profileBannerInput.click()">
           <img alt="" class="rounded" height="300px"
                *ngIf="updatedBannerPicture === null"
-               [src]="updateOrganisation.bannerPicture != undefined? updateOrganisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
-               style="object-fit: none" width="100%">
-          <img *ngIf="updatedBannerPicture != null" [src]="updatedBannerPictureURL" alt=""
-               class="rounded"
-               height="300px"
-               style="object-fit: none" width="100%">
+               [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+               style="object-fit: cover" width="100%">
           <input #profileBannerInput (change)="onProfileBannerSelected()" hidden id="profileBanner" type="file">
         </a>
       </div>

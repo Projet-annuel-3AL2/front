@@ -6,6 +6,7 @@ import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {CookieService} from "ngx-cookie-service";
 import {Event} from "../../shared/models/event.model";
+import {Organisation} from "../../shared/models/organisation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient, private cookieService: CookieService) {
     this.userSubject = new BehaviorSubject<User>(null);
     this.user = this.userSubject.asObservable();
-    timer(0, 30000).subscribe(() => this.updateUser());
+    timer(0, 30000).subscribe(async () => await this.updateUser());
   }
 
   async updateUser() {
@@ -27,6 +28,8 @@ export class AuthService {
     if (this.getCurrentUsername() && this.userSubject.getValue()) {
       await this.getParticipations().toPromise();
       await this.getFriends().toPromise();
+      await this.getInvitationsOrganisation().subscribe();
+      await this.getOrganisations().subscribe();
     }
   }
 
@@ -84,6 +87,27 @@ export class AuthService {
           this.userSubject.next(user);
         }
         return friends;
+      }));
+  }
+
+
+  getInvitationsOrganisation(): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/organisation/invitations`)
+      .pipe(map( organisationInvitations => {
+        let user = this.userSubject.getValue();
+        user.organisationInvitations = organisationInvitations;
+        this.userSubject.next(user);
+        return organisationInvitations;
+      }));
+  }
+
+  getOrganisations(): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/organisations`)
+      .pipe(map( organisations=> {
+        let user = this.userSubject.getValue();
+        user.organisations = organisations;
+        this.userSubject.next(user);
+        return organisations;
       }));
   }
 

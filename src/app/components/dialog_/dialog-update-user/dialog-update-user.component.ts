@@ -16,7 +16,7 @@ export class DialogUpdateUserComponent implements OnInit {
   updatedUser: User;
   updatedProfilePicture: any;
   updatedBannerPicture: any;
-  updatedProfilPictureURL: any;
+  updatedProfilePictureURL: any;
   updatedBannerPictureURL: any;
   env: any;
   private oldUsername: string;
@@ -65,7 +65,7 @@ export class DialogUpdateUserComponent implements OnInit {
           return;
         }
         if (typeof file === "string") {
-          this.updatedProfilPictureURL = file;
+          this.updatedProfilePictureURL = file;
           this.updatedProfilePicture = inputNode.files[0];
         }
       };

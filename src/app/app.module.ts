@@ -80,6 +80,8 @@ import {FriendsPageComponent} from "./components/page_/friends-page/friends-page
 import {UserJoinOrganisationComponent} from "./components/card_/user-join-organisation/user-join-organisation.component";
 import {PageAskJoinOrganisationComponent} from "./components/page_/page-ask-join-organisation/page-ask-join-organisation.component";
 import {UserAskJoinOrganisationComponent} from "./components/card_/user-ask-join-organisation/user-ask-join-organisation.component";
+import {ImageUrlPipe} from "./pipes/image-url/image-url.pipe";
+import {NotificationsComponent} from "./components/notifications/notifications.component";
 
 @NgModule({
   declarations: [
@@ -137,7 +139,9 @@ import {UserAskJoinOrganisationComponent} from "./components/card_/user-ask-join
     FriendsPageComponent,
     UserJoinOrganisationComponent,
     PageAskJoinOrganisationComponent,
-    UserAskJoinOrganisationComponent
+    UserAskJoinOrganisationComponent,
+    ImageUrlPipe,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

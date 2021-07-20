@@ -17,7 +17,7 @@ export class DialogUpdateOrganisationComponent implements OnInit {
   updateOrganisation: Organisation;
   updatedProfilePicture: any;
   updatedBannerPicture: any;
-  updatedProfilPictureURL: any;
+  updatedProfilePictureURL: any;
   updatedBannerPictureURL: any;
   env: any;
 
@@ -67,7 +67,7 @@ export class DialogUpdateOrganisationComponent implements OnInit {
           return;
         }
         if (typeof file === "string") {
-          this.updatedProfilPictureURL = file;
+          this.updatedProfilePictureURL = file;
           this.updatedProfilePicture = inputNode.files[0];
         }
       };

@@ -1,9 +1,10 @@
 <div class="rounded-pill border d-flex p-2 user-join-organisation my-3">
   <div class="mr-2">
-    <img [routerLink]="['/organisation/' + organisation.id]" [src]="
-      organisation.profilePicture !== undefined? env.apiBaseUrl + '/' + organisation.profilePicture.link: 'https://picsum.photos/50/50'"
+    <img [routerLink]="['/organisation/' + organisation.id]"
+         [src]=" organisation?.profilePicture?.link| imageUrl"
          alt=""
-         class="rounded-circle me-2" width="50">
+         style="object-fit: cover"
+         class="rounded-circle me-2" width="50" height="50">
   </div>
   <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
   <div class="spacer"></div>

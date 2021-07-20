@@ -9,7 +9,6 @@ import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
 import {map} from "rxjs/operators";
-import {Organisation} from "../../shared/models/organisation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -99,11 +98,37 @@ export class UserService {
     return this.http.put<any>(`${environment.apiBaseUrl}/user/${id}/report`, report)
   }
 
-  getInvitationsOrganisation(): Observable<User> {
-    return this.http.get<User>(`${environment.apiBaseUrl}/user/organisation/invitations`)
-      .pipe(map( user => {
-        this.userSubject.next(user);
-        return user;
-      }))
+  block(username: string): Observable<void> {
+    return this.http.put<boolean>(`${environment.apiBaseUrl}/user/${username}/block`, {}).pipe(map(() => {
+      let user = this.userSubject.getValue();
+      user.isBlocked = true;
+      this.userSubject.next(user);
+    }));
+  }
+
+  unblock(username: string): Observable<void> {
+    return this.http.delete<boolean>(`${environment.apiBaseUrl}/user/${username}/unblock`, {}).pipe(map(() => {
+      let user = this.userSubject.getValue();
+      user.isBlocked = false;
+      this.userSubject.next(user);
+    }));
+  }
+
+  hasBlocked(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/user/${username}/has-blocked`, {}).pipe(map(isBlocked => {
+      let user = this.userSubject.getValue();
+      user.isBlocked = isBlocked;
+      this.userSubject.next(user);
+      return isBlocked;
+    }));
+  }
+
+  isBlocked(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/user/${username}/is-blocked`, {}).pipe(map(blocksCurrentUser => {
+      let user = this.userSubject.getValue();
+      user.blocksCurrentUser = blocksCurrentUser;
+      this.userSubject.next(user);
+      return blocksCurrentUser;
+    }));
   }
 }

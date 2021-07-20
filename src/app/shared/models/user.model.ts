@@ -12,6 +12,8 @@ export class User {
   lastname?: string;
   mail?: string;
   bio?: string;
+  isBlocked: boolean;
+  blocksCurrentUser: boolean;
   friends?: User[];
   createdEvents?: Event[];
   createdPosts?: Post[];
@@ -21,5 +23,6 @@ export class User {
   certification?: Certification;
   eventsParticipation?: Event[];
   comments?: Comment[];
+  organisations?: Organisation[];
   organisationInvitations?: Organisation[];
 }

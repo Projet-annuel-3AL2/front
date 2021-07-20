@@ -1,8 +1,8 @@
 <div (click)="onConversationSelect()" class="conversation-card container " fxFlex fxLayout="row">
   <div fxFlex fxLayoutAlign="start center">
-    <img
-      [src]="getPicture() || 'https://picsum.photos/50/50'"
-      alt="" class="rounded-circle mx-2" width="50">
+    <img [src]="getPicture()?.link | imageUrl"
+         style="object-fit: cover"
+      alt="" class="rounded-circle mx-2" width="50" height="50">
     <div class="w-100" fxFlex fxLayout="row">
       <div fxFlex fxFlexFill fxLayout="column" fxLayoutAlign="start start">
         <p class="m-0 fw-bold username">{{getName() || "username"}}</p>

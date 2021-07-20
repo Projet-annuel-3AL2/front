@@ -17,7 +17,6 @@ import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certific
 import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
-import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-profile-user',
@@ -60,6 +59,7 @@ export class ProfileUserComponent implements OnInit {
     await this._userService.getPosts(this.username).toPromise();
     await this._userService.getFriends(this.username).toPromise();
     await this._userService.getParticipations(this.username).toPromise();
+    await this._userService.hasBlocked(this.username).toPromise();
     await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
     await this._organisationService.whereIsAdmin(this.username).toPromise();
   }
@@ -180,5 +180,13 @@ export class ProfileUserComponent implements OnInit {
         }
       }
     })
+  }
+
+  blockUser() {
+    this._userService.block(this.username).subscribe();
+  }
+
+  unblockUser() {
+    this._userService.unblock(this.username).subscribe();
   }
 }

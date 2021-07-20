@@ -2,8 +2,9 @@
   <div class="create-post-text m-2" fxFlex fxLayout="row">
     <div class="create-post-picture">
       <img [alt]="(_authService.user|async)?.username"
-           [src]="(_authService.user|async)?.profilePicture || 'https://picsum.photos/50/50'"
-           class="rounded-circle profile-picture">
+           [src]="(_authService.user|async)?.profilePicture?.link| imageUrl"
+           style="object-fit: cover"
+           class="rounded-circle profile-picture" height="50" width="50">
     </div>
     <div class="w-100">
       <div>
@@ -19,9 +20,9 @@
         <app-post-share-card [post]="data.sharesPost"></app-post-share-card>
       </div>
       <div *ngIf="data?.sharedEvent" class="event-card">
-        <img alt="" class="rounded"
-             src="https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg"
-             style="object-fit: none">
+        <img alt="" class="rounded" height="300px"
+             [src]="data?.sharedEvent?.picture?.link|imageUrl: 1360:906"
+             style="object-fit: cover" width="100%">
         <div class="event-card-infos">
           <p>{{data.sharedEvent.name}}</p>
         </div>
