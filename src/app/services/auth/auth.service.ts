@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient, private cookieService: CookieService) {
     this.userSubject = new BehaviorSubject<User>(null);
     this.user = this.userSubject.asObservable();
-    timer(0, 30000).subscribe(() => this.updateUser());
+    timer(0, 30000).subscribe(async () => await this.updateUser());
   }
 
   async updateUser() {
@@ -91,11 +91,13 @@ export class AuthService {
   }
 
 
-  getInvitationsOrganisation(): Observable<User> {
-    return this.http.get<User>(`${environment.apiBaseUrl}/user/organisation/invitations`)
-      .pipe(map( user => {
+  getInvitationsOrganisation(): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/organisation/invitations`)
+      .pipe(map( organisationInvitations => {
+        let user = this.userSubject.getValue();
+        user.organisationInvitations = organisationInvitations;
         this.userSubject.next(user);
-        return user;
+        return organisationInvitations;
       }));
   }
 
