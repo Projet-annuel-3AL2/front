@@ -26,7 +26,7 @@ export class DialogUpdateEventComponent implements OnInit {
   postalAddress: any;
   media: File;
   mediaURL: string;
-
+  env: any
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateEventComponent>,
               public _eventService: EventService,
@@ -35,6 +35,7 @@ export class DialogUpdateEventComponent implements OnInit {
               public _authService: AuthService,
               private _mapService: MapService,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
+    this.env = environment;
   }
 
   ngOnInit(): void {
