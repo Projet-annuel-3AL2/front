@@ -1,0 +1,16 @@
+<div class="rounded-pill border d-flex p-2 user-join-organisation my-3">
+  <div class="mr-2">
+    <img [routerLink]="['/organisation/' + organisation.id]" [src]="
+      organisation.profilePicture !== undefined? env.apiBaseUrl + '/' + organisation.profilePicture.link: 'https://picsum.photos/50/50'"
+         alt=""
+         class="rounded-circle me-2" width="50">
+  </div>
+  <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
+  <div class="spacer"></div>
+  <button (click)="this.acceptRequest()"  class="ml-auto button-accept-invitation" mat-raised-button>
+    Accepter
+  </button>
+  <button (click)="this.rejectRequest()" class="ml-auto button-reject-invitation" mat-raised-button>
+    Rejeter
+  </button>
+</div>
