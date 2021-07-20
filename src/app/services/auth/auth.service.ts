@@ -100,7 +100,7 @@ export class AuthService {
   }
 
   getOrganisations(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/organisations`)
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/organisations`)
       .pipe(map( organisations=> {
         let user = this.userSubject.getValue();
         user.organisations = organisations;
