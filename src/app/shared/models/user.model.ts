@@ -12,6 +12,8 @@ export class User {
   lastname?: string;
   mail?: string;
   bio?: string;
+  isBlocked: boolean;
+  blocksCurrentUser: boolean;
   friends?: User[];
   createdEvents?: Event[];
   createdPosts?: Post[];

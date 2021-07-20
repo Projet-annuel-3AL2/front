@@ -1,4 +1,7 @@
-<div *ngIf="(_userService.user | async) !== null" class="row m-0">
+<div *ngIf="(_userService.user | async)?.blocksCurrentUser" fxLayoutAlign="center">
+  <h1 class="m-5">L'utilisateur vous a bloqué</h1>
+</div>
+<div *ngIf="(_userService.user | async) !== null && !(_userService.user | async)?.blocksCurrentUser" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
@@ -7,7 +10,7 @@
       <div class="user-card-full">
         <img alt="" class="rounded" height="300px"
              [src]="(_userService.user | async).bannerPicture?.link | imageUrl:1360:900"
-             style="object-fit: none" width="100%">
+             style="object-fit: cover" width="100%">
         <div class="user-card-display">
           <div class="user-card-div">
             <div fxFlex fxLayoutAlign="row">
@@ -17,6 +20,7 @@
                        alt=""
                        width="75"
                        height="75"
+                       style="object-fit: cover"
                        class="rounded-circle">
                 </div>
                 <div class="user-card-username">
@@ -55,8 +59,7 @@
                           dropdownToggle type="button">
                     <fa-icon [icon]="faEllipsisH"></fa-icon>
                   </button>
-                  <mat-menu #menu="matMenu">
-                    <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
+                  <mat-menu #menu="matMenu" xPosition="before">
                     <button
                       (click)="showDialogueCreateEvent()"
                       *ngIf="(_userService.user | async).username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== undefined"
@@ -66,15 +69,20 @@
                       <button (click)="showDialogUpdateUser()" mat-menu-item>Edition du profil</button>
                     </div>
                     <div
-                      *ngIf="username === _authService.getCurrentUsername() && ((_authService.user|async)?.certification === undefined || (_authService.user|async)?.certification === null)">
+                      *ngIf="username === _authService.getCurrentUsername() && !(_userService.user|async)?.certification">
                       <button (click)="showDialogAskCertification()" mat-menu-item>Demander une certification</button>
                     </div>
                     <div
-                      *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async)?.certification">
+                      *ngIf="username === _authService.getCurrentUsername() && (_userService.user|async)?.certification">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Créer une organisation</button>
                     </div>
                     <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">
                       <button mat-menu-item [matMenuTriggerFor]="organisationsWhereAdmin">Inviter</button>
+                    </div>
+                    <div *ngIf="username !== _authService.getCurrentUsername()">
+                      <button (click)="showDialogueReport()" class="text-danger" mat-menu-item>Signaler</button>
+                      <button (click)="blockUser()" *ngIf="!(_userService.user|async)?.isBlocked" class="text-danger" mat-menu-item>Bloquer</button>
+                      <button (click)="unblockUser()" *ngIf="(_userService.user|async)?.isBlocked" class="text-danger" mat-menu-item>Débloquer</button>
                     </div>
                   </mat-menu>
                   <mat-menu #organisationsWhereAdmin="matMenu">
