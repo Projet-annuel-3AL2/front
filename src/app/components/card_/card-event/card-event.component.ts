@@ -91,11 +91,10 @@ export class CardEventComponent implements OnInit {
           console.error('There was an error!', error);
         }
       }
-    })
+    });
   }
 
   private updateData() {
     this.getEvent();
-
   }
 }
