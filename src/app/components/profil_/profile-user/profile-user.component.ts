@@ -17,6 +17,7 @@ import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certific
 import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-profile-user',
@@ -29,6 +30,7 @@ export class ProfileUserComponent implements OnInit {
   username: string;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
+  env: any;
 
   constructor(public _userService: UserService,
               private route: ActivatedRoute,
@@ -43,6 +45,7 @@ export class ProfileUserComponent implements OnInit {
               public dialogAskCertification: MatDialog,
               public dialogUpdateUser: MatDialog
   ) {
+    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -88,19 +91,24 @@ export class ProfileUserComponent implements OnInit {
   }
 
   async showDialogUpdateUser() {
+    let user: User;
+    this._userService.user.subscribe(userR => {
+      user = userR
+    });
     const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
-      width: '950px',
-      data: {user: await this._userService.user.toPromise()}
+      width: '600px',
+      data: {user: user}
     });
 
 
     dialogRef.afterClosed().subscribe(() => {
+      this.updateUser()
     })
   }
 
   async showDialogAskCertification() {
     const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
-      width: '950px',
+      width: '600px',
       data: {user: this.username}
     });
 

@@ -49,13 +49,22 @@ export class UserService {
     return this.http.delete(`${environment.apiBaseUrl}/user/${username}`)
   }
 
-  // TODO: getUserFriends() pas implémenter sur l'API
-  getUserFriends(username: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiBaseUrl}/user/getFriendship/${username}`);
-  }
+  putUser(user: User, updatedProfilePicture: File, updatedBannerPicture: File): Observable<User> {
+    const formData = new FormData()
+    formData.append("username", user.username);
+    formData.append("mail", user.mail);
+    formData.append("firstname", user.firstname);
+    formData.append("lastname", user.lastname);
+    formData.append("bio", user.bio);
 
-  putUser(oldUsername: string, user: User): Observable<User> {
-    return this.http.put<User>(`${environment.apiBaseUrl}/user/${oldUsername}`, user);
+    if (updatedProfilePicture !== null) {
+      formData.append("profilePicture", updatedProfilePicture)
+    }
+    if (updatedBannerPicture !== null) {
+
+      formData.append("bannerPicture", updatedBannerPicture)
+    }
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/`, formData);
   }
 
   getParticipations(username: string): Observable<Event[]> {

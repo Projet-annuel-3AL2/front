@@ -14,17 +14,24 @@ export class DialogUpdateUserComponent implements OnInit {
 
   formData: NgForm;
   updatedUser: User;
-  updatedProfilPicture: any;
+  updatedProfilePicture: any;
   updatedBannerPicture: any;
+  updatedProfilPictureURL: any;
+  updatedBannerPictureURL: any;
+  env: any;
   private oldUsername: string;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateUserComponent>,
               public _userService: UserService,
-              @Inject(MAT_DIALOG_DATA) public data: {user: User}) { }
+              @Inject(MAT_DIALOG_DATA) public data: {user: User}) {
+    this.env = environment;
+  }
 
   ngOnInit(): void {
     this.updatedUser = this.data.user;
     this.oldUsername = this.data.user.username;
+    this.updatedProfilePicture = null;
+    this.updatedBannerPicture = null;
   }
 
 
@@ -32,20 +39,8 @@ export class DialogUpdateUserComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onClickSubmit(data: NgForm) {
-
-    this.updatedUser.username = data.value.username;
-    this.updatedUser.bio = data.value.bio;
-    this.updatedUser.firstname = data.value.firstname;
-    this.updatedUser.lastname = data.value.lastname;
-    this.updatedUser.mail = data.value.mail;
-    // this.updatedUser.profilePicture = data.profilePicture;
-    // this.updatedUser.bannerPicture = data.bannerPicture;
-
-    console.log(this.updatedUser)
-    console.log(this.updatedProfilPicture)
-    console.log(this.updatedBannerPicture)
-    this._userService.putUser(this.oldUsername, this.updatedUser).subscribe({
+  onClickSubmit() {
+    this._userService.putUser(this.updatedUser, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
       next: () => {
         this.dialogRef.close()
       },
@@ -59,29 +54,41 @@ export class DialogUpdateUserComponent implements OnInit {
 
   onProfilePictureSelected() {
     const inputNode: any = document.querySelector('#profilePicture');
-
     if (typeof (FileReader) !== 'undefined') {
+
       const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.updatedProfilPicture = e.target.result;
-      };
-
       reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string =  e.target.result
+        if ( file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.updatedProfilPictureURL = file;
+          this.updatedProfilePicture = inputNode.files[0];
+        }
+      };
     }
   }
 
   onProfileBannerSelected() {
     const inputNode: any = document.querySelector('#profileBanner');
-
     if (typeof (FileReader) !== 'undefined') {
+
       const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        this.updatedBannerPicture = e.target.result;
-      };
-
       reader.readAsDataURL(inputNode.files[0]);
+      reader.onload = (e: any) => {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
+          console.log('invalid file input');
+          return;
+        }
+        if (typeof file === "string") {
+          this.updatedBannerPictureURL = file;
+          this.updatedBannerPicture = inputNode.files[0];
+        }
+      };
     }
   }
 }
