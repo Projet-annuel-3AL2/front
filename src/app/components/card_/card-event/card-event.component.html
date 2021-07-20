@@ -2,8 +2,8 @@
   <div class="img-card-event">
     <a [routerLink]="['/event/' + event?.id]">
       <img [src]=" event?.picture?.link | imageUrl:1360:906"
-        alt="" class="rounded"
-        style="">
+           style="object-fit: cover"
+           alt="" class="rounded">
     </a>
   </div>
   <div class="titre-card-event">

@@ -9,6 +9,7 @@
           <a (click)="profilePictureInput.click()">
             <img [src]="updatedProfilePictureURL || (data.user?.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
                  alt="" class="rounded-circle"
+                 style="object-fit: cover"
                  height="150px"
                  width="150px">
             <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
@@ -21,7 +22,7 @@
         <a (click)="profileBannerInput.click()">
           <img alt="" class="rounded"
                [src]="updatedBannerPictureURL || (data.user?.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
-               style="object-fit: none" width="100%" height="300px">
+               style="object-fit: cover" width="100%" height="300px">
           <input hidden (change)="onProfileBannerSelected()" #profileBannerInput type="file" id="profileBanner">
         </a>
       </div>

@@ -9,6 +9,7 @@
       <div class="rounded-circle profile-picture">
         <img [src]="(_authService.user.toPromise() | async)?.profilePicture?.link | imageUrl"
              alt="" class="me-1 rounded-circle"
+             style="object-fit: cover"
              width="50" height="50">
       </div>
       <div (input)="text=$event.target.textContent" [textContent]="text"

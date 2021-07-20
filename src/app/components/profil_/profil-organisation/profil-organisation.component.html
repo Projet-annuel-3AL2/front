@@ -7,12 +7,12 @@
       <div class="orga-card-full">
         <img alt="" class="rounded" height="300px"
              [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906"
-             style="object-fit: none" width="100%">
+             style="object-fit: cover" width="100%">
         <div class="orga-card-display">
           <div class="orga-card-div">
             <div class="orga-card-img-profil">
-              <img
-                [src]="(_organisationService.organisation|async).profilePicture?.link | imageUrl"
+              <img [src]="(_organisationService.organisation|async).profilePicture?.link | imageUrl"
+                style="object-fit: cover"
                 alt=""
                 class="rounded-circle" width="75" height="75">
             </div>

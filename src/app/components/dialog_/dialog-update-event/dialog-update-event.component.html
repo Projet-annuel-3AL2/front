@@ -77,7 +77,7 @@
         <img [src]="mediaURL || (updateEvent.picture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
              class="rounded"
              height="300px"
-             style="object-fit: none" width="100%">
+             style="object-fit: cover" width="100%">
       </a>
       <input #pictureInput (change)="onPictureSelected()" [ngModel]="updateEvent.picture" hidden id="picture"
              name="picture" type="file">

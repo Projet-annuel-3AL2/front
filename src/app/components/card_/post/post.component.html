@@ -7,6 +7,7 @@
           <div class="mr-2">
             <img [src]="post.creator?.profilePicture?.link | imageUrl" alt=""
                  class="rounded-circle"
+                 style="object-fit: cover"
                  width="50"
                  height="50">
           </div>
@@ -48,7 +49,7 @@
       <div *ngIf="post?.sharedEvent" [routerLink]="'/event/'+post?.sharedEvent.id" class="event-card">
         <img alt="" class="rounded" height="300px"
              [src]="post?.sharedEvent?.picture?.link|imageUrl: 1360:906"
-             style="object-fit: none" width="100%">
+             style="object-fit: cover" width="100%">
         <div class="event-card-infos">
           <p>{{post.sharedEvent?.name}}</p>
           <p>{{post.sharedEvent?.description}}</p>

@@ -5,11 +5,10 @@
   <div class="col-md-5 my-3">
     <div class="event-scroll">
       <div class="event-card-full">
-        <img
-          [src]="(_eventService.event|async)?.picture?.link | imageUrl:1360:906"
+        <img [src]="(_eventService.event|async)?.picture?.link | imageUrl:1360:906"
           alt="" class="rounded"
           height="300px"
-          style="object-fit: none" width="100%">
+             style="object-fit: cover" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
             <div fxFlex fxLayoutAlign="row">
