@@ -6,6 +6,7 @@ import {environment} from "../../../environments/environment";
 import {map} from "rxjs/operators";
 import {CookieService} from "ngx-cookie-service";
 import {Event} from "../../shared/models/event.model";
+import {Organisation} from "../../shared/models/organisation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,8 @@ export class AuthService {
     if (this.getCurrentUsername() && this.userSubject.getValue()) {
       await this.getParticipations().toPromise();
       await this.getFriends().toPromise();
+      await this.getInvitationsOrganisation().subscribe();
+      await this.getOrganisations().subscribe();
     }
   }
 
@@ -84,6 +87,25 @@ export class AuthService {
           this.userSubject.next(user);
         }
         return friends;
+      }));
+  }
+
+
+  getInvitationsOrganisation(): Observable<User> {
+    return this.http.get<User>(`${environment.apiBaseUrl}/user/organisation/invitations`)
+      .pipe(map( user => {
+        this.userSubject.next(user);
+        return user;
+      }));
+  }
+
+  getOrganisations(): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/organisations`)
+      .pipe(map( organisations=> {
+        let user = this.userSubject.getValue();
+        user.organisations = organisations;
+        this.userSubject.next(user);
+        return organisations;
       }));
   }
 

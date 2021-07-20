@@ -9,7 +9,6 @@ import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
 import {map} from "rxjs/operators";
-import {Organisation} from "../../shared/models/organisation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -99,11 +98,4 @@ export class UserService {
     return this.http.put<any>(`${environment.apiBaseUrl}/user/${id}/report`, report)
   }
 
-  getInvitationsOrganisation(): Observable<User> {
-    return this.http.get<User>(`${environment.apiBaseUrl}/user/organisation/invitations`)
-      .pipe(map( user => {
-        this.userSubject.next(user);
-        return user;
-      }))
-  }
 }

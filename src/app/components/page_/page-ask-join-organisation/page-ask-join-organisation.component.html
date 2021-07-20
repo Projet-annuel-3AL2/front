@@ -3,12 +3,23 @@
   </div>
   <div class="col-md-4">
     <div>
-      <h2 class="text-center">Demandes pour rejoindre une Organisation</h2>
-      <div *ngIf="(_userService.user|async).organisationInvitations?.length === 0">
+      <h2 class="text-center">Invitations pour rejoindre une organisations</h2>
+      <div *ngIf="(_authService.user|async)?.organisationInvitations?.length === 0">
         <p class="text-center">Vous n'avez pas de demande pour le moment.</p>
       </div>
-      <div *ngIf="(_userService.user|async).organisationInvitations?.length > 0">
-        <div *ngFor="let organisation of (_userService.user|async).organisationInvitations" class="mt-3">
+      <div *ngIf="(_authService.user|async)?.organisationInvitations?.length > 0">
+        <div *ngFor="let organisation of (_authService.user|async)?.organisationInvitations" class="mt-3">
+          <app-user-ask-join-organisation [organisation]="organisation"></app-user-ask-join-organisation>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-center">Vos organisations</h2>
+      <div *ngIf="(_authService.user|async)?.organisationInvitations?.length === 0">
+        <p class="text-center">Vous n'êtes pour le moment pas membre d'une organisation.</p>
+      </div>
+      <div *ngIf="(_authService.user|async)?.organisations?.length > 0">
+        <div *ngFor="let organisation of (_authService.user|async)?.organisations" class="mt-3">
           <app-user-ask-join-organisation [organisation]="organisation"></app-user-ask-join-organisation>
         </div>
       </div>

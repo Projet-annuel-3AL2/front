@@ -21,5 +21,6 @@ export class User {
   certification?: Certification;
   eventsParticipation?: Event[];
   comments?: Comment[];
+  organisations?: Organisation[];
   organisationInvitations?: Organisation[];
 }

@@ -13,6 +13,11 @@
         <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
       </a>
     </div>
+    <div *ngIf="_authService.isAuthenticated()">
+      <a [routerLink]="['/my-organisations']" class="m-4" matRipple>
+        <fa-icon [icon]="faBuilding" size="2x"></fa-icon>
+      </a>
+    </div>
   </div>
   <div fxFlex fxLayoutAlign="center center">
     <app-search-bar class="align-self-center"></app-search-bar>
@@ -31,9 +36,6 @@
       <mat-menu #menu="matMenu">
         <button [routerLink]="['/user/' + _authService.getCurrentUsername()]" mat-menu-item>
           <span>Profil</span>
-        </button>
-        <button mat-menu-item [routerLink]="['/invitations']">
-          <span>Invitations</span>
         </button>
         <a [href]="env.backBaseUrl" mat-menu-item>
           <span>Administration</span>

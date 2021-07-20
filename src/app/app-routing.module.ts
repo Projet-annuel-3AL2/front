@@ -18,7 +18,7 @@ import {PageAskJoinOrganisationComponent} from "./components/page_/page-ask-join
 const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
   {path: 'friends', component: FriendsPageComponent, canActivate: [AuthGuardService]},
-  {path: 'invitations', component: PageAskJoinOrganisationComponent, canActivate: [AuthGuardService]},
+  {path: 'my-organisations', component: PageAskJoinOrganisationComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent, canActivate: [NegateAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [NegateAuthGuardService]},
   {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NegateAuthGuardService]},
