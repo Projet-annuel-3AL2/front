@@ -73,6 +73,9 @@ import {DialogAskCertificationComponent} from "./components/dialog_/dialog-ask-c
 import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {CookieService} from "ngx-cookie-service";
 import {FriendsPageComponent} from "./components/page_/friends-page/friends-page.component";
+import {UserJoinOrganisationComponent} from "./components/card_/user-join-organisation/user-join-organisation.component";
+import {PageAskJoinOrganisationComponent} from "./components/page_/page-ask-join-organisation/page-ask-join-organisation.component";
+import {UserAskJoinOrganisationComponent} from "./components/card_/user-ask-join-organisation/user-ask-join-organisation.component";
 
 @NgModule({
   declarations: [
@@ -127,7 +130,10 @@ import {FriendsPageComponent} from "./components/page_/friends-page/friends-page
     ForgotPasswordComponent,
     MapComponent,
     MapComponent,
-    FriendsPageComponent
+    FriendsPageComponent,
+    UserJoinOrganisationComponent,
+    PageAskJoinOrganisationComponent,
+    UserAskJoinOrganisationComponent
   ],
   imports: [
     BrowserModule,

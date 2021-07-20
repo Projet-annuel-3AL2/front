@@ -32,8 +32,8 @@
         <button [routerLink]="['/user/' + _authService.getCurrentUsername()]" mat-menu-item>
           <span>Profil</span>
         </button>
-        <button mat-menu-item routerLink="/settings">
-          <span>Paramètres</span>
+        <button mat-menu-item [routerLink]="['/invitations']">
+          <span>Invitations</span>
         </button>
         <a mat-menu-item [href]="env.backBaseUrl">
           <span>Administration</span>
