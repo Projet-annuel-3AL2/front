@@ -6,14 +6,14 @@
     <div class="profil-user-scroll">
       <div class="user-card-full">
         <img alt="" class="rounded" height="300px"
-             src="{{(_userService.user | async)?.bannerPicture?.link || 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
+             [src]="(_userService.user | async).bannerPicture !== null? env.apiBaseUrl + '/' + (_userService.user | async).bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'"
              style="object-fit: none" width="100%">
         <div class="user-card-display">
           <div class="user-card-div">
             <div fxFlex fxLayoutAlign="row">
               <div fxFlex fxLayoutAlign="row start center">
                 <div class="me-2">
-                  <img [src]="(_userService.user | async)?.profilePicture?.link || 'https://picsum.photos/50/50'"
+                  <img [src]="(_userService.user | async).profilePicture !== null? env.apiBaseUrl + '/' + (_userService.user | async).profilePicture.link: 'https://picsum.photos/50/50'"
                        alt=""
                        class="rounded-circle" width="75">
                 </div>
@@ -48,12 +48,12 @@
                   </button>
                 </div>
                 <div class="dropdown" dropdown>
-                  <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                  <button mat-button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
                           data-toggle="dropdown"
                           dropdownToggle type="button">
                     <fa-icon [icon]="faEllipsisH"></fa-icon>
                   </button>
-                  <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+                  <mat-menu #menu="matMenu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
                     <button
                       (click)="showDialogueCreateEvent()"
@@ -71,7 +71,15 @@
                       *ngIf="username === _authService.getCurrentUsername() && (_authService.user|async).certification !== undefined">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Créer une organisation</button>
                     </div>
-                  </div>
+                    <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">
+                      <button mat-menu-item [matMenuTriggerFor]="organisationsWhereAdmin">Inviter</button>
+                    </div>
+                  </mat-menu>
+                  <mat-menu #organisationsWhereAdmin="matMenu">
+                    <div *ngFor="let organisation of (_organisationService.organisationWhereAdmin|async)">
+                      <button (click)="sendJoinOrganisation(organisation.id)" mat-menu-item>{{organisation.name}}</button>
+                    </div>
+                  </mat-menu>
                 </div>
               </div>
             </div>

@@ -6,13 +6,13 @@
     <div class="profil-user-scroll">
       <div class="orga-card-full">
         <img alt="" class="rounded" height="300px"
-             src="{{(_organisationService.organisation|async).bannerPicture != undefined? env.baseUrl + '/' + (_organisationService.organisation|async).bannerPicture.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
+             src="{{(_organisationService.organisation|async).bannerPicture !== null? env.apiBaseUrl + '/' + (_organisationService.organisation|async).bannerPicture?.link: 'https://www.ventsud.com/app/uploads/2019/06/belles_plages_Plage_des_Aresquiers_%C2%A9_Delemotte-1360x906.jpg'}} "
              style="object-fit: none" width="100%">
         <div class="orga-card-display">
           <div class="orga-card-div">
             <div class="orga-card-img-profil">
               <img
-                [src]="(_organisationService.organisation|async).profilePicture != undefined? env.baseUrl + '/' + (_organisationService.organisation|async).profilePicture.link: 'https://picsum.photos/50/50'"
+                [src]="(_organisationService.organisation|async).profilePicture !== null? env.apiBaseUrl + '/' + (_organisationService.organisation|async).profilePicture?.link: 'https://picsum.photos/50/50'"
                 alt=""
                 class="rounded-circle" width="75">
             </div>
@@ -86,6 +86,17 @@
               </div>
             </div>
           </mat-tab>
+          <div *ngIf="isAdminB && isOwnerB">
+            <mat-tab label="Gestion">
+              <mat-List-item *ngFor="let user of (_organisationService.organisation|async).invitedUsers"
+                             style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
+                <app-user-join-organisation [user]="user" [organisationId]="organisationId"></app-user-join-organisation>
+              </mat-List-item>
+              <div *ngIf="(_organisationService.organisation|async).invitedUsers?.length === 0">
+                <p style="text-align: center">Il n'y a pas de demande en cours</p>
+              </div>
+            </mat-tab>
+          </div>
         </mat-tab-group>
       </div>
     </div>
