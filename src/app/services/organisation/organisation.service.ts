@@ -95,31 +95,20 @@ export class OrganisationService {
   }
 
   putOrganisation(organisation: Organisation, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
-
+    const formData = new FormData()
+    formData.append("name", organisation.name)
     if (updatedProfilePicture !== null) {
-      const formData = new FormData()
       formData.append("profilePicture", updatedProfilePicture)
-      this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/profile-picture`, formData).subscribe({
-        next: () => {
-        },
-        error: err => {
-          console.log(err)
-        }
-      });
     }
     if (updatedBannerPicture !== null) {
-      const formData = new FormData()
-      formData.append("bannerPicture", updatedBannerPicture)
-      this.http.put(`${environment.apiBaseUrl}/organisation/${organisation.id}/banner-picture`, formData).subscribe({
-        next: () => {
 
-        },
-        error: err => {
-          console.log(err)
-        }
-      });
+      formData.append("bannerPicture", updatedBannerPicture)
     }
-    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisation.id}`, organisation);
+    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisation.id}`, formData)
+      .pipe(map( organisation => {
+        this.organisationSubject.next(organisation);
+        return organisation;
+      }));
   }
 
   deleteOrganisation(organisationId: string) {
