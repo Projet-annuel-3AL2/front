@@ -6,7 +6,7 @@
     <p class="my-3"><a [routerLink]="['/user/' + user.username]">  {{user.username}}</a>
       <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
     </p>
-    <div *ngIf="user.id !== (_authService.user|async).id" fxFlex fxLayoutAlign="end center">
+    <div *ngIf="user.id !== userSession.id" fxFlex fxLayoutAlign="end center">
       <button [matMenuTriggerFor]="menu" class="button-gestion" mat-button>Gestion</button>
       <mat-menu #menu="matMenu">
         <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"

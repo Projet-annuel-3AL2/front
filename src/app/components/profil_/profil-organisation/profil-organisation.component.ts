@@ -83,13 +83,14 @@ export class ProfilOrganisationComponent implements OnInit {
     this._organisationService.isAdmin(this.organisationId).subscribe({
       next: bool => {
         this.isAdminB = bool;
+        this.getOrganisationInvitedUser();
       },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
         }
       }
-    })
+    });
   }
 
   canFollow() {
@@ -193,6 +194,16 @@ export class ProfilOrganisationComponent implements OnInit {
 
   private getPostsOrganisation() {
     this._organisationService.getOrganisationPosts(this.organisationId).subscribe({
+      error: error => {
+        if (!environment.production) {
+          console.error('Error: ', error);
+        }
+      }
+    })
+  }
+
+  private getOrganisationInvitedUser() {
+    this._organisationService.getInvitedOrganisation(this.organisationId).subscribe({
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);

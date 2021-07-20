@@ -47,7 +47,6 @@ export class DialogUpdateUserComponent implements OnInit {
     console.log(this.updatedBannerPicture)
     this._userService.putUser(this.oldUsername, this.updatedUser).subscribe({
       next: () => {
-        console.log("ok")
         this.dialogRef.close()
       },
       error: err => {

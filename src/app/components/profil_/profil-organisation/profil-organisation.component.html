@@ -84,6 +84,17 @@
               </div>
             </div>
           </mat-tab>
+          <div *ngIf="isAdminB && isOwnerB">
+            <mat-tab label="Gestion">
+              <mat-List-item *ngFor="let user of (_organisationService.organisation|async).invitedUsers"
+                             style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
+                <app-user-join-organisation [user]="user" [organisationId]="organisationId"></app-user-join-organisation>
+              </mat-List-item>
+              <div *ngIf="(_organisationService.organisation|async).invitedUsers.length == 0">
+                <p style="text-align: center">Il n'y a pas de demande en cours</p>
+              </div>
+            </mat-tab>
+          </div>
         </mat-tab-group>
       </div>
     </div>
