@@ -43,7 +43,7 @@
       </div>
 
       <div *ngIf="post.sharesPost">
-        <app-post-share-card [post]="post.sharesPost"></app-post-share-card>
+        <app-post-share-card (click)="$event.stopPropagation()" [post]="post.sharesPost"></app-post-share-card>
       </div>
       <div *ngIf="post?.sharedEvent" [routerLink]="'/event/'+post?.sharedEvent.id" class="event-card">
         <img alt="" class="rounded" height="300px"

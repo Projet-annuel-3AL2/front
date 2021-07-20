@@ -22,7 +22,7 @@
       {{post?.text}}
     </p>
     <div class="d-inline-block">
-      <img *ngFor="let media of post.medias" [src]="media.link | imageUrl" (click)="$event.stopPropagation()" alt="" class="h-50 w-50">
+      <img *ngFor="let media of post.medias" [src]="media.link | imageUrl" alt="" class="h-50 w-50">
     </div>
     <div *ngIf="post?.sharedEvent" class="event-card">
       <img alt="" class="rounded" height="300px"
