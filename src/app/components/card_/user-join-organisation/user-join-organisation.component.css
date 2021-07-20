@@ -1,0 +1,25 @@
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.center {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.card-user {
+  width: 100%;
+  margin: auto;
+}
+
+p {
+
+}
+
+p a {
+  text-decoration: none;
+  color: black;
+  font-size: 15px;
+  font-family: Roboto, serif;
+}
