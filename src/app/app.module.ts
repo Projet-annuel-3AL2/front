@@ -48,7 +48,7 @@ import {ConversationsListComponent} from "./components/conversations/conversatio
 import {GlobalHttpInterceptor} from "./shared/interceptors/global-http-interceptor.service";
 import {CreatePostComponent} from "./components/create_/create-post/create-post.component";
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
-import {CardUserMangeEventComponent} from "./components/card_/card-user-mange-event/card-user-mange-event.component";
+import {CardUserManageEventComponent} from "./components/card_/card-user-manage-event/card-user-manage-event.component";
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
 import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-report.component";
@@ -77,6 +77,9 @@ import {DialogAskCertificationComponent} from "./components/dialog_/dialog-ask-c
 import {DialogAskOrganisationComponent} from "./components/dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {CookieService} from "ngx-cookie-service";
 import {FriendsPageComponent} from "./components/page_/friends-page/friends-page.component";
+import {UserJoinOrganisationComponent} from "./components/card_/user-join-organisation/user-join-organisation.component";
+import {PageAskJoinOrganisationComponent} from "./components/page_/page-ask-join-organisation/page-ask-join-organisation.component";
+import {UserAskJoinOrganisationComponent} from "./components/card_/user-ask-join-organisation/user-ask-join-organisation.component";
 
 @NgModule({
   declarations: [
@@ -112,7 +115,7 @@ import {FriendsPageComponent} from "./components/page_/friends-page/friends-page
     ConversationsBoxComponent,
     ConversationCardComponent,
     ConversationsListComponent,
-    CardUserMangeEventComponent,
+    CardUserManageEventComponent,
     CardUserManageOrganisationComponent,
     DialogResFriendshipRequestComponent,
     DialogReportComponent,
@@ -131,7 +134,10 @@ import {FriendsPageComponent} from "./components/page_/friends-page/friends-page
     ForgotPasswordComponent,
     MapComponent,
     MapComponent,
-    FriendsPageComponent
+    FriendsPageComponent,
+    UserJoinOrganisationComponent,
+    PageAskJoinOrganisationComponent,
+    UserAskJoinOrganisationComponent
   ],
   imports: [
     BrowserModule,

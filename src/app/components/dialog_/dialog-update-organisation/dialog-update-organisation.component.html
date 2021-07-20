@@ -6,7 +6,7 @@
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input [(ngModel)]="data.organisation.name" matInput name="name"
+          <input [(ngModel)]="updateOrganisation.name" name="name" matInput
                  placeholder="Nom de l'Organisation" required>
         </mat-form-field>
 
@@ -16,15 +16,15 @@
         <p> Photo de Profil</p>
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
-            <img *ngIf="updatedProfilePicture === null"
-                 [src]="data.organisation.profilePicture != undefined? env.apiBaseUrl + '/' + data.organisation.profilePicture.link: '../../../../assets/images/no-image.png'"
-                 alt="" class="rounded-circle"
-                 width="150px">
-            <img *ngIf="updatedProfilePicture !== null"
-                 [src]="updatedProfilPictureURL"
-                 alt="" class="rounded-circle"
-                 width="150px">
-            <input #profilePictureInput (change)="onProfilePictureSelected()" hidden id="profilePicture" type="file">
+          <img *ngIf="updatedProfilePicture === null"
+               [src]="updateOrganisation.profilePicture != undefined? env.apiBaseUrl + '/' + updateOrganisation.profilePicture.link: '../../../../assets/images/no-image.png'"
+               alt="" class="rounded-circle"
+               width="150px">
+          <img *ngIf="updatedProfilePicture !== null"
+               [src]="updatedProfilPictureURL"
+               alt="" class="rounded-circle"
+               width="150px">
+            <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
           </a>
 
         </div>
@@ -33,9 +33,9 @@
       <div class="form-field-update-bannerPicture">
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
-          <img *ngIf="updatedBannerPicture === null" [src]="data.organisation.bannerPicture != undefined? data.organisation.bannerPicture.link: '../../../../assets/images/no-image.png'" alt=""
-               class="rounded"
-               height="300px"
+          <img alt="" class="rounded" height="300px"
+               *ngIf="updatedBannerPicture === null"
+               [src]="updateOrganisation.bannerPicture != undefined? updateOrganisation.bannerPicture.link: '../../../../assets/images/no-image.png'"
                style="object-fit: none" width="100%">
           <img *ngIf="updatedBannerPicture != null" [src]="updatedBannerPictureURL" alt=""
                class="rounded"

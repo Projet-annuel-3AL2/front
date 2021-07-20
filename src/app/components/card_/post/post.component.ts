@@ -25,7 +25,7 @@ export class PostComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   text: string;
-  env: unknown;
+  env: any;
   private timeSubscription: Subscription;
 
   constructor(private _postService: PostService,

@@ -13,10 +13,12 @@ import {PostPageComponent} from "./components/page_/post-page/post-page.componen
 import {ForgotPasswordComponent} from "./components/page_/auth_/forgot-password/forgot-password.component";
 import {PasswordRecoveryComponent} from "./components/page_/auth_/password-recovery/password-recovery.component";
 import {FriendsPageComponent} from "./components/page_/friends-page/friends-page.component";
+import {PageAskJoinOrganisationComponent} from "./components/page_/page-ask-join-organisation/page-ask-join-organisation.component";
 
 const appRoutes: Routes = [
   {path: '', component: TimelineComponent, canActivate: [AuthGuardService]},
   {path: 'friends', component: FriendsPageComponent, canActivate: [AuthGuardService]},
+  {path: 'invitations', component: PageAskJoinOrganisationComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent, canActivate: [NegateAuthGuardService]},
   {path: 'login', component: LoginComponent, canActivate: [NegateAuthGuardService]},
   {path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [NegateAuthGuardService]},

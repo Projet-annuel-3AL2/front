@@ -9,6 +9,7 @@ import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
 import {map} from "rxjs/operators";
+import {Organisation} from "../../shared/models/organisation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -48,35 +49,22 @@ export class UserService {
     return this.http.delete(`${environment.apiBaseUrl}/user/${username}`)
   }
 
-  // TODO: getUserFriends() pas implémenter sur l'API
-  getUserFriends(username: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiBaseUrl}/user/getFriendship/${username}`);
-  }
+  putUser(user: User, updatedProfilePicture: File, updatedBannerPicture: File): Observable<User> {
+    const formData = new FormData()
+    formData.append("username", user.username);
+    formData.append("mail", user.mail);
+    formData.append("firstname", user.firstname);
+    formData.append("lastname", user.lastname);
+    formData.append("bio", user.bio);
 
-  putUser(oldUsername: string, username: string, bio: string, firstname: string, lastname: string, mail: string, profilePicture: File, bannerPicture: File): Observable<User> {
-    const formData = new FormData();
-    if (username !== undefined && username !== null) {
-      formData.append("username", username);
+    if (updatedProfilePicture !== null) {
+      formData.append("profilePicture", updatedProfilePicture)
     }
-    if (bio !== undefined && bio !== null) {
-      formData.append("bio", bio);
+    if (updatedBannerPicture !== null) {
+
+      formData.append("bannerPicture", updatedBannerPicture)
     }
-    if (firstname !== undefined && firstname !== null) {
-      formData.append("firstname", firstname);
-    }
-    if (lastname !== undefined && lastname !== null) {
-      formData.append("lastname", lastname);
-    }
-    if (mail !== undefined && mail !== null) {
-      formData.append("mail", mail);
-    }
-    if (profilePicture !== undefined && profilePicture !== null) {
-      formData.append("profilePicture", profilePicture);
-    }
-    if (bannerPicture !== undefined && bannerPicture !== null) {
-      formData.append("bannerPicture", bannerPicture);
-    }
-    return this.http.put<User>(`${environment.apiBaseUrl}/user/${oldUsername}`, formData);
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/`, formData);
   }
 
   getParticipations(username: string): Observable<Event[]> {
@@ -109,5 +97,13 @@ export class UserService {
 
   sendReport(id: string, report: Report): Observable<any> {
     return this.http.put<any>(`${environment.apiBaseUrl}/user/${id}/report`, report)
+  }
+
+  getInvitationsOrganisation(): Observable<User> {
+    return this.http.get<User>(`${environment.apiBaseUrl}/user/organisation/invitations`)
+      .pipe(map( user => {
+        this.userSubject.next(user);
+        return user;
+      }))
   }
 }

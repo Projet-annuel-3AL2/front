@@ -15,6 +15,9 @@ import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dial
 import {DialogUpdateUserComponent} from "../../dialog_/dialog-update-user/dialog-update-user.component";
 import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certification/dialog-ask-certification.component";
 import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
+import {User} from "../../../shared/models/user.model";
+import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {Event} from "../../../shared/models/event.model";
 
 @Component({
   selector: 'app-profile-user',
@@ -27,12 +30,14 @@ export class ProfileUserComponent implements OnInit {
   username: string;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
+  env: any;
 
   constructor(public _userService: UserService,
               private route: ActivatedRoute,
               private _friendshipService: FriendshipService,
               private _eventService: EventService,
               public _authService: AuthService,
+              public _organisationService: OrganisationService,
               public dialog: MatDialog,
               public dialogReport: MatDialog,
               public dialogCreateEvent: MatDialog,
@@ -40,6 +45,7 @@ export class ProfileUserComponent implements OnInit {
               public dialogAskCertification: MatDialog,
               public dialogUpdateUser: MatDialog
   ) {
+    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -55,6 +61,7 @@ export class ProfileUserComponent implements OnInit {
     await this._userService.getFriends(this.username).toPromise();
     await this._userService.getParticipations(this.username).toPromise();
     await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
+    await this._organisationService.whereIsAdmin(this.username).toPromise();
   }
 
   showDialogueRespondFriendRequest() {
@@ -84,24 +91,24 @@ export class ProfileUserComponent implements OnInit {
   }
 
   async showDialogUpdateUser() {
-    let usr;
-    this._userService.user.subscribe(user => {
-      usr = user
+    let user: User;
+    this._userService.user.subscribe(userR => {
+      user = userR
     });
     const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
-      width: '950px',
-      data: {usr}
+      width: '600px',
+      data: {user: user}
     });
 
 
     dialogRef.afterClosed().subscribe(() => {
+      this.updateUser()
     })
   }
 
-  // TODO : ne fonctionne pas
   async showDialogAskCertification() {
     const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
-      width: '950px',
+      width: '600px',
       data: {user: this.username}
     });
 
@@ -109,7 +116,6 @@ export class ProfileUserComponent implements OnInit {
     })
   }
 
-  // TODO : ne fonctionne pas
   showDialogAskOrganisation() {
     const dialogRef = this.dialogAskOrganisation.open(DialogAskOrganisationComponent, {
       width: '950px',
@@ -157,5 +163,22 @@ export class ProfileUserComponent implements OnInit {
         }
       }
     });
+  }
+
+  async sendJoinOrganisation(id: string) {
+    let user: User;
+    await this._userService.user.subscribe(userS => {
+      user = userS
+    });
+    this._organisationService.postInvitation(id, user.id).subscribe({
+      next: () => {
+        this.updateUser().then()
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
   }
 }

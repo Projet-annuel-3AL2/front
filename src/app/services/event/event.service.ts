@@ -205,16 +205,9 @@ export class EventService {
   }
 
   getEventsSearch(searchEventProps: SearchEventProps): Observable<Event[]> {
-    return this.http.get<Event[]>(
-      `${environment.apiBaseUrl}/event/search`
-      + `/${searchEventProps.longitude}`
-      + `/${searchEventProps.latitude}`
-      + `/${searchEventProps.range}`
-      + `/${searchEventProps.startDate}`
-      + `/${searchEventProps.endDate}`
-      + `/${searchEventProps.categoryId}`)
+    return this.http.post<Event[]>(
+      `${environment.apiBaseUrl}/event/search-event`, searchEventProps)
       .pipe(map(events => {
-        console.log(events);
         this.eventsSubject.next(events);
         return events;
       }))

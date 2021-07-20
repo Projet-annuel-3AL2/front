@@ -15,6 +15,7 @@ export class Organisation {
   bannerPicture: Media;
   conversation: Conversation;
   posts: Post[];
+  invitedUsers: User[];
 
 
   constructor() {
