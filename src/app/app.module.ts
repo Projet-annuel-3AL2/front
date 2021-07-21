@@ -28,7 +28,7 @@ import {EventDialogMapsComponent} from "./components/dialog_/event-dialog-maps/e
 import {ProfileUserComponent} from "./components/profil_/profile-user/profile-user.component";
 import {ListPostComponent} from "./components/tabs_/list-post/list-post.component";
 import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/profil-list-event.component";
-import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
+import {ProfileOrganisationComponent} from "./components/profil_/profil-organisation/profile-organisation.component";
 import {ListOrganisationSuggestionComponent} from "./components/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
 import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
@@ -108,7 +108,7 @@ import {NotificationsComponent} from "./components/notifications/notifications.c
     EventDialogMapsComponent,
     ProfileUserComponent,
     ListPostComponent,
-    ProfilOrganisationComponent,
+    ProfileOrganisationComponent,
     ProfilListEventComponent,
     ListOrganisationSuggestionComponent,
     CardOrganisationComponent,

@@ -21,4 +21,5 @@ export class Event {
   posts: Post[];
   isMember: boolean = false;
   isOwner: boolean = false;
+  address: any;
 }

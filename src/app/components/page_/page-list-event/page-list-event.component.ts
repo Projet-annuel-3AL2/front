@@ -5,6 +5,7 @@ import {EventFilterComponent} from "../../event-filter/event-filter.component";
 import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-page-list-event',
@@ -18,8 +19,9 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
 
   constructor(public _eventService: EventService,
               private _userService: UserService,
-              private _authService: AuthService
-  ) {
+              private _authService: AuthService,
+              private _titleService : Title) {
+    this._titleService.setTitle("Événements - "+environment.name);
   }
 
   ngOnInit(): void {

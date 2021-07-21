@@ -4,6 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {PostService} from "../../../services/post/post.service";
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {Title} from "@angular/platform-browser";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-post-page',
@@ -24,7 +26,8 @@ export class PostPageComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               public _postService: PostService,
               public _userService: UserService,
-              public _authService: AuthService) {
+              public _authService: AuthService,
+              private _titleService : Title) {
   }
 
   ngOnInit(): void {
@@ -35,7 +38,7 @@ export class PostPageComponent implements OnInit {
   }
 
   update(): void {
-    this._postService.getPostById(this.postId).subscribe();
+    this._postService.getPostById(this.postId).subscribe(post=> this._titleService.setTitle(post.text+ " - "+environment.name));
     this._postService.getComments(this.postId).subscribe();
   }
 

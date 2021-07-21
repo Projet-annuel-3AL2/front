@@ -9,6 +9,8 @@ import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dialog-update-event.component";
 import {Event} from "../../../shared/models/event.model";
+import {Title} from "@angular/platform-browser";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-page-event',
@@ -26,8 +28,8 @@ export class PageEventComponent implements OnInit {
               public _authService: AuthService,
               private _organisationService: OrganisationService,
               public dialogReport: MatDialog,
-              public dialogUpdateEvent: MatDialog
-  ) {
+              public dialogUpdateEvent: MatDialog,
+              private _titleService : Title) {
   }
 
   ngOnInit(): void {
@@ -38,7 +40,8 @@ export class PageEventComponent implements OnInit {
   }
 
   async updateEvent() {
-    await this._eventService.getEventById(this.eventId).toPromise();
+    const event = await this._eventService.getEventById(this.eventId).toPromise();
+    this._titleService.setTitle(event.name +" - "+environment.name);
     await this._eventService.getEventPosts(this.eventId).toPromise();
     await this._eventService.getParticipants(this.eventId).toPromise();
     await this._eventService.getOwner(this.eventId).toPromise();
