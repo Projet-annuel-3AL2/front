@@ -37,8 +37,7 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateData()
-
+    this.updateData().then()
   }
 
   onClickSubmit() {

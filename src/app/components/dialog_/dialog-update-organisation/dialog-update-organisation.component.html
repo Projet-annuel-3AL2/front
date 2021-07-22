@@ -1,6 +1,6 @@
 <h1 class="dialog-title-update-orga" mat-dialog-title>Modification de l'Organisation</h1>
 <mat-divider></mat-divider>
-<form (ngSubmit)="onClickSubmit()">
+<form #updateOrganisationForm="ngForm" (ngSubmit)="onClickSubmit(updateOrganisationForm.form)">
   <div mat-dialog-content>
     <div class="update-organisation-grid">
       <div class="form-field-name-organisation">
@@ -16,7 +16,7 @@
         <p> Photo de Profil</p>
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
-          <img *ngIf="updatedProfilePicture === null"
+          <img
                [src]="updatedProfilePictureURL || (updateOrganisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
                alt="" class="rounded-circle"
                style="object-fit: cover"
@@ -31,7 +31,6 @@
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
           <img alt="" class="rounded" height="300px"
-               *ngIf="updatedBannerPicture === null"
                [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
                style="object-fit: cover" width="100%">
           <input #profileBannerInput (change)="onProfileBannerSelected()" hidden id="profileBanner" type="file">

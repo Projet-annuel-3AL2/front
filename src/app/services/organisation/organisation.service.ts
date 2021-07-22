@@ -96,7 +96,10 @@ export class OrganisationService {
 
   putOrganisation(organisation: Organisation, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
     const formData = new FormData()
-    formData.append("name", organisation.name)
+    console.log(organisation.name)
+    if (organisation.name != null){
+      formData.append("name", organisation.name)
+    }
     if (updatedProfilePicture !== null) {
       formData.append("profilePicture", updatedProfilePicture)
     }

@@ -49,19 +49,24 @@ export class UserService {
   }
 
   putUser(user: User, updatedProfilePicture: File, updatedBannerPicture: File): Observable<User> {
-    const formData = new FormData()
-    formData.append("username", user.username);
-    formData.append("mail", user.mail);
-    formData.append("firstname", user.firstname);
-    formData.append("lastname", user.lastname);
-    formData.append("bio", user.bio);
-
+    const formData = new FormData();
+    if (user.mail == null){
+      formData.append("mail", user.mail);
+    }
+    if (user.firstname == null){
+      formData.append("firstname", user.firstname);
+    }
+    if (user.lastname){
+      formData.append("lastname", user.lastname);
+    }
+    if (user.bio){
+      formData.append("bio", user.bio);
+    }
     if (updatedProfilePicture !== null) {
-      formData.append("profilePicture", updatedProfilePicture)
+      formData.append("profilePicture", updatedProfilePicture);
     }
     if (updatedBannerPicture !== null) {
-
-      formData.append("bannerPicture", updatedBannerPicture)
+      formData.append("bannerPicture", updatedBannerPicture);
     }
     return this.http.put<User>(`${environment.apiBaseUrl}/user/`, formData);
   }

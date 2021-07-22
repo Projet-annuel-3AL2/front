@@ -33,11 +33,9 @@ export class DialogUpdateOrganisationComponent implements OnInit {
     this.updatedBannerPicture = null;
   }
 
-  onClickSubmit() {
-    console.log("clcik")
+  onClickSubmit(form: FormGroup) {
     this._organisationService.putOrganisation(this.updateOrganisation, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
         next: () => {
-          console.log("click")
           this.dialogRef.close()
         },
         error: err => {
