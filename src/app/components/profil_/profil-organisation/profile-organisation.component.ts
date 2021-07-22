@@ -50,7 +50,8 @@ export class ProfileOrganisationComponent implements OnInit {
     this.updateData();
     this._organisationService.organisation.subscribe(organisation => {
       this.organisation$ = organisation;
-      this._titleService.setTitle(this.organisation$.name + " - "+environment.name);
+      if(organisation)
+        this._titleService.setTitle(organisation.name + " - "+environment.name);
     })
   }
 

@@ -9,7 +9,6 @@ import {Event} from "../../shared/models/event.model";
 import {Report} from "../../shared/models/report.model";
 import {OrganisationRequest} from "../../shared/models/organisation_request.model";
 import {map} from "rxjs/operators";
-import {OrganisationMembership} from "../../shared/models/organisation_membership.model";
 
 @Injectable({
   providedIn: 'root'
@@ -182,11 +181,13 @@ export class OrganisationService {
     return this.http.put<void>(`${environment.apiBaseUrl}/organisation/${organisationId}/invite/accept`, null)
   }
 
-  getInvitedOrganisation(organisationId: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}/invited/user`)
-      .pipe(map( organisation => {
+  getInvitedOrganisation(organisationId: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/invited/user`)
+      .pipe(map( invitedUsers => {
+        let organisation = this.organisationSubject.getValue();
+        organisation.invitedUsers = invitedUsers;
         this.organisationSubject.next(organisation);
-        return organisation;
+        return invitedUsers;
       }))
   }
 }
