@@ -29,7 +29,7 @@ export class PageEventComponent implements OnInit {
               private _organisationService: OrganisationService,
               public dialogReport: MatDialog,
               public dialogUpdateEvent: MatDialog,
-              private _titleService : Title) {
+              private _titleService: Title) {
   }
 
   ngOnInit(): void {
@@ -41,7 +41,7 @@ export class PageEventComponent implements OnInit {
 
   async updateEvent() {
     const event = await this._eventService.getEventById(this.eventId).toPromise();
-    this._titleService.setTitle(event.name +" - "+environment.name);
+    this._titleService.setTitle(event.name + " - " + environment.name);
     await this._eventService.getEventPosts(this.eventId).toPromise();
     await this._eventService.getParticipants(this.eventId).toPromise();
     await this._eventService.getOwner(this.eventId).toPromise();

@@ -20,8 +20,8 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
   constructor(public _eventService: EventService,
               private _userService: UserService,
               private _authService: AuthService,
-              private _titleService : Title) {
-    this._titleService.setTitle("Événements - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Événements - " + environment.name);
   }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Report} from "../../shared/models/report.model";
@@ -9,7 +9,8 @@ import {Observable} from "rxjs";
 })
 export class CommentService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   deleteComment(id: string) {
     return this.http.delete<void>(`${environment.apiBaseUrl}/comment/${id}`);

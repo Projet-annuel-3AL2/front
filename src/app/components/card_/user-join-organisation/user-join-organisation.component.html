@@ -3,8 +3,8 @@
     <img [routerLink]="['/user/' + user.username]"
          [src]=" user?.profilePicture?.link | imageUrl"
          alt=""
-         style="object-fit: cover"
-         class="rounded-circle me-2" width="50" height="50">
+         class="rounded-circle me-2"
+         height="50" style="object-fit: cover" width="50">
     <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
       <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
     </p>

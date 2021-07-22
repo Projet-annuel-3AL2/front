@@ -19,8 +19,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
   constructor(public _postService: PostService,
               private _userService: UserService,
               private _authService: AuthService,
-              private _titleService : Title) {
-    this._titleService.setTitle("Accueil - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Accueil - " + environment.name);
   }
 
   ngOnInit(): void {

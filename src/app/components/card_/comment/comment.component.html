@@ -2,13 +2,13 @@
   <div class="rounded-circle profile-picture">
     <img [src]="comment.creator?.profilePicture?.link | imageUrl" alt=""
          class="me-1 rounded-circle"
-         style="object-fit: cover"
-         width="50" height="50">
+         height="50"
+         style="object-fit: cover" width="50">
   </div>
   <div class="mx-2 w-100">
     <div class="w-100" fxLayout="row">
       <div class="w-100">
-      <p>{{comment.creator.username}}</p>
+        <p>{{comment.creator.username}}</p>
       </div>
       <div class="dropdown" dropdown fxLayout="end end">
         <button aria-expanded="false" aria-haspopup="true" class="btn btn-link"

@@ -12,8 +12,8 @@ import {environment} from "../../../../environments/environment";
 export class FriendsPageComponent implements OnInit {
 
   constructor(public _authService: AuthService, public _friendshipService: FriendshipService,
-              private _titleService : Title) {
-    this._titleService.setTitle("Amis - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Amis - " + environment.name);
   }
 
   ngOnInit(): void {

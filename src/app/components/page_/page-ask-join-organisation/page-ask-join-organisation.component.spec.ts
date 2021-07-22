@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PageAskJoinOrganisationComponent } from './page-ask-join-organisation.component';
+import {PageAskJoinOrganisationComponent} from './page-ask-join-organisation.component';
 
 describe('PageAskJoinOrganisationComponent', () => {
   let component: PageAskJoinOrganisationComponent;
@@ -8,9 +8,9 @@ describe('PageAskJoinOrganisationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageAskJoinOrganisationComponent ]
+      declarations: [PageAskJoinOrganisationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

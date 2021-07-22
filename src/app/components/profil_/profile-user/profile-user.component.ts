@@ -50,7 +50,7 @@ export class ProfileUserComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.username = params["username"];
-      this._titleService.setTitle(this.username + " - "+environment.name);
+      this._titleService.setTitle(this.username + " - " + environment.name);
       this.updateUser().then();
     });
   }

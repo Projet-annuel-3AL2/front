@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
@@ -11,8 +11,8 @@ import {environment} from "../../../../environments/environment";
 export class PageAskJoinOrganisationComponent implements OnInit {
 
   constructor(public _authService: AuthService,
-              private _titleService : Title) {
-    this._titleService.setTitle("Mes organisations - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Mes organisations - " + environment.name);
   }
 
   ngOnInit(): void {

@@ -15,10 +15,10 @@ import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
 export class CommentComponent implements OnInit {
   @Input()
   comment: Comment;
-  faEllipsisH=faEllipsisH;
+  faEllipsisH = faEllipsisH;
 
   constructor(public _authService: AuthService,
-  private _commentService: CommentService,
+              private _commentService: CommentService,
               private matDialog: MatDialog) {
   }
 

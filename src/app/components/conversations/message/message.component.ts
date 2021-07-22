@@ -11,7 +11,7 @@ import {environment} from "../../../../environments/environment";
 export class MessageComponent implements OnInit {
   @Input()
   message: Message;
-  env:any;
+  env: any;
 
   constructor(public authService: AuthService) {
     this.env = environment;

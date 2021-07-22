@@ -16,7 +16,7 @@ export class AppComponent {
 
   constructor(public authService: AuthService,
               private userService: UserService,
-              private _titleService : Title) {
+              private _titleService: Title) {
     this._titleService.setTitle(environment.name);
   }
 

@@ -87,7 +87,7 @@ export class OrganisationService {
 
   whereIsAdmin(username: string): Observable<Organisation[]> {
     return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/membership/where-admin/${username}`)
-      .pipe(map( organisations => {
+      .pipe(map(organisations => {
         this.organisationWhereAdminSubject.next(organisations)
         return organisations;
       }))
@@ -104,7 +104,7 @@ export class OrganisationService {
       formData.append("bannerPicture", updatedBannerPicture)
     }
     return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisation.id}`, formData)
-      .pipe(map( organisation => {
+      .pipe(map(organisation => {
         this.organisationSubject.next(organisation);
         return organisation;
       }));
@@ -183,7 +183,7 @@ export class OrganisationService {
 
   getInvitedOrganisation(organisationId: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/invited/user`)
-      .pipe(map( invitedUsers => {
+      .pipe(map(invitedUsers => {
         let organisation = this.organisationSubject.getValue();
         organisation.invitedUsers = invitedUsers;
         this.organisationSubject.next(organisation);

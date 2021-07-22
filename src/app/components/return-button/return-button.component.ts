@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationService} from "../../services/navigation/navigation.service";
-import {faChevronCircleLeft, } from '@fortawesome/free-solid-svg-icons';
+import {faChevronCircleLeft,} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-return-button',
@@ -8,7 +8,8 @@ import {faChevronCircleLeft, } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./return-button.component.css']
 })
 export class ReturnButtonComponent implements OnInit {
-  faChevronCircleLeft=faChevronCircleLeft;
+  faChevronCircleLeft = faChevronCircleLeft;
+
   constructor(private _navigationService: NavigationService) {
   }
 
