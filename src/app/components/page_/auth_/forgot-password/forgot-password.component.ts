@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../services/auth/auth.service";
+import {Title} from "@angular/platform-browser";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-forgot-password-page',
@@ -13,7 +15,9 @@ export class ForgotPasswordComponent implements OnInit {
   info: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private _authService: AuthService) {
+              private _authService: AuthService,
+              private _titleService : Title) {
+    this._titleService.setTitle("Mot de passe oublié - "+environment.name);
   }
 
   ngOnInit(): void {

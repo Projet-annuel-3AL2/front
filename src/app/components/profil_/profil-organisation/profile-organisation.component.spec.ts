@@ -1,20 +1,20 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ProfilOrganisationComponent} from './profil-organisation.component';
+import {ProfileOrganisationComponent} from './profile-organisation.component';
 
 describe('ProfilOrganisationComponent', () => {
-  let component: ProfilOrganisationComponent;
-  let fixture: ComponentFixture<ProfilOrganisationComponent>;
+  let component: ProfileOrganisationComponent;
+  let fixture: ComponentFixture<ProfileOrganisationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ProfilOrganisationComponent]
+      declarations: [ProfileOrganisationComponent]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfilOrganisationComponent);
+    fixture = TestBed.createComponent(ProfileOrganisationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
