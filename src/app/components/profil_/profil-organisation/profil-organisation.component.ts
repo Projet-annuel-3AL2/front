@@ -136,6 +136,7 @@ export class ProfilOrganisationComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
+      this.updateData();
     })
   }
 

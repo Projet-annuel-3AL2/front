@@ -1,8 +1,9 @@
 <div class="row m-0">
-  <div class="col-md-4">
+  <div class="col-md-4 my-3">
+    <app-return-button></app-return-button>
   </div>
-  <div class="col-md-4">
-    <div>
+  <div class="col-md-5 ">
+    <div style="width: 80%">
       <h2 class="text-center">Invitations pour rejoindre une organisations</h2>
       <div *ngIf="(_authService.user|async)?.organisationInvitations?.length === 0">
         <p class="text-center">Vous n'avez pas de demande pour le moment.</p>
@@ -13,9 +14,9 @@
         </div>
       </div>
     </div>
-    <div>
+    <div style="width: 80%">
       <h2 class="text-center">Vos organisations</h2>
-      <div *ngIf="(_authService.user|async)?.organisationInvitations?.length === 0">
+      <div *ngIf="(_authService.user|async)?.organisations?.length === 0">
         <p class="text-center">Vous n'êtes pour le moment pas membre d'une organisation.</p>
       </div>
       <div *ngIf="(_authService.user|async)?.organisations?.length > 0">
@@ -25,7 +26,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4 my-3 d-none d-sm-block d-sm-block d-sm-none d-md-block">
+  <div class="col-md-3 my-3 d-none d-sm-block d-sm-block d-sm-none d-md-block">
     <div class="position-fixed">
       <app-list-event-suggestion></app-list-event-suggestion>
       <app-list-organisation-suggestion></app-list-organisation-suggestion>
