@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Organisation} from "../../../shared/models/organisation.model";
-import {UserService} from "../../../services/user/user.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {environment} from "../../../../environments/environment";
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-ask-join-organisation',
@@ -13,7 +13,7 @@ export class UserAskJoinOrganisationComponent implements OnInit {
 
   @Input('organisation') organisation: Organisation;
   env: any;
-
+  faTimes=faTimes;
   constructor(public _organisationService: OrganisationService) {
     this.env = environment;
   }

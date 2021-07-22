@@ -20,7 +20,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
 
   @Input('user') user: User = new User();
   @Input('organisation') organisation: Organisation;
-  @Input('userSession') userSession: User;
   @Input('isOwner') isOwner: boolean;
   faCheckCircle = faCheckCircle;
 
@@ -149,5 +148,31 @@ export class CardUserManageOrganisationComponent implements OnInit {
         }
       })
     }
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
   }
 }

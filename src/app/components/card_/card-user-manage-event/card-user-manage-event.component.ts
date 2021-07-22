@@ -3,7 +3,7 @@ import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {UserService} from "../../../services/user/user.service";
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
@@ -23,6 +23,7 @@ export class CardUserManageEventComponent implements OnInit {
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
   env: any;
+  faTimes=faTimes;
 
   constructor(private _friendshipService: FriendshipService,
               private _eventService: EventService,
@@ -70,17 +71,6 @@ export class CardUserManageEventComponent implements OnInit {
     })
   }
 
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.canAdd();
-    })
-  }
-
   cancelRequest() {
     this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
       next: () => {
@@ -105,5 +95,31 @@ export class CardUserManageEventComponent implements OnInit {
         }
       }
     });
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
   }
 }

@@ -1,14 +1,14 @@
 <div class="rounded-pill border d-flex p-2 card-user my-3" fxFlex fxLayoutAlign="row">
   <div class="mr-2" fxFlex fxLayoutAlign="row start center">
     <img [routerLink]="['/user/' + user.username]"
-         [src]="user.profilePicture.link | imageUrl"
+         [src]="user.profilePicture?.link | imageUrl"
          alt=""
          style="object-fit: cover"
          class="rounded-circle" width="50" height="50">
     <p class="my-3"><a [routerLink]="['/user/' + user.username]">  {{user.username}}</a>
       <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
     </p>
-    <div *ngIf="user.id !== userSession.id" fxFlex fxLayoutAlign="end center">
+    <div *ngIf="user.id !== (_authService.user|async).id" fxFlex fxLayoutAlign="end center">
       <button [matMenuTriggerFor]="menu" class="button-gestion" mat-button>Gestion</button>
       <mat-menu #menu="matMenu">
         <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
@@ -19,11 +19,9 @@
                 class="ml-auto button-add-friend" mat-menu-item matTooltip="Enlever de la list d'amis">
           Enlever
         </button>
-        <button (click)="this.showDialogueRespondFriendRequest()"
-                *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                class="ml-auto button-add-friend" mat-menu-item
-                matTooltip="Accepter ou Refuser la demande d'amis"> Répondre
-        </button>
+        <div *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED">
+          <button mat-menu-item [matMenuTriggerFor]="resfFriendship">Répondre</button>
+        </div>
         <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
                 mat-menu-item> En Attente
         </button>
@@ -32,6 +30,18 @@
         </button>
         <button (click)="this.giveAdmin(user.id)" *ngIf="isOwner && !userIsAdmin" mat-menu-item>Donner Admin</button>
         <button (click)="this.removeAdmin(user.id)" *ngIf="isOwner && userIsAdmin" mat-menu-item>Retirer Admin</button>
+      </mat-menu>
+      <mat-menu #resfFriendship="matMenu">
+        <button (click)="this.acceptFriendship()"
+                class="ml-auto button-add-friend" mat-menu-item
+                matTooltip="Accepter la demande d'amis"
+                matTooltipPosition="above"> accepter
+        </button>
+        <button (click)="this.delFriendshipRequest()"
+                class="ml-auto button-add-friend" mat-menu-item
+                matTooltip="Rejeter la demande d'amis"
+                matTooltipPosition="above"> Rejeter
+        </button>
       </mat-menu>
     </div>
   </div>

@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-card',
@@ -21,7 +22,7 @@ export class UserCardComponent implements OnInit {
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
   env: any;
-
+  faTimes= faTimes;
   constructor(private _friendshipService: FriendshipService,
               public _authService: AuthService,
               public dialog: MatDialog) {
@@ -66,14 +67,29 @@ export class UserCardComponent implements OnInit {
     })
   }
 
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.id).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
     });
+  }
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.canAdd();
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
     })
   }
 
