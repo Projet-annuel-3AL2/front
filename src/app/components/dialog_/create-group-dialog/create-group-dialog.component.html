@@ -1,0 +1,23 @@
+<form [formGroup]="groupForm" class="form-group">
+  <div fxLayoutAlign="column center start">
+    <mat-form-field appearance="fill" class="m-2">
+      <mat-label>Nom du groupe</mat-label>
+      <input type="text" matInput required formControlName="name" id="name">
+    </mat-form-field>
+  </div>
+  <div class="container w-100 h-100 m-2 overflow-auto">
+    <div *ngFor="let user of (_authService.user | async).friends" fxLayoutAlign="row" class="mt-1 border border-secondary border-1 rounded-pill p-1">
+      <div fxFlex fxLayoutAlign="start center">
+        <p class="p-0 m-0">{{user.username}}</p>
+      </div>
+      <div fxFlex fxLayoutAlign="end center">
+        <button *ngIf="!inList(user)" type="button" (click)="addUser(user)" mat-flat-button>Ajouter</button>
+        <button *ngIf="inList(user)" type="button" (click)="removeUser(user)" mat-flat-button>Retirer</button>
+      </div>
+    </div>
+  </div>
+  <div fxLayoutAlign="row" class="my-4">
+    <button type="button" (click)="dialogRef.close()" class="me-2" mat-raised-button>Annuler</button>
+    <button type="submit" (click)="onSubmit()" mat-raised-button>Créer le groupe</button>
+  </div>
+</form>

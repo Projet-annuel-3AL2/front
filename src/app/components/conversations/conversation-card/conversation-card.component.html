@@ -9,7 +9,19 @@
         <p *ngIf="conversation.messages?.length > 0" class="m-0">{{conversation.messages[0]?.text}}</p>
         <p *ngIf="conversation.messages?.length === 0" class="m-0">Commencer la conversation</p>
       </div>
-      <div fxFlex fxLayoutAlign="end start">
+      <div fxFlex fxLayout="column" fxLayoutAlign="end end">
+        <div fxFlex *ngIf="conversation.group" (click)="$event.stopPropagation()" fxLayoutAlign="end center">
+          <div class="dropdown" dropdown fxLayout="end end">
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-link"
+                    data-toggle="dropdown"
+                    dropdownToggle type="button">
+              <fa-icon [icon]="faEllipsisH"></fa-icon>
+            </button>
+            <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+              <button (click)="leave()" class="text-danger" mat-menu-item>Quitter</button>
+            </div>
+          </div>
+        </div>
         <p *ngIf="conversation.messages?.length > 0" class="m-0">{{conversation.messages[0]?.createdAt | timeago}}</p>
       </div>
     </div>
