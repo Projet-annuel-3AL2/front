@@ -12,13 +12,14 @@ import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogUpdateOrganisationComponent} from "../../dialog_/dialog-update-organisation/dialog-update-organisation.component";
 import {DialogCreateEventComponent} from "../../dialog_/dialog-create-event/dialog-create-event.component";
+import {Title} from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-profil-organisation',
-  templateUrl: './profil-organisation.component.html',
-  styleUrls: ['./profil-organisation.component.css']
+  selector: 'app-profile-organisation',
+  templateUrl: './profile-organisation.component.html',
+  styleUrls: ['./profile-organisation.component.css']
 })
-export class ProfilOrganisationComponent implements OnInit {
+export class ProfileOrganisationComponent implements OnInit {
 
   faCheckCircle = faCheckCircle;
   organisationId: string;
@@ -27,7 +28,6 @@ export class ProfilOrganisationComponent implements OnInit {
   isOwnerB: boolean = false;
   isAdminB: boolean = false;
   isFollowing: boolean = false;
-  env: any;
   private organisation$: Organisation;
 
   constructor(public _organisationService: OrganisationService,
@@ -36,11 +36,12 @@ export class ProfilOrganisationComponent implements OnInit {
               private _authService: AuthService,
               public dialogReport: MatDialog,
               public dialogUpdateOrganisation: MatDialog,
-              public dialogCreateEvent: MatDialog
+              public dialogCreateEvent: MatDialog,
+              private _titleService: Title
   ) {
-    this.env = environment;
   }
 
+//TODO refactor subscribe to route params and do not use snapshot
   ngOnInit(): void {
     this.organisationId = this.route.snapshot.params['id']
     this._authService.getCurrentUser().subscribe()
@@ -50,6 +51,8 @@ export class ProfilOrganisationComponent implements OnInit {
     this.updateData();
     this._organisationService.organisation.subscribe(organisation => {
       this.organisation$ = organisation;
+      if (organisation)
+        this._titleService.setTitle(organisation.name + " - " + environment.name);
     })
   }
 

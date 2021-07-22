@@ -31,7 +31,7 @@
 }
 
 .orga-card-name {
-  flex: 1 1 0%;
+  flex: 1 1 0;
   box-sizing: border-box;
   max-width: 38%;
   text-align: start;
@@ -43,7 +43,7 @@
 }
 
 .orga-card-certification {
-  flex: 1 1 0%;
+  flex: 1 1 0;
   box-sizing: border-box;
   max-width: 5%;
   padding-top: 63px;

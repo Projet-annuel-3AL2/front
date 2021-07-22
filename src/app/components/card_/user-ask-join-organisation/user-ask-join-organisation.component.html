@@ -3,12 +3,12 @@
     <img [routerLink]="['/organisation/' + organisation.id]"
          [src]=" organisation?.profilePicture?.link| imageUrl"
          alt=""
-         style="object-fit: cover"
-         class="rounded-circle me-2" width="50" height="50">
+         class="rounded-circle me-2"
+         height="50" style="object-fit: cover" width="50">
   </div>
   <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
   <div class="spacer"></div>
-  <button (click)="this.acceptRequest()"  class="ml-auto button-accept-invitation" mat-raised-button>
+  <button (click)="this.acceptRequest()" class="ml-auto button-accept-invitation" mat-raised-button>
     Accepter
   </button>
   <button (click)="this.rejectRequest()" class="ml-auto button-reject-invitation" mat-raised-button>

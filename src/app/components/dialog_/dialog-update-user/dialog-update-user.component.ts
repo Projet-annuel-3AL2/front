@@ -23,7 +23,7 @@ export class DialogUpdateUserComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateUserComponent>,
               public _userService: UserService,
-              @Inject(MAT_DIALOG_DATA) public data: {user: User}) {
+              @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
     this.env = environment;
   }
 
@@ -59,8 +59,8 @@ export class DialogUpdateUserComponent implements OnInit {
       const reader = new FileReader();
       reader.readAsDataURL(inputNode.files[0]);
       reader.onload = (e: any) => {
-        const file: string =  e.target.result
-        if ( file.match(/image\/*/) === null) {
+        const file: string = e.target.result
+        if (file.match(/image\/*/) === null) {
           console.log('invalid file input');
           return;
         }

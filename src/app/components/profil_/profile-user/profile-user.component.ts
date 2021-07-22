@@ -17,6 +17,7 @@ import {DialogAskCertificationComponent} from "../../dialog_/dialog-ask-certific
 import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisation/dialog-ask-organisation.component";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile-user',
@@ -29,7 +30,6 @@ export class ProfileUserComponent implements OnInit {
   username: string;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
-  env: any;
 
   constructor(public _userService: UserService,
               private route: ActivatedRoute,
@@ -42,14 +42,15 @@ export class ProfileUserComponent implements OnInit {
               public dialogCreateEvent: MatDialog,
               public dialogAskOrganisation: MatDialog,
               public dialogAskCertification: MatDialog,
-              public dialogUpdateUser: MatDialog
+              public dialogUpdateUser: MatDialog,
+              private _titleService: Title
   ) {
-    this.env = environment;
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.username = params["username"];
+      this._titleService.setTitle(this.username + " - " + environment.name);
       this.updateUser().then();
     });
   }

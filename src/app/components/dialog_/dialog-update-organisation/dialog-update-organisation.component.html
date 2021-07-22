@@ -6,7 +6,7 @@
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input [(ngModel)]="updateOrganisation.name" name="name" matInput
+          <input [(ngModel)]="updateOrganisation.name" matInput name="name"
                  placeholder="Nom de l'Organisation" required>
         </mat-form-field>
 
@@ -16,12 +16,12 @@
         <p> Photo de Profil</p>
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
-          <img *ngIf="updatedProfilePicture === null"
-               [src]="updatedProfilePictureURL || (updateOrganisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
-               alt="" class="rounded-circle"
-               style="object-fit: cover"
-               width="150px">
-            <input hidden (change)="onProfilePictureSelected()" #profilePictureInput type="file" id="profilePicture">
+            <img *ngIf="updatedProfilePicture === null"
+                 [src]="updatedProfilePictureURL || (updateOrganisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+                 alt="" class="rounded-circle"
+                 height="150px"
+                 style="object-fit: cover" width="150px">
+            <input #profilePictureInput (change)="onProfilePictureSelected()" hidden id="profilePicture" type="file">
           </a>
 
         </div>
@@ -30,9 +30,9 @@
       <div class="form-field-update-bannerPicture">
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
-          <img alt="" class="rounded" height="300px"
-               *ngIf="updatedBannerPicture === null"
-               [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+          <img *ngIf="updatedBannerPicture === null" [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
+               class="rounded"
+               height="300px"
                style="object-fit: cover" width="100%">
           <input #profileBannerInput (change)="onProfileBannerSelected()" hidden id="profileBanner" type="file">
         </a>

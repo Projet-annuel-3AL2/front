@@ -5,16 +5,16 @@
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="orga-card-full">
-        <img alt="" class="rounded" height="300px"
-             [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906"
+        <img [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906" alt="" class="rounded"
+             height="300px"
              style="object-fit: cover" width="100%">
         <div class="orga-card-display">
           <div class="orga-card-div">
             <div class="orga-card-img-profil">
               <img [src]="(_organisationService.organisation|async).profilePicture?.link | imageUrl"
-                style="object-fit: cover"
-                alt=""
-                class="rounded-circle" width="75" height="75">
+                   alt=""
+                   class="rounded-circle"
+                   height="75" style="object-fit: cover" width="75">
             </div>
             <div class="orga-card-name">
               <p>{{(_organisationService.organisation|async).name}}</p>
@@ -90,7 +90,8 @@
             <mat-tab label="Gestion">
               <mat-list-item *ngFor="let user of (_organisationService.organisation|async).invitedUsers"
                              style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
-                <app-user-join-organisation [user]="user" [organisationId]="organisationId"></app-user-join-organisation>
+                <app-user-join-organisation [organisationId]="organisationId"
+                                            [user]="user"></app-user-join-organisation>
               </mat-list-item>
               <div *ngIf="(_organisationService.organisation|async).invitedUsers?.length === 0">
                 <p style="text-align: center">Il n'y a pas de demande en cours</p>

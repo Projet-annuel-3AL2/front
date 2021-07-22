@@ -6,8 +6,8 @@
     <div class="event-scroll">
       <div class="event-card-full">
         <img [src]="(_eventService.event|async)?.picture?.link | imageUrl:1360:906"
-          alt="" class="rounded"
-          height="300px"
+             alt="" class="rounded"
+             height="300px"
              style="object-fit: cover" width="100%">
         <div class="event-card-infos-event">
           <div class="event-card-text-infos">
@@ -82,7 +82,7 @@
             <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
               <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
                 <app-card-user-manage-event [eventId]="eventId" [user]="user"
-                                           class="m-0"></app-card-user-manage-event>
+                                            class="m-0"></app-card-user-manage-event>
               </div>
             </div>
           </mat-tab>

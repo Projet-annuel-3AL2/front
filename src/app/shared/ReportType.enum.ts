@@ -4,4 +4,5 @@ export enum ReportTypeEnum {
   POST,
   ORGANISATION,
   EVENT,
+  COMMENT
 }
