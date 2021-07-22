@@ -20,7 +20,11 @@
             matTooltipPosition="above">
       Retirer des amis
     </button>
-    <div class="ml-auto">
+    <button (click)="cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+            class="ml-auto button-add-friend-disable"
+            mat-raised-button><span>Invitation envoyé</span>
+    </button>
+    <div class="">
       <a (click)="this.delFriendshipRequest()" class=" button-reject-invitation"
          *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
          style=" padding-right: 10px" label="Rejeter l'invitation">
@@ -28,14 +32,10 @@
       </a>
       <button (click)="this.acceptFriendship()"
               *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-              class="ml-auto button-add-friend" mat-raised-button
+              class="button-add-friend" mat-raised-button
               matTooltip="Accepter la demande d'amis"
               matTooltipPosition="above"> accepter
       </button>
     </div>
-    <button (click)="cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
-            class="ml-auto button-add-friend-disable"
-            mat-raised-button><span>Invitation envoyé</span>
-    </button>
   </div>
 </div>
