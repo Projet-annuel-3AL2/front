@@ -6,6 +6,7 @@ import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-post-page',
@@ -27,7 +28,8 @@ export class PostPageComponent implements OnInit {
               public _postService: PostService,
               public _userService: UserService,
               public _authService: AuthService,
-              private _titleService : Title) {
+              private _titleService : Title,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -51,6 +53,10 @@ export class PostPageComponent implements OnInit {
   }
 
   sendComment(): void {
+    if(this.text === undefined || this.text.length<=0){
+      this.snackBar.open("Impossible d'envoyer un commentaire vide", "Fermer");
+      return;
+    }
     this._postService.sendComment(this.postId, this.text).subscribe();
   }
 }
