@@ -3,8 +3,8 @@
     <div class="create-post-picture">
       <img [alt]="(_authService.user|async)?.username"
            [src]="(_authService.user|async)?.profilePicture?.link| imageUrl"
-           style="object-fit: cover"
-           class="rounded-circle profile-picture" height="50" width="50">
+           class="rounded-circle profile-picture"
+           height="50" style="object-fit: cover" width="50">
     </div>
     <div class="w-100">
       <div>
@@ -20,8 +20,8 @@
         <app-post-share-card [post]="data.sharesPost"></app-post-share-card>
       </div>
       <div *ngIf="data?.sharedEvent" class="event-card">
-        <img alt="" class="rounded" height="300px"
-             [src]="data?.sharedEvent?.picture?.link|imageUrl: 1360:906"
+        <img [src]="data?.sharedEvent?.picture?.link|imageUrl: 1360:906" alt="" class="rounded"
+             height="300px"
              style="object-fit: cover" width="100%">
         <div class="event-card-infos">
           <p>{{data.sharedEvent.name}}</p>

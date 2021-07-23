@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {AuthService} from "../../../../services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-password-recovery-page',
@@ -16,7 +18,9 @@ export class PasswordRecoveryComponent implements OnInit {
   constructor(private _activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
               private _authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private _titleService: Title) {
+    this._titleService.setTitle("Changement de mot de passe - " + environment.name);
   }
 
   get password() {

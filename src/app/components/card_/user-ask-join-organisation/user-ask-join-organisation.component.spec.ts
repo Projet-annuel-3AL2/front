@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserAskJoinOrganisationComponent } from './user-ask-join-organisation.component';
+import {UserAskJoinOrganisationComponent} from './user-ask-join-organisation.component';
 
 describe('UserAskJoinOrganisationComponent', () => {
   let component: UserAskJoinOrganisationComponent;
@@ -8,9 +8,9 @@ describe('UserAskJoinOrganisationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserAskJoinOrganisationComponent ]
+      declarations: [UserAskJoinOrganisationComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

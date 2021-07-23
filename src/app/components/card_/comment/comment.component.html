@@ -2,11 +2,28 @@
   <div class="rounded-circle profile-picture">
     <img [src]="comment.creator?.profilePicture?.link | imageUrl" alt=""
          class="me-1 rounded-circle"
-         style="object-fit: cover"
-         width="50" height="50">
+         height="50"
+         style="object-fit: cover" width="50">
   </div>
-  <div class="mx-2">
-    <p>{{comment.creator.username}}</p>
+  <div class="mx-2 w-100">
+    <div class="w-100" fxLayout="row">
+      <div class="w-100">
+        <p>{{comment.creator.username}}</p>
+      </div>
+      <div class="dropdown" dropdown fxLayout="end end">
+        <button aria-expanded="false" aria-haspopup="true" class="btn btn-link"
+                data-toggle="dropdown"
+                dropdownToggle type="button">
+          <fa-icon [icon]="faEllipsisH"></fa-icon>
+        </button>
+        <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+          <button (click)="showDialogReport()" mat-menu-item>Signaler</button>
+          <button (click)="deleteComment()" *ngIf="comment.creator?.username === _authService.getCurrentUsername()"
+                  class="text-danger" mat-menu-item>Supprimer
+          </button>
+        </div>
+      </div>
+    </div>
     <p class="text-break">{{comment.text}}</p>
   </div>
 </div>

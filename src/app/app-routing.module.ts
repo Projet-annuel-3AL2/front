@@ -4,7 +4,7 @@ import {TimelineComponent} from "./components/page_/timeline/timeline.component"
 import {PageEventComponent} from "./components/page_/page-event/page-event.component";
 import {PageListEventComponent} from "./components/page_/page-list-event/page-list-event.component";
 import {ProfileUserComponent} from "./components/profil_/profile-user/profile-user.component";
-import {ProfilOrganisationComponent} from "./components/profil_/profil-organisation/profil-organisation.component";
+import {ProfileOrganisationComponent} from "./components/profil_/profil-organisation/profile-organisation.component";
 import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {RegisterComponent} from "./components/page_/auth_/register/register.component";
 import {AuthGuardService} from "./services/auth/auth-guard.service";
@@ -34,7 +34,7 @@ const appRoutes: Routes = [
 const profileRoutes: Routes = [
   {path: 'event/:eventId', component: PageEventComponent},
   {path: 'user/:username', component: ProfileUserComponent},
-  {path: 'organisation/:id', component: ProfilOrganisationComponent},
+  {path: 'organisation/:id', component: ProfileOrganisationComponent},
   {path: 'post/:postId', component: PostPageComponent},
 ]
 

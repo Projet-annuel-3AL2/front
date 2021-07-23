@@ -4,6 +4,7 @@ import {environment} from "../../../../environments/environment";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
 import {AuthService} from "../../../services/auth/auth.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-timeline',
@@ -17,7 +18,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   constructor(public _postService: PostService,
               private _userService: UserService,
-              private _authService: AuthService) {
+              private _authService: AuthService,
+              private _titleService: Title) {
+    this._titleService.setTitle("Accueil - " + environment.name);
   }
 
   ngOnInit(): void {

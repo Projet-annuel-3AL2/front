@@ -64,9 +64,9 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getConversationName(): string {
-    if (this.conversation.group !== undefined) {
+    if (this.conversation.group) {
       return this.conversation.group.name;
-    } else if (this.conversation.organisation !== undefined) {
+    } else if (this.conversation.organisation) {
       return this.conversation.organisation.name;
     } else if (this.conversation.friendship) {
       return this.conversation.friendship.friendOne.username !== this.authService.getCurrentUsername() ? this.conversation.friendship.friendOne.username : this.conversation.friendship.friendTwo.username;

@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {environment} from "../../../environments/environment";
 
 @Pipe({
@@ -6,8 +6,8 @@ import {environment} from "../../../environments/environment";
 })
 export class ImageUrlPipe implements PipeTransform {
 
-  transform(value: string, x:number = 50, y : number = 50, returnOther: boolean = true, ...args: unknown[]): string {
-    if(value) {
+  transform(value: string, x: number = 50, y: number = 50, returnOther: boolean = true, ...args: unknown[]): string {
+    if (value) {
       return environment.apiBaseUrl + '/' + value;
     } else if (returnOther) {
       return `https://picsum.photos/${x}/${y}`;

@@ -2,8 +2,8 @@
   <div class="mr-2">
     <img [routerLink]="['/user/' + user.username]" [src]=" user.profilePicture?.link | imageUrl"
          alt=""
-         style="object-fit: cover"
-         class="rounded-circle" width="50" height="50">
+         class="rounded-circle"
+         height="50" style="object-fit: cover" width="50">
   </div>
   <p class="my-3"><a [routerLink]="['/user/' + user.username]">{{user.username}}</a>
     <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
@@ -31,9 +31,10 @@
             mat-raised-button><span>Invitation envoyé</span>
     </button>
   </div>
-  <button [matMenuTriggerFor]="menu" mat-button *ngIf="user.username !== _authService.getCurrentUsername()">Gestion</button >
-  <mat-menu #menu="matMenu" >
-    <div >
+  <button *ngIf="user.username !== _authService.getCurrentUsername()" [matMenuTriggerFor]="menu" mat-button>Gestion
+  </button>
+  <mat-menu #menu="matMenu">
+    <div>
       <button (click)="this.deleteParticipantEvent(user.id)" mat-menu-item>Retirer Participant</button>
     </div>
 

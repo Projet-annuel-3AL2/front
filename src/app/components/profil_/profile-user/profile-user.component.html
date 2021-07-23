@@ -8,8 +8,8 @@
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="user-card-full">
-        <img alt="" class="rounded" height="300px"
-             [src]="(_userService.user | async).bannerPicture?.link | imageUrl:1360:900"
+        <img [src]="(_userService.user | async).bannerPicture?.link | imageUrl:1360:900" alt="" class="rounded"
+             height="300px"
              style="object-fit: cover" width="100%">
         <div class="user-card-display">
           <div class="user-card-div">
@@ -18,10 +18,10 @@
                 <div class="me-2">
                   <img [src]="(_userService.user | async).profilePicture?.link | imageUrl"
                        alt=""
-                       width="75"
+                       class="rounded-circle"
                        height="75"
                        style="object-fit: cover"
-                       class="rounded-circle">
+                       width="75">
                 </div>
                 <div class="user-card-username">
                   <p>{{(_userService.user | async).username}}</p>
@@ -54,9 +54,9 @@
                   </button>
                 </div>
                 <div class="dropdown" dropdown>
-                  <button mat-button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true"
-                          data-toggle="dropdown"
-                          dropdownToggle type="button">
+                  <button [matMenuTriggerFor]="menu" aria-expanded="false" aria-haspopup="true" data-toggle="dropdown"
+                          dropdownToggle
+                          mat-button type="button">
                     <fa-icon [icon]="faEllipsisH"></fa-icon>
                   </button>
                   <mat-menu #menu="matMenu" xPosition="before">
@@ -77,17 +77,22 @@
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Créer une organisation</button>
                     </div>
                     <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">
-                      <button mat-menu-item [matMenuTriggerFor]="organisationsWhereAdmin">Inviter</button>
+                      <button [matMenuTriggerFor]="organisationsWhereAdmin" mat-menu-item>Inviter</button>
                     </div>
                     <div *ngIf="username !== _authService.getCurrentUsername()">
                       <button (click)="showDialogueReport()" class="text-danger" mat-menu-item>Signaler</button>
-                      <button (click)="blockUser()" *ngIf="!(_userService.user|async)?.isBlocked" class="text-danger" mat-menu-item>Bloquer</button>
-                      <button (click)="unblockUser()" *ngIf="(_userService.user|async)?.isBlocked" class="text-danger" mat-menu-item>Débloquer</button>
+                      <button (click)="blockUser()" *ngIf="!(_userService.user|async)?.isBlocked" class="text-danger"
+                              mat-menu-item>Bloquer
+                      </button>
+                      <button (click)="unblockUser()" *ngIf="(_userService.user|async)?.isBlocked" class="text-danger"
+                              mat-menu-item>Débloquer
+                      </button>
                     </div>
                   </mat-menu>
                   <mat-menu #organisationsWhereAdmin="matMenu">
                     <div *ngFor="let organisation of (_organisationService.organisationWhereAdmin|async)">
-                      <button (click)="sendJoinOrganisation(organisation.id)" mat-menu-item>{{organisation.name}}</button>
+                      <button (click)="sendJoinOrganisation(organisation.id)"
+                              mat-menu-item>{{organisation.name}}</button>
                     </div>
                   </mat-menu>
                 </div>

@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Organisation} from "../../../shared/models/organisation.model";
-import {UserService} from "../../../services/user/user.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {environment} from "../../../../environments/environment";
 
@@ -24,7 +23,7 @@ export class UserAskJoinOrganisationComponent implements OnInit {
   acceptRequest() {
     this._organisationService.acceptInvitation(this.organisation.id).subscribe({
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error(err)
         }
       }
@@ -34,7 +33,7 @@ export class UserAskJoinOrganisationComponent implements OnInit {
   rejectRequest() {
     this._organisationService.rejectInvitation(this.organisation.id).subscribe({
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error(err)
         }
       }
