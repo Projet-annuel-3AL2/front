@@ -4,7 +4,6 @@ import {FriendshipService} from "../../../services/friendship/friendship.service
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {faTimes} from '@fortawesome/free-solid-svg-icons';

@@ -45,7 +45,7 @@ export class PageEventComponent implements OnInit {
     await this._eventService.getEventPosts(this.eventId).toPromise();
     await this._eventService.getParticipants(this.eventId).toPromise();
     await this._eventService.getOwner(this.eventId).toPromise();
-    await this._eventService.getCategory(this.eventId).toPromise();
+    await this._eventService.getEventCategory(this.eventId).toPromise();
     await this._eventService.getOrganisation(this.eventId).toPromise();
     await this._eventService.isMember(this.eventId).toPromise();
     await this._eventService.isOwner(this.eventId).toPromise();
@@ -82,4 +82,5 @@ export class PageEventComponent implements OnInit {
       this.updateEvent();
     });
   }
+
 }

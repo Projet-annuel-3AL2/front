@@ -50,7 +50,6 @@ import {CreatePostComponent} from "./components/create_/create-post/create-post.
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {CardUserManageEventComponent} from "./components/card_/card-user-manage-event/card-user-manage-event.component";
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
-import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-report.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
@@ -121,7 +120,6 @@ import {CardOrganisationLeaveComponent} from "./components/card_/card-organisati
     ConversationsListComponent,
     CardUserManageEventComponent,
     CardUserManageOrganisationComponent,
-    DialogResFriendshipRequestComponent,
     DialogReportComponent,
     DialogUpdateOrganisationComponent,
     DialogUpdateEventComponent,
