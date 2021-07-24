@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventService} from "../../../services/event/event.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {faEllipsisH, faUserPlus, faClock} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from "../../../services/auth/auth.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
@@ -21,6 +21,8 @@ import {environment} from "../../../../environments/environment";
 export class PageEventComponent implements OnInit {
   event: Event;
   faEllipsisH = faEllipsisH;
+  faUserPlus = faUserPlus;
+  faClock = faClock;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,

@@ -13,7 +13,7 @@
       <mat-menu #menu="matMenu">
         <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
                 class="ml-auto button-add-friend"
-                mat-menu-item><i aria-hidden="true" class="fa fa-user-plus"></i> Ajouter
+                mat-menu-item><fa-icon [icon]="faUserPlus"></fa-icon> Ajouter
         </button>
         <button (click)="this.dellFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
                 class="ml-auto button-add-friend" mat-menu-item matTooltip="Enlever de la list d'amis">

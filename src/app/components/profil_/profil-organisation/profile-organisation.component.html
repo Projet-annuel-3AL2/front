@@ -25,7 +25,7 @@
             <div class="orga-card-empty"></div>
             <div class="orga-card-button">
               <button (click)="this.followOrganisation()" *ngIf="!isFollowing" class="ml-auto button-join-event"
-                      mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Suivre
+                      mat-raised-button><fa-icon [icon]="faUserPlus"></fa-icon> Suivre
               </button>
               <button (click)="this.unfollowOrganisation()" *ngIf="isFollowing" class="ml-auto mat-button-event"
                       mat-raised-button>Ne plus suivre

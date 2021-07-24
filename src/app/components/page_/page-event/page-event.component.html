@@ -20,7 +20,7 @@
               <div fxLayoutAlign="row center end">
                 <div *ngIf="!event?.isOwner">
                   <button (click)="this.joinEvent()" *ngIf="!event?.isMember" class="ml-auto"
-                          mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
+                          mat-raised-button><fa-icon [icon]="faUserPlus"></fa-icon> Rejoindre
                   </button>
                   <button (click)="this.leaveEvent()" *ngIf="event?.isMember" class="ml-auto"
                           mat-raised-button> Quitter
@@ -50,7 +50,7 @@
           </div>
           <div class="date-area-event">
             <div class="dates-event">
-              <p><i class="fas fa-clock"></i> {{event?.startDate | date:"dd/MM/YYYY HH:MM"}}
+              <p><fa-icon [icon]="faClock"></fa-icon> {{event?.startDate | date:"dd/MM/YYYY HH:MM"}}
                 -- {{event?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
             </div>
           </div>

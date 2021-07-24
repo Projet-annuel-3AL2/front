@@ -3,7 +3,7 @@ import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {UserService} from "../../../services/user/user.service";
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
@@ -20,6 +20,7 @@ export class CardUserManageEventComponent implements OnInit {
   @Input('user') user: User = new User();
   @Input('eventId') eventId: string;
   faCheckCircle = faCheckCircle;
+  faUserPlus = faUserPlus;
   allFriendRequestStatus = FriendRequestStatus;
   env: any;
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
@@ -28,6 +28,7 @@ import {Post} from "../../../shared/models/post.model";
 export class ProfileUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
+  faUserPlus = faUserPlus;
   user: User;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;

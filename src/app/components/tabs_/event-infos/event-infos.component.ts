@@ -4,6 +4,7 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {UserService} from "../../../services/user/user.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {MapService} from "../../../services/map/map.service";
+import {faUserCheck, faClock, faTags, faMapMarkerAlt} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-event-infos',
@@ -11,7 +12,10 @@ import {MapService} from "../../../services/map/map.service";
   styleUrls: ['./event-infos.component.css']
 })
 export class EventInfosComponent implements OnInit {
-
+  faUserCheck=faUserCheck;
+  faClock=faClock;
+  faTags=faTags;
+  faMapMarkerAlt = faMapMarkerAlt;
   @Input()
   event: Event = new Event();
   isFollowing: boolean = false;

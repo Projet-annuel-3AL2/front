@@ -6,7 +6,7 @@ import {Event} from "../../shared/models/event.model";
 import {EventService} from "../../services/event/event.service";
 import {CategoryService} from "../../services/category/category.service";
 import {Category} from "../../shared/models/category.model";
-
+import {faMapMarked} from "@fortawesome/free-solid-svg-icons"
 export interface EventDialogData {
   latitude: any;
   longitude: any;
@@ -30,7 +30,7 @@ export class SearchEventProps {
 export class EventFilterComponent implements OnInit {
   categories: Category[];
   isLocated: boolean;
-
+  faMapMarked = faMapMarked;
   postalAddress: string;
   range: FormGroup;
   userLocalisation: string;

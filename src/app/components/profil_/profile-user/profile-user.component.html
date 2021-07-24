@@ -33,8 +33,7 @@
               <div fxLayoutAlign="row center end">
                 <div *ngIf="user.username !== _authService.getCurrentUsername()">
                   <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
-                          class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true"
-                                                                                 class="fa fa-user-plus"></i>Ajouter
+                          class="ml-auto button-add-friend" mat-raised-button><fa-icon [icon]="faUserPlus">Ajouter
                   </button>
                   <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
                           class="button-add-friend" mat-raised-button
