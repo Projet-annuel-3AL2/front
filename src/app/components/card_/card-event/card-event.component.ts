@@ -6,6 +6,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {User} from "../../../shared/models/user.model";
+import {MapService} from "../../../services/map/map.service";
 
 @Component({
   selector: 'app-card-event',
@@ -19,10 +20,12 @@ export class CardEventComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   userSession: User;
   env = environment;
+  address: any;
 
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
+    private _mapService: MapService,
     private _authService: AuthService
   ) {
   }
@@ -32,13 +35,6 @@ export class CardEventComponent implements OnInit {
 
     this.canJoin();
   }
-
-
-  // TODO : Récupérer la localisation avec coordonnées
-  getLocalisation() {
-    return "6 boulevard Maréchal Foch, 76200 Dieppe"
-  }
-
 
   async joinEvent(id: string) {
     this._eventService.joinEvent(id).subscribe({
@@ -85,6 +81,8 @@ export class CardEventComponent implements OnInit {
     this._eventService.getProfile(this.event.id).subscribe({
       next: event => {
         this.event = event;
+        this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).subscribe(address => this.address = address);
+
       },
       error: error => {
         if (!environment.production) {
@@ -96,5 +94,9 @@ export class CardEventComponent implements OnInit {
 
   private updateData() {
     this.getEvent();
+  }
+
+  isEnd(): boolean {
+    return new Date(this.event.endDate) > new Date(Date.now())
   }
 }

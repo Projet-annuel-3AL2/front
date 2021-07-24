@@ -27,9 +27,9 @@
     <p><i class="fas fa-tags"></i> {{event?.category?.name}}</p>
   </div>
   <div class="localisation-card-event">
-    <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
+    <p><i class="fas fa-map-marker-alt"></i> {{address?.address?.town}} ({{address?.address?.postcode}})</p>
   </div>
-  <div class="button-join">
+  <div class="button-join" *ngIf="isEnd()">
     <button (click)="this.joinEvent(event?.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
             mat-raised-button>
       Rejoindre
