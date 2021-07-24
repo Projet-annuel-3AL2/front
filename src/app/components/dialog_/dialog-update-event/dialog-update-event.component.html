@@ -1,13 +1,13 @@
 <h1 class="update-event-title" mat-dialog-title>Modification de l'Évènement</h1>
 <mat-divider></mat-divider>
-<form (ngSubmit)="onClickSubmit()">
+<form [formGroup]="formData" (ngSubmit)="onClickSubmit()">
   <div mat-dialog-content>
     <div class="update-event-grid">
       <p>Informations</p>
       <div class="form-field-name-event">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Évènement</mat-label>
-          <input [(ngModel)]="updateEvent.name" matInput name="name" placeholder="Nom de l'Évènement"
+          <input formControlName="name" matInput name="name" placeholder="Nom de l'Évènement"
                  required>
         </mat-form-field>
       </div>
@@ -15,7 +15,7 @@
         <mat-form-field appearance="fill">
           <mat-label>Adresse de l'événement</mat-label>
           <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
-            <input (input)="searchAddress($event)" [(ngModel)]="postalAddress" [matAutocompleteConnectedTo]="origin"
+            <input (input)="searchAddress($event)" formControlName="postalAddress" [matAutocompleteConnectedTo]="origin"
                    [matAutocomplete]="auto" matInput
                    name="postalAddress" placeholder="Adresse" required>
           </div>
@@ -31,14 +31,14 @@
       <div class="form-field-participant-limit">
         <mat-form-field appearance="fill">
           <mat-label>Nb. de participant Max</mat-label>
-          <input [(ngModel)]="updateEvent.participantsLimit" matInput min="2" name="participantsLimit"
+          <input formControlName="participantsLimit" matInput min="2" name="participantsLimit"
                  placeholder="Ex. 30" required type="number">
         </mat-form-field>
       </div>
       <div class="form-field-date-picker-start">
         <mat-form-field appearance="fill">
           <mat-label>Date de début</mat-label>
-          <input [(ngModel)]="updateEvent.startDate" [ngxMatDatetimePicker]="pickerFrom" matInput name="dateStart"
+          <input formControlName="startDate" [ngxMatDatetimePicker]="pickerFrom" matInput name="dateStart"
                  placeholder="Date de début" required>
           <mat-datepicker-toggle [for]="pickerFrom" matSuffix></mat-datepicker-toggle>
           <ngx-mat-datetime-picker #pickerFrom></ngx-mat-datetime-picker>
@@ -47,7 +47,7 @@
       <div class="form-field-date-picker-end">
         <mat-form-field appearance="fill">
           <mat-label>Date de fin</mat-label>
-          <input [(ngModel)]="updateEvent.endDate" [ngxMatDatetimePicker]="pickerTo" matInput name="endDate"
+          <input formControlName="endDate" [ngxMatDatetimePicker]="pickerTo" matInput name="endDate"
                  placeholder="Date de fin"
                  required>
           <mat-datepicker-toggle [for]="pickerTo" matSuffix></mat-datepicker-toggle>
@@ -55,10 +55,10 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="form-field-categories" *ngIf="updateEvent.category !== undefined">
+    <div class="form-field-categories">
       <mat-form-field appearance="fill">
         <mat-label>Categories:</mat-label>
-        <mat-select [(ngModel)]="updateEvent.category.id" matNativeControl name="category" required>
+        <mat-select formControlName="category" matNativeControl name="category" required>
           <mat-option *ngFor="let category of (_categoryService.categories|async)"
                       value="{{category.id}}">{{category?.name}}
           </mat-option>
@@ -68,7 +68,7 @@
     <div class="form-field-description">
       <mat-form-field>
         <mat-label>Description de l'Évènement</mat-label>
-        <textarea [(ngModel)]="updateEvent.description" class="textarea-description" matInput
+        <textarea formControlName="description" class="textarea-description" matInput
                   name="description" placeholder="Ex. L'Évènement se ..."></textarea>
       </mat-form-field>
     </div>
@@ -76,13 +76,13 @@
       <p>Photo de Bannière</p>
       <a (click)="pictureInput.click()">
         <img
-          [src]="mediaURL || (updateEvent.picture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+          [src]="mediaURL || (data.event.picture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
           alt=""
           class="rounded"
           height="300px"
           style="object-fit: cover" width="100%">
       </a>
-      <input #pictureInput (change)="onPictureSelected()" [ngModel]="updateEvent.picture" hidden id="picture"
+      <input #pictureInput (change)="onPictureSelected()" formControlName="picture" hidden id="picture"
              name="picture" type="file">
     </div>
   </div>

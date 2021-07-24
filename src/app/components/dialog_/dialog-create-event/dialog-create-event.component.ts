@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../../../shared/models/event.model";
 import {environment} from "../../../../environments/environment";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
@@ -21,12 +21,12 @@ export class DialogCreateEventComponent implements OnInit {
 
   addresses: unknown[];
   addressSearchTimeOut: number;
-  formData: FormGroup;
   limitParticipant = new FormControl(2, Validators.min(2));
-  newEvent: Event;
   postalAddress: any;
   media: File;
   mediaURL: string;
+  newEventForm: FormGroup;
+  isSubmitted: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
@@ -35,34 +35,35 @@ export class DialogCreateEventComponent implements OnInit {
               private _organisationService: OrganisationService,
               private _snackBar: MatSnackBar,
               private _mapService: MapService,
+              private _formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
 
   }
 
   ngOnInit(): void {
-    this.newEvent = new Event();
-    this.newEvent.category = new Category();
     this.media = null;
     this.updateData();
+    this.initializeFormGroup();
   }
 
   onClickSubmit() {
-    if (this.newEvent.startDate < this.newEvent.endDate) {
-      this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
-        this.newEvent.latitude = address[0].lat;
-        this.newEvent.longitude = address[0].lon;
-
-        this._eventService.createEvent(this.newEvent, this.media).subscribe({
-          next: () => {
-            this.dialogRef.close()
-          },
-          error: err => {
-            if (!environment.production) {
-              console.log(err);
+    if (this.newEventForm.value.startDate < this.newEventForm.value.endDate) {
+      this.isSubmitted = true;
+      if(this.newEventForm.valid){
+        this._mapService.getAddressInfos(this.newEventForm.value.postalAddress).subscribe(address => {
+          this._eventService.createEvent(this.newEventForm, this.media, address[0].lat, address[0].lon, this.data?.organisation).subscribe({
+            next: () => {
+              this.dialogRef.close()
+            },
+            error: err => {
+              if (!environment.production) {
+                console.log(err);
+              }
             }
-          }
+          });
         });
-      });
+      }
+
     } else {
       this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
         duration: 3000
@@ -121,9 +122,35 @@ export class DialogCreateEventComponent implements OnInit {
   private async updateData(): Promise<void> {
     this.getAllCategories();
     this.postalAddress = null;
-    await this._authService.user.subscribe(user => {
-      this.newEvent.user = user;
-    });
-    this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
+  }
+
+  private initializeFormGroup() {
+    this.newEventForm = this._formBuilder.group({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(30)
+      ]),
+      description: new FormControl('', []),
+      participationLimit: new FormControl('', [
+        Validators.required,
+        Validators.min(2),
+        Validators.max(1000),
+        Validators.pattern('^[0-9]*$')
+      ]),
+      category: new FormControl('', [
+        Validators.required
+      ]),
+      postalAddress: new FormControl('', [
+        Validators.required
+      ]),
+      startDate: new FormControl('', [
+        Validators.required
+      ]),
+      endDate: new FormControl('', [
+        Validators.required
+      ]),
+      picture: new FormControl('',[])
+    })
   }
 }

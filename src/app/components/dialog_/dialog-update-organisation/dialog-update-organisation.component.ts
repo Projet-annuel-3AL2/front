@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
@@ -14,7 +14,6 @@ import {environment} from "../../../../environments/environment";
 export class DialogUpdateOrganisationComponent implements OnInit {
 
   formData: FormGroup;
-  updateOrganisation: Organisation;
   updatedProfilePicture: any;
   updatedBannerPicture: any;
   updatedProfilePictureURL: any;
@@ -22,30 +21,33 @@ export class DialogUpdateOrganisationComponent implements OnInit {
   env: any;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateOrganisationComponent>,
+              private _formBuilder: FormBuilder,
               private _organisationService: OrganisationService,
               @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
     this.env = environment
   }
 
   ngOnInit(): void {
-    this.updateOrganisation = this.data.organisation;
+    this.initializeFormGroup();
     this.updatedProfilePicture = null;
     this.updatedBannerPicture = null;
   }
 
-  onClickSubmit(form: FormGroup) {
-    this._organisationService.putOrganisation(this.updateOrganisation, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        },
-        error: err => {
-          console.log("click")
-          if (!environment.production) {
-            console.error(err);
+  onClickSubmit() {
+    if (this.formData.valid) {
+      this._organisationService.putOrganisation(this.data.organisation.id, this.formData, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
+          next: () => {
+            this.dialogRef.close()
+          },
+          error: err => {
+            console.log("click")
+            if (!environment.production) {
+              console.error(err);
+            }
           }
         }
-      }
-    );
+      );
+    }
   }
 
   onNoClick(): void {
@@ -90,5 +92,20 @@ export class DialogUpdateOrganisationComponent implements OnInit {
         }
       };
     }
+  }
+
+  private initializeFormGroup() {
+    this.formData = this._formBuilder.group({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(30),
+        Validators.minLength(2)
+      ]),
+      profilePicture: new FormControl('', []),
+      bannerPicture: new FormControl('', [])
+    });
+    this.formData.patchValue({
+      name: this.data.organisation.name
+    })
   }
 }

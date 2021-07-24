@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EventService} from "../../../services/event/event.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Event} from "../../../shared/models/event.model";
@@ -9,7 +9,6 @@ import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {MapService} from "../../../services/map/map.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {add} from "ngx-bootstrap/chronos";
 
 @Component({
   selector: 'app-dialog-update-event',
@@ -22,7 +21,6 @@ export class DialogUpdateEventComponent implements OnInit {
   addressSearchTimeOut: number;
   formData: FormGroup;
   limitParticipant = new FormControl(2, Validators.min(2));
-  updateEvent: Event;
   postalAddress: any;
   media: File;
   mediaURL: string;
@@ -33,6 +31,7 @@ export class DialogUpdateEventComponent implements OnInit {
               private _organisationService: OrganisationService,
               public _categoryService: CategoryService,
               public _authService: AuthService,
+              private _formBuilder: FormBuilder,
               private _mapService: MapService,
               private _snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
@@ -41,26 +40,28 @@ export class DialogUpdateEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateData().then()
+    this.initialiseFormGroup();
   }
 
   onClickSubmit() {
-    if (this.updateEvent.startDate < this.updateEvent.endDate) {
-      this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
-        console.log(address)
-        this.updateEvent.latitude = address[0].lat;
-        this.updateEvent.longitude = address[0].lon;
+    if (this.formData.value.startDate < this.formData.value.endDate) {
+      if (this.formData.valid) {
+        this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
+          this.formData.value.latitude = address[0].lat;
+          this.formData.value.longitude = address[0].lon;
 
-        this._eventService.updateEvent(this.updateEvent, this.media).subscribe({
-          next: () => {
-            this.dialogRef.close()
-          },
-          error: err => {
-            if (!environment.production) {
-              console.log(err);
+          this._eventService.updateEvent(this.data.event.id, this.formData, this.media).subscribe({
+            next: () => {
+              this.dialogRef.close()
+            },
+            error: err => {
+              if (!environment.production) {
+                console.log(err);
+              }
             }
-          }
+          });
         });
-      });
+      }
     } else {
       this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
         duration: 3000
@@ -107,15 +108,9 @@ export class DialogUpdateEventComponent implements OnInit {
     this.getAllCategories();
     this.getCategory();
     this.postalAddress = null;
-    this.updateEvent = new Event();
     this.media = null;
-    this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
-    await this._authService.user.subscribe(user => {
-      this.updateEvent.user = user;
-    });
 
     await this._eventService.event.subscribe(event => {
-      this.updateEvent = event
       this._mapService.getAddressFromLatLng(event.latitude, event.longitude).subscribe( addressT => {
         const address: any = addressT;
         this.postalAddress = `${address?.house_number} ${address?.road}, ${address?.town} ${address?.postcode}, ${address?.country} `
@@ -136,7 +131,7 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   private getCategory() {
-    this._eventService.getCategory(this.data.event.id).subscribe({
+    this._eventService.getEventCategory(this.data.event.id).subscribe({
       next: () => {
       },
       error: err => {
@@ -147,4 +142,44 @@ export class DialogUpdateEventComponent implements OnInit {
     });
   }
 
+  private initialiseFormGroup() {
+    this.formData = this._formBuilder.group({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(30)
+      ]),
+      description: new FormControl('', []),
+      participantsLimit: new FormControl('', [
+        Validators.required,
+        Validators.min(2),
+        Validators.max(1000),
+        Validators.pattern('^[0-9]*$')
+      ]),
+      category: new FormControl('', [
+        Validators.required
+      ]),
+      postalAddress: new FormControl('', [
+        Validators.required
+      ]),
+      startDate: new FormControl('', [
+        Validators.required
+      ]),
+      endDate: new FormControl('', [
+        Validators.required
+      ]),
+      picture: new FormControl('',[])
+    });
+
+
+    this.formData.setValue({
+      name: this.data.event.name,
+      description: this.data.event.description,
+      participantsLimit: this.data.event.participantsLimit,
+      category: this.data.event.category,
+      startDate: this.data.event.startDate,
+      endDate: this.data.event.endDate,
+      postalAddress: this.postalAddress
+    })
+  }
 }

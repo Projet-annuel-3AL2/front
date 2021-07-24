@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {UserService} from "../../../services/user/user.service";
 import {User} from "../../../shared/models/user.model";
@@ -12,24 +12,22 @@ import {environment} from "../../../../environments/environment";
 })
 export class DialogUpdateUserComponent implements OnInit {
 
-  formData: NgForm;
-  updatedUser: User;
+  formData: FormGroup;
   updatedProfilePicture: any;
   updatedBannerPicture: any;
   updatedProfilePictureURL: any;
   updatedBannerPictureURL: any;
   env: any;
-  private oldUsername: string;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateUserComponent>,
+              private _formBuilder: FormBuilder,
               public _userService: UserService,
               @Inject(MAT_DIALOG_DATA) public data: { user: User }) {
     this.env = environment;
   }
 
   ngOnInit(): void {
-    this.updatedUser = this.data.user;
-    this.oldUsername = this.data.user.username;
+    this.initializeFormGroup();
     this.updatedProfilePicture = null;
     this.updatedBannerPicture = null;
   }
@@ -40,16 +38,18 @@ export class DialogUpdateUserComponent implements OnInit {
   }
 
   onClickSubmit() {
-    this._userService.putUser(this.updatedUser, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
-      next: () => {
-        this.dialogRef.close()
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
+    if (this.formData.valid){
+      this._userService.putUser(this.formData, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
+        next: () => {
+          this.dialogRef.close()
+        },
+        error: err => {
+          if (!environment.production) {
+            console.log(err);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   onProfilePictureSelected() {
@@ -90,5 +90,38 @@ export class DialogUpdateUserComponent implements OnInit {
         }
       };
     }
+  }
+
+  private initializeFormGroup() {
+    this.formData = this._formBuilder.group({
+      firstname: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20)
+      ]),
+      lastname: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20)
+      ]),
+      mail: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ]),
+      bio: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(200)
+      ]),
+      profilePicture: new FormControl('',[]),
+      bannerPicture: new FormControl('', [])
+    });
+
+    this.formData.patchValue({
+      firstname: this.data.user.firstname,
+      lastname: this.data.user.lastname,
+      mail: this.data.user.mail,
+      bio: this.data.user.bio
+    })
   }
 }
