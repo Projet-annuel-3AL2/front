@@ -25,8 +25,8 @@ export class UserService {
     return this.http.get<Group[]>(`${environment.apiBaseUrl}/user/${username}/groups`);
   }
 
-  getPosts(username: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiBaseUrl}/user/${username}/posts`);
+  getPosts(username: string, limit:number, offset:number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/user/${username}/posts/${limit}/${offset}`);
   }
 
   deleteUser(username: string): Observable<any> {

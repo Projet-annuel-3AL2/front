@@ -34,7 +34,7 @@
                 <div *ngIf="user.username !== _authService.getCurrentUsername()">
                   <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
                           class="ml-auto button-add-friend" mat-raised-button>
-                    <fa-icon [icon]="faUserPlus"></fa-icon>Ajouter
+                    <fa-icon [icon]="faUserPlus" [style.color]="'white'"></fa-icon> Ajouter
                   </button>
                   <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
                           class="button-add-friend" mat-raised-button
@@ -111,9 +111,9 @@
           <mat-tab label="Post">
             <div #divContent style="height: 450px">
               <virtual-scroller #scroll [enableUnequalChildrenSizes]="true"
-                                [items]="user.createdPosts"
+                                [items]="user.createdPosts" (vsEnd)="triggerGetMore($event)"
                                 [parentScroll]="divContent" childHeight="1" class="w-100 h-100">
-                <div *ngFor="let post of scroll.viewPortItems" class="mt-3 ">
+                <div *ngFor="let post of scroll.viewPortItems" class="mt-3">
                   <post (onDelete)="removePost($event)" [post]="post"></post>
                 </div>
               </virtual-scroller>

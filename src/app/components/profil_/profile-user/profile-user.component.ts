@@ -29,6 +29,9 @@ export class ProfileUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   faUserPlus = faUserPlus;
+  loading: boolean = false;
+  offset: number = 0;
+  limit: number = 10;
   user: User;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
@@ -58,7 +61,8 @@ export class ProfileUserComponent implements OnInit {
 
   async updateUser(username: string): Promise<void> {
     this.user = await this._userService.getByUsername(username).toPromise();
-    this.user.createdPosts = await this._userService.getPosts(username).toPromise();
+    this.user.createdPosts = [];
+    this.getMorePosts();
     this.user.friends = await this._userService.getFriends(username).toPromise();
     this.user.eventsParticipation = await this._userService.getParticipations(username).toPromise();
     this.user.isBlocked = await this._userService.hasBlocked(username).toPromise();
@@ -186,5 +190,23 @@ export class ProfileUserComponent implements OnInit {
 
   removePost($event: Post) {
     this.user.createdPosts = this.user.createdPosts.filter(post => post.id !== $event.id);
+  }
+
+  triggerGetMore($event) {
+    if ($event.endIndex !== this.user.createdPosts.length - 1 || this.loading) return;
+    this.getMorePosts();
+  }
+
+  getMorePosts() {
+    this.loading = true;
+    this._userService.getPosts(this.user.username, this.limit, this.offset)
+      .toPromise()
+      .then(posts => {
+        this.user.createdPosts = this.user.createdPosts.concat(posts);
+        this.offset += this.limit;
+        if (posts.length > 0) {
+          this.loading = false;
+        }
+      });
   }
 }
