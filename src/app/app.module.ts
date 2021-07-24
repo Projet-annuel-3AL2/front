@@ -83,6 +83,7 @@ import {ImageUrlPipe} from "./pipes/image-url/image-url.pipe";
 import {NotificationsComponent} from "./components/notifications/notifications.component";
 import {CreateGroupDialogComponent} from "./components/dialog_/create-group-dialog/create-group-dialog.component";
 import {CardOrganisationLeaveComponent} from "./components/card_/card-organisation-leave/card-organisation-leave.component";
+import {MapSearchComponent} from "./components/map-search/map-search.component";
 
 @NgModule({
   declarations: [
@@ -143,7 +144,8 @@ import {CardOrganisationLeaveComponent} from "./components/card_/card-organisati
     ImageUrlPipe,
     NotificationsComponent,
     CreateGroupDialogComponent,
-    CardOrganisationLeaveComponent
+    CardOrganisationLeaveComponent,
+    MapSearchComponent
   ],
   imports: [
     BrowserModule,
