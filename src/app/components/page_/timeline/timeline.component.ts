@@ -13,8 +13,9 @@ import {Post} from "../../../shared/models/post.model";
 })
 export class TimelineComponent implements OnInit, OnDestroy {
   offset: number = 0;
-  limit: number = 20;
-  posts: Post[];
+  limit: number = 10;
+  loading: boolean;
+  posts: Post[] = [];
 
   constructor(public _postService: PostService,
               private _userService: UserService,
@@ -24,9 +25,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._postService.getTimeline()
-      .toPromise()
-      .then(posts => this.posts = posts);
+    this.getMorePosts();
   }
 
   removePost($event: Post) {
@@ -34,5 +33,23 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+
+  triggerGetMore($event){
+    if ($event.endIndex !== this.posts.length-1 || this.loading) return;
+    this.getMorePosts();
+  }
+
+  getMorePosts() {
+    this.loading = true;
+    this._postService.getTimeline(this.limit, this.offset)
+      .toPromise()
+      .then(posts => {
+        this.posts=this.posts.concat(posts);
+        this.offset += this.limit;
+        if(posts.length>0) {
+          this.loading = false;
+        }
+      });
   }
 }

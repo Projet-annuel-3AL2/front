@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Post} from "../../shared/models/post.model";
 import {User} from "../../shared/models/user.model";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {Report} from "../../shared/models/report.model";
 import {Comment} from "../../shared/models/comment.model";
-import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +39,8 @@ export class PostService {
     return this.http.get<Post>(`${environment.apiBaseUrl}/post/${postId}`);
   }
 
-  getTimeline(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiBaseUrl}/post/timeline/0/0`);
+  getTimeline(limit: number, offset: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/post/timeline/${offset}/${limit}`);
   }
 
   getPostLikes(postId: string): Observable<User[]> {
