@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
@@ -27,6 +26,7 @@ import {Title} from "@angular/platform-browser";
 export class ProfileUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
+  faTimes = faTimes;
   username: string;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
@@ -65,13 +65,6 @@ export class ProfileUserComponent implements OnInit {
     await this._organisationService.whereIsAdmin(this.username).toPromise();
   }
 
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.username}
-    });
-    dialogRef.afterClosed().subscribe(() => this.updateUser());
-  }
 
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
@@ -161,6 +154,31 @@ export class ProfileUserComponent implements OnInit {
       error: err => {
         if (!environment.production) {
           console.log(err)
+        }
+      }
+    });
+  }
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
         }
       }
     });

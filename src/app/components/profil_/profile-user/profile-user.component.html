@@ -42,12 +42,17 @@
                           matTooltipPosition="above">
                     Retirer des amis
                   </button>
-                  <button (click)="this.showDialogueRespondFriendRequest()"
-                          *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                          class="ml-auto button-add-friend" mat-raised-button
-                          matTooltip="Accepter ou Refuser la demande d'amis"
-                          matTooltipPosition="above">Répondre
-                  </button>
+                    <a (click)="this.delFriendshipRequest()" class=" button-reject-invitation"
+                       *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+                       style=" padding-right: 10px" label="Rejeter l'invitation">
+                      <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
+                    </a>
+                    <button (click)="this.acceptFriendship()"
+                            *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+                            class="button-add-friend" mat-raised-button
+                            matTooltip="Accepter la demande d'amis"
+                            matTooltipPosition="above"> accepter
+                    </button>
                   <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
                           class="ml-auto button-add-friend-disable"
                           mat-raised-button><span>Invitation envoyé</span>
@@ -94,6 +99,18 @@
                       <button (click)="sendJoinOrganisation(organisation.id)"
                               mat-menu-item>{{organisation.name}}</button>
                     </div>
+                  </mat-menu>
+                  <mat-menu #resfFriendship="matMenu">
+                    <button (click)="this.acceptFriendship()"
+                            class="ml-auto button-add-friend" mat-menu-item
+                            matTooltip="Accepter la demande d'amis"
+                            matTooltipPosition="above"> accepter
+                    </button>
+                    <button (click)="this.delFriendshipRequest()"
+                            class="ml-auto button-add-friend" mat-menu-item
+                            matTooltip="Rejeter la demande d'amis"
+                            matTooltipPosition="above"> Rejeter
+                    </button>
                   </mat-menu>
                 </div>
               </div>
