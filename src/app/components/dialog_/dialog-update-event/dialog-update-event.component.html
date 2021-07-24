@@ -55,12 +55,12 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="form-field-categories">
+    <div class="form-field-categories" *ngIf="updateEvent.category !== undefined">
       <mat-form-field appearance="fill">
         <mat-label>Categories:</mat-label>
         <mat-select [(ngModel)]="updateEvent.category.id" matNativeControl name="category" required>
           <mat-option *ngFor="let category of (_categoryService.categories|async)"
-                      value="{{category.id}}">{{category.name}}
+                      value="{{category.id}}">{{category?.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -121,7 +121,6 @@ export class DialogUpdateEventComponent implements OnInit {
         this.postalAddress = `${address?.house_number} ${address?.road}, ${address?.town} ${address?.postcode}, ${address?.country} `
       });
     })
-    this.postalAddress = null;
   }
 
   private getAllCategories() {

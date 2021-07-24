@@ -68,7 +68,7 @@ export class EventService {
     if (event.organisation) {
       formData.append("organisation", event.organisation.id);
     }
-    if (file !== undefined) {
+    if (file !== null) {
       formData.append("event_media", file);
     }
     return this.http.put<Event>(`${environment.apiBaseUrl}/event/${event.id}`, formData);
