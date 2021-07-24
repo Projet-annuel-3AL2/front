@@ -13,6 +13,7 @@ import {Category} from "../../shared/models/category.model";
 import {Organisation} from "../../shared/models/organisation.model";
 import {AuthService} from "../auth/auth.service";
 import {SearchEventProps} from "../../components/event-filter/event-filter.component";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -33,19 +34,18 @@ export class EventService {
     this.event = this.eventSubject.asObservable();
   }
 
-  createEvent(newEvent: Event, file: File): Observable<Event> {
+  createEvent(newEvent: FormGroup, file: File, latitude: number, longitude: number, organisation?: Organisation): Observable<Event> {
     let formData = new FormData();
-    formData.append("name", newEvent.name);
-    formData.append("description", newEvent.description);
-    formData.append("user", newEvent.user.id);
-    formData.append("startDate", newEvent.startDate.toString());
-    formData.append("endDate", newEvent.endDate.toString());
-    formData.append("latitude", newEvent.latitude.toString());
-    formData.append("longitude", newEvent.longitude.toString());
-    formData.append("participantsLimit", newEvent.participantsLimit.toString());
-    formData.append("category", newEvent.category.id);
-    if (newEvent.organisation) {
-      formData.append("organisation", newEvent.organisation.id);
+    formData.append("name", newEvent.value.name);
+    formData.append("description", newEvent.value.description);
+    formData.append("startDate", newEvent.value.startDate.toString());
+    formData.append("endDate", newEvent.value.endDate.toString());
+    formData.append("latitude", latitude.toString());
+    formData.append("longitude", longitude.toString());
+    formData.append("participantsLimit", newEvent.value.participationLimit.toString());
+    formData.append("category", newEvent.value.category.id);
+    if (organisation) {
+      formData.append("organisation", organisation.id);
     }
     if (file !== undefined) {
       formData.append("event_media", file);
@@ -54,24 +54,21 @@ export class EventService {
     return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, formData);
   }
 
-  updateEvent(event: Event, file: File): Observable<Event> {
+  updateEvent(eventId: string, event: FormGroup, file: File): Observable<Event> {
     let formData = new FormData();
-    formData.append("name", event.name);
-    formData.append("description", event.description);
-    formData.append("user", event.user.id);
-    formData.append("startDate", event.startDate.toString());
-    formData.append("endDate", event.endDate.toString());
-    formData.append("latitude", event.latitude.toString());
-    formData.append("longitude", event.longitude.toString());
-    formData.append("participantsLimit", event.participantsLimit.toString());
-    formData.append("category", event.category.id);
-    if (event.organisation) {
-      formData.append("organisation", event.organisation.id);
-    }
+    formData.append("name", event.value.name);
+    formData.append("description", event.value.description);
+    formData.append("startDate", event.value.startDate.toString());
+    formData.append("endDate", event.value.endDate.toString());
+    formData.append("latitude", event.value.latitude.toString());
+    formData.append("longitude", event.value.longitude.toString());
+    formData.append("participantsLimit", event.value.participantsLimit.toString());
+    formData.append("category", event.value.category.id);
+
     if (file !== null) {
       formData.append("event_media", file);
     }
-    return this.http.put<Event>(`${environment.apiBaseUrl}/event/${event.id}`, formData);
+    return this.http.put<Event>(`${environment.apiBaseUrl}/event/${eventId}`, formData);
   }
 
   joinEvent(eventId: string): Observable<void> {
@@ -158,7 +155,7 @@ export class EventService {
     }));
   }
 
-  getCategory(eventId: string) {
+  getEventCategory(eventId: string) {
     return this.http.get<Category>(`${environment.apiBaseUrl}/event/${eventId}/category`).pipe(map(category => {
       let event = this.eventSubject.getValue();
       event.category = category;

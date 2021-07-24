@@ -9,6 +9,7 @@ import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
 import {map} from "rxjs/operators";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -48,19 +49,19 @@ export class UserService {
     return this.http.delete(`${environment.apiBaseUrl}/user/${username}`)
   }
 
-  putUser(user: User, updatedProfilePicture: File, updatedBannerPicture: File): Observable<User> {
+  putUser(user: FormGroup, updatedProfilePicture: File, updatedBannerPicture: File): Observable<User> {
     const formData = new FormData();
-    if (user.mail == null){
-      formData.append("mail", user.mail);
+    if (user.value.mail !== null){
+      formData.append("mail", user.value.mail);
     }
-    if (user.firstname == null){
-      formData.append("firstname", user.firstname);
+    if (user.value.firstname !== null){
+      formData.append("firstname", user.value.firstname);
     }
-    if (user.lastname){
-      formData.append("lastname", user.lastname);
+    if (user.value.lastname){
+      formData.append("lastname", user.value.lastname);
     }
-    if (user.bio){
-      formData.append("bio", user.bio);
+    if (user.value.bio){
+      formData.append("bio", user.value.bio);
     }
     if (updatedProfilePicture !== null) {
       formData.append("profilePicture", updatedProfilePicture);
