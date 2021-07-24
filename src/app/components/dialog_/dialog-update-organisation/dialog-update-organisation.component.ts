@@ -23,7 +23,7 @@ export class DialogUpdateOrganisationComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateOrganisationComponent>,
               private _organisationService: OrganisationService,
-              @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation, userSession: User }) {
+              @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
     this.env = environment
   }
 

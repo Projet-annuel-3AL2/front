@@ -23,7 +23,7 @@
               <fa-icon [icon]="faCheckCircle"></fa-icon>
             </div>
             <div class="orga-card-empty"></div>
-            <div class="orga-card-button">
+            <div class="orga-card-button" *ngIf="!isAdminB || !isOwnerB">
               <button (click)="this.followOrganisation()" *ngIf="!isFollowing" class="ml-auto button-join-event"
                       mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Suivre
               </button>
@@ -97,7 +97,7 @@
           </mat-tab>
           <div *ngIf="isAdminB && isOwnerB">
             <mat-tab label="Gestion">
-              <mat-list-item *ngFor="let user of (_organisationService.organisation|async).invitedUsers"
+              <mat-list-item *ngFor="let user of (_organisationService.organisation|async)?.invitedUsers"
                              style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
                 <app-user-join-organisation [user]="user" [organisationId]="organisationId"></app-user-join-organisation>
               </mat-list-item>
