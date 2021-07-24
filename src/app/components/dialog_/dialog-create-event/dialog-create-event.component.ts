@@ -18,7 +18,7 @@ import {AuthService} from "../../../services/auth/auth.service";
   styleUrls: ['./dialog-create-event.component.css']
 })
 export class DialogCreateEventComponent implements OnInit {
-
+  categories: Category[];
   addresses: unknown[];
   addressSearchTimeOut: number;
   formData: FormGroup;
@@ -47,26 +47,18 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   onClickSubmit() {
-    if (this.newEvent.startDate < this.newEvent.endDate) {
-      this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
-        this.newEvent.latitude = 48.79643969643021;
-        this.newEvent.longitude = 2.128967056048809;
-        this._eventService.createEvent(this.newEvent, this.media).subscribe({
-          next: () => {
-            this.dialogRef.close()
-          },
-          error: err => {
-            if (!environment.production) {
-              console.log(err);
-            }
-          }
-        });
-      });
-    } else {
-      this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
+    if (this.newEvent.startDate > this.newEvent.endDate) {
+      this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
         duration: 3000
       });
     }
+    this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address=> {
+      this.newEvent.latitude = address.latitude;
+      this.newEvent.longitude = address.longitude;
+      this._eventService.createEvent(this.newEvent, this.media)
+        .toPromise()
+        .then(() => this.dialogRef.close());
+    });
   }
 
   onNoClick(): void {
@@ -80,12 +72,11 @@ export class DialogCreateEventComponent implements OnInit {
         this.addresses = undefined;
         return;
       }
-      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => this.addresses = addresses);
     }, 500);
   }
 
   onPictureSelected() {
-
     const inputNode: any = document.querySelector('#picture');
     if (typeof (FileReader) !== 'undefined') {
 
@@ -106,23 +97,19 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      next: () => {
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._categoryService.getAllCategory()
+      .toPromise()
+      .then(categories=>this.categories = categories);
   }
 
-  private async updateData(): Promise<void> {
+  private updateData(): void {
     this.getAllCategories();
     this.postalAddress = null;
-    await this._authService.user.subscribe(user => {
+    this._authService.user
+      .toPromise()
+      .then(user => {
       this.newEvent.user = user;
     });
-    this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
+    this.newEvent.organisation = this.data.organisation ? this.data.organisation : undefined;
   }
 }

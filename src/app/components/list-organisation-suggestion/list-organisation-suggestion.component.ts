@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {OrganisationService} from "../../services/organisation/organisation.service";
 import {Organisation} from "../../shared/models/organisation.model";
-import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-list-organisation-suggestion',
@@ -20,13 +19,9 @@ export class ListOrganisationSuggestionComponent implements OnInit {
   }
 
   private getSuggestionOrganisation() {
-    this._organisationService.getSuggestions().subscribe({
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
+    this._organisationService.getSuggestions()
+      .toPromise()
+      .then(organisations=>this.listOrganisation$ = organisations);
   }
 
 }

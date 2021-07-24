@@ -49,9 +49,7 @@ export class CreateGroupDialogComponent implements OnInit {
       return;
     }
     const formValue = this.groupForm.value;
-    console.log(formValue.name)
-    console.log(this.addedUsers)
     this._groupService.create(formValue.name, this.addedUsers)
-      .subscribe(() => this.dialogRef.close());
+      .toPromise().then(() => this.dialogRef.close());
   }
 }

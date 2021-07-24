@@ -31,7 +31,6 @@ import {ProfilListEventComponent} from "./components/tabs_/profil-list-event/pro
 import {ProfileOrganisationComponent} from "./components/profil_/profil-organisation/profile-organisation.component";
 import {ListOrganisationSuggestionComponent} from "./components/list-organisation-suggestion/list-organisation-suggestion.component";
 import {CardOrganisationComponent} from "./components/card_/card-organisation/card-organisation.component";
-import {CreateOrganisationComponent} from "./components/create_/create-organisation/create-organisation.component";
 import {A11yModule} from "@angular/cdk/a11y";
 import {LoginComponent} from "./components/page_/auth_/login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -113,7 +112,6 @@ import {CreateGroupDialogComponent} from "./components/dialog_/create-group-dial
     ProfilListEventComponent,
     ListOrganisationSuggestionComponent,
     CardOrganisationComponent,
-    CreateOrganisationComponent,
     ConversationBoxDirective,
     ConversationsBoxComponent,
     ConversationCardComponent,

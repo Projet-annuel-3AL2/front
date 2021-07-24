@@ -18,7 +18,6 @@ export class GroupService {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("users", JSON.stringify(users.map(user=>user.id)));
-    console.log(JSON.stringify(formData))
     return this.http.post<Group>(`${environment.apiBaseUrl}/group`, formData);
   }
 

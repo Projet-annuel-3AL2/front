@@ -11,17 +11,8 @@ import {map} from "rxjs/operators";
   providedIn: 'root'
 })
 export class FriendshipService {
-  public friendRequests: Observable<FriendRequest[]>;
-  public sentFriendRequests: Observable<FriendRequest[]>;
-  private friendRequestsSubject: BehaviorSubject<FriendRequest[]>;
-  private sentFriendRequestsSubject: BehaviorSubject<FriendRequest[]>;
 
   constructor(private http: HttpClient) {
-    this.sentFriendRequestsSubject = new BehaviorSubject<FriendRequest[]>(null);
-    this.sentFriendRequests = this.sentFriendRequestsSubject.asObservable();
-
-    this.friendRequestsSubject = new BehaviorSubject<FriendRequest[]>(null);
-    this.friendRequests = this.friendRequestsSubject.asObservable();
   }
 
   sendFriendRequest(username: string): Observable<Friendship> {
@@ -47,19 +38,4 @@ export class FriendshipService {
   isFriendshipRequested(username: string): Observable<FriendRequestStatus> {
     return this.http.get<FriendRequestStatus>(`${environment.apiBaseUrl}/friendship/${username}/friendship-status`);
   }
-
-  getSentFriendshipRequest(): Observable<FriendRequest[]> {
-    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/sent-friendship-request`).pipe(map(requests => {
-      this.sentFriendRequestsSubject.next(requests);
-      return requests;
-    }));
-  }
-
-  getReceivedFriendshipRequest(): Observable<FriendRequest[]> {
-    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/received-friendship-request`).pipe(map(requests => {
-      this.friendRequestsSubject.next(requests);
-      return requests;
-    }));
-  }
-
 }

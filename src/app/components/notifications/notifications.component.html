@@ -7,8 +7,8 @@
       <h3 (click)="$event.stopPropagation()" fxLayoutAlign="center start">Notifications</h3>
       <app-user-ask-join-organisation (click)="$event.stopPropagation()" *ngFor="let organisation of (_authService.user|async)?.organisationInvitations"
                                       [organisation]="organisation"></app-user-ask-join-organisation>
-      <app-user-card (click)="$event.stopPropagation()" *ngFor="let user of (_friendshipService.friendRequests|async)"
-                     [user]="user.sender"></app-user-card>
+      <app-user-card (click)="$event.stopPropagation()" *ngFor="let request of (_authService.user|async)?.friendRequests"
+                     [user]="request.sender"></app-user-card>
     </mat-menu>
   </div>
 </div>

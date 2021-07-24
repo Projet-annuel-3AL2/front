@@ -25,7 +25,7 @@ export class ConversationCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversationService.getLastMessage(this.conversation.id)
-      .subscribe(message => {
+      .toPromise().then(message => {
         if (message) {
           this.conversation.messages = [message]
         } else {
@@ -67,6 +67,6 @@ export class ConversationCardComponent implements OnInit {
   }
 
   leave() {
-    this.groupService.leave(this.conversation.group.id).subscribe();
+    this.groupService.leave(this.conversation.group.id).toPromise().then();
   }
 }

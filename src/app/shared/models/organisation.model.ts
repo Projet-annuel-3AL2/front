@@ -16,6 +16,7 @@ export class Organisation {
   conversation: Conversation;
   posts: Post[];
   invitedUsers: User[];
+  isFollower: boolean;
 
 
   constructor() {

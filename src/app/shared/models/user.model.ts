@@ -4,6 +4,8 @@ import {Certification} from "./certification.model";
 import {Event} from "./event.model";
 import {Comment} from "./comment.model";
 import {Organisation} from "./organisation.model";
+import {FriendRequestStatus} from "../FriendshipRequestStatus.enum";
+import {FriendRequest} from "./FriendRequest";
 
 export class User {
   id: string;
@@ -14,6 +16,7 @@ export class User {
   bio?: string;
   isBlocked: boolean;
   blocksCurrentUser: boolean;
+  friendshipStatus: FriendRequestStatus;
   friends?: User[];
   createdEvents?: Event[];
   createdPosts?: Post[];
@@ -25,4 +28,6 @@ export class User {
   comments?: Comment[];
   organisations?: Organisation[];
   organisationInvitations?: Organisation[];
+  friendRequests: FriendRequest[];
+  sentFriendRequests: FriendRequest[];
 }

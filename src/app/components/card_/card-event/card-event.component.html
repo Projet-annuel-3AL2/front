@@ -27,14 +27,14 @@
     <p><i class="fas fa-tags"></i> {{event?.category?.name}}</p>
   </div>
   <div class="localisation-card-event">
-    <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
+    <p><i class="fas fa-map-marked"></i>{{event.address?.house_number}}, {{event.address?.road}}, {{event.address?.town}} {{event.address?.postcode}}, {{event.address?.country}}</p>
   </div>
   <div class="button-join">
-    <button (click)="this.joinEvent(event?.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
+    <button (click)="this.joinEvent(event?.id)" *ngIf="!event.isMember" class="ml-auto button-join-event"
             mat-raised-button>
       Rejoindre
     </button>
-    <button (click)="this.leaveEvent(event?.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
+    <button (click)="this.leaveEvent(event?.id)" *ngIf="event.isMember" class="ml-auto button-join-event"
             mat-raised-button>Quitter
     </button>
   </div>

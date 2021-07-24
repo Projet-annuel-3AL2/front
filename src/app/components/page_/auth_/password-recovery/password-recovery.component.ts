@@ -33,9 +33,10 @@ export class PasswordRecoveryComponent implements OnInit {
 
   ngOnInit(): void {
     this._authService.isValidToken(this._activatedRoute.snapshot.paramMap.get("resetToken"), this._activatedRoute.snapshot.paramMap.get("username"))
-      .subscribe(isValid => {
+      .toPromise()
+      .then(isValid => {
         if (!isValid) {
-          this.router.navigate(['/forgot-password']);
+          this.router.navigate(['/forgot-password']).then();
         }
       });
     this.initForm();
@@ -45,9 +46,9 @@ export class PasswordRecoveryComponent implements OnInit {
     this.submitted = true;
     const formValue = this.resetPasswordForm.value;
     this._authService.resetPassword(this._activatedRoute.snapshot.paramMap.get("resetToken"), this._activatedRoute.snapshot.paramMap.get("username"), formValue.password)
-      .subscribe(() => {
-        this.router.navigate(['/login']);
-      }, () => {
+      .toPromise()
+      .then(() => {
+        this.router.navigate(['/login']).then();
       });
   }
 

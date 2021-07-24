@@ -37,7 +37,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.conversation = this.conversationBoxService.selectedConversation;
     this.conversationService.getMessages(this.conversation.id)
-      .subscribe(messages => {
+      .toPromise().then(messages => {
         this.conversation.messages = messages;
       });
   }
@@ -50,7 +50,7 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   updateConversation() {
     this.conversationService.getMessages(this.conversation.id)
-      .subscribe(messages => {
+      .toPromise().then(messages => {
         this.conversation.messages = messages;
         this.isNearBottom = this.isUserNearBottom();
         if (this.isNearBottom) {
@@ -82,7 +82,8 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     let message: Message = new Message();
     message.text = this.message;
     this.conversationService.sendMessage(this.conversation.id, message)
-      .subscribe(() => this.updateConversation());
+      .toPromise()
+      .then(() => this.updateConversation());
     this.message = "";
   }
 

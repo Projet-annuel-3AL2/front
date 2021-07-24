@@ -1,14 +1,16 @@
-<div class="rounded-pill border d-flex p-2 organisation-card my-3">
-  <div class="mr-2">
-    <a [routerLink]="['/organisation/' + organisation.id]"><i class="far fa-building fa-2x"></i></a>
+<div class="rounded-pill border d-flex p-2 organisation-card my-3" fxLayoutAlign="row">
+  <div class="mr-2" fxLayoutAlign="start center">
+    <img *ngIf="organisation.profilePicture"  [src]="organisation.profilePicture?.link | imageUrl"
+         alt=""
+         class="rounded-circle"
+         height="50" style="object-fit: cover" width="50">
+    <a *ngIf="!organisation.profilePicture" [routerLink]="['/organisation/' + organisation.id]"><fa-icon class="far" [icon]="faBuilding" size="2x"></fa-icon></a>
   </div>
-  <div class="spacer"></div>
   <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
-  <div class="spacer"></div>
-  <button (click)="this.followOrganisation()" *ngIf="!isFollowing" class="ml-auto button-follow-orga" mat-raised-button>
-    <i aria-hidden="true" class="fa fa-user-plus"></i> Suivre
+  <button (click)="followOrganisation()" *ngIf="!organisation.isFollower" class="ml-auto button-follow-orga" mat-raised-button>
+    <fa-icon [icon]="faUserPlus"></fa-icon> Suivre
   </button>
-  <button (click)="this.unfollowOrganisation()" *ngIf="isFollowing" class="ml-auto button-follow-orga-disable"
+  <button (click)="unfollowOrganisation()" *ngIf="organisation.isFollower" class="ml-auto button-follow-orga-disable"
           mat-raised-button matTooltip="Arrêter de suivre l'organisation">Ne plus suivre
   </button>
 </div>

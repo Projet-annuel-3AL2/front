@@ -11,17 +11,12 @@ import {environment} from "../../../../environments/environment";
 })
 export class FriendsPageComponent implements OnInit {
 
-  constructor(public _authService: AuthService, public _friendshipService: FriendshipService,
+  constructor(public _authService: AuthService,
               private _titleService: Title) {
     this._titleService.setTitle("Amis - " + environment.name);
   }
 
   ngOnInit(): void {
-    this.update();
   }
 
-  update() {
-    this._friendshipService.getReceivedFriendshipRequest().subscribe();
-    this._friendshipService.getSentFriendshipRequest().subscribe();
-  }
 }

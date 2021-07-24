@@ -48,14 +48,15 @@ export class RegisterComponent implements OnInit {
     this.submitted = true;
     const formValue = this.registerForm.value;
     this._authService.register(formValue.mail, formValue.username, formValue.password)
-      .subscribe(() => {
-      }, error => {
+      .toPromise()
+      .catch( error => {
         this.submitted = false;
         if (error.status === 401) {
           this.error = true;
         }
-      }, () => {
-        this.router.navigate(['/']);
+      })
+      .finally( () => {
+        this.router.navigate(['/']).then();
       });
   }
 

@@ -18,7 +18,6 @@ export class DialogCreatePostComponent implements OnInit {
   faImage = faImage;
   faSmile = faSmile;
   faCalendarAlt = faCalendarAlt;
-  faUserFriends = faUserFriends;
   medias: File[];
   mediasURL: string[];
   caretPosition: number = 0;
@@ -47,12 +46,13 @@ export class DialogCreatePostComponent implements OnInit {
   }
 
   sendPost() {
-    console.log(this.data)
     if (this.text === undefined && this.text === '' && this.medias.length <= 0 && this.data.sharesPost === undefined && this.data.sharedEvent === undefined) {
       this._snackBar.open("Vous ne pouvez créer un poste s'il est vide.", "Fermer");
       return;
     }
-    this._postService.createPost(this.text, this.data?.sharesPost?.id, this.data?.sharedEvent?.id, this.medias).subscribe();
+    this._postService.createPost(this.text, this.data?.sharesPost?.id, this.data?.sharedEvent?.id, this.medias)
+      .toPromise()
+      .then();
     this.dialogRef.close();
   }
 
@@ -92,9 +92,8 @@ export class DialogCreatePostComponent implements OnInit {
   }
 
   searchEvents($event: any) {
-    this._searchService.searchEvent($event.target.value).subscribe(events => {
-      console.log(events)
-      this.events = events;
-    });
+    this._searchService.searchEvent($event.target.value)
+      .toPromise()
+      .then(events => this.events = events);
   }
 }

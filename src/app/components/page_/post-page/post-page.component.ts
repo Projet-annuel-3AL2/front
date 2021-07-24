@@ -7,6 +7,7 @@ import {AuthService} from "../../../services/auth/auth.service";
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Post} from "../../../shared/models/post.model";
 
 @Component({
   selector: 'app-post-page',
@@ -14,7 +15,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./post-page.component.css']
 })
 export class PostPageComponent implements OnInit {
-  postId: string;
   faTimes = faTimes;
   faImage = faImage;
   faSmile = faSmile;
@@ -23,6 +23,7 @@ export class PostPageComponent implements OnInit {
   faPaperPlane = faPaperPlane;
   showEmojiPicker: boolean = false;
   text: string;
+  post: Post;
 
   constructor(private _activatedRoute: ActivatedRoute,
               public _postService: PostService,
@@ -33,15 +34,15 @@ export class PostPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._activatedRoute.params.subscribe(params => {
-      this.postId = params["postId"];
-      this.update();
-    });
+    this._activatedRoute.params.subscribe(params => this.update(params["postId"]));
   }
 
-  update(): void {
-    this._postService.getPostById(this.postId).subscribe(post => this._titleService.setTitle(post.text + " - " + environment.name));
-    this._postService.getComments(this.postId).subscribe();
+  update(postId: string): void {
+    this._postService.getPostById(postId).toPromise().then(post => {
+      this.post = post;
+      this._titleService.setTitle(post.text + " - " + environment.name);
+    });
+    this._postService.getComments(postId).toPromise().then(comments=>this.post.comments = comments);
   }
 
   addEmoji($event: any) {
@@ -57,6 +58,11 @@ export class PostPageComponent implements OnInit {
       this.snackBar.open("Impossible d'envoyer un commentaire vide", "Fermer");
       return;
     }
-    this._postService.sendComment(this.postId, this.text).subscribe();
+    this._postService.sendComment(this.post.id, this.text).toPromise().then(comment=>{
+      if (this.post.comments === undefined) {
+        this.post.comments = [];
+      }
+      this.post.comments = [comment].concat(this.post.comments);
+    });
   }
 }

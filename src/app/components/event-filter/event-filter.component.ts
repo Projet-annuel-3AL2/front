@@ -1,12 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {EventDialogMapsComponent} from "../dialog_/event-dialog-maps/event-dialog-maps.component";
 import {Event} from "../../shared/models/event.model";
 import {EventService} from "../../services/event/event.service";
 import {CategoryService} from "../../services/category/category.service";
-import {Search_eventModel} from "../../shared/models/search_event.model";
-import {environment} from "../../../environments/environment";
+import {Category} from "../../shared/models/category.model";
 
 export interface EventDialogData {
   latitude: any;
@@ -29,13 +28,14 @@ export class SearchEventProps {
   styleUrls: ['./event-filter.component.css']
 })
 export class EventFilterComponent implements OnInit {
-
+  categories: Category[];
   isLocated: boolean;
 
   postalAddress: string;
   range: FormGroup;
   userLocalisation: string;
-  listEventRecherche: Event[];
+  @Output("events")
+  foundEvents: EventEmitter<Event[]>;
   longitude: number;
   latitude: number;
   formData: FormGroup;
@@ -44,9 +44,11 @@ export class EventFilterComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private _eventService: EventService,
               public _categoryService: CategoryService) {
+    this.foundEvents = new EventEmitter<Event[]>();
   }
 
   ngOnInit(): void {
+    this.onclickSubmit()
     this.updateData();
   }
 
@@ -71,41 +73,22 @@ export class EventFilterComponent implements OnInit {
     })
   }
 
-  onclickSubmit() {
-    this._eventService.getEventsSearch(this.searchEventProps).subscribe({
-      next: () => {
-
-      },
-      error: err => {
-        if (environment.production) {
-          console.error(err)
-        }
-      }
-    })
+   onclickSubmit() {
+      this._eventService.getEventsSearch(this.searchEventProps)
+        .toPromise()
+        .then(events => this.foundEvents.emit(events));
   }
 
   private updateData() {
     this.searchEventProps = new SearchEventProps();
-    this.getAllCategories()
+    this.getAllCategories();
     this.isLocated = false;
-
+  //TODO
     this.searchEventProps.longitude = 48.79643969643021;
     this.searchEventProps.latitude = 2.128967056048809;
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      error: err => {
-        if (!environment.production) {
-          console.error(err)
-        }
-      }
-    })
-  }
-
-  private getEventWithRecherche(rechercheEvent: Search_eventModel) {
-    this._eventService.searchEvents(rechercheEvent).subscribe(events => {
-      this.listEventRecherche = events;
-    });
+    this._categoryService.getAllCategory().toPromise().then(categories=>this.categories=categories);
   }
 }

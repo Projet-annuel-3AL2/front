@@ -3,7 +3,6 @@ import {OrganisationRequest} from "../../../shared/models/organisation_request.m
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {User} from "../../../shared/models/user.model";
-import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-dialog-ask-organisation',
@@ -27,15 +26,8 @@ export class DialogAskOrganisationComponent implements OnInit {
   }
 
   onClickSubmit() {
-    this._organisationService.postOrganisationRequest(this.organisationRequest).subscribe({
-      next: () => {
-        this.dialogRef.close()
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
+    this._organisationService.postOrganisationRequest(this.organisationRequest)
+      .toPromise()
+      .then(() => this.dialogRef.close());
   }
 }

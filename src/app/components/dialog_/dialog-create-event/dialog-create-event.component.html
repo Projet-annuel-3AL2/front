@@ -64,7 +64,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Catégorie</mat-label>
         <mat-select [(ngModel)]="newEvent.category.id" matNativeControl name="category" required>
-          <mat-option *ngFor="let category of (_categoryService.categories|async)"
+          <mat-option *ngFor="let category of categories"
                       value="{{category.id}}">{{category.name}}
           </mat-option>
         </mat-select>

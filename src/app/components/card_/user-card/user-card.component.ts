@@ -5,7 +5,6 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
-import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
@@ -16,16 +15,12 @@ import {AuthService} from "../../../services/auth/auth.service";
 export class UserCardComponent implements OnInit {
 
   @Input()
-  user: User = new User()
+  user: User;
   faCheckCircle = faCheckCircle;
-  friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
-  allFriendRequestStatus = FriendRequestStatus;
-  env: any;
-
+  statusEnum: typeof FriendRequestStatus = FriendRequestStatus;
   constructor(private _friendshipService: FriendshipService,
               public _authService: AuthService,
               public dialog: MatDialog) {
-    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -33,37 +28,21 @@ export class UserCardComponent implements OnInit {
   }
 
   canAdd() {
-    this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
-      next: requestStatus => {
-        this.friendshipRequest = requestStatus;
-      }
-    })
+    this._friendshipService.isFriendshipRequested(this.user.username)
+      .toPromise()
+      .then(friendshipStatus => this.user.friendshipStatus = friendshipStatus);
   }
 
   askFriend() {
-    this._friendshipService.sendFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = this.allFriendRequestStatus.PENDING;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.sendFriendRequest(this.user.username)
+      .toPromise()
+        .then(() => this.user.friendshipStatus = FriendRequestStatus.PENDING);
   }
 
   removeFriend() {
-    this._friendshipService.removeFriendship(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = this.allFriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    })
+    this._friendshipService.removeFriendship(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 
   showDialogueRespondFriendRequest() {
@@ -74,19 +53,12 @@ export class UserCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
       this.canAdd();
-    })
+    });
   }
 
   cancelRequest() {
-    this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.cancelFriendRequest(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 }
