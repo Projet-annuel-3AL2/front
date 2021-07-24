@@ -5,9 +5,9 @@
            class="d-flex justify-content-between align-items-center user-infos">
         <div class="mr-2">
           <img [src]="post?.creator?.profilePicture?.link |imageUrl" alt=""
-               style="object-fit: cover"
                class="rounded-circle"
-               width="50" height="50">
+               height="50"
+               style="object-fit: cover" width="50">
         </div>
         <div class="ms-2">
           <div class="h6 m-0">{{post?.creator?.username}}
@@ -26,8 +26,8 @@
       <img *ngFor="let media of post.medias" [src]="media.link | imageUrl" alt="" class="h-50 w-50">
     </div>
     <div *ngIf="post?.sharedEvent" class="event-card">
-      <img alt="" class="rounded" height="300px"
-           [src]="post?.sharedEvent?.picture?.link|imageUrl: 1360:906"
+      <img [src]="post?.sharedEvent?.picture?.link|imageUrl: 1360:906" alt="" class="rounded"
+           height="300px"
            style="object-fit: cover" width="100%">
       <div class="event-card-infos">
         <p>{{post.sharedEvent?.description}}</p>

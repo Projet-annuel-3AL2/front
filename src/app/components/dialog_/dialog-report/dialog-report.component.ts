@@ -9,6 +9,7 @@ import {EventService} from "../../../services/event/event.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {GroupService} from "../../../services/group/group.service";
 import {environment} from "../../../../environments/environment";
+import {CommentService} from "../../../services/comment/comment.service";
 
 @Component({
   selector: 'app-dialog-report',
@@ -24,6 +25,7 @@ export class DialogReportComponent implements OnInit {
               private _eventService: EventService,
               private _organisationService: OrganisationService,
               private _groupService: GroupService,
+              private _commentService: CommentService,
               @Inject(MAT_DIALOG_DATA) public data: { id: string, reportType: ReportTypeEnum }) {
   }
 
@@ -99,6 +101,12 @@ export class DialogReportComponent implements OnInit {
         }
       })
 
+    } else if (this.data.reportType === ReportTypeEnum.COMMENT) {
+      this._commentService.sendReport(this.data.id, newReport).subscribe({
+        next: () => {
+          this.dialogRef.close()
+        }
+      });
     }
     this.dialogRef.close()
   }

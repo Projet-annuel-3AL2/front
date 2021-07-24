@@ -7,9 +7,9 @@
           <div class="mr-2">
             <img [src]="post.creator?.profilePicture?.link | imageUrl" alt=""
                  class="rounded-circle"
+                 height="50"
                  style="object-fit: cover"
-                 width="50"
-                 height="50">
+                 width="50">
           </div>
           <div class="ms-2">
             <div class="h6 m-0">{{post?.creator?.username}}
@@ -47,8 +47,8 @@
         <app-post-share-card (click)="$event.stopPropagation()" [post]="post.sharesPost"></app-post-share-card>
       </div>
       <div *ngIf="post?.sharedEvent" [routerLink]="'/event/'+post?.sharedEvent.id" class="event-card">
-        <img alt="" class="rounded" height="300px"
-             [src]="post?.sharedEvent?.picture?.link|imageUrl: 1360:906"
+        <img [src]="post?.sharedEvent?.picture?.link|imageUrl: 1360:906" alt="" class="rounded"
+             height="300px"
              style="object-fit: cover" width="100%">
         <div class="event-card-infos">
           <p>{{post.sharedEvent?.name}}</p>

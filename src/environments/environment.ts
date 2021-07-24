@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  name:"Agir pour tous",
+  name: "Agir pour tous",
   domain: "localhost",
   apiBaseUrl: "http://localhost:4500/apt",
   backBaseUrl: "http://localhost:4250/"

@@ -4,8 +4,8 @@
        fxLayout="row">
     <div class="rounded-circle profile-picture" fxFlex>
       <img [alt]="message.user.username" [src]="message?.user?.profilePicture?.link| imageUrl"
-           style="object-fit: cover"
-           class="rounded-circle profile-picture" size="10px">
+           class="rounded-circle profile-picture"
+           size="10px" style="object-fit: cover">
     </div>
     <div class="bg-light rounded-3 mx-2 p-2 w-75">
       <p class="m-0 text-break">{{message.text}}</p>
@@ -24,8 +24,8 @@
       </div>
       <div class="rounded-circle profile-picture" fxFlex fxLayoutAlign="end end">
         <img [alt]="message.user.username" [src]="message?.user?.profilePicture?.link | imageUrl"
-             style="object-fit: cover"
-             class="rounded-circle profile-picture" size="10px">
+             class="rounded-circle profile-picture"
+             size="10px" style="object-fit: cover">
       </div>
     </div>
   </ng-template>

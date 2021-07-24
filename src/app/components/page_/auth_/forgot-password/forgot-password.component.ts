@@ -16,8 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private _authService: AuthService,
-              private _titleService : Title) {
-    this._titleService.setTitle("Mot de passe oublié - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Mot de passe oublié - " + environment.name);
   }
 
   ngOnInit(): void {

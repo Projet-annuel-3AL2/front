@@ -24,7 +24,7 @@ export class UserAskJoinOrganisationComponent implements OnInit {
   acceptRequest() {
     this._organisationService.acceptInvitation(this.organisation.id).subscribe({
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error(err)
         }
       }
@@ -34,7 +34,7 @@ export class UserAskJoinOrganisationComponent implements OnInit {
   rejectRequest() {
     this._organisationService.rejectInvitation(this.organisation.id).subscribe({
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.error(err)
         }
       }

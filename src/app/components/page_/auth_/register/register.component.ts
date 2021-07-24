@@ -18,8 +18,8 @@ export class RegisterComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private _authService: AuthService,
               private router: Router,
-              private _titleService : Title) {
-    this._titleService.setTitle("Inscription - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Inscription - " + environment.name);
     this.error = false;
     this.submitted = false;
   }

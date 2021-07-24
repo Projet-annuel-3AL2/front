@@ -40,12 +40,17 @@ export class ProfileOrganisationComponent implements OnInit {
               private _titleService: Title
   ) {
   }
+
 //TODO refactor subscribe to route params and do not use snapshot
   ngOnInit(): void {
     this.organisationId = this.route.snapshot.params['id']
 
     this.updateData();
-
+    this._organisationService.organisation.subscribe(organisation => {
+      this.organisation$ = organisation;
+      if (organisation)
+        this._titleService.setTitle(organisation.name + " - " + environment.name);
+    })
   }
 
   isOwner() {

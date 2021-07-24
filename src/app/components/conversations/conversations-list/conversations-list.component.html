@@ -1,12 +1,16 @@
 <div class="conversations-box col">
-  <div (click)="conversationBoxService.opened=!conversationBoxService.opened" class="conversations-box-header">
+  <div (click)="conversationBoxService.opened=!conversationBoxService.opened" class="conversations-box-header w-100">
     <div fxFlex fxLayoutAlign="start center">
       <h2 class="user-select-none m-2 mx-4 ">Messages</h2>
     </div>
-    <fa-icon *ngIf="!conversationBoxService.opened" [icon]="faAngleUp" class="my-2 mx-4" fxFlex
-             fxLayoutAlign="end center" size="2x"></fa-icon>
-    <fa-icon *ngIf="conversationBoxService.opened" [icon]="faAngleDown" class="my-2 mx-4" fxFlex
-             fxLayoutAlign="end center" size="2x"></fa-icon>
+    <div class="my-2 mx-4" fxLayoutAlign="row end center">
+      <fa-icon *ngIf="conversationBoxService.opened" [icon]="faPlusCircle" class="me-3" (click)="openCreateGroupDialog()"
+               fxLayoutAlign="end center" size="2x"></fa-icon>
+      <fa-icon *ngIf="!conversationBoxService.opened" [icon]="faAngleUp"
+               fxLayoutAlign="end center" size="2x"></fa-icon>
+      <fa-icon *ngIf="conversationBoxService.opened" [icon]="faAngleDown"
+               fxLayoutAlign="end center" size="2x"></fa-icon>
+    </div>
   </div>
   <div *ngIf="conversationBoxService.opened" class="conversations-list">
     <div *ngFor="let conversation of conversations">

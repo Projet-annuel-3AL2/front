@@ -19,8 +19,8 @@ export class PasswordRecoveryComponent implements OnInit {
               private formBuilder: FormBuilder,
               private _authService: AuthService,
               private router: Router,
-              private _titleService : Title) {
-    this._titleService.setTitle("Changement de mot de passe - "+environment.name);
+              private _titleService: Title) {
+    this._titleService.setTitle("Changement de mot de passe - " + environment.name);
   }
 
   get password() {

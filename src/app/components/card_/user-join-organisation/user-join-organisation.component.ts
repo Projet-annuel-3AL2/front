@@ -11,7 +11,7 @@ import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 })
 export class UserJoinOrganisationComponent implements OnInit {
 
-  @Input('user') user : User;
+  @Input('user') user: User;
   @Input('organisationId') organisationId: string;
   faCheckCircle = faCheckCircle;
   env: any;
@@ -29,7 +29,7 @@ export class UserJoinOrganisationComponent implements OnInit {
         this._organisationService.getInvitedOrganisation(this.organisationId);
       },
       error: err => {
-        if (!environment.production){
+        if (!environment.production) {
           console.log(err)
         }
       }

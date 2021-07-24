@@ -93,7 +93,7 @@ export class AuthService {
 
   getInvitationsOrganisation(): Observable<Organisation[]> {
     return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/organisation/invitations`)
-      .pipe(map( organisationInvitations => {
+      .pipe(map(organisationInvitations => {
         let user = this.userSubject.getValue();
         user.organisationInvitations = organisationInvitations;
         this.userSubject.next(user);
@@ -103,7 +103,7 @@ export class AuthService {
 
   getOrganisations(): Observable<Organisation[]> {
     return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/${this.getCurrentUsername()}/organisations`)
-      .pipe(map( organisations=> {
+      .pipe(map(organisations => {
         let user = this.userSubject.getValue();
         user.organisations = organisations;
         this.userSubject.next(user);
