@@ -8,6 +8,8 @@ import {CategoryService} from "../../../services/category/category.service";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {MapService} from "../../../services/map/map.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {add} from "ngx-bootstrap/chronos";
 
 @Component({
   selector: 'app-dialog-update-event',
@@ -32,6 +34,7 @@ export class DialogUpdateEventComponent implements OnInit {
               public _categoryService: CategoryService,
               public _authService: AuthService,
               private _mapService: MapService,
+              private _snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
     this.env = environment;
   }
@@ -41,17 +44,28 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   onClickSubmit() {
-    this._eventService.updateEvent(this.updateEvent).subscribe({
+    if (this.updateEvent.startDate < this.updateEvent.endDate) {
+      this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
+        console.log(address)
+        this.updateEvent.latitude = address[0].lat;
+        this.updateEvent.longitude = address[0].lon;
 
-      next: () => {
-        this.dialogRef.close()
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+        this._eventService.updateEvent(this.updateEvent, this.media).subscribe({
+          next: () => {
+            this.dialogRef.close()
+          },
+          error: err => {
+            if (!environment.production) {
+              console.log(err);
+            }
+          }
+        });
+      });
+    } else {
+      this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
+        duration: 3000
+      });
+    }
   }
 
   onNoClick(): void {
@@ -102,6 +116,10 @@ export class DialogUpdateEventComponent implements OnInit {
 
     await this._eventService.event.subscribe(event => {
       this.updateEvent = event
+      this._mapService.getAddressFromLatLng(event.latitude, event.longitude).subscribe( addressT => {
+        const address: any = addressT;
+        this.postalAddress = `${address?.house_number} ${address?.road}, ${address?.town} ${address?.postcode}, ${address?.country} `
+      });
     })
     this.postalAddress = null;
   }

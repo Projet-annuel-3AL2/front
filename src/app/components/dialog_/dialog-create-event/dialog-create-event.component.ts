@@ -49,8 +49,9 @@ export class DialogCreateEventComponent implements OnInit {
   onClickSubmit() {
     if (this.newEvent.startDate < this.newEvent.endDate) {
       this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
-        this.newEvent.latitude = 48.79643969643021;
-        this.newEvent.longitude = 2.128967056048809;
+        this.newEvent.latitude = address[0].lat;
+        this.newEvent.longitude = address[0].lon;
+
         this._eventService.createEvent(this.newEvent, this.media).subscribe({
           next: () => {
             this.dialogRef.close()
