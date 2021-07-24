@@ -1,0 +1,8 @@
+<div class="rounded-pill border d-flex p-2 organisation-card my-3">
+  <div class="mr-2">
+    <a [routerLink]="['/organisation/' + organisation.id]"><i class="far fa-building fa-2x"></i></a>
+  </div>
+  <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
+  <div class="spacer"></div>
+  <button (click)="leaveOrganisation()" mat-stroked-button color="warn" class="button-follow-orga">Quitter l'Organisation</button>
+</div>
