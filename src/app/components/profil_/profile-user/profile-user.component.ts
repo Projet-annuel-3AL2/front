@@ -185,6 +185,6 @@ export class ProfileUserComponent implements OnInit {
   }
 
   removePost($event: Post) {
-    this.user.createdPosts = this.user.createdPosts.filter(post=>post.id !== $event.id);
+    this.user.createdPosts = this.user.createdPosts.filter(post => post.id !== $event.id);
   }
 }

@@ -49,13 +49,13 @@ export class RegisterComponent implements OnInit {
     const formValue = this.registerForm.value;
     this._authService.register(formValue.mail, formValue.username, formValue.password)
       .toPromise()
-      .catch( error => {
+      .catch(error => {
         this.submitted = false;
         if (error.status === 401) {
           this.error = true;
         }
       })
-      .finally( () => {
+      .finally(() => {
         this.router.navigate(['/']).then();
       });
   }

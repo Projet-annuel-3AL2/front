@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
-import {faCalendarAlt, faImage, faSmile, faTimes, faUserFriends} from '@fortawesome/free-solid-svg-icons';
+import {faCalendarAlt, faImage, faSmile, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Post} from "../../../shared/models/post.model";
 import {PostService} from "../../../services/post/post.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";

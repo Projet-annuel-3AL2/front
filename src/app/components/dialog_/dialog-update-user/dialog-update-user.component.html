@@ -21,9 +21,11 @@
       <div class="form-field-update-bannerPicture">
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
-          <img [src]="updatedBannerPictureURL || (data.user?.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
-               class="rounded"
-               height="300px" style="object-fit: cover" width="100%">
+          <img
+            [src]="updatedBannerPictureURL || (data.user?.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+            alt=""
+            class="rounded"
+            height="300px" style="object-fit: cover" width="100%">
           <input #profileBannerInput (change)="onProfileBannerSelected()" hidden id="profileBanner" type="file">
         </a>
       </div>
@@ -49,7 +51,8 @@
       <div class="form-field-update-mail">
         <mat-form-field>
           <mat-label>Mail</mat-label>
-          <input [(ngModel)]="updatedUser.mail" matInput name="mail" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+          <input [(ngModel)]="updatedUser.mail" matInput name="mail"
+                 pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
                  placeholder="Mail" required>
         </mat-form-field>
       </div>

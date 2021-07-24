@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
-import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
 

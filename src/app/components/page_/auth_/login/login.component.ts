@@ -33,13 +33,13 @@ export class LoginComponent implements OnInit {
     const formValue = this.userForm.value;
     this._authService.login(formValue.username, formValue.password)
       .toPromise().then().catch(error => {
-        this.submitted = false;
-        if (error.status === 401) {
-          this.error = true;
-        }
-      }).finally( () => {
-        this.router.navigate(['/']).then();
-      });
+      this.submitted = false;
+      if (error.status === 401) {
+        this.error = true;
+      }
+    }).finally(() => {
+      this.router.navigate(['/']).then();
+    });
   }
 
   private initForm() {

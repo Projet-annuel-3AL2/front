@@ -26,12 +26,12 @@ export class ConversationCardComponent implements OnInit {
   ngOnInit(): void {
     this.conversationService.getLastMessage(this.conversation.id)
       .toPromise().then(message => {
-        if (message) {
-          this.conversation.messages = [message]
-        } else {
-          this.conversation.messages = [];
-        }
-      });
+      if (message) {
+        this.conversation.messages = [message]
+      } else {
+        this.conversation.messages = [];
+      }
+    });
   }
 
   onConversationSelect() {
@@ -53,11 +53,9 @@ export class ConversationCardComponent implements OnInit {
   getName(): string | undefined {
     if (this.conversation.organisation) {
       return this.conversation.organisation.name;
-    }
-    else if (this.conversation.group) {
+    } else if (this.conversation.group) {
       return this.conversation.group.name;
-    }
-    else if (this.conversation.friendship) {
+    } else if (this.conversation.friendship) {
       if (this.conversation.friendship.friendOne.username !== this.authService.getCurrentUsername()) {
         return this.conversation.friendship.friendOne.username;
       }

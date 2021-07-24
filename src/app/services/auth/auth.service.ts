@@ -39,22 +39,22 @@ export class AuthService {
   getReceivedFriendshipRequest(): Observable<FriendRequest[]> {
     return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/received-friendship-request`)
       .pipe(map(requests => {
-      let user = this.userSubject.getValue();
-      user.friendRequests = requests;
-      this.userSubject.next(user);
-      return requests;
-    }));
+        let user = this.userSubject.getValue();
+        user.friendRequests = requests;
+        this.userSubject.next(user);
+        return requests;
+      }));
   }
 
 
   getSentFriendshipRequest(): Observable<FriendRequest[]> {
     return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/sent-friendship-request`)
       .pipe(map(requests => {
-      let user = this.userSubject.getValue();
-      user.sentFriendRequests = requests;
-      this.userSubject.next(user);
-      return requests;
-    }));
+        let user = this.userSubject.getValue();
+        user.sentFriendRequests = requests;
+        this.userSubject.next(user);
+        return requests;
+      }));
   }
 
   public register(mail: string, username: string, password: string) {

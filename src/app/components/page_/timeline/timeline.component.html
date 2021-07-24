@@ -5,10 +5,10 @@
     <p style="padding-top: 100px">Il n'y a pas de post à afficher</p>
   </div>
   <div *ngIf="posts?.length > 0" class="col-md-4">
-    <virtual-scroller #scroll [enableUnequalChildrenSizes]="true" [items]="posts" (vsEnd)="triggerGetMore($event)"
+    <virtual-scroller #scroll (vsEnd)="triggerGetMore($event)" [enableUnequalChildrenSizes]="true" [items]="posts"
                       [parentScroll]="scroll.window" style="height: fit-content">
       <div *ngFor="let post of scroll.viewPortItems" class="mt-3">
-        <post [post]="post" (onDelete)="removePost($event)"></post>
+        <post (onDelete)="removePost($event)" [post]="post"></post>
       </div>
     </virtual-scroller>
   </div>

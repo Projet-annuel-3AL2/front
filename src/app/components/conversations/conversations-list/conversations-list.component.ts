@@ -18,12 +18,13 @@ export class ConversationsListComponent implements OnInit, OnDestroy {
   faPlusCircle = faPlusCircle;
   conversations: Conversation[];
   timerSubscription: Subscription;
+
   constructor(public conversationBoxService: ConversationBoxService, private userService: UserService, private matDialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.timerSubscription=timer(0,20000)
-      .subscribe(()=>this.userService.getConversations()
+    this.timerSubscription = timer(0, 20000)
+      .subscribe(() => this.userService.getConversations()
         .toPromise()
         .then(conversations => this.conversations = conversations));
   }

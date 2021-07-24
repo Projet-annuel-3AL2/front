@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../../../shared/models/event.model";
-import {environment} from "../../../../environments/environment";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventService} from "../../../services/event/event.service";
 import {CategoryService} from "../../../services/category/category.service";
@@ -52,7 +51,7 @@ export class DialogCreateEventComponent implements OnInit {
         duration: 3000
       });
     }
-    this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address=> {
+    this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
       this.newEvent.latitude = address.latitude;
       this.newEvent.longitude = address.longitude;
       this._eventService.createEvent(this.newEvent, this.media)
@@ -99,7 +98,7 @@ export class DialogCreateEventComponent implements OnInit {
   private getAllCategories() {
     this._categoryService.getAllCategory()
       .toPromise()
-      .then(categories=>this.categories = categories);
+      .then(categories => this.categories = categories);
   }
 
   private updateData(): void {
@@ -108,8 +107,8 @@ export class DialogCreateEventComponent implements OnInit {
     this._authService.user
       .toPromise()
       .then(user => {
-      this.newEvent.user = user;
-    });
+        this.newEvent.user = user;
+      });
     this.newEvent.organisation = this.data.organisation ? this.data.organisation : undefined;
   }
 }

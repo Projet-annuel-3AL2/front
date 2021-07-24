@@ -19,6 +19,7 @@ export class UserCardComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faUserPlus = faUserPlus;
   statusEnum: typeof FriendRequestStatus = FriendRequestStatus;
+
   constructor(private _friendshipService: FriendshipService,
               public _authService: AuthService,
               public dialog: MatDialog) {
@@ -37,7 +38,7 @@ export class UserCardComponent implements OnInit {
   askFriend() {
     this._friendshipService.sendFriendRequest(this.user.username)
       .toPromise()
-        .then(() => this.user.friendshipStatus = FriendRequestStatus.PENDING);
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.PENDING);
   }
 
   removeFriend() {

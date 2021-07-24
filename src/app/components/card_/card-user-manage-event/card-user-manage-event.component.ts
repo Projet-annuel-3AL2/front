@@ -65,8 +65,8 @@ export class CardUserManageEventComponent implements OnInit {
 
   cancelRequest() {
     this._friendshipService.cancelFriendRequest(this.user.username).toPromise().then(() => {
-        this.user.friendshipStatus = FriendRequestStatus.NONE;
-      });
+      this.user.friendshipStatus = FriendRequestStatus.NONE;
+    });
   }
 
   deleteParticipantEvent(userId: string) {

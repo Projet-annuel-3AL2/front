@@ -7,6 +7,7 @@ import {EventService} from "../../services/event/event.service";
 import {CategoryService} from "../../services/category/category.service";
 import {Category} from "../../shared/models/category.model";
 import {faMapMarked} from "@fortawesome/free-solid-svg-icons"
+
 export interface EventDialogData {
   latitude: any;
   longitude: any;
@@ -73,22 +74,22 @@ export class EventFilterComponent implements OnInit {
     })
   }
 
-   onclickSubmit() {
-      this._eventService.getEventsSearch(this.searchEventProps)
-        .toPromise()
-        .then(events => this.foundEvents.emit(events));
+  onclickSubmit() {
+    this._eventService.getEventsSearch(this.searchEventProps)
+      .toPromise()
+      .then(events => this.foundEvents.emit(events));
   }
 
   private updateData() {
     this.searchEventProps = new SearchEventProps();
     this.getAllCategories();
     this.isLocated = false;
-  //TODO
+    //TODO
     this.searchEventProps.longitude = 48.79643969643021;
     this.searchEventProps.latitude = 2.128967056048809;
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().toPromise().then(categories=>this.categories=categories);
+    this._categoryService.getAllCategory().toPromise().then(categories => this.categories = categories);
   }
 }

@@ -100,12 +100,12 @@ export class DialogUpdateEventComponent implements OnInit {
     await this._authService.user.subscribe(user => {
       this.updateEvent.user = user;
     });
-    this._eventService.getEventById(this.data.event.id).toPromise().then(event => this.updateEvent=event);
+    this._eventService.getEventById(this.data.event.id).toPromise().then(event => this.updateEvent = event);
     this.postalAddress = null;
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().toPromise().then(categories=>this.categories=categories);
+    this._categoryService.getAllCategory().toPromise().then(categories => this.categories = categories);
   }
 
   private getCategory() {

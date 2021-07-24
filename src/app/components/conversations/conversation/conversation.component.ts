@@ -38,8 +38,8 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.conversation = this.conversationBoxService.selectedConversation;
     this.conversationService.getMessages(this.conversation.id)
       .toPromise().then(messages => {
-        this.conversation.messages = messages;
-      });
+      this.conversation.messages = messages;
+    });
   }
 
   ngAfterViewInit() {
@@ -51,16 +51,16 @@ export class ConversationComponent implements OnInit, OnDestroy, AfterViewInit {
   updateConversation() {
     this.conversationService.getMessages(this.conversation.id)
       .toPromise().then(messages => {
-        this.conversation.messages = messages;
-        this.isNearBottom = this.isUserNearBottom();
-        if (this.isNearBottom) {
-          this.scroll.scroll({
-            top: this.scroll.scrollHeight,
-            left: 0,
-            behavior: 'smooth'
-          });
-        }
-      });
+      this.conversation.messages = messages;
+      this.isNearBottom = this.isUserNearBottom();
+      if (this.isNearBottom) {
+        this.scroll.scroll({
+          top: this.scroll.scrollHeight,
+          left: 0,
+          behavior: 'smooth'
+        });
+      }
+    });
   }
 
   getConversationName(): string {

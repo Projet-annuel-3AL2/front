@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Organisation} from "../../../shared/models/organisation.model";
-import {faUserPlus, faBuilding} from "@fortawesome/free-solid-svg-icons";
+import {faBuilding, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../../../services/user/user.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 
@@ -11,7 +11,7 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 })
 export class CardOrganisationComponent implements OnInit {
   faUserPlus = faUserPlus;
-  faBuilding= faBuilding;
+  faBuilding = faBuilding;
   @Input('organisation')
   organisation: Organisation;
 
@@ -28,10 +28,10 @@ export class CardOrganisationComponent implements OnInit {
   }
 
   followOrganisation() {
-    this._organisationService.followOrganisation(this.organisation.id).toPromise().then(()=> this.organisation.isFollower = true);
+    this._organisationService.followOrganisation(this.organisation.id).toPromise().then(() => this.organisation.isFollower = true);
   }
 
   unfollowOrganisation() {
-    this._organisationService.unfollowOrganisation(this.organisation.id).toPromise().then(()=> this.organisation.isFollower = false);
+    this._organisationService.unfollowOrganisation(this.organisation.id).toPromise().then(() => this.organisation.isFollower = false);
   }
 }

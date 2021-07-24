@@ -14,10 +14,10 @@ export class GroupService {
   constructor(private http: HttpClient) {
   }
 
-  create(name: string, users: User[]): Observable<Group>{
+  create(name: string, users: User[]): Observable<Group> {
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("users", JSON.stringify(users.map(user=>user.id)));
+    formData.append("users", JSON.stringify(users.map(user => user.id)));
     return this.http.post<Group>(`${environment.apiBaseUrl}/group`, formData);
   }
 

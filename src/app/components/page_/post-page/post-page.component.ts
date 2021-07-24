@@ -42,7 +42,7 @@ export class PostPageComponent implements OnInit {
       this.post = post;
       this._titleService.setTitle(post.text + " - " + environment.name);
     });
-    this._postService.getComments(postId).toPromise().then(comments=>this.post.comments = comments);
+    this._postService.getComments(postId).toPromise().then(comments => this.post.comments = comments);
   }
 
   addEmoji($event: any) {
@@ -58,7 +58,7 @@ export class PostPageComponent implements OnInit {
       this.snackBar.open("Impossible d'envoyer un commentaire vide", "Fermer");
       return;
     }
-    this._postService.sendComment(this.post.id, this.text).toPromise().then(comment=>{
+    this._postService.sendComment(this.post.id, this.text).toPromise().then(comment => {
       if (this.post.comments === undefined) {
         this.post.comments = [];
       }

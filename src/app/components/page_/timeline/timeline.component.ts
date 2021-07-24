@@ -29,14 +29,14 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   removePost($event: Post) {
-    this.posts = this.posts.filter(post=>post.id !== $event.id);
+    this.posts = this.posts.filter(post => post.id !== $event.id);
   }
 
   ngOnDestroy(): void {
   }
 
-  triggerGetMore($event){
-    if ($event.endIndex !== this.posts.length-1 || this.loading) return;
+  triggerGetMore($event) {
+    if ($event.endIndex !== this.posts.length - 1 || this.loading) return;
     this.getMorePosts();
   }
 
@@ -45,9 +45,9 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this._postService.getTimeline(this.limit, this.offset)
       .toPromise()
       .then(posts => {
-        this.posts=this.posts.concat(posts);
+        this.posts = this.posts.concat(posts);
         this.offset += this.limit;
-        if(posts.length>0) {
+        if (posts.length > 0) {
           this.loading = false;
         }
       });

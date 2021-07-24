@@ -4,7 +4,7 @@ import {UserService} from "../../../services/user/user.service";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {environment} from "../../../../environments/environment";
-import {faCheckCircle, faUser, faClock, faTags, faMapMarked} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faClock, faMapMarked, faTags, faUser} from '@fortawesome/free-solid-svg-icons';
 import {User} from "../../../shared/models/user.model";
 import {MapService} from "../../../services/map/map.service";
 
@@ -37,16 +37,16 @@ export class CardEventComponent implements OnInit {
   }
 
   async getLocalisation() {
-    this.event.address = await this._mapService.getAddressFromLatLng(this.event.latitude,this.event.longitude).toPromise();
+    this.event.address = await this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).toPromise();
   }
 
 
   async joinEvent(id: string) {
-    this._eventService.joinEvent(id).toPromise().then(()=>this.event.isMember = true);
+    this._eventService.joinEvent(id).toPromise().then(() => this.event.isMember = true);
   }
 
   leaveEvent(id: string) {
-    this._eventService.leaveEvent(id).toPromise().then(()=>this.event.isMember = false);
+    this._eventService.leaveEvent(id).toPromise().then(() => this.event.isMember = false);
   }
 
   async canJoin() {

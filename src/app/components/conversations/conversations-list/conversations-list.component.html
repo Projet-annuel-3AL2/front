@@ -4,7 +4,8 @@
       <h2 class="user-select-none m-2 mx-4 ">Messages</h2>
     </div>
     <div class="my-2 mx-4" fxLayoutAlign="row end center">
-      <fa-icon *ngIf="conversationBoxService.opened" [icon]="faPlusCircle" class="me-3" (click)="openCreateGroupDialog()"
+      <fa-icon (click)="openCreateGroupDialog()" *ngIf="conversationBoxService.opened" [icon]="faPlusCircle"
+               class="me-3"
                fxLayoutAlign="end center" size="2x"></fa-icon>
       <fa-icon *ngIf="!conversationBoxService.opened" [icon]="faAngleUp"
                fxLayoutAlign="end center" size="2x"></fa-icon>

@@ -21,7 +21,7 @@ export class ListOrganisationSuggestionComponent implements OnInit {
   private getSuggestionOrganisation() {
     this._organisationService.getSuggestions()
       .toPromise()
-      .then(organisations=>this.listOrganisation$ = organisations);
+      .then(organisations => this.listOrganisation$ = organisations);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {GroupService} from "../../../services/group/group.service";
 import {User} from "../../../shared/models/user.model";
@@ -19,37 +19,38 @@ export class CreateGroupDialogComponent implements OnInit {
               public _authService: AuthService,
               private _groupService: GroupService,
               public dialogRef: MatDialogRef<CreateGroupDialogComponent>,
-              private snackBar: MatSnackBar) { }
+              private snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     this.initForm();
   }
 
-  addUser(user:User) {
+  addUser(user: User) {
     this.addedUsers.push(user);
   }
 
-  removeUser(user:User) {
-    this.addedUsers=this.addedUsers.filter(usr=>usr.id !== user.id);
+  removeUser(user: User) {
+    this.addedUsers = this.addedUsers.filter(usr => usr.id !== user.id);
   }
 
-  inList(user:User): boolean {
-    return this.addedUsers.some(usr=>usr.id === user.id);
+  inList(user: User): boolean {
+    return this.addedUsers.some(usr => usr.id === user.id);
+  }
+
+  onSubmit() {
+    if (this.addedUsers.length < 2) {
+      this.snackBar.open("Vous devez ajouter au moins deux utilisateurs au groupe", "Fermer");
+      return;
+    }
+    const formValue = this.groupForm.value;
+    this._groupService.create(formValue.name, this.addedUsers)
+      .toPromise().then(() => this.dialogRef.close());
   }
 
   private initForm() {
     this.groupForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30)]],
     });
-  }
-
-  onSubmit() {
-    if(this.addedUsers.length < 2 ){
-      this.snackBar.open("Vous devez ajouter au moins deux utilisateurs au groupe","Fermer");
-      return;
-    }
-    const formValue = this.groupForm.value;
-    this._groupService.create(formValue.name, this.addedUsers)
-      .toPromise().then(() => this.dialogRef.close());
   }
 }
