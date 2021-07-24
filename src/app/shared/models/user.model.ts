@@ -7,6 +7,12 @@ import {Organisation} from "./organisation.model";
 import {FriendRequestStatus} from "../FriendshipRequestStatus.enum";
 import {FriendRequest} from "./FriendRequest";
 
+export enum UserType {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  SUPER_ADMIN = "SUPER_ADMIN"
+}
+
 export class User {
   id: string;
   username: string;
@@ -16,6 +22,7 @@ export class User {
   bio?: string;
   isBlocked: boolean;
   blocksCurrentUser: boolean;
+  userType: UserType;
   friendshipStatus: FriendRequestStatus;
   friends?: User[];
   createdEvents?: Event[];

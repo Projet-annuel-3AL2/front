@@ -35,7 +35,7 @@
         <button [routerLink]="['/user/' + _authService.getCurrentUsername()]" mat-menu-item>
           <span>Profil</span>
         </button>
-        <a [href]="env.backBaseUrl" mat-menu-item>
+        <a *ngIf="(_authService.user|async)?.userType !== userType.USER" [href]="env.backBaseUrl" mat-menu-item>
           <span>Administration</span>
         </a>
         <button (click)="onDisconnect()" mat-menu-item>
