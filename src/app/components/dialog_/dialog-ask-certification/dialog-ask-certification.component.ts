@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {CertificationService} from "../../../services/certification/certification.service";
-import {environment} from "../../../../environments/environment";
 import {CertificationRequest} from "../../../shared/models/certification_request.model";
 
 @Component({
@@ -22,20 +21,8 @@ export class DialogAskCertificationComponent implements OnInit {
   }
 
   onClickSubmit() {
-    this._certificationService.postCertification(this.certificationRequest).subscribe({
-      next: () => {
-        this.dialogRef.close()
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    });
+    this._certificationService.postCertification(this.certificationRequest)
+      .toPromise()
+      .then(() => this.dialogRef.close());
   }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }

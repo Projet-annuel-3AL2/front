@@ -30,7 +30,9 @@
       <div class="form-field-update-bannerPicture">
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
-          <img *ngIf="updatedBannerPicture === null" [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
+          <img *ngIf="updatedBannerPicture === null"
+               [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+               alt=""
                class="rounded"
                height="300px"
                style="object-fit: cover" width="100%">
@@ -43,7 +45,7 @@
   <div class="dialog-actions-update-orga" mat-dialog-actions>
     <div class="button-grid-update-orga">
       <div class="button-cancel">
-        <button (click)="onNoClick()" mat-button>Annuler</button>
+        <button (click)="dialogRef.close()" mat-button>Annuler</button>
       </div>
       <div class="button-send">
         <button class="button-send" mat-raised-button type="submit">Envoyer</button>

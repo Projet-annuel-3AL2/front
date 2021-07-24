@@ -8,6 +8,7 @@ import {CategoryService} from "../../../services/category/category.service";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {MapService} from "../../../services/map/map.service";
+import {Category} from "../../../shared/models/category.model";
 
 @Component({
   selector: 'app-dialog-update-event',
@@ -15,7 +16,7 @@ import {MapService} from "../../../services/map/map.service";
   styleUrls: ['./dialog-update-event.component.css']
 })
 export class DialogUpdateEventComponent implements OnInit {
-
+  categories: Category[];
   addresses: unknown[];
   addressSearchTimeOut: number;
   formData: FormGroup;
@@ -94,41 +95,21 @@ export class DialogUpdateEventComponent implements OnInit {
     this.getAllCategories();
     this.getCategory();
     this.postalAddress = null;
-    this.updateEvent = new Event();
     this.media = null;
     this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
     await this._authService.user.subscribe(user => {
       this.updateEvent.user = user;
     });
-
-    await this._eventService.event.subscribe(event => {
-      this.updateEvent = event
-    })
+    this._eventService.getEventById(this.data.event.id).toPromise().then(event => this.updateEvent = event);
     this.postalAddress = null;
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      next: () => {
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._categoryService.getAllCategory().toPromise().then(categories => this.categories = categories);
   }
 
   private getCategory() {
-    this._eventService.getCategory(this.data.event.id).subscribe({
-      next: () => {
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._eventService.getCategory(this.data.event.id).toPromise().then();
   }
 
 }

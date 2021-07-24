@@ -3,7 +3,7 @@
     <div class="px-4">
       <h2>Organisations suggérées</h2>
     </div>
-    <div *ngFor="let organisation of (_organisationService.organisationsSuggestion|async)">
+    <div *ngFor="let organisation of listOrganisation$">
       <app-card-organisation [organisation]="organisation"></app-card-organisation>
     </div>
   </div>

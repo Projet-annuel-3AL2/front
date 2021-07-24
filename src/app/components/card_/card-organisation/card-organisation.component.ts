@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Organisation} from "../../../shared/models/organisation.model";
-import {environment} from "../../../../environments/environment";
+import {faBuilding, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {UserService} from "../../../services/user/user.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 
@@ -10,54 +10,28 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
   styleUrls: ['./card-organisation.component.css']
 })
 export class CardOrganisationComponent implements OnInit {
-
-  isFollowing: boolean = false;
-  @Input('organisation') organisation: Organisation;
+  faUserPlus = faUserPlus;
+  faBuilding = faBuilding;
+  @Input('organisation')
+  organisation: Organisation;
 
   constructor(private _userService: UserService,
               private _organisationService: OrganisationService) {
   }
 
   ngOnInit(): void {
-    this.canFollow();
+    this.canFollow().then();
   }
 
-  canFollow() {
-    this._userService.isFollowingOrganisation(this.organisation.id).subscribe({
-      next: bool => {
-        this.isFollowing = bool;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
+  async canFollow() {
+    this.organisation.isFollower = await this._userService.isFollowingOrganisation(this.organisation.id).toPromise();
   }
 
   followOrganisation() {
-    this._organisationService.followOrganisation(this.organisation.id).subscribe({
-      next: () => {
-        this.isFollowing = true;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
+    this._organisationService.followOrganisation(this.organisation.id).toPromise().then(() => this.organisation.isFollower = true);
   }
 
   unfollowOrganisation() {
-    this._organisationService.unfollowOrganisation(this.organisation.id).subscribe({
-      next: () => {
-        this.isFollowing = false;
-      },
-      error: error => {
-        if (!environment.production) {
-          console.error('There was an error!', error);
-        }
-      }
-    })
+    this._organisationService.unfollowOrganisation(this.organisation.id).toPromise().then(() => this.organisation.isFollower = false);
   }
 }

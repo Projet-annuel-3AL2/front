@@ -10,7 +10,7 @@
           <div class="localisation-filter">
             <div class="button-maps">
               <button (click)="showDialogMapsCollapse()" mat-flat-button>
-                <i class="fas fa-map-marked"></i>
+                <fa-icon [icon]="faMapMarked"></fa-icon>
               </button>
             </div>
             <div class="localisation-text">
@@ -52,7 +52,7 @@
           <h3>Type d'évènement</h3>
           <mat-form-field class="section-checkbox">
             <mat-select [(ngModel)]="searchEventProps.categoryId" matNativeControl name="categoryId">
-              <mat-option *ngFor="let category of (_categoryService.categories|async)"
+              <mat-option *ngFor="let category of categories"
                           value="{{category.id}}">{{category.name}}</mat-option>
             </mat-select>
           </mat-form-field>

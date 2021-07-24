@@ -12,29 +12,39 @@
     </a>
   </div>
   <div class="orga-card-event">
-    <p *ngIf="event?.organisation !== null"><i aria-hidden="true" class="fa fa-user"></i>  {{event?.organisation?.name}}
+    <p *ngIf="event?.organisation !== null">
+      <fa-icon [icon]="faUser"></fa-icon>
+      {{event?.organisation?.name}}
     </p>
-    <p *ngIf="event?.organisation === null"><i aria-hidden="true" class="fa fa-user"></i>  {{event?.user?.username}}
+    <p *ngIf="event?.organisation === null">
+      <fa-icon [icon]="faUser"></fa-icon>
+      {{event?.user?.username}}
       <fa-icon *ngIf="event?.user?.certification" [icon]="faCheckCircle"></fa-icon>
     </p>
   </div>
   <div class="date-card-event">
-    <p style="font-size: 13px"><i class="fas fa-clock"></i>
+    <p style="font-size: 13px">
+      <fa-icon [icon]="faClock"></fa-icon>
       {{event.startDate | date:"dd/MM/YYYY HH:MM"}}
       -- {{event.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
   </div>
   <div class="category-card-event">
-    <p><i class="fas fa-tags"></i> {{event?.category?.name}}</p>
+    <p>
+      <fa-icon [icon]="faTags"></fa-icon>
+      {{event?.category?.name}}</p>
   </div>
   <div class="localisation-card-event">
-    <p><i class="fas fa-map-marked"></i>  {{getLocalisation()}}</p>
+    <p>
+      <fa-icon [icon]="faMapMarked"></fa-icon>
+      {{event.address?.house_number}}, {{event.address?.road}}, {{event.address?.town}} {{event.address?.postcode}}
+      , {{event.address?.country}}</p>
   </div>
   <div class="button-join">
-    <button (click)="this.joinEvent(event?.id)" *ngIf="isAbleToJoin" class="ml-auto button-join-event"
+    <button (click)="this.joinEvent(event?.id)" *ngIf="!event.isMember" class="ml-auto button-join-event"
             mat-raised-button>
       Rejoindre
     </button>
-    <button (click)="this.leaveEvent(event?.id)" *ngIf="!isAbleToJoin" class="ml-auto button-join-event"
+    <button (click)="this.leaveEvent(event?.id)" *ngIf="event.isMember" class="ml-auto button-join-event"
             mat-raised-button>Quitter
     </button>
   </div>

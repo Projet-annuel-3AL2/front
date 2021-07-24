@@ -10,7 +10,7 @@
         <p *ngIf="conversation.messages?.length === 0" class="m-0">Commencer la conversation</p>
       </div>
       <div fxFlex fxLayout="column" fxLayoutAlign="end end">
-        <div fxFlex *ngIf="conversation.group" (click)="$event.stopPropagation()" fxLayoutAlign="end center">
+        <div (click)="$event.stopPropagation()" *ngIf="conversation.group" fxFlex fxLayoutAlign="end center">
           <div class="dropdown" dropdown fxLayout="end end">
             <button aria-expanded="false" aria-haspopup="true" class="btn btn-link"
                     data-toggle="dropdown"

@@ -5,7 +5,7 @@
   <div class="col-md-5 my-3">
     <div class="event-scroll">
       <div class="event-card-full">
-        <img [src]="(_eventService.event|async)?.picture?.link | imageUrl:1360:906"
+        <img [src]="event?.picture?.link | imageUrl:1360:906"
              alt="" class="rounded"
              height="300px"
              style="object-fit: cover" width="100%">
@@ -14,15 +14,17 @@
             <div fxFlex fxLayoutAlign="row">
               <div fxFlex fxLayoutAlign="row start center">
                 <div class="titre-event">
-                  <p>{{(_eventService.event|async)?.name}}</p>
+                  <p>{{event?.name}}</p>
                 </div>
               </div>
               <div fxLayoutAlign="row center end">
-                <div *ngIf="!(_eventService.event|async)?.isOwner">
-                  <button (click)="this.joinEvent()" *ngIf="!(_eventService.event|async)?.isMember" class="ml-auto"
-                          mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Rejoindre
+                <div *ngIf="!event?.isOwner">
+                  <button (click)="this.joinEvent()" *ngIf="!event?.isMember" class="ml-auto"
+                          mat-raised-button>
+                    <fa-icon [icon]="faUserPlus"></fa-icon>
+                    Rejoindre
                   </button>
-                  <button (click)="this.leaveEvent()" *ngIf="(_eventService.event|async)?.isMember" class="ml-auto"
+                  <button (click)="this.leaveEvent()" *ngIf="event?.isMember" class="ml-auto"
                           mat-raised-button> Quitter
                   </button>
                 </div>
@@ -34,7 +36,7 @@
                   </button>
                   <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                     <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                    <div *ngIf="(_eventService.event|async)?.isOwner">
+                    <div *ngIf="event?.isOwner">
                       <button (click)="showDialogueUpdateEvent()" mat-menu-item>Modifier</button>
                     </div>
                   </div>
@@ -45,13 +47,15 @@
           </div>
           <div class="description-area-event">
             <div class="description-event">
-              <p>{{(_eventService.event|async)?.description | slice:0:200}}...</p>
+              <p>{{event?.description | slice:0:200}}...</p>
             </div>
           </div>
           <div class="date-area-event">
             <div class="dates-event">
-              <p><i class="fas fa-clock"></i> {{(_eventService.event|async)?.startDate | date:"dd/MM/YYYY HH:MM"}}
-                -- {{(_eventService.event|async)?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
+              <p>
+                <fa-icon [icon]="faClock"></fa-icon>
+                {{event?.startDate | date:"dd/MM/YYYY HH:MM"}}
+                -- {{event?.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
             </div>
           </div>
         </div>
@@ -61,7 +65,7 @@
                        mat-align-tabs="center">
           <mat-tab label="Accueil">
             <div #divContent style="height: 450px">
-              <virtual-scroller #scroll [enableUnequalChildrenSizes]="true" [items]="(_eventService.event|async)?.posts"
+              <virtual-scroller #scroll [enableUnequalChildrenSizes]="true" [items]="event?.posts"
                                 [parentScroll]="divContent" childHeight="1" class="w-100 h-100">
                 <div *ngFor="let post of scroll.viewPortItems" class="mt-3 ">
                   <post [post]="post"></post>
@@ -70,18 +74,18 @@
             </div>
           </mat-tab>
           <mat-tab label="Infos">
-            <app-event-infos *ngIf="(_eventService.event|async)"
-                             [event]="(_eventService.event|async)"></app-event-infos>
+            <app-event-infos *ngIf="event"
+                             [event]="event"></app-event-infos>
           </mat-tab>
           <mat-tab label="Participants">
-            <div *ngIf="!(_eventService.event|async)?.isOwner" class="my-3">
-              <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
+            <div *ngIf="!event?.isOwner" class="my-3">
+              <div *ngFor="let user of event?.participants;" class="display-list-user">
                 <app-user-card [user]="user" class="m-0"></app-user-card>
               </div>
             </div>
-            <div *ngIf="(_eventService.event|async)?.isOwner" class="my-3">
-              <div *ngFor="let user of (_eventService.event|async)?.participants;" class="display-list-user">
-                <app-card-user-manage-event [eventId]="eventId" [user]="user"
+            <div *ngIf="event?.isOwner" class="my-3">
+              <div *ngFor="let user of event?.participants;" class="display-list-user">
+                <app-card-user-manage-event [eventId]="event.id" [user]="user"
                                             class="m-0"></app-card-user-manage-event>
               </div>
             </div>

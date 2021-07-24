@@ -3,12 +3,11 @@ import {Event} from "../../shared/models/event.model";
 import {UserService} from "../user/user.service";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {User} from "../../shared/models/user.model";
 import {Search_eventModel} from "../../shared/models/search_event.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
-import {map} from "rxjs/operators";
 import {Category} from "../../shared/models/category.model";
 import {Organisation} from "../../shared/models/organisation.model";
 import {AuthService} from "../auth/auth.service";
@@ -18,19 +17,10 @@ import {SearchEventProps} from "../../components/event-filter/event-filter.compo
   providedIn: 'root'
 })
 export class EventService {
-  public event: Observable<Event>;
-  public events: Observable<Event[]>;
-
-  private eventsSubject: BehaviorSubject<Event[]>;
-  private eventSubject: BehaviorSubject<Event>;
 
   constructor(private userService: UserService,
               private _authService: AuthService,
               private http: HttpClient) {
-    this.eventSubject = new BehaviorSubject<Event>(null);
-    this.eventsSubject = new BehaviorSubject<Event[]>(null);
-    this.events = this.eventsSubject.asObservable();
-    this.event = this.eventSubject.asObservable();
   }
 
   createEvent(newEvent: Event, file: File): Observable<Event> {
@@ -55,11 +45,7 @@ export class EventService {
   }
 
   joinEvent(eventId: string): Observable<void> {
-    return this.http.post<void>(`${environment.apiBaseUrl}/event/${eventId}/join`, {}).pipe(map(() => {
-      let event = this.eventSubject.getValue();
-      event.isMember = true;
-      this.eventSubject.next(event);
-    }));
+    return this.http.post<void>(`${environment.apiBaseUrl}/event/${eventId}/join`, {});
   }
 
   getAllEvents(): Observable<Event[]> {
@@ -67,11 +53,7 @@ export class EventService {
   }
 
   getEventById(eventId: string): Observable<Event> {
-    return this.http.get<Event>(`${environment.apiBaseUrl}/event/${eventId}`)
-      .pipe(map(event => {
-        this.eventSubject.next(event);
-        return event;
-      }));
+    return this.http.get<Event>(`${environment.apiBaseUrl}/event/${eventId}`);
   }
 
   deleteEvent(eventId: string) {
@@ -101,20 +83,11 @@ export class EventService {
   }
 
   isEventFinished(): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/is-finished`)
-      .pipe(map(events => {
-        this.eventsSubject.next(events);
-        return events;
-      }));
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/is-finished`);
   }
 
   getEventPosts(eventId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiBaseUrl}/event/${eventId}/posts`).pipe(map(posts => {
-      let event = this.eventSubject.getValue();
-      event.posts = posts;
-      this.eventSubject.next(event);
-      return posts;
-    }));
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/event/${eventId}/posts`);
   }
 
   // TODO : Les fonctions sont implémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
@@ -147,70 +120,32 @@ export class EventService {
   }
 
   getOwner(eventId: string): Observable<User> {
-    return this.http.get<User>(`${environment.apiBaseUrl}/event/${eventId}/owner`).pipe(map(owner => {
-      let event = this.eventSubject.getValue();
-      event.user = owner;
-      this.eventSubject.next(event);
-      return owner;
-    }));
+    return this.http.get<User>(`${environment.apiBaseUrl}/event/${eventId}/owner`);
   }
 
   getCategory(eventId: string) {
-    return this.http.get<Category>(`${environment.apiBaseUrl}/event/${eventId}/category`).pipe(map(category => {
-      let event = this.eventSubject.getValue();
-      event.category = category;
-      this.eventSubject.next(event);
-      return category;
-    }));
+    return this.http.get<Category>(`${environment.apiBaseUrl}/event/${eventId}/category`);
   }
 
   getOrganisation(eventId: string) {
-    return this.http.get<Organisation>(`${environment.apiBaseUrl}/event/${eventId}/organisation`).pipe(map(organisation => {
-      let event = this.eventSubject.getValue();
-      event.organisation = organisation;
-      this.eventSubject.next(event);
-      return organisation;
-    }));
+    return this.http.get<Organisation>(`${environment.apiBaseUrl}/event/${eventId}/organisation`);
   }
 
   getParticipants(eventId: string) {
-    return this.http.get<User[]>(`${environment.apiBaseUrl}/event/${eventId}/participants`).pipe(map(participants => {
-      let event = this.eventSubject.getValue();
-      event.participants = participants;
-      this.eventSubject.next(event);
-      return participants;
-    }));
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/event/${eventId}/participants`);
   }
 
   isMember(eventId: string) {
-    return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-member`).pipe(map(isMember => {
-      if (this.eventSubject.getValue()) {
-        let event = this.eventSubject.getValue();
-        event.isMember = isMember;
-        this.eventSubject.next(event);
-      }
-      return isMember;
-    }));
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-member`);
   }
 
   isOwner(eventId: string) {
-    return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-owner`).pipe(map(isOwner => {
-      if (this.eventSubject.getValue()) {
-        let event = this.eventSubject.getValue();
-        event.isOwner = isOwner;
-        this.eventSubject.next(event);
-      }
-      return isOwner;
-    }));
+    return this.http.get<boolean>(`${environment.apiBaseUrl}/event/${eventId}/is-owner`);
   }
 
   getEventsSearch(searchEventProps: SearchEventProps): Observable<Event[]> {
     return this.http.post<Event[]>(
-      `${environment.apiBaseUrl}/event/search-event`, searchEventProps)
-      .pipe(map(events => {
-        this.eventsSubject.next(events);
-        return events;
-      }))
+      `${environment.apiBaseUrl}/event/search-event`, searchEventProps);
   }
 }
 

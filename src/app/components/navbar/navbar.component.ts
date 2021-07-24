@@ -27,6 +27,8 @@ export class NavbarComponent implements OnInit {
   }
 
   public onDisconnect() {
-    this._authService.logout().subscribe(() => this._router.navigate(['../login']));
+    this._authService.logout()
+      .toPromise()
+      .then(() => this._router.navigate(['../login']));
   }
 }

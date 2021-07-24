@@ -3,7 +3,7 @@ import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {UserService} from "../../../services/user/user.service";
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
@@ -23,7 +23,7 @@ export class CardUserManageOrganisationComponent implements OnInit {
   @Input('userSession') userSession: User;
   @Input('isOwner') isOwner: boolean;
   faCheckCircle = faCheckCircle;
-
+  faUserPlus = faUserPlus;
   friendshipRequest: FriendRequestStatus;
   userIsAdmin: boolean = false;
   allFriendRequestStatus = FriendRequestStatus;

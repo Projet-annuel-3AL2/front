@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
@@ -18,6 +18,7 @@ import {DialogAskOrganisationComponent} from "../../dialog_/dialog-ask-organisat
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Title} from "@angular/platform-browser";
+import {Post} from "../../../shared/models/post.model";
 
 @Component({
   selector: 'app-profile-user',
@@ -27,7 +28,11 @@ import {Title} from "@angular/platform-browser";
 export class ProfileUserComponent implements OnInit {
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
-  username: string;
+  faUserPlus = faUserPlus;
+  loading: boolean = false;
+  offset: number = 0;
+  limit: number = 10;
+  user: User;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
@@ -49,37 +54,37 @@ export class ProfileUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.username = params["username"];
-      this._titleService.setTitle(this.username + " - " + environment.name);
-      this.updateUser().then();
+      this._titleService.setTitle(params["username"] + " - " + environment.name);
+      this.updateUser(params["username"]).then();
     });
   }
 
-  async updateUser(): Promise<void> {
-    await this._userService.getByUsername(this.username).toPromise();
-    await this._userService.getPosts(this.username).toPromise();
-    await this._userService.getFriends(this.username).toPromise();
-    await this._userService.getParticipations(this.username).toPromise();
-    await this._userService.hasBlocked(this.username).toPromise();
-    await this._friendshipService.isFriendshipRequested(this.username).subscribe(friendshipRequest => this.friendshipRequest = friendshipRequest);
-    await this._organisationService.whereIsAdmin(this.username).toPromise();
+  async updateUser(username: string): Promise<void> {
+    this.user = await this._userService.getByUsername(username).toPromise();
+    this.user.createdPosts = [];
+    this.getMorePosts();
+    this.user.friends = await this._userService.getFriends(username).toPromise();
+    this.user.eventsParticipation = await this._userService.getParticipations(username).toPromise();
+    this.user.isBlocked = await this._userService.hasBlocked(username).toPromise();
+    this.user.friendshipStatus = await this._friendshipService.isFriendshipRequested(username).toPromise();
+    this.user.organisations = await this._organisationService.whereIsAdmin(username).toPromise();
   }
 
   showDialogueRespondFriendRequest() {
     const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
       width: '500px',
-      data: {userId: this.username}
+      data: {userId: this.user.username}
     });
-    dialogRef.afterClosed().subscribe(() => this.updateUser());
+    dialogRef.afterClosed().subscribe(() => this.updateUser(this.user.username));
   }
 
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
-      data: {id: this.username, reportType: ReportTypeEnum.USER}
+      data: {id: this.user.username, reportType: ReportTypeEnum.USER}
     });
 
-    dialogRef.afterClosed().subscribe(() => this.updateUser());
+    dialogRef.afterClosed().subscribe(() => this.updateUser(this.user.username));
   }
 
   showDialogueCreateEvent() {
@@ -88,29 +93,25 @@ export class ProfileUserComponent implements OnInit {
       data: {organisation: null}
     });
 
-    dialogRef.afterClosed().subscribe(() => this.updateUser());
+    dialogRef.afterClosed().subscribe(() => this.updateUser(this.user.username));
   }
 
   async showDialogUpdateUser() {
-    let user: User;
-    this._userService.user.subscribe(userR => {
-      user = userR
-    });
     const dialogRef = this.dialogUpdateUser.open(DialogUpdateUserComponent, {
       width: '600px',
-      data: {user: user}
+      data: {user: this.user}
     });
 
 
     dialogRef.afterClosed().subscribe(() => {
-      this.updateUser()
+      this.updateUser(this.user.username)
     })
   }
 
   async showDialogAskCertification() {
     const dialogRef = this.dialogAskCertification.open(DialogAskCertificationComponent, {
       width: '600px',
-      data: {user: this.username}
+      data: {user: this.user.username}
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -120,7 +121,7 @@ export class ProfileUserComponent implements OnInit {
   showDialogAskOrganisation() {
     const dialogRef = this.dialogAskOrganisation.open(DialogAskOrganisationComponent, {
       width: '950px',
-      data: {user: this.username}
+      data: {user: this.user.username}
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -128,7 +129,7 @@ export class ProfileUserComponent implements OnInit {
   }
 
   removeFriend() {
-    this._friendshipService.removeFriendship(this.username).subscribe({
+    this._friendshipService.removeFriendship(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
@@ -141,7 +142,7 @@ export class ProfileUserComponent implements OnInit {
   }
 
   askFriend() {
-    this._friendshipService.sendFriendRequest(this.username).subscribe({
+    this._friendshipService.sendFriendRequest(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.PENDING;
       },
@@ -154,7 +155,7 @@ export class ProfileUserComponent implements OnInit {
   }
 
   cancelRequest() {
-    this._friendshipService.cancelFriendRequest(this.username).subscribe({
+    this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
@@ -167,13 +168,9 @@ export class ProfileUserComponent implements OnInit {
   }
 
   async sendJoinOrganisation(id: string) {
-    let user: User;
-    await this._userService.user.subscribe(userS => {
-      user = userS
-    });
-    this._organisationService.postInvitation(id, user.id).subscribe({
+    this._organisationService.postInvitation(id, this.user.id).subscribe({
       next: () => {
-        this.updateUser().then()
+        this.updateUser(this.user.username).then()
       },
       error: err => {
         if (!environment.production) {
@@ -184,10 +181,32 @@ export class ProfileUserComponent implements OnInit {
   }
 
   blockUser() {
-    this._userService.block(this.username).subscribe();
+    this._userService.block(this.user.username).toPromise().then();
   }
 
   unblockUser() {
-    this._userService.unblock(this.username).subscribe();
+    this._userService.unblock(this.user.username).toPromise().then();
+  }
+
+  removePost($event: Post) {
+    this.user.createdPosts = this.user.createdPosts.filter(post => post.id !== $event.id);
+  }
+
+  triggerGetMore($event) {
+    if ($event.endIndex !== this.user.createdPosts.length - 1 || this.loading) return;
+    this.getMorePosts();
+  }
+
+  getMorePosts() {
+    this.loading = true;
+    this._userService.getPosts(this.user.username, this.limit, this.offset)
+      .toPromise()
+      .then(posts => {
+        this.user.createdPosts = this.user.createdPosts.concat(posts);
+        this.offset += this.limit;
+        if (posts.length > 0) {
+          this.loading = false;
+        }
+      });
   }
 }

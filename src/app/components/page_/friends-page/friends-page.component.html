@@ -5,22 +5,22 @@
   <div class="col-md-4">
     <div>
       <h2 class="text-center">Demandes d'amis</h2>
-      <div *ngIf="(_friendshipService.friendRequests|async)?.length === 0">
+      <div *ngIf="(_authService.user|async).friendRequests?.length === 0">
         <p class="text-center">Vous n'avez aucune demande d'amis pour le moment.</p>
       </div>
-      <div *ngIf="(_friendshipService.friendRequests|async)?.length > 0">
-        <div *ngFor="let friendRequest of (_friendshipService.friendRequests|async)" class="mt-3">
+      <div *ngIf="(_authService.user|async).friendRequests?.length > 0">
+        <div *ngFor="let friendRequest of (_authService.user|async).friendRequests" class="mt-3">
           <app-user-card [user]="friendRequest.sender"></app-user-card>
         </div>
       </div>
     </div>
     <div>
       <h2 class="text-center">Demandes envoyés</h2>
-      <div *ngIf="(_friendshipService.sentFriendRequests|async)?.length === 0">
+      <div *ngIf="(_authService.user|async).sentFriendRequests?.length === 0">
         <p class="text-center">Vous n'avez envoyé aucune demande pour le moment.</p>
       </div>
-      <div *ngIf="(_friendshipService.sentFriendRequests|async)?.length > 0">
-        <div *ngFor="let friendRequest of (_friendshipService.sentFriendRequests|async)" class="mt-3">
+      <div *ngIf="(_authService.user|async).sentFriendRequests?.length > 0">
+        <div *ngFor="let friendRequest of (_authService.user|async).sentFriendRequests" class="mt-3">
           <app-user-card [user]="friendRequest.user"></app-user-card>
         </div>
       </div>

@@ -2,7 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
-import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-dialog-res-friendship-request',
@@ -26,29 +25,14 @@ export class DialogResFriendshipRequestComponent implements OnInit {
   }
 
   acceptFriendship() {
-
-    this._friendshipService.acceptFriendship(this.data.userId).subscribe({
-      next: () => {
-        this.friendshipRequestStatus = FriendRequestStatus.BEFRIENDED;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._friendshipService.acceptFriendship(this.data.userId)
+      .toPromise()
+      .then(() => this.friendshipRequestStatus = FriendRequestStatus.BEFRIENDED);
   }
 
   delFriendshipRequest() {
-    this._friendshipService.rejectFriendRequest(this.data.userId).subscribe({
-      next: () => {
-        this.friendshipRequestStatus = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    })
+    this._friendshipService.rejectFriendRequest(this.data.userId)
+      .toPromise()
+      .then(() => this.friendshipRequestStatus = FriendRequestStatus.NONE);
   }
 }
