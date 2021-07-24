@@ -34,24 +34,44 @@ export class EventService {
   }
 
   createEvent(newEvent: Event, file: File): Observable<Event> {
-    const formData = new FormData();
-
-    formData.append("name", JSON.stringify(newEvent.name));
-    formData.append("description", JSON.stringify(newEvent.description));
-    formData.append("user", JSON.stringify(newEvent.user));
-    formData.append("startDate", JSON.stringify(newEvent.startDate.toString()));
-    formData.append("endDate", JSON.stringify(newEvent.endDate.toString()));
-    formData.append("latitude", JSON.stringify(newEvent.latitude));
-    formData.append("longitude", JSON.stringify(newEvent.longitude));
-    formData.append("participantsLimit", JSON.stringify(newEvent.participantsLimit));
-    formData.append("category", JSON.stringify(newEvent.category));
-    if (newEvent.organisation !== undefined) {
-      formData.append("organisation", JSON.stringify(newEvent.organisation));
+    let formData = new FormData();
+    formData.append("name", newEvent.name);
+    formData.append("description", newEvent.description);
+    formData.append("user", newEvent.user.id);
+    formData.append("startDate", newEvent.startDate.toString());
+    formData.append("endDate", newEvent.endDate.toString());
+    formData.append("latitude", newEvent.latitude.toString());
+    formData.append("longitude", newEvent.longitude.toString());
+    formData.append("participantsLimit", newEvent.participantsLimit.toString());
+    formData.append("category", newEvent.category.id);
+    if (newEvent.organisation) {
+      formData.append("organisation", newEvent.organisation.id);
     }
     if (file !== undefined) {
       formData.append("event_media", file);
     }
+    console.log(formData.get("name"))
     return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, formData);
+  }
+
+  updateEvent(event: Event, file: File): Observable<Event> {
+    let formData = new FormData();
+    formData.append("name", event.name);
+    formData.append("description", event.description);
+    formData.append("user", event.user.id);
+    formData.append("startDate", event.startDate.toString());
+    formData.append("endDate", event.endDate.toString());
+    formData.append("latitude", event.latitude.toString());
+    formData.append("longitude", event.longitude.toString());
+    formData.append("participantsLimit", event.participantsLimit.toString());
+    formData.append("category", event.category.id);
+    if (event.organisation) {
+      formData.append("organisation", event.organisation.id);
+    }
+    if (file !== undefined) {
+      formData.append("event_media", file);
+    }
+    return this.http.put<Event>(`${environment.apiBaseUrl}/event/${event.id}`, formData);
   }
 
   joinEvent(eventId: string): Observable<void> {
@@ -92,10 +112,6 @@ export class EventService {
     return this.http.delete<void>(`${environment.apiBaseUrl}/event/${eventId}/participant/${userId}`);
   }
 
-  updateEvent(event: Event): Observable<Event> {
-    return this.http.put<Event>(`${environment.apiBaseUrl}/event/${event.id}`, event);
-  }
-
   getEventMembers(eventId: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiBaseUrl}/event/${eventId}/participants`);
   }
@@ -115,19 +131,6 @@ export class EventService {
       this.eventSubject.next(event);
       return posts;
     }));
-  }
-
-  // TODO : Les fonctions sont implémenter dans l'api mais je suis pas sur qu'on s'en serve vue qu'il serait mieux de faire la fonction getEventWithRecherche pour filter
-  getEventWithUserLocation(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/getEventWithUserLocation/${userLocationX}/${userLocationY}/${range}`);
-  }
-
-  getEventWithUserLocationNotEnd(userLocationX: string, userLocationY: string, range: number): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/getEventWithUserLocationNotEnd/${userLocationX}/${userLocationY}/${range}`);
-  }
-
-  getUserRechercheNameEvent(userRecherche: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/userRechercheNameEvent/${userRecherche}`);
   }
 
   searchEvents(rechercheEvent: Search_eventModel): Observable<Event[]> {
