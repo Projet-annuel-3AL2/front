@@ -96,7 +96,6 @@ export class OrganisationService {
 
   putOrganisation(organisation: Organisation, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
     const formData = new FormData()
-    console.log(organisation.name)
     if (organisation.name != null){
       formData.append("name", organisation.name)
     }
@@ -191,5 +190,9 @@ export class OrganisationService {
         this.organisationSubject.next(organisation);
         return organisation;
       }))
+  }
+
+  leave(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${id}/leave`);
   }
 }

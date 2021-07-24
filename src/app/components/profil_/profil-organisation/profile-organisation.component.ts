@@ -48,10 +48,7 @@ export class ProfileOrganisationComponent implements OnInit {
       this.userSession$ = user;
     });
     this.updateData();
-    this._organisationService.organisation.subscribe(organisation => {
-      this.organisation$ = organisation;
-      this._titleService.setTitle(this.organisation$.name + " - "+environment.name);
-    })
+
   }
 
   isOwner() {
@@ -159,10 +156,17 @@ export class ProfileOrganisationComponent implements OnInit {
     this.isOwner();
     this.isAdmin();
     this.getPostsOrganisation();
+
   }
 
   private getOrganisation() {
     this._organisationService.getOrganisation(this.organisationId).subscribe({
+      next: () => {
+        this._organisationService.organisation.subscribe(organisation => {
+          this.organisation$ = organisation;
+          this._titleService.setTitle(this.organisation$.name + " - "+environment.name);
+        })
+      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);
