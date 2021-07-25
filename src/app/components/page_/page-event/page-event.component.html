@@ -47,7 +47,7 @@
           </div>
           <div class="description-area-event">
             <div class="description-event">
-              <p>{{event?.description | slice:0:200}}...</p>
+              <p>{{event?.description | slice:0:200}}</p>
             </div>
           </div>
           <div class="date-area-event">
@@ -85,7 +85,7 @@
             </div>
             <div *ngIf="event?.isOwner" class="my-3">
               <div *ngFor="let user of event?.participants;" class="display-list-user">
-                <app-card-user-manage-event [eventId]="event.id" [user]="user"
+                <app-card-user-manage-event [eventId]="event?.id" [user]="user"
                                             class="m-0"></app-card-user-manage-event>
               </div>
             </div>

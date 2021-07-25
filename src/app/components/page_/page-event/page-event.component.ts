@@ -11,6 +11,7 @@ import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dial
 import {Event} from "../../../shared/models/event.model";
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
+import {MapService} from "../../../services/map/map.service";
 
 @Component({
   selector: 'app-page-event',
@@ -26,6 +27,7 @@ export class PageEventComponent implements OnInit {
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
+              private _mapService: MapService,
               public _eventService: EventService,
               public _authService: AuthService,
               private _organisationService: OrganisationService,
@@ -50,6 +52,7 @@ export class PageEventComponent implements OnInit {
     this._eventService.getOrganisation(eventId).toPromise().then(organisation => this.event.organisation = organisation);
     this._eventService.isMember(eventId).toPromise().then(isMember => this.event.isMember = isMember);
     this._eventService.isOwner(eventId).toPromise().then(isOwner => this.event.isOwner = isOwner);
+    this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).subscribe(address => this.event.address = address);
   }
 
   joinEvent() {
@@ -80,6 +83,6 @@ export class PageEventComponent implements OnInit {
   }
 
   isEnd(): boolean {
-    return new Date(this.event.endDate) < new Date(Date.now())
+    return new Date(this.event?.endDate) < new Date(Date.now())
   }
 }
