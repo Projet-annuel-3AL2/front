@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {faCheckCircle, faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {Organisation} from "../../../shared/models/organisation.model";
 import {User} from "../../../shared/models/user.model";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
@@ -20,7 +20,7 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./profile-organisation.component.css']
 })
 export class ProfileOrganisationComponent implements OnInit {
-
+  faUserPlus = faUserPlus;
   faCheckCircle = faCheckCircle;
   organisationId: string;
   faEllipsisH = faEllipsisH;

@@ -30,21 +30,14 @@ export class DialogAskOrganisationComponent implements OnInit {
 
   onClickSubmit() {
     if (this.formGroup.valid){
+    
       const organisationRequest = new OrganisationRequest();
       organisationRequest.comment = this.formGroup.value.comment;
       organisationRequest.name = this.formGroup.value.name;
-      this._organisationService.postOrganisationRequest(organisationRequest).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        },
-        error: error => {
-          if (!environment.production) {
-            console.error('Error: ', error);
-          }
-        }
-      });
+      this._organisationService.postOrganisationRequest(organisationRequest)
+      .toPromise()
+      .then(() => this.dialogRef.close());
     }
-
   }
 
   private initialiseFormGroup() {

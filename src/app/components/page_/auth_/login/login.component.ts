@@ -32,15 +32,14 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     const formValue = this.userForm.value;
     this._authService.login(formValue.username, formValue.password)
-      .subscribe(() => {
-      }, error => {
-        this.submitted = false;
-        if (error.status === 401) {
-          this.error = true;
-        }
-      }, () => {
-        this.router.navigate(['/']);
-      });
+      .toPromise().then().catch(error => {
+      this.submitted = false;
+      if (error.status === 401) {
+        this.error = true;
+      }
+    }).finally(() => {
+      this.router.navigate(['/']).then();
+    });
   }
 
   private initForm() {

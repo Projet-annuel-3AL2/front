@@ -4,6 +4,7 @@ import {AuthService} from "../../services/auth/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../services/user/user.service";
 import {environment} from "../../../environments/environment";
+import {UserType} from "../../shared/models/user.model";
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ export class NavbarComponent implements OnInit {
   faCalendarAlt = faCalendarAlt;
   faUserFriends = faUserFriends;
   faBuilding = faBuilding;
+  userType: typeof UserType = UserType;
   env: any;
 
   constructor(private _activatedRoute: ActivatedRoute,
@@ -27,6 +29,8 @@ export class NavbarComponent implements OnInit {
   }
 
   public onDisconnect() {
-    this._authService.logout().subscribe(() => this._router.navigate(['../login']));
+    this._authService.logout()
+      .toPromise()
+      .then(() => this._router.navigate(['../login']));
   }
 }

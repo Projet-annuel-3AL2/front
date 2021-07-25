@@ -10,7 +10,7 @@
   <div class="dialog-actions-certification" mat-dialog-actions>
     <div class="certification-grid">
       <div class="button-cancel">
-        <button (click)="onNoClick()" mat-button>Annuler</button>
+        <button (click)="dialogRef.close()" mat-button>Annuler</button>
       </div>
       <div class="button-send">
         <button class="button-send" mat-raised-button type="submit">Envoyer</button>

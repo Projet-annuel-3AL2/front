@@ -1,9 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {MatDialog} from "@angular/material/dialog";
+import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
@@ -16,16 +17,14 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons';
 export class UserCardComponent implements OnInit {
 
   @Input()
-  user: User = new User()
+  user: User;
   faCheckCircle = faCheckCircle;
-  friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
-  allFriendRequestStatus = FriendRequestStatus;
-  env: any;
-  faTimes= faTimes;
+  faUserPlus = faUserPlus;
+  statusEnum: typeof FriendRequestStatus = FriendRequestStatus;
+
   constructor(private _friendshipService: FriendshipService,
               public _authService: AuthService,
               public dialog: MatDialog) {
-    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -33,37 +32,21 @@ export class UserCardComponent implements OnInit {
   }
 
   canAdd() {
-    this._friendshipService.isFriendshipRequested(this.user.username).subscribe({
-      next: requestStatus => {
-        this.friendshipRequest = requestStatus;
-      }
-    })
+    this._friendshipService.isFriendshipRequested(this.user.username)
+      .toPromise()
+      .then(friendshipStatus => this.user.friendshipStatus = friendshipStatus);
   }
 
   askFriend() {
-    this._friendshipService.sendFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = this.allFriendRequestStatus.PENDING;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.sendFriendRequest(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.PENDING);
   }
 
   removeFriend() {
-    this._friendshipService.removeFriendship(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = this.allFriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    })
+    this._friendshipService.removeFriendship(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 
   acceptFriendship() {
@@ -93,15 +76,8 @@ export class UserCardComponent implements OnInit {
   }
 
   cancelRequest() {
-    this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.cancelFriendRequest(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 }

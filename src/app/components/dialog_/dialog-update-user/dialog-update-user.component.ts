@@ -38,18 +38,9 @@ export class DialogUpdateUserComponent implements OnInit {
   }
 
   onClickSubmit() {
-    if (this.formData.valid){
-      this._userService.putUser(this.formData, this.updatedProfilePicture, this.updatedBannerPicture).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        },
-        error: err => {
-          if (!environment.production) {
-            console.log(err);
-          }
-        }
-      });
-    }
+    this._userService.putUser(this.updatedUser, this.updatedProfilePicture, this.updatedBannerPicture)
+      .toPromise()
+      .then(() => this.dialogRef.close());
   }
 
   onProfilePictureSelected() {

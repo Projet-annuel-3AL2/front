@@ -10,11 +10,12 @@
     </p>
   </div>
   <div *ngIf="user.username !== _authService.getCurrentUsername()" fxFlex fxLayoutAlign="end center">
-    <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
-            class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true"
-                                                                   class="fa fa-user-plus"></i> Ajouter
+    <button (click)="this.askFriend()" *ngIf="user.friendshipStatus === statusEnum.NONE"
+            class="ml-auto button-add-friend" mat-raised-button>
+      <fa-icon [icon]="faUserPlus"></fa-icon>
+      Ajouter
     </button>
-    <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
+    <button (click)="this.removeFriend()" *ngIf="user.friendshipStatus === statusEnum.BEFRIENDED"
             class="button-add-friend" mat-raised-button
             matTooltip="Enlever de la liste des amis"
             matTooltipPosition="above">

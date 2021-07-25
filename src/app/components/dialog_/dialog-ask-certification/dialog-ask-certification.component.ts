@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {CertificationService} from "../../../services/certification/certification.service";
-import {environment} from "../../../../environments/environment";
 import {CertificationRequest} from "../../../shared/models/certification_request.model";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
@@ -27,16 +26,9 @@ export class DialogAskCertificationComponent implements OnInit {
     if (this.formGroup.valid){
       let certificationRequest = new CertificationRequest();
       certificationRequest.comment = this.formGroup.value.comment;
-      this._certificationService.postCertification(certificationRequest).subscribe({
-        next: () => {
-          this.dialogRef.close()
-        },
-        error: error => {
-          if (!environment.production) {
-            console.error('Error: ', error);
-          }
-        }
-      });
+      this._certificationService.postCertification(certificationRequest)
+      .toPromise()
+      .then(() => this.dialogRef.close());
     }
   }
 

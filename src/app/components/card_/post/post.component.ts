@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Post} from "../../../shared/models/post.model";
 import {faCheckCircle, faComment, faEllipsisH, faShare, faThumbsUp} from '@fortawesome/free-solid-svg-icons';
 import {PostService} from "../../../services/post/post.service";
@@ -9,7 +9,6 @@ import {Subscription, timer} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog-create-post.component";
 import {MediaService} from "../../../services/media/media.service";
-import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'post',
@@ -19,20 +18,20 @@ import {environment} from "../../../../environments/environment";
 export class PostComponent implements OnInit {
   @Input()
   post: Post;
+  @Output()
+  onDelete: EventEmitter<Post> = new EventEmitter();
   faThumbsUp = faThumbsUp;
   faComment = faComment;
   faShare = faShare;
   faCheckCircle = faCheckCircle;
   faEllipsisH = faEllipsisH;
   text: string;
-  env: any;
   private timeSubscription: Subscription;
 
   constructor(private _postService: PostService,
               public _authService: AuthService,
               private _mediaService: MediaService,
               public matDialog: MatDialog) {
-    this.env = environment;
   }
 
   ngOnDestroy(): void {
@@ -40,10 +39,8 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._postService.sharedPost(this.post.id)
-      .subscribe(post => this.post.sharesPost = post);
-    this._mediaService.getPostMedias(this.post.id)
-      .subscribe(medias => this.post.medias = medias);
+    this._postService.sharedPost(this.post.id).toPromise().then(post => this.post.sharesPost = post);
+    this._mediaService.getPostMedias(this.post.id).toPromise().then(medias => this.post.medias = medias);
     this.updatePost();
     this.timeSubscription = timer(0, 15000)
       .subscribe(() => this.updatePost());
@@ -51,35 +48,35 @@ export class PostComponent implements OnInit {
 
   updatePost(): void {
     this._postService.getPostLikes(this.post.id)
-      .subscribe(likes => this.post.likes = likes);
+      .toPromise().then(likes => this.post.likes = likes);
     this._postService.isPostLiked(this.post.id)
-      .subscribe(isLiked => this.post.isLiked = isLiked);
+      .toPromise().then(isLiked => this.post.isLiked = isLiked);
   }
 
 
   showDialogReport() {
-    const dialogRef = this.matDialog.open(DialogReportComponent, {
+    this.matDialog.open(DialogReportComponent, {
       width: '500px',
       data: {id: this.post.id, reportType: ReportTypeEnum.POST}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
     });
   }
 
   deletePost() {
     this._postService.deletePost(this.post.id)
-      .subscribe();
+      .toPromise()
+      .then(() => this.onDelete.emit(this.post));
   }
 
   likePost() {
     this._postService.likePost(this.post.id)
-      .subscribe(() => this.updatePost());
+      .toPromise()
+      .then(() => this.post.isLiked = true);
   }
 
   dislikePost() {
     this._postService.dislikePost(this.post.id)
-      .subscribe(() => this.updatePost());
+      .toPromise()
+      .then(() => this.post.isLiked = false);
   }
 
   sharePost() {

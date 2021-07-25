@@ -1,7 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../../../shared/models/event.model";
-import {environment} from "../../../../environments/environment";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventService} from "../../../services/event/event.service";
 import {CategoryService} from "../../../services/category/category.service";
@@ -18,7 +17,7 @@ import {AuthService} from "../../../services/auth/auth.service";
   styleUrls: ['./dialog-create-event.component.css']
 })
 export class DialogCreateEventComponent implements OnInit {
-
+  categories: Category[];
   addresses: unknown[];
   addressSearchTimeOut: number;
   limitParticipant = new FormControl(2, Validators.min(2));
@@ -47,6 +46,10 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   onClickSubmit() {
+    if (this.newEvent.startDate > this.newEvent.endDate) {
+      this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
+                 duration: 3000
+      });
     if (this.newEventForm.value.startDate < this.newEventForm.value.endDate) {
       this.isSubmitted = true;
       if(this.newEventForm.valid){
@@ -66,9 +69,16 @@ export class DialogCreateEventComponent implements OnInit {
 
     } else {
       this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
-        duration: 3000
-      });
+ 
+      
     }
+    this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
+      this.newEvent.latitude = address.latitude;
+      this.newEvent.longitude = address.longitude;
+      this._eventService.createEvent(this.newEvent, this.media)
+        .toPromise()
+        .then(() => this.dialogRef.close());
+    });
   }
 
   onNoClick(): void {
@@ -82,12 +92,11 @@ export class DialogCreateEventComponent implements OnInit {
         this.addresses = undefined;
         return;
       }
-      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => this.addresses = addresses);
     }, 500);
   }
 
   onPictureSelected() {
-
     const inputNode: any = document.querySelector('#picture');
     if (typeof (FileReader) !== 'undefined') {
 
@@ -108,20 +117,19 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      next: () => {
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._categoryService.getAllCategory()
+      .toPromise()
+      .then(categories => this.categories = categories);
   }
 
-  private async updateData(): Promise<void> {
+  private updateData(): void {
     this.getAllCategories();
     this.postalAddress = null;
+    this._authService.user
+      .toPromise()
+      .then(user => {
+        this.newEvent.user = user;
+      });
   }
 
   private initializeFormGroup() {

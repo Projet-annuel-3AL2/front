@@ -7,6 +7,7 @@ import {map} from "rxjs/operators";
 import {CookieService} from "ngx-cookie-service";
 import {Event} from "../../shared/models/event.model";
 import {Organisation} from "../../shared/models/organisation.model";
+import {FriendRequest} from "../../shared/models/FriendRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,32 @@ export class AuthService {
     if (this.getCurrentUsername() && this.userSubject.getValue()) {
       await this.getParticipations().toPromise();
       await this.getFriends().toPromise();
-      await this.getInvitationsOrganisation().subscribe();
-      await this.getOrganisations().subscribe();
+      await this.getInvitationsOrganisation().toPromise();
+      await this.getOrganisations().toPromise();
+      await this.getReceivedFriendshipRequest().toPromise();
+      await this.getSentFriendshipRequest().toPromise();
     }
+  }
+
+  getReceivedFriendshipRequest(): Observable<FriendRequest[]> {
+    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/received-friendship-request`)
+      .pipe(map(requests => {
+        let user = this.userSubject.getValue();
+        user.friendRequests = requests;
+        this.userSubject.next(user);
+        return requests;
+      }));
+  }
+
+
+  getSentFriendshipRequest(): Observable<FriendRequest[]> {
+    return this.http.get<FriendRequest[]>(`${environment.apiBaseUrl}/friendship/sent-friendship-request`)
+      .pipe(map(requests => {
+        let user = this.userSubject.getValue();
+        user.sentFriendRequests = requests;
+        this.userSubject.next(user);
+        return requests;
+      }));
   }
 
   public register(mail: string, username: string, password: string) {

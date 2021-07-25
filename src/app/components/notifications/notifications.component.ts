@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {faBell} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from "../../services/auth/auth.service";
-import {FriendshipService} from "../../services/friendship/friendship.service";
 
 @Component({
   selector: 'app-notifications',
@@ -11,11 +10,10 @@ import {FriendshipService} from "../../services/friendship/friendship.service";
 export class NotificationsComponent implements OnInit {
   faBell = faBell;
 
-  constructor(public _authService: AuthService, public _friendshipService: FriendshipService) {
+  constructor(public _authService: AuthService) {
   }
 
   ngOnInit(): void {
-    this._friendshipService.getReceivedFriendshipRequest().subscribe();
   }
 
 }

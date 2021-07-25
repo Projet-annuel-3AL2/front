@@ -26,9 +26,8 @@ export class SearchBarComponent implements OnInit {
       return;
     }
     this.searchService.searchData($event.target.value)
-      .subscribe(searchResult => {
-        this.searchResult = searchResult;
-      });
+      .toPromise()
+      .then(searchResult => this.searchResult = searchResult);
   }
 
 }

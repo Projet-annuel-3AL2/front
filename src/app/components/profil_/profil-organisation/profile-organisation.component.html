@@ -5,7 +5,8 @@
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="orga-card-full">
-        <img [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906" alt="" class="rounded"
+        <img [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906" alt=""
+             class="rounded"
              height="300px"
              style="object-fit: cover" width="100%">
         <div class="orga-card-display">
@@ -25,7 +26,9 @@
             <div class="orga-card-empty"></div>
             <div class="orga-card-button" *ngIf="!isAdminB || !isOwnerB">
               <button (click)="this.followOrganisation()" *ngIf="!isFollowing" class="ml-auto button-join-event"
-                      mat-raised-button><i aria-hidden="true" class="fa fa-user-plus"></i> Suivre
+                      mat-raised-button>
+                <fa-icon [icon]="faUserPlus"></fa-icon>
+                Suivre
               </button>
               <button (click)="this.unfollowOrganisation()" *ngIf="isFollowing" class="ml-auto mat-button-event"
                       mat-raised-button>Ne plus suivre
