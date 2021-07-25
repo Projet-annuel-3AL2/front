@@ -3,8 +3,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
-import {User} from "../../../shared/models/user.model";
-import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-dialog-update-organisation',
@@ -14,17 +12,15 @@ import {environment} from "../../../../environments/environment";
 export class DialogUpdateOrganisationComponent implements OnInit {
 
   formData: FormGroup;
-  updatedProfilePicture: any;
-  updatedBannerPicture: any;
-  updatedProfilePictureURL: any;
-  updatedBannerPictureURL: any;
-  env: any;
+  updatedProfilePicture: File;
+  updatedBannerPicture: File;
+  updatedProfilePictureURL: string;
+  updatedBannerPictureURL: string;
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateOrganisationComponent>,
               private _formBuilder: FormBuilder,
               private _organisationService: OrganisationService,
               @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
-    this.env = environment
   }
 
   ngOnInit(): void {

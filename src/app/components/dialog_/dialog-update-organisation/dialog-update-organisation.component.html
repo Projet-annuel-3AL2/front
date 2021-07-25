@@ -16,8 +16,7 @@
         <p> Photo de Profil</p>
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
-            <img *ngIf="updatedProfilePicture === null"
-                 [src]="updatedProfilePictureURL || (data.organisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+            <img [src]="updatedProfilePictureURL || (data.organisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
                  alt="" class="rounded-circle"
                  height="150px"
                  style="object-fit: cover" width="150px">
