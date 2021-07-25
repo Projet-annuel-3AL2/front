@@ -3,5 +3,5 @@ export const environment = {
   name: "Agir pour tous",
   domain: "pooetitu.xyz",
   apiBaseUrl: "http://api.pooetitu.xyz:4500/apt",
-  backBaseUrl: "http://back.pooetitu.xyz/"
+  backBaseUrl: "http://ooetitu.xyz:8080/"
 };
