@@ -3,16 +3,18 @@
     <a [routerLink]="['/']">
       <img alt="logo" height="75" src="../../../assets/images/logo.png">
     </a>
-    <a [routerLink]="['/events']" class="m-4" matRipple>
-      <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
-    </a>
-    <div *ngIf="_authService.isAuthenticated()">
-      <a [routerLink]="['/friends']" class="m-4" matRipple>
+    <div class="overflow-hidden icon-button m-4 p-2">
+      <a [routerLink]="['/events']" matRipple>
+        <fa-icon [icon]="faCalendarAlt" size="2x"></fa-icon>
+      </a>
+    </div>
+    <div *ngIf="_authService.isAuthenticated()" class="overflow-hidden icon-button m-4 p-2">
+      <a [routerLink]="['/friends']" matRipple>
         <fa-icon [icon]="faUserFriends" size="2x"></fa-icon>
       </a>
     </div>
-    <div *ngIf="_authService.isAuthenticated()">
-      <a [routerLink]="['/my-organisations']" class="m-4" matRipple>
+    <div *ngIf="_authService.isAuthenticated()" class="overflow-hidden icon-button m-4 p-2">
+      <a [routerLink]="['/my-organisations']" matRipple>
         <fa-icon [icon]="faBuilding" size="2x"></fa-icon>
       </a>
     </div>
@@ -25,7 +27,7 @@
       <button class="m-2" mat-flat-button routerLink="/login">Connexion</button>
       <button class="m-2 register-button" mat-raised-button routerLink="/register">Inscription</button>
     </div>
-    <app-notifications *ngIf="_authService.isAuthenticated()"></app-notifications>
+    <app-notifications *ngIf="_authService.isAuthenticated()" class="overflow-hidden icon-button m-4 p-2"></app-notifications>
     <div *ngIf="_authService.isAuthenticated()">
       <button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" mat-raised-button>
         <fa-icon [icon]="faUserFriends"></fa-icon>
