@@ -1,10 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
-import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faUserPlus, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {MatDialog} from "@angular/material/dialog";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {AuthService} from "../../../services/auth/auth.service";
 
 @Component({
@@ -18,6 +17,7 @@ export class UserCardComponent implements OnInit {
   user: User;
   faCheckCircle = faCheckCircle;
   faUserPlus = faUserPlus;
+  faTimes = faTimes;
   statusEnum: typeof FriendRequestStatus = FriendRequestStatus;
 
   constructor(private _friendshipService: FriendshipService,
@@ -47,15 +47,16 @@ export class UserCardComponent implements OnInit {
       .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
-    });
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.username).toPromise().then(() =>{
+      this.user.friendshipStatus = FriendRequestStatus.BEFRIENDED;
+    })
+  }
 
-    dialogRef.afterClosed().subscribe(() => {
-      this.canAdd();
-    });
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).toPromise().then(() => {
+      this.user.friendshipStatus = FriendRequestStatus.NONE;
+    })
   }
 
   cancelRequest() {

@@ -1,13 +1,14 @@
 import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
-import {latLng, Map, MapOptions, tileLayer} from "leaflet";
-import * as L from 'leaflet';
+import {latLng, LeafletMouseEvent, Map, MapOptions, tileLayer} from "leaflet";
+import * as L from "leaflet";
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  selector: 'app-map-search',
+  templateUrl: './map-search.component.html',
+  styleUrls: ['./map-search.component.css']
 })
-export class MapComponent implements OnInit, AfterViewChecked {
+export class MapSearchComponent implements OnInit, AfterViewChecked {
+
   @Input()
   longitude: number;
   @Input()
@@ -41,12 +42,12 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   onMapReady(map: Map): void {
     this.map = map;
-    const myIcon = L.icon({
-      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
-    });
-    L.marker([this.latitude, this.longitude], {icon: myIcon}).addTo(this.map);
     setTimeout(() => {
       map.invalidateSize();
     }, 0);
+  }
+
+  onClickMap($event: LeafletMouseEvent) {
+    console.log($event.latlng)
   }
 }

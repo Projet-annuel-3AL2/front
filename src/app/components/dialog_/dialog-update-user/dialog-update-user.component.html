@@ -1,6 +1,6 @@
 <h1 class="update-event-title" mat-dialog-title>Modification du profil</h1>
 <mat-divider></mat-divider>
-<form (ngSubmit)="onClickSubmit()">
+<form [formGroup]="formData" (ngSubmit)="onClickSubmit()">
   <div mat-dialog-content>
     <div class="grid-update-user">
       <div class="form-field-update-profilePicture">
@@ -13,7 +13,7 @@
               height="150px"
               style="object-fit: cover"
               width="150px">
-            <input #profilePictureInput (change)="onProfilePictureSelected()" hidden id="profilePicture" type="file">
+            <input #profilePictureInput (change)="onProfilePictureSelected()" formControlName="profilePicture" hidden id="profilePicture" type="file">
           </a>
         </div>
       </div>
@@ -21,45 +21,35 @@
       <div class="form-field-update-bannerPicture">
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
-          <img
-            [src]="updatedBannerPictureURL || (data.user?.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
-            alt=""
-            class="rounded"
-            height="300px" style="object-fit: cover" width="100%">
-          <input #profileBannerInput (change)="onProfileBannerSelected()" hidden id="profileBanner" type="file">
+          <img [src]="updatedBannerPictureURL || (data.user?.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
+               class="rounded"
+               height="300px" style="object-fit: cover" width="100%">
+          <input #profileBannerInput (change)="onProfileBannerSelected()" formControlName="bannerPicture" hidden id="bannerPicture" type="file">
         </a>
       </div>
       <mat-divider class="mat-divider-2"></mat-divider>
-      <div class="form-field-update-username">
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input [(ngModel)]="updatedUser.username" matInput name="username" placeholder="Username" required>
-        </mat-form-field>
-      </div>
       <div class="form-field-update-firstname">
         <mat-form-field appearance="fill">
           <mat-label>Prénom</mat-label>
-          <input [(ngModel)]="updatedUser.firstname" matInput name="firstname" placeholder="Prénom" required>
+          <input formControlName="firstname" matInput name="firstname" placeholder="Prénom" required>
         </mat-form-field>
       </div>
       <div class="form-field-update-lastname">
         <mat-form-field appearance="fill">
           <mat-label>Nom</mat-label>
-          <input [(ngModel)]="updatedUser.lastname" matInput name="lastname" placeholder="Nom" required>
+          <input formControlName="lastname" matInput name="lastname" placeholder="Nom" required>
         </mat-form-field>
       </div>
       <div class="form-field-update-mail">
         <mat-form-field>
           <mat-label>Mail</mat-label>
-          <input [(ngModel)]="updatedUser.mail" matInput name="mail"
-                 pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
-                 placeholder="Mail" required>
+          <input formControlName="mail" matInput name="mail" placeholder="Mail" required>
         </mat-form-field>
       </div>
       <div class="form-field-update-bio">
         <mat-form-field>
           <mat-label>Bio</mat-label>
-          <textarea [(ngModel)]="updatedUser.bio" class="textarea-description" matInput
+          <textarea formControlName="bio" class="textarea-description" matInput
                     name="bio" placeholder="Ex. Je suis..."></textarea>
         </mat-form-field>
       </div>

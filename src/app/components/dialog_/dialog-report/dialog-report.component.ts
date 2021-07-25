@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {UserService} from "../../../services/user/user.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Report} from "../../../shared/models/report.model";
 import {PostService} from "../../../services/post/post.service";
 import {EventService} from "../../../services/event/event.service";
@@ -33,6 +33,7 @@ export class DialogReportComponent implements OnInit {
   }
 
   onClickSubmit(formData) {
+    if (this.formData.valid){
     let newReport: Report = new Report();
     newReport.text = formData.text;
     if (this.data.reportType === ReportTypeEnum.USER) {
@@ -59,13 +60,17 @@ export class DialogReportComponent implements OnInit {
       this._commentService.sendReport(this.data.id, newReport)
         .toPromise()
         .then(() => this.dialogRef.close());
+        }
     }
-    this.dialogRef.close()
   }
 
   private initialiseFormReport() {
     this.formData = new FormGroup({
-      text: new FormControl()
+      text: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(500)
+      ])
     })
   }
 }

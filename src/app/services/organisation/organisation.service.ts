@@ -9,6 +9,7 @@ import {Event} from "../../shared/models/event.model";
 import {Report} from "../../shared/models/report.model";
 import {OrganisationRequest} from "../../shared/models/organisation_request.model";
 import {map} from "rxjs/operators";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -93,9 +94,11 @@ export class OrganisationService {
       }))
   }
 
-  putOrganisation(organisation: Organisation, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
+  putOrganisation(id: string, form: FormGroup, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
     const formData = new FormData()
-    formData.append("name", organisation.name)
+    if (form.value.name != null){
+      formData.append("name", form.value.name)
+    }
     if (updatedProfilePicture !== null) {
       formData.append("profilePicture", updatedProfilePicture)
     }
@@ -103,7 +106,7 @@ export class OrganisationService {
 
       formData.append("bannerPicture", updatedBannerPicture)
     }
-    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisation.id}`, formData)
+    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${id}`, formData)
       .pipe(map(organisation => {
         this.organisationSubject.next(organisation);
         return organisation;
@@ -189,5 +192,9 @@ export class OrganisationService {
         this.organisationSubject.next(organisation);
         return invitedUsers;
       }))
+  }
+
+  leave(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${id}/leave`);
   }
 }

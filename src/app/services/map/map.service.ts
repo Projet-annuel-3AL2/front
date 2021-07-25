@@ -44,6 +44,7 @@ export class MapService {
   getAddressInfos(address: string): Observable<Address> {
     return this.http.get<Address>(`https://nominatim.openstreetmap.org/search?q=${address}&format=json`)
       .pipe(map((address: any) => {
+        console.log(address)
         const addr: Address = {
           house_number: undefined,
           country: undefined,

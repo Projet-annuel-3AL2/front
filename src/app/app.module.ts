@@ -49,7 +49,6 @@ import {CreatePostComponent} from "./components/create_/create-post/create-post.
 import {PickerModule} from "@ctrl/ngx-emoji-mart";
 import {CardUserManageEventComponent} from "./components/card_/card-user-manage-event/card-user-manage-event.component";
 import {CardUserManageOrganisationComponent} from "./components/card_/card-user-manage-organisation/card-user-manage-organisation.component";
-import {DialogResFriendshipRequestComponent} from "./components/dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {DialogReportComponent} from "./components/dialog_/dialog-report/dialog-report.component";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {ScrollingModule as ExperimentalScrollingModule} from "@angular/cdk-experimental/scrolling";
@@ -82,6 +81,8 @@ import {UserAskJoinOrganisationComponent} from "./components/card_/user-ask-join
 import {ImageUrlPipe} from "./pipes/image-url/image-url.pipe";
 import {NotificationsComponent} from "./components/notifications/notifications.component";
 import {CreateGroupDialogComponent} from "./components/dialog_/create-group-dialog/create-group-dialog.component";
+import {CardOrganisationLeaveComponent} from "./components/card_/card-organisation-leave/card-organisation-leave.component";
+import {MapSearchComponent} from "./components/map-search/map-search.component";
 
 @NgModule({
   declarations: [
@@ -118,7 +119,6 @@ import {CreateGroupDialogComponent} from "./components/dialog_/create-group-dial
     ConversationsListComponent,
     CardUserManageEventComponent,
     CardUserManageOrganisationComponent,
-    DialogResFriendshipRequestComponent,
     DialogReportComponent,
     DialogUpdateOrganisationComponent,
     DialogUpdateEventComponent,
@@ -141,7 +141,9 @@ import {CreateGroupDialogComponent} from "./components/dialog_/create-group-dial
     UserAskJoinOrganisationComponent,
     ImageUrlPipe,
     NotificationsComponent,
-    CreateGroupDialogComponent
+    CreateGroupDialogComponent,
+    CardOrganisationLeaveComponent,
+    MapSearchComponent
   ],
   imports: [
     BrowserModule,

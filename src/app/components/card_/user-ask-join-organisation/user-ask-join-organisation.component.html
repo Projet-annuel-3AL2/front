@@ -8,10 +8,11 @@
   </div>
   <p class="my-3"><a [routerLink]="['/organisation/' + organisation.id]">{{organisation.name}}</a></p>
   <div class="spacer"></div>
-  <button (click)="this.acceptRequest()" class="ml-auto button-accept-invitation" mat-raised-button>
+  <a (click)="this.rejectRequest()" class="button-reject-invitation" style="padding-right: 20px; padding-top: 13px" label="Rejeter l'invitation">
+    <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
+  </a>
+  <button (click)="this.acceptRequest()"  class="ml-auto button-accept-invitation" mat-raised-button>
     Accepter
   </button>
-  <button (click)="this.rejectRequest()" class="ml-auto button-reject-invitation" mat-raised-button>
-    Rejeter
-  </button>
+
 </div>

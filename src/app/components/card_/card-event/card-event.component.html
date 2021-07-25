@@ -39,7 +39,7 @@
       {{event.address?.house_number}}, {{event.address?.road}}, {{event.address?.town}} {{event.address?.postcode}}
       , {{event.address?.country}}</p>
   </div>
-  <div class="button-join">
+  <div class="button-join" *ngIf="isEnd()">
     <button (click)="this.joinEvent(event?.id)" *ngIf="!event.isMember" class="ml-auto button-join-event"
             mat-raised-button>
       Rejoindre

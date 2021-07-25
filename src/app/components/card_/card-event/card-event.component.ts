@@ -23,12 +23,13 @@ export class CardEventComponent implements OnInit {
   faMapMarked = faMapMarked;
   userSession: User;
   env = environment;
+  address: any;
 
   constructor(
     private _userService: UserService,
     private _eventService: EventService,
-    private _authService: AuthService,
-    private _mapService: MapService
+    private _mapService: MapService,
+    private _authService: AuthService
   ) {
   }
 
@@ -61,5 +62,9 @@ export class CardEventComponent implements OnInit {
     await this.getEvent();
     await this.getLocalisation();
     await this.canJoin();
+  }
+
+  isEnd(): boolean {
+    return new Date(this.event.endDate) > new Date(Date.now())
   }
 }

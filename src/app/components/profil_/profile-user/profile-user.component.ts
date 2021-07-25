@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {faCheckCircle, faEllipsisH, faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH, faUserPlus,faTimes} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ReportTypeEnum} from "../../../shared/ReportType.enum";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
@@ -33,6 +32,7 @@ export class ProfileUserComponent implements OnInit {
   offset: number = 0;
   limit: number = 10;
   user: User;
+  faTimes = faTimes;
   friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
@@ -68,14 +68,6 @@ export class ProfileUserComponent implements OnInit {
     this.user.isBlocked = await this._userService.hasBlocked(username).toPromise();
     this.user.friendshipStatus = await this._friendshipService.isFriendshipRequested(username).toPromise();
     this.user.organisations = await this._organisationService.whereIsAdmin(username).toPromise();
-  }
-
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
-    });
-    dialogRef.afterClosed().subscribe(() => this.updateUser(this.user.username));
   }
 
   showDialogueReport() {
@@ -162,6 +154,31 @@ export class ProfileUserComponent implements OnInit {
       error: err => {
         if (!environment.production) {
           console.log(err)
+        }
+      }
+    });
+  }
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
         }
       }
     });

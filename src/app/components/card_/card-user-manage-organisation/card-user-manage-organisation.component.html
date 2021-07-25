@@ -8,33 +8,43 @@
     <p class="my-3"><a [routerLink]="['/user/' + user.username]">  {{user.username}}</a>
       <fa-icon *ngIf="user.certification != null" [icon]="faCheckCircle"></fa-icon>
     </p>
-    <div *ngIf="user.id !== userSession.id" fxFlex fxLayoutAlign="end center">
-      <button [matMenuTriggerFor]="menu" class="button-gestion" mat-button>Gestion</button>
-      <mat-menu #menu="matMenu">
-        <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
-                class="ml-auto button-add-friend"
-                mat-menu-item>
-          <fa-icon [icon]="faUserPlus"></fa-icon>
-          Ajouter
-        </button>
-        <button (click)="this.dellFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
-                class="ml-auto button-add-friend" mat-menu-item matTooltip="Enlever de la list d'amis">
-          Enlever
-        </button>
-        <button (click)="this.showDialogueRespondFriendRequest()"
-                *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                class="ml-auto button-add-friend" mat-menu-item
-                matTooltip="Accepter ou Refuser la demande d'amis"> Répondre
-        </button>
-        <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
-                mat-menu-item> En Attente
-        </button>
-        <button (click)="this.deleteMembership(user.id)" *ngIf="isOwner || (!userIsAdmin && !userIsOwner) "
-                calss="button-remove-orga" mat-menu-item>
-          Retirer de l'Orga
-        </button>
-        <button (click)="this.giveAdmin(user.id)" *ngIf="isOwner && !userIsAdmin" mat-menu-item>Donner Admin</button>
-        <button (click)="this.removeAdmin(user.id)" *ngIf="isOwner && userIsAdmin" mat-menu-item>Retirer Admin</button>
-      </mat-menu>
+    <div *ngIf="user.username !== _authService.getCurrentUsername()">
+      <div  fxFlex fxLayoutAlign="end center">
+        <button [matMenuTriggerFor]="menu" class="button-gestion" mat-button>Gestion</button>
+        <mat-menu #menu="matMenu">
+          <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
+                  class="ml-auto button-add-friend"
+                  mat-menu-item><i aria-hidden="true" class="fa fa-user-plus"></i> Ajouter
+          </button>
+          <button (click)="this.dellFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
+                  class="ml-auto button-add-friend" mat-menu-item matTooltip="Enlever de la list d'amis">
+            Enlever
+          </button>
+          <div *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED">
+            <button mat-menu-item [matMenuTriggerFor]="resfFriendship">Répondre</button>
+          </div>
+          <button (click)="cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+                  class="ml-auto button-add-friend-disable"
+                  mat-raised-button><span>Invitation envoyé</span>
+          </button>
+          <button (click)="this.deleteMembership(user.id)" *ngIf="isOwner || (!userIsAdmin && !userIsOwner) " calss="button-remove-orga"mat-menu-item>
+            Retirer de l'Orga
+          </button>
+          <button (click)="this.giveAdmin(user.id)" *ngIf="isOwner && !userIsAdmin" mat-menu-item>Donner Admin</button>
+          <button (click)="this.removeAdmin(user.id)" *ngIf="isOwner && userIsAdmin" mat-menu-item>Retirer Admin</button>
+        </mat-menu>
+        <mat-menu #resfFriendship="matMenu">
+          <button (click)="this.acceptFriendship()"
+                  class="ml-auto button-add-friend" mat-menu-item
+                  matTooltip="Accepter la demande d'amis"
+                  matTooltipPosition="above"> accepter
+          </button>
+          <button (click)="this.delFriendshipRequest()"
+                  class="ml-auto button-add-friend" mat-menu-item
+                  matTooltip="Rejeter la demande d'amis"
+                  matTooltipPosition="above"> Rejeter
+          </button>
+        </mat-menu>
+      </div>
     </div>
   </div>

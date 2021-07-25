@@ -44,10 +44,7 @@ export class ProfileOrganisationComponent implements OnInit {
 //TODO refactor subscribe to route params and do not use snapshot
   ngOnInit(): void {
     this.organisationId = this.route.snapshot.params['id']
-    this._authService.getCurrentUser().subscribe()
-    this._authService.user.subscribe(user => {
-      this.userSession$ = user;
-    });
+
     this.updateData();
     this._organisationService.organisation.subscribe(organisation => {
       this.organisation$ = organisation;
@@ -135,10 +132,11 @@ export class ProfileOrganisationComponent implements OnInit {
   showDialogueUpdateOrganisation() {
     const dialogRef = this.dialogUpdateOrganisation.open(DialogUpdateOrganisationComponent, {
       width: '600px',
-      data: {organisation: this.organisation$, userSession: this.userSession$}
+      data: {organisation: this.organisation$}
     });
 
     dialogRef.afterClosed().subscribe(() => {
+      this.updateData();
     })
   }
 
@@ -160,10 +158,17 @@ export class ProfileOrganisationComponent implements OnInit {
     this.isOwner();
     this.isAdmin();
     this.getPostsOrganisation();
+
   }
 
   private getOrganisation() {
     this._organisationService.getOrganisation(this.organisationId).subscribe({
+      next: () => {
+        this._organisationService.organisation.subscribe(organisation => {
+          this.organisation$ = organisation;
+          this._titleService.setTitle(this.organisation$.name + " - "+environment.name);
+        })
+      },
       error: error => {
         if (!environment.production) {
           console.error('Error: ', error);

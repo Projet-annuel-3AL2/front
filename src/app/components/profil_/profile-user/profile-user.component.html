@@ -42,12 +42,17 @@
                           matTooltipPosition="above">
                     Retirer des amis
                   </button>
-                  <button (click)="this.showDialogueRespondFriendRequest()"
-                          *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                          class="ml-auto button-add-friend" mat-raised-button
-                          matTooltip="Accepter ou Refuser la demande d'amis"
-                          matTooltipPosition="above">Répondre
-                  </button>
+                    <a (click)="this.delFriendshipRequest()" class=" button-reject-invitation"
+                       *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+                       style=" padding-right: 10px" label="Rejeter l'invitation">
+                      <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
+                    </a>
+                    <button (click)="this.acceptFriendship()"
+                            *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+                            class="button-add-friend" mat-raised-button
+                            matTooltip="Accepter la demande d'amis"
+                            matTooltipPosition="above"> accepter
+                    </button>
                   <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
                           class="ml-auto button-add-friend-disable"
                           mat-raised-button><span>Invitation envoyé</span>
@@ -62,7 +67,7 @@
                   <mat-menu #menu="matMenu" xPosition="before">
                     <button
                       (click)="showDialogueCreateEvent()"
-                      *ngIf="user.username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== undefined"
+                      *ngIf="user.username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== null"
                       mat-menu-item>Créer un évènement
                     </button>
                     <div *ngIf="user.username === _authService.getCurrentUsername()">

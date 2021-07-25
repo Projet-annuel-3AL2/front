@@ -8,7 +8,6 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -20,7 +19,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
 
   @Input('user') user: User = new User();
   @Input('organisation') organisation: Organisation;
-  @Input('userSession') userSession: User;
   @Input('isOwner') isOwner: boolean;
   faCheckCircle = faCheckCircle;
   faUserPlus = faUserPlus;
@@ -74,17 +72,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
           console.log(err)
         }
       }
-    })
-  }
-
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.canAddFriend()
     })
   }
 
@@ -149,5 +136,37 @@ export class CardUserManageOrganisationComponent implements OnInit {
         }
       })
     }
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
+  }
+
+  cancelRequest() {
+    this._friendshipService.cancelFriendRequest(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 }

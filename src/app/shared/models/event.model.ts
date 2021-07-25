@@ -7,8 +7,8 @@ import {Address} from "./address.model";
 
 export class Event {
   id: string;
-  name: String;
-  description: String;
+  name: string;
+  description: string;
   startDate: Date;
   endDate: Date;
   latitude: number;

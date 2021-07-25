@@ -78,4 +78,8 @@ export class PageEventComponent implements OnInit {
     dialogRef.afterClosed().subscribe(() => {
     });
   }
+
+  isEnd(): boolean {
+    return new Date(this.event.endDate) < new Date(Date.now())
+  }
 }

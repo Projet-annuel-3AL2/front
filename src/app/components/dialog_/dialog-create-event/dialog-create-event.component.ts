@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Event} from "../../../shared/models/event.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventService} from "../../../services/event/event.service";
@@ -20,12 +20,12 @@ export class DialogCreateEventComponent implements OnInit {
   categories: Category[];
   addresses: unknown[];
   addressSearchTimeOut: number;
-  formData: FormGroup;
   limitParticipant = new FormControl(2, Validators.min(2));
-  newEvent: Event;
   postalAddress: any;
   media: File;
   mediaURL: string;
+  newEventForm: FormGroup;
+  isSubmitted: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
@@ -34,30 +34,33 @@ export class DialogCreateEventComponent implements OnInit {
               private _organisationService: OrganisationService,
               private _snackBar: MatSnackBar,
               private _mapService: MapService,
+              private _formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
 
   }
 
   ngOnInit(): void {
-    this.newEvent = new Event();
-    this.newEvent.category = new Category();
     this.media = null;
     this.updateData();
+    this.initializeFormGroup();
   }
 
   onClickSubmit() {
-    if (this.newEvent.startDate > this.newEvent.endDate) {
+    if (this.newEventForm.value.startDate > this.newEventForm.value.endDate) {
       this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
         duration: 3000
       });
     }
-    this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
-      this.newEvent.latitude = address.latitude;
-      this.newEvent.longitude = address.longitude;
-      this._eventService.createEvent(this.newEvent, this.media)
-        .toPromise()
-        .then(() => this.dialogRef.close());
-    });
+    if (this.newEventForm.valid){
+      this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
+        this.newEventForm.value.latitude = address.latitude;
+        this.newEventForm.value.longitude = address.longitude;
+        this._eventService.createEvent(this.newEventForm, this.media, address[0].lat, address[0].lon, this.data?.organisation)
+          .toPromise()
+          .then(() => this.dialogRef.close());
+      });
+    }
+
   }
 
   onNoClick(): void {
@@ -65,13 +68,15 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   searchAddress($event: any) {
-    clearTimeout(this.addressSearchTimeOut);
+    clearTimeout(this.postalAddress);
     this.addressSearchTimeOut = setTimeout(() => {
       if ($event.target.value === undefined || $event.target.value === '') {
         this.addresses = undefined;
         return;
       }
-      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => this.addresses = addresses);
+      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => {
+        this.addresses = addresses
+      });
     }, 500);
   }
 
@@ -107,8 +112,37 @@ export class DialogCreateEventComponent implements OnInit {
     this._authService.user
       .toPromise()
       .then(user => {
-        this.newEvent.user = user;
+        this.newEventForm.value.user = user;
       });
-    this.newEvent.organisation = this.data.organisation ? this.data.organisation : undefined;
+  }
+
+  private initializeFormGroup() {
+    this.newEventForm = this._formBuilder.group({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(30)
+      ]),
+      description: new FormControl('', []),
+      participationLimit: new FormControl('', [
+        Validators.required,
+        Validators.min(2),
+        Validators.max(1000),
+        Validators.pattern('^[0-9]*$')
+      ]),
+      category: new FormControl('', [
+        Validators.required
+      ]),
+      postalAddress: new FormControl('', [
+        Validators.required
+      ]),
+      startDate: new FormControl('', [
+        Validators.required
+      ]),
+      endDate: new FormControl('', [
+        Validators.required
+      ]),
+      picture: new FormControl('',[])
+    })
   }
 }

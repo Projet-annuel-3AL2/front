@@ -3,10 +3,9 @@ import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {UserService} from "../../../services/user/user.service";
-import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faTimes, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -23,6 +22,7 @@ export class CardUserManageEventComponent implements OnInit {
   faUserPlus = faUserPlus;
   allFriendRequestStatus = FriendRequestStatus;
   env: any;
+  faTimes=faTimes;
 
   constructor(private _friendshipService: FriendshipService,
               private _eventService: EventService,
@@ -52,17 +52,6 @@ export class CardUserManageEventComponent implements OnInit {
       .then(() => this.user.friendshipStatus = this.allFriendRequestStatus.NONE);
   }
 
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.canAdd();
-    })
-  }
-
   cancelRequest() {
     this._friendshipService.cancelFriendRequest(this.user.username).toPromise().then(() => {
       this.user.friendshipStatus = FriendRequestStatus.NONE;
@@ -71,5 +60,17 @@ export class CardUserManageEventComponent implements OnInit {
 
   deleteParticipantEvent(userId: string) {
     this._eventService.deleteParticipantEvent(this.eventId, userId).toPromise().then();
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.id).toPromise().then(() => {
+      this.user.friendshipStatus = FriendRequestStatus.BEFRIENDED;
+    })
+  }
+
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).toPromise().then(() => {
+      this.user.friendshipStatus = FriendRequestStatus.NONE;
+    })
   }
 }

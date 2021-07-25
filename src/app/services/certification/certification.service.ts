@@ -13,6 +13,6 @@ export class CertificationService {
   }
 
   postCertification(certificationRequest: CertificationRequest): Observable<void> {
-    return this.http.post<void>(`${environment.apiBaseUrl}/certification/request`, certificationRequest, {headers: {'Access-Control-Allow-Origin': '*'}});
+    return this.http.post<void>(`${environment.apiBaseUrl}/certification/request`, certificationRequest);
   }
 }
