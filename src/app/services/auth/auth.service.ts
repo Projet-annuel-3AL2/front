@@ -40,7 +40,8 @@ export class AuthService {
       mail
     })
       .pipe(map(user => {
-        this.cookieService.set('user', user.username, 3, "", environment.domain, false, 'Lax');
+        console.log(environment.domain)
+        this.cookieService.set('user', user.username, 3, "", "pooetitu.xyz", false, 'Lax');
         this.updateUser();
         return user;
       }));
@@ -52,7 +53,7 @@ export class AuthService {
       password
     })
       .pipe(map(user => {
-        this.cookieService.set('user', user.username, 3, "", environment.domain, false, 'Lax');
+        this.cookieService.set('user', user.username, 3, "", "pooetitu.xyz", false, 'Lax');
         this.updateUser();
         return user;
       }));
