@@ -48,8 +48,8 @@ export class DialogUpdateEventComponent implements OnInit {
     if (this.formData.value.startDate < this.formData.value.endDate) {
       if (this.formData.valid) {
         this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
-          this.formData.value.latitude = address[0].lat;
-          this.formData.value.longitude = address[0].lon;
+          this.formData.value.latitude = address.latitude;
+          this.formData.value.longitude = address.longitude;
 
           this._eventService.updateEvent(this.data.event.id, this.formData, this.media)
             .toPromise()
@@ -148,7 +148,7 @@ export class DialogUpdateEventComponent implements OnInit {
     });
 
 
-    this.formData.setValue({
+    this.formData.patchValue({
       name: this.data.event.name,
       description: this.data.event.description,
       participantsLimit: this.data.event.participantsLimit,

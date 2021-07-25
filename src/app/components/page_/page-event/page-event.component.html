@@ -18,7 +18,7 @@
                 </div>
               </div>
               <div fxLayoutAlign="row center end">
-                <div *ngIf="!event?.isOwner">
+                <div *ngIf="!event?.isOwner && !isEnd()">
                   <button (click)="this.joinEvent()" *ngIf="!event?.isMember" class="ml-auto"
                           mat-raised-button>
                     <fa-icon [icon]="faUserPlus"></fa-icon>

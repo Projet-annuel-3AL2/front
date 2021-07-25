@@ -37,4 +37,5 @@ export class User {
   organisationInvitations?: Organisation[];
   friendRequests: FriendRequest[];
   sentFriendRequests: FriendRequest[];
+  organisationWhereAdmin: Organisation[];
 }

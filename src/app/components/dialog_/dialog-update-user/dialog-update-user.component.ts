@@ -64,7 +64,7 @@ export class DialogUpdateUserComponent implements OnInit {
   }
 
   onProfileBannerSelected() {
-    const inputNode: any = document.querySelector('#profileBanner');
+    const inputNode: any = document.querySelector('#bannerPicture');
     if (typeof (FileReader) !== 'undefined') {
 
       const reader = new FileReader();

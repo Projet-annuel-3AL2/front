@@ -23,8 +23,9 @@
           <div *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED">
             <button mat-menu-item [matMenuTriggerFor]="resfFriendship">Répondre</button>
           </div>
-          <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
-                  mat-menu-item> En Attente
+          <button (click)="cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+                  class="ml-auto button-add-friend-disable"
+                  mat-raised-button><span>Invitation envoyé</span>
           </button>
           <button (click)="this.deleteMembership(user.id)" *ngIf="isOwner || (!userIsAdmin && !userIsOwner) " calss="button-remove-orga"mat-menu-item>
             Retirer de l'Orga

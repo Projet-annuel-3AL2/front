@@ -68,13 +68,15 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   searchAddress($event: any) {
-    clearTimeout(this.addressSearchTimeOut);
+    clearTimeout(this.postalAddress);
     this.addressSearchTimeOut = setTimeout(() => {
       if ($event.target.value === undefined || $event.target.value === '') {
         this.addresses = undefined;
         return;
       }
-      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => this.addresses = addresses);
+      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => {
+        this.addresses = addresses
+      });
     }, 500);
   }
 

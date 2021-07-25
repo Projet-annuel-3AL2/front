@@ -163,4 +163,10 @@ export class CardUserManageOrganisationComponent implements OnInit {
       }
     })
   }
+
+  cancelRequest() {
+    this._friendshipService.cancelFriendRequest(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
+  }
 }

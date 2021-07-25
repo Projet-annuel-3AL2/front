@@ -48,7 +48,7 @@ export class UserCardComponent implements OnInit {
   }
 
   acceptFriendship() {
-    this._friendshipService.acceptFriendship(this.user.id).toPromise().then(() =>{
+    this._friendshipService.acceptFriendship(this.user.username).toPromise().then(() =>{
       this.user.friendshipStatus = FriendRequestStatus.BEFRIENDED;
     })
   }

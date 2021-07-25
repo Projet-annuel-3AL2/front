@@ -67,7 +67,7 @@
                   <mat-menu #menu="matMenu" xPosition="before">
                     <button
                       (click)="showDialogueCreateEvent()"
-                      *ngIf="user.username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== undefined"
+                      *ngIf="user.username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== null"
                       mat-menu-item>Créer un évènement
                     </button>
                     <div *ngIf="user.username === _authService.getCurrentUsername()">
@@ -99,18 +99,6 @@
                       <button (click)="sendJoinOrganisation(organisation.id)"
                               mat-menu-item>{{organisation.name}}</button>
                     </div>
-                  </mat-menu>
-                  <mat-menu #resfFriendship="matMenu">
-                    <button (click)="this.acceptFriendship()"
-                            class="ml-auto button-add-friend" mat-menu-item
-                            matTooltip="Accepter la demande d'amis"
-                            matTooltipPosition="above"> accepter
-                    </button>
-                    <button (click)="this.delFriendshipRequest()"
-                            class="ml-auto button-add-friend" mat-menu-item
-                            matTooltip="Rejeter la demande d'amis"
-                            matTooltipPosition="above"> Rejeter
-                    </button>
                   </mat-menu>
                 </div>
               </div>
