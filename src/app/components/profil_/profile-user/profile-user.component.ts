@@ -198,11 +198,15 @@ export class ProfileUserComponent implements OnInit {
   }
 
   blockUser() {
-    this._userService.block(this.user.username).toPromise().then();
+    this._userService.block(this.user.username)
+      .toPromise()
+      .then(()=>this.user.isBlocked = true);
   }
 
   unblockUser() {
-    this._userService.unblock(this.user.username).toPromise().then();
+    this._userService.unblock(this.user.username)
+      .toPromise()
+      .then(()=>this.user.isBlocked = false);
   }
 
   removePost($event: Post) {
