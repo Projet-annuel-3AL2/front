@@ -41,8 +41,8 @@ export class PageEventComponent implements OnInit {
   }
 
   async updateEvent(eventId: string) {
-    const event = await this._eventService.getEventById(eventId).toPromise();
-    this._titleService.setTitle(event.name + " - " + environment.name);
+    this.event = await this._eventService.getEventById(eventId).toPromise();
+    this._titleService.setTitle(this.event.name + " - " + environment.name);
     this._eventService.getEventPosts(eventId).toPromise().then(posts => this.event.posts = posts);
     this._eventService.getParticipants(eventId).toPromise().then(participants => this.event.participants = participants);
     this._eventService.getOwner(eventId).toPromise().then(owner => this.event.user = owner);
