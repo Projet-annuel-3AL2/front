@@ -24,15 +24,15 @@
         <mat-form-field appearance="fill">
           <mat-label>Adresse de l'événement</mat-label>
           <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
-            <input (input)="searchAddress($event)" [formControlName]="'postalAddress'" [matAutocompleteConnectedTo]="origin"
+            <input (input)="searchAddress($event)" [(ngModel)]="addressInput" [formControlName]="'postalAddress'" [matAutocompleteConnectedTo]="origin"
                    [matAutocomplete]="auto" matInput
                    name="postalAddress" placeholder="Adresse" required>
           </div>
           <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
             <mat-option *ngFor="let option of addresses"
-                        [value]="option.address?.house_number + ' ' + option.address?.road + ', ' + option.address?.town +' '+ option.address?.postcode+', '+ option.address?.country">
-              {{option.address?.house_number}} {{option.address?.road}}
-              , {{option.address?.town}} {{option.address?.postcode}}, {{option.address?.country}}</mat-option>
+                        [value]="option?.house_number + ' ' + option?.road + ', ' + option?.town +' '+ option?.postcode+', '+ option?.country">
+              {{option?.house_number}} {{option?.road}}
+              , {{option?.town}} {{option?.postcode}}, {{option?.country}}</mat-option>
           </mat-autocomplete>
 
         </mat-form-field>

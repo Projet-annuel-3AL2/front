@@ -33,14 +33,14 @@ export class EventService {
     formData.append("latitude", latitude.toString());
     formData.append("longitude", longitude.toString());
     formData.append("participantsLimit", newEvent.value.participationLimit.toString());
-    formData.append("category", newEvent.value.category.id);
+    formData.append("category", newEvent.value.category);
+    console.log(newEvent.value.category)
     if (organisation) {
       formData.append("organisation", organisation.id);
     }
-    if (file !== undefined) {
+    if (file) {
       formData.append("event_media", file);
     }
-    console.log(formData.get("name"))
     return this.http.post<Event>(`${environment.apiBaseUrl}/event/`, formData);
   }
 

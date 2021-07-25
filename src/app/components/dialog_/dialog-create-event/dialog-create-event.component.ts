@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Event} from "../../../shared/models/event.model";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventService} from "../../../services/event/event.service";
 import {CategoryService} from "../../../services/category/category.service";
@@ -10,6 +9,7 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MapService} from "../../../services/map/map.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {Address} from "../../../shared/models/address.model";
 
 @Component({
   selector: 'app-dialog-create-event',
@@ -18,14 +18,13 @@ import {AuthService} from "../../../services/auth/auth.service";
 })
 export class DialogCreateEventComponent implements OnInit {
   categories: Category[];
-  addresses: unknown[];
+  addresses: Address[];
   addressSearchTimeOut: number;
   limitParticipant = new FormControl(2, Validators.min(2));
-  postalAddress: any;
   media: File;
   mediaURL: string;
   newEventForm: FormGroup;
-  isSubmitted: boolean = false;
+  addressInput: string;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
@@ -52,10 +51,10 @@ export class DialogCreateEventComponent implements OnInit {
       });
     }
     if (this.newEventForm.valid){
-      this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
+      this._mapService.getAddressInfos(this.addressInput).toPromise().then(address => {
         this.newEventForm.value.latitude = address.latitude;
         this.newEventForm.value.longitude = address.longitude;
-        this._eventService.createEvent(this.newEventForm, this.media, address[0].lat, address[0].lon, this.data?.organisation)
+        this._eventService.createEvent(this.newEventForm, this.media, address.latitude, address.longitude, this.data?.organisation)
           .toPromise()
           .then(() => this.dialogRef.close());
       });
@@ -68,15 +67,15 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   searchAddress($event: any) {
-    clearTimeout(this.postalAddress);
+    clearTimeout(this.addressSearchTimeOut);
     this.addressSearchTimeOut = setTimeout(() => {
       if ($event.target.value === undefined || $event.target.value === '') {
         this.addresses = undefined;
         return;
       }
-      this._mapService.searchAddresses($event.target.value).toPromise().then(addresses => {
-        this.addresses = addresses
-      });
+      this._mapService.searchAddresses($event.target.value)
+        .toPromise()
+        .then(addresses => this.addresses = addresses,()=>{});
     }, 500);
   }
 
@@ -108,7 +107,6 @@ export class DialogCreateEventComponent implements OnInit {
 
   private updateData(): void {
     this.getAllCategories();
-    this.postalAddress = null;
     this._authService.user
       .toPromise()
       .then(user => {
