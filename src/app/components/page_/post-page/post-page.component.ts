@@ -34,15 +34,16 @@ export class PostPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._activatedRoute.params.subscribe(params => this.update(params["postId"]));
+    this._activatedRoute.params.subscribe(params => this.update(params["postId"]).then());
   }
 
-  update(postId: string): void {
-    this._postService.getPostById(postId).toPromise().then(post => {
+  async update(postId: string): Promise<void> {
+    await this._postService.getPostById(postId).toPromise().then(post => {
       this.post = post;
       this._titleService.setTitle(post.text + " - " + environment.name);
     });
-    this._postService.getComments(postId).toPromise().then(comments => this.post.comments = comments);
+    await this._postService.sharedPost(postId).toPromise().then(shared=> this.post.sharesPost = shared);
+    await this._postService.getComments(postId).toPromise().then(comments => this.post.comments = comments);
   }
 
   addEmoji($event: any) {
