@@ -38,7 +38,7 @@ export class DialogUpdateUserComponent implements OnInit {
   }
 
   onClickSubmit() {
-    this._userService.putUser(this.updatedUser, this.updatedProfilePicture, this.updatedBannerPicture)
+    this._userService.putUser(this.formData, this.updatedProfilePicture, this.updatedBannerPicture)
       .toPromise()
       .then(() => this.dialogRef.close());
   }

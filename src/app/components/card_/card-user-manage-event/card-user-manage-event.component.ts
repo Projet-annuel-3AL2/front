@@ -3,7 +3,7 @@ import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
 import {UserService} from "../../../services/user/user.service";
-import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faTimes, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
@@ -63,28 +63,14 @@ export class CardUserManageEventComponent implements OnInit {
   }
 
   acceptFriendship() {
-    this._friendshipService.acceptFriendship(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._friendshipService.acceptFriendship(this.user.id).toPromise().then(() => {
+      this.user.friendshipStatus = FriendRequestStatus.BEFRIENDED;
+    })
   }
 
   delFriendshipRequest() {
-    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
+    this._friendshipService.rejectFriendRequest(this.user.username).toPromise().then(() => {
+      this.user.friendshipStatus = FriendRequestStatus.NONE;
     })
   }
 }

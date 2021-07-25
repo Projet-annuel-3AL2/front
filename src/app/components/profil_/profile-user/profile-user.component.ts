@@ -70,14 +70,6 @@ export class ProfileUserComponent implements OnInit {
     this.user.organisations = await this._organisationService.whereIsAdmin(username).toPromise();
   }
 
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.username}
-    });
-    dialogRef.afterClosed().subscribe(() => this.updateUser());
-  }
-
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
@@ -167,7 +159,7 @@ export class ProfileUserComponent implements OnInit {
     });
   }
   delFriendshipRequest() {
-    this._friendshipService.rejectFriendRequest(this.username).subscribe({
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.NONE;
       },
@@ -180,7 +172,7 @@ export class ProfileUserComponent implements OnInit {
   }
 
   acceptFriendship() {
-    this._friendshipService.acceptFriendship(this.username).subscribe({
+    this._friendshipService.acceptFriendship(this.user.username).subscribe({
       next: () => {
         this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
       },

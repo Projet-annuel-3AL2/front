@@ -21,18 +21,18 @@
             matTooltipPosition="above">
       Retirer des amis
     </button>
-    <button (click)="cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+    <button (click)="cancelRequest()" *ngIf="user.friendshipStatus === statusEnum.PENDING"
             class="ml-auto button-add-friend-disable"
             mat-raised-button><span>Invitation envoyé</span>
     </button>
     <div class="">
       <a (click)="this.delFriendshipRequest()" class=" button-reject-invitation"
-         *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+         *ngIf="user.friendshipStatus === statusEnum.RECEIVED"
          style=" padding-right: 10px" label="Rejeter l'invitation">
         <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
       </a>
       <button (click)="this.acceptFriendship()"
-              *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
+              *ngIf="user.friendshipStatus === statusEnum.RECEIVED"
               class="button-add-friend" mat-raised-button
               matTooltip="Accepter la demande d'amis"
               matTooltipPosition="above"> accepter

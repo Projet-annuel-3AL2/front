@@ -46,39 +46,21 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   onClickSubmit() {
-    if (this.newEvent.startDate > this.newEvent.endDate) {
+    if (this.newEventForm.value.startDate > this.newEventForm.value.endDate) {
       this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
-                 duration: 3000
+        duration: 3000
       });
-    if (this.newEventForm.value.startDate < this.newEventForm.value.endDate) {
-      this.isSubmitted = true;
-      if(this.newEventForm.valid){
-        this._mapService.getAddressInfos(this.newEventForm.value.postalAddress).subscribe(address => {
-          this._eventService.createEvent(this.newEventForm, this.media, address[0].lat, address[0].lon, this.data?.organisation).subscribe({
-            next: () => {
-              this.dialogRef.close()
-            },
-            error: err => {
-              if (!environment.production) {
-                console.log(err);
-              }
-            }
-          });
-        });
-      }
-
-    } else {
-      this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
- 
-      
     }
-    this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
-      this.newEvent.latitude = address.latitude;
-      this.newEvent.longitude = address.longitude;
-      this._eventService.createEvent(this.newEvent, this.media)
-        .toPromise()
-        .then(() => this.dialogRef.close());
-    });
+    if (this.newEventForm.valid){
+      this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
+        this.newEventForm.value.latitude = address.latitude;
+        this.newEventForm.value.longitude = address.longitude;
+        this._eventService.createEvent(this.newEventForm, this.media, address[0].lat, address[0].lon, this.data?.organisation)
+          .toPromise()
+          .then(() => this.dialogRef.close());
+      });
+    }
+
   }
 
   onNoClick(): void {
@@ -128,7 +110,7 @@ export class DialogCreateEventComponent implements OnInit {
     this._authService.user
       .toPromise()
       .then(user => {
-        this.newEvent.user = user;
+        this.newEventForm.value.user = user;
       });
   }
 

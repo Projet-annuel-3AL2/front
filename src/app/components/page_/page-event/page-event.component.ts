@@ -76,7 +76,6 @@ export class PageEventComponent implements OnInit {
       data: {event: this.event}
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.updateEvent();
     });
   }
 

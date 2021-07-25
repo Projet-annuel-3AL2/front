@@ -13,18 +13,18 @@
   <mat-menu #menu="matMenu" >
     <div >
       <button (click)="this.deleteParticipantEvent(user.id)" mat-menu-item>Retirer Participant</button>
-      <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
+      <button (click)="this.askFriend()" *ngIf="user.friendshipStatus === allFriendRequestStatus.NONE"
               class="ml-auto button-add-friend"
               mat-menu-item><i aria-hidden="true" class="fa fa-user-plus"></i> Ajouter
       </button>
-      <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
+      <button (click)="this.removeFriend()" *ngIf="user.friendshipStatus === allFriendRequestStatus.BEFRIENDED"
               class="ml-auto button-add-friend" mat-menu-item matTooltip="Enlever de la list d'amis">
         Enlever
       </button>
-      <div *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED">
+      <div *ngIf="user.friendshipStatus === allFriendRequestStatus.RECEIVED">
         <button mat-menu-item [matMenuTriggerFor]="resfFriendship">Répondre</button>
       </div>
-      <button *ngIf="friendshipRequest === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
+      <button *ngIf="user.friendshipStatus === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
               mat-menu-item> En Attente
       </button>
     </div>

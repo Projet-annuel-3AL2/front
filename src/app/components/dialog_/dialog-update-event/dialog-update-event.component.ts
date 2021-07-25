@@ -47,20 +47,13 @@ export class DialogUpdateEventComponent implements OnInit {
   onClickSubmit() {
     if (this.formData.value.startDate < this.formData.value.endDate) {
       if (this.formData.valid) {
-        this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
+        this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
           this.formData.value.latitude = address[0].lat;
           this.formData.value.longitude = address[0].lon;
 
-          this._eventService.updateEvent(this.data.event.id, this.formData, this.media).subscribe({
-            next: () => {
-              this.dialogRef.close()
-            },
-            error: err => {
-              if (!environment.production) {
-                console.log(err);
-              }
-            }
-          });
+          this._eventService.updateEvent(this.data.event.id, this.formData, this.media)
+            .toPromise()
+            .then(() => this.dialogRef.close())
         });
       }
     } else {
@@ -110,18 +103,11 @@ export class DialogUpdateEventComponent implements OnInit {
     this.getCategory();
     this.postalAddress = null;
     this.media = null;
-    this.updateEvent.organisation = this.data.event.organisation != null ? this.data.event.organisation : null;
-    await this._authService.user.subscribe(user => {
-      this.updateEvent.user = user;
-    });
-    this._eventService.getEventById(this.data.event.id).toPromise().then(event => this.updateEvent = event);
 
-    await this._eventService.event.subscribe(event => {
-      this._mapService.getAddressFromLatLng(event.latitude, event.longitude).subscribe( addressT => {
-        const address: any = addressT;
-        this.postalAddress = `${address?.house_number} ${address?.road}, ${address?.town} ${address?.postcode}, ${address?.country} `
-      });
-    })
+    this._mapService.getAddressFromLatLng(this.data.event.latitude, this.data.event.longitude).subscribe( addressT => {
+      const address: any = addressT;
+      this.postalAddress = `${address?.house_number} ${address?.road}, ${address?.town} ${address?.postcode}, ${address?.country} `
+    });
   }
 
   private getAllCategories() {
