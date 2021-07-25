@@ -41,7 +41,7 @@ export class AuthService {
     })
       .pipe(map(user => {
         console.log(environment.domain)
-        this.cookieService.set('user', user.username, 3, "", environment.domain, false, 'Lax');
+        this.cookieService.set('user', user.username,{sameSite:"Lax",expires:3});
         this.updateUser();
         return user;
       }));
@@ -53,7 +53,7 @@ export class AuthService {
       password
     })
       .pipe(map(user => {
-        this.cookieService.set('user', user.username, 3, "", environment.domain, false, 'Lax');
+        this.cookieService.set('user', user.username,{sameSite:"Lax",expires:3});
         this.updateUser();
         return user;
       }));
