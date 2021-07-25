@@ -9,6 +9,7 @@ import {Subscription, timer} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
 import {DialogCreatePostComponent} from "../../dialog_/dialog-create-post/dialog-create-post.component";
 import {MediaService} from "../../../services/media/media.service";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'post',
@@ -70,13 +71,25 @@ export class PostComponent implements OnInit {
   likePost() {
     this._postService.likePost(this.post.id)
       .toPromise()
-      .then(() => this.post.isLiked = true);
+      .then(() => {
+        this.post.isLiked = true;
+        this._authService.user
+          .pipe(take(1))
+          .toPromise()
+          .then(user=>this.post.likes.push(user));
+      });
   }
 
   dislikePost() {
     this._postService.dislikePost(this.post.id)
       .toPromise()
-      .then(() => this.post.isLiked = false);
+      .then(() => {
+        this.post.isLiked = false;
+        this._authService.user
+          .pipe(take(1))
+          .toPromise()
+          .then(user=>this.post.likes = this.post.likes.filter(user1=>user1.id !== user.id));
+      });
   }
 
   sharePost() {
