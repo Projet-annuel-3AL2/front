@@ -1,36 +1,36 @@
-<div *ngIf="(_organisationService.organisation|async) != undefined" class="row m-0">
+<div *ngIf="organisation != undefined" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="orga-card-full">
-        <img [src]="(_organisationService.organisation|async).bannerPicture?.link | imageUrl:1360:906" alt=""
+        <img [src]="organisation?.bannerPicture?.link | imageUrl:1360:906" alt=""
              class="rounded"
              height="300px"
              style="object-fit: cover" width="100%">
         <div class="orga-card-display">
           <div class="orga-card-div">
             <div class="orga-card-img-profil">
-              <img [src]="(_organisationService.organisation|async).profilePicture?.link | imageUrl"
+              <img [src]="organisation?.profilePicture?.link | imageUrl"
                    alt=""
                    class="rounded-circle"
                    height="75" style="object-fit: cover" width="75">
             </div>
             <div class="orga-card-name">
-              <p>{{(_organisationService.organisation|async).name}}</p>
+              <p>{{organisation?.name}}</p>
             </div>
             <div class="orga-card-certification">
               <fa-icon [icon]="faCheckCircle"></fa-icon>
             </div>
             <div class="orga-card-empty"></div>
-            <div class="orga-card-button" *ngIf="!isAdminB || !isOwnerB">
-              <button (click)="this.followOrganisation()" *ngIf="!isFollowing" class="ml-auto button-join-event"
+            <div class="orga-card-button" *ngIf="!organisation.isAdmin || !organisation.isOwner">
+              <button (click)="this.followOrganisation()" *ngIf="!organisation.isFollower" class="ml-auto button-join-event"
                       mat-raised-button>
                 <fa-icon [icon]="faUserPlus"></fa-icon>
                 Suivre
               </button>
-              <button (click)="this.unfollowOrganisation()" *ngIf="isFollowing" class="ml-auto mat-button-event"
+              <button (click)="this.unfollowOrganisation()" *ngIf="organisation.isFollower" class="ml-auto mat-button-event"
                       mat-raised-button>Ne plus suivre
               </button>
             </div>
@@ -43,7 +43,7 @@
                 </button>
                 <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
                   <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                  <div *ngIf="isOwnerB || isAdminB">
+                  <div *ngIf="organisation.isOwner || organisation.isAdmin">
                     <button (click)="showDialogueUpdateOrganisation()" mat-menu-item>Modifier</button>
                     <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
                   </div>
@@ -56,56 +56,48 @@
       <div class="tab-event  ">
         <mat-tab-group dynamicHeight mat-align-tabs="center">
           <mat-tab label="Post">
-            <app-list-post [posts]="(_organisationService.organisation|async).posts"></app-list-post>
-            <div *ngIf="(_organisationService.organisation|async).posts?.length === 0">
+            <app-list-post [posts]="organisation?.posts"></app-list-post>
+            <div *ngIf="organisation?.posts?.length === 0">
               <p style="text-align: center"> Cette organisation n'a pas de Posts</p>
             </div>
           </mat-tab>
           <mat-tab label="Membres">
-            <div *ngIf="!isOwnerB && !isAdminB">
-              <mat-list-item *ngFor="let member of (_organisationService.members|async)"
+            <div *ngIf="!organisation.isOwner && !organisation.isAdmin">
+              <mat-list-item *ngFor="let member of organisation.members"
                              style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
                 <app-user-card [user]="member"></app-user-card>
               </mat-list-item>
             </div>
-            <div *ngIf="isAdminB && !isOwnerB" class="my-3">
-              <div *ngFor="let member of (_organisationService.members|async);" class="display-list-user">
-                <app-card-user-manage-organisation [isOwner]="false"
-                                                   [organisation]="(_organisationService.organisation|async)"
+            <div *ngIf="organisation.isAdmin || organisation.isOwner" class="my-3">
+              <div *ngFor="let member of organisation.members;" class="display-list-user">
+                <app-card-user-manage-organisation [isOwner]="organisation.isOwner"
+                                                   [organisation]="organisation"
                                                     [user]="member"
                                                    class="m-0"></app-card-user-manage-organisation>
               </div>
             </div>
-            <div *ngIf="isOwnerB" class="my-3">
-              <div *ngFor="let member of (_organisationService.members|async);" class="display-list-user">
-                <app-card-user-manage-organisation [isOwner]="true"
-                                                   [organisation]="(_organisationService.organisation|async)"
-                                                   [user]="member"
-                                                   class="m-0"></app-card-user-manage-organisation>
-              </div>
-            </div>
-            <div *ngIf="(_organisationService.members|async)?.length === 0">
+            <div *ngIf="organisation.members?.length === 0">
               <p style="text-align: center"> Cette organisation n'a pas de membre</p>
             </div>
           </mat-tab>
           <mat-tab label="Événements">
-            <div *ngFor="let event of (_organisationService.eventsCreated|async);">
+            <div *ngFor="let event of organisation.events;">
               <div class="event-list-item m-2 flex">
                 <app-card-event [event]="event"></app-card-event>
               </div>
             </div>
-            <div *ngIf="(_organisationService.eventsCreated|async)?.length === 0">
+            <div *ngIf="organisation.events?.length === 0">
               <p style="text-align: center"> Cette organisation n'a pas créer d'évènement</p>
             </div>
           </mat-tab>
-          <div *ngIf="isAdminB && isOwnerB">
+          <div *ngIf="organisation.isAdmin && organisation.isOwner">
             <mat-tab label="Gestion">
-              <mat-list-item *ngFor="let user of (_organisationService.organisation|async)?.invitedUsers"
+              <mat-list-item *ngFor="let user of organisation?.invitedUsers"
                              style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
-                <app-user-join-organisation [organisationId]="organisationId"
+                <app-user-join-organisation [organisationId]="organisation.id"
                                             [user]="user"></app-user-join-organisation>
               </mat-list-item>
-              <div *ngIf="(_organisationService.organisation|async).invitedUsers?.length === 0">
+              <div *ngIf="organisation?.invitedUsers?.length === 0">
                 <p style="text-align: center">Il n'y a pas de demande en cours</p>
               </div>
             </mat-tab>
