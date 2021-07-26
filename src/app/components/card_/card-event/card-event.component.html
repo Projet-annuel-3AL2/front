@@ -36,8 +36,12 @@
   <div class="localisation-card-event">
     <p>
       <fa-icon [icon]="faMapMarked"></fa-icon>
-      {{event.address?.house_number}}, {{event.address?.road}}, {{event.address?.town}} {{event.address?.postcode}}
-      , {{event.address?.country}}</p>
+      <span *ngIf="this.event.address?.house_number"> {{this.event.address?.house_number}} </span>
+      <span *ngIf="this.event.address?.road">{{this.event.address?.road}}, </span>
+      <span *ngIf="this.event.address?.town">{{this.event.address?.town}} </span>
+      <span *ngIf="this.event.address?.postcode">{{this.event.address?.postcode}}, </span>
+      <span *ngIf="this.event.address?.country">{{this.event.address?.country}}</span>
+    </p>
   </div>
   <div class="button-join" *ngIf="isEnd()">
     <button (click)="this.joinEvent(event?.id)" *ngIf="!event.isMember" class="ml-auto button-join-event"

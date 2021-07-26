@@ -52,7 +52,7 @@ export class PageEventComponent implements OnInit {
     this._eventService.getOrganisation(eventId).toPromise().then(organisation => this.event.organisation = organisation);
     this._eventService.isMember(eventId).toPromise().then(isMember => this.event.isMember = isMember);
     this._eventService.isOwner(eventId).toPromise().then(isOwner => this.event.isOwner = isOwner);
-    this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).subscribe(address => this.event.address = address);
+    this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).toPromise().then(address => this.event.address = address);
   }
 
   joinEvent() {

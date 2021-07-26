@@ -3,9 +3,7 @@ import {Event} from "../../../shared/models/event.model";
 import {UserService} from "../../../services/user/user.service";
 import {EventService} from "../../../services/event/event.service";
 import {AuthService} from "../../../services/auth/auth.service";
-import {environment} from "../../../../environments/environment";
 import {faCheckCircle, faClock, faMapMarked, faTags, faUser} from '@fortawesome/free-solid-svg-icons';
-import {User} from "../../../shared/models/user.model";
 import {MapService} from "../../../services/map/map.service";
 
 @Component({
@@ -21,9 +19,6 @@ export class CardEventComponent implements OnInit {
   faClock = faClock;
   faTags = faTags;
   faMapMarked = faMapMarked;
-  userSession: User;
-  env = environment;
-  address: any;
 
   constructor(
     private _userService: UserService,
@@ -33,12 +28,14 @@ export class CardEventComponent implements OnInit {
   ) {
   }
 
-  async ngOnInit(): Promise<void> {
-    this.updateData().then();
+  ngOnInit(): void {
+    this.updateData();
   }
 
-  async getLocalisation() {
-    this.event.address = await this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).toPromise();
+  getLocalisation() {
+     this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude)
+       .toPromise()
+       .then(address=>this.event.address=address);
   }
 
 
@@ -58,10 +55,10 @@ export class CardEventComponent implements OnInit {
     this.event = await this._eventService.getProfile(this.event.id).toPromise();
   }
 
-  private async updateData() {
-    await this.getEvent();
-    await this.getLocalisation();
-    await this.canJoin();
+  private updateData() {
+    this.getEvent().then();
+    this.getLocalisation();
+    this.canJoin().then();
   }
 
   isEnd(): boolean {
