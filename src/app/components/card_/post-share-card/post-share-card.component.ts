@@ -18,8 +18,6 @@ export class PostShareCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._mediaService.getPostMedias(this.post.id)
-      .toPromise().then(medias => this.post.medias = medias);
   }
 
 }

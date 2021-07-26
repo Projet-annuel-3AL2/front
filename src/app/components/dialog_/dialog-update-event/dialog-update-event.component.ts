@@ -49,16 +49,13 @@ export class DialogUpdateEventComponent implements OnInit {
       });
       return;
     }
-    if (this.formData.valid) {
-      this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
-        this.formData.value.latitude = address.latitude;
-        this.formData.value.longitude = address.longitude;
-
-        this._eventService.updateEvent(this.data.event.id, this.formData, this.media)
-          .toPromise()
-          .then(() => this.dialogRef.close())
-      });
-      }
+    this._mapService.getAddressInfos(this.formData.value.postalAddress).toPromise().then(address => {
+      this.formData.value.latitude = address.latitude;
+      this.formData.value.longitude = address.longitude;
+      this._eventService.updateEvent(this.data.event.id, this.formData, this.media)
+        .toPromise()
+        .then(() => this.dialogRef.close())
+    });
   }
 
   onNoClick(): void {

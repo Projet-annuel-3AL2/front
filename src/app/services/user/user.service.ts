@@ -8,8 +8,8 @@ import {environment} from "../../../environments/environment";
 import {Group} from "../../shared/models/group.model";
 import {Post} from "../../shared/models/post.model";
 import {Report} from "../../shared/models/report.model";
-import {map} from "rxjs/operators";
 import {FormGroup} from "@angular/forms";
+import {Organisation} from "../../shared/models/organisation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -92,5 +92,9 @@ export class UserService {
 
   isBlocked(username: string): Observable<boolean> {
     return this.http.get<boolean>(`${environment.apiBaseUrl}/user/${username}/is-blocked`, {});
+  }
+
+  getOrganisations(username: string): Observable<Organisation[]> {
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/user/${username}/organisations`);
   }
 }

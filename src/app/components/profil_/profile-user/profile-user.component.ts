@@ -62,12 +62,11 @@ export class ProfileUserComponent implements OnInit {
     this.user = await this._userService.getByUsername(username).toPromise();
     this.user.createdPosts = [];
     this.getMorePosts();
-    await this._userService.getFriends(username).toPromise().then(friends =>this.user.friends=friends);
-    this.user.eventsParticipation = await this._userService.getParticipations(username).toPromise().then(eventParticipation =>this.user.eventsParticipation=eventParticipation);
-    this.user.isBlocked = await this._userService.hasBlocked(username).toPromise().then(isBlocked =>this.user.isBlocked=isBlocked);
-    this.user.friendshipStatus = await this._friendshipService.isFriendshipRequested(username).toPromise().then(friendshipStatus =>this.user.friendshipStatus=friendshipStatus);
-    this.user.organisations = await this._organisationService.whereIsAdmin(username).toPromise().then(organisations =>this.user.organisations=organisations);
-    this.user.administratedOrganisations = await this._organisationService.whereIsAdmin(username).toPromise().then(administratedOrganisations =>this.user.administratedOrganisations=administratedOrganisations);
+    this._userService.getFriends(username).toPromise().then(friends =>this.user.friends=friends);
+    this._userService.getParticipations(username).toPromise().then(eventParticipation =>this.user.eventsParticipation=eventParticipation);
+    this._userService.hasBlocked(username).toPromise().then(isBlocked =>this.user.isBlocked=isBlocked);
+    this._friendshipService.isFriendshipRequested(username).toPromise().then(friendshipStatus =>this.user.friendshipStatus=friendshipStatus);
+    this._organisationService.whereIsAdmin(username).toPromise().then(administratedOrganisations =>this.user.administratedOrganisations=administratedOrganisations);
   }
 
   showDialogueReport() {
