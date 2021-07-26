@@ -46,6 +46,7 @@ export class EventService {
 
   updateEvent(eventId: string, event: FormGroup, file: File): Observable<Event> {
     let formData = new FormData();
+    formData.append("id", eventId);
     formData.append("name", event.value.name);
     formData.append("description", event.value.description);
     formData.append("startDate", event.value.startDate.toString());
@@ -53,9 +54,8 @@ export class EventService {
     formData.append("latitude", event.value.latitude.toString());
     formData.append("longitude", event.value.longitude.toString());
     formData.append("participantsLimit", event.value.participantsLimit.toString());
-    if(event.value.category) {
-      formData.append("category", event.value.category.id);
-    }
+    formData.append("category", event.value.category);
+
 
     if (file) {
       formData.append("event_media", file);

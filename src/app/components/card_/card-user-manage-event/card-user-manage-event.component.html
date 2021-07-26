@@ -24,8 +24,9 @@
       <div *ngIf="user.friendshipStatus === allFriendRequestStatus.RECEIVED">
         <button mat-menu-item [matMenuTriggerFor]="resfFriendship">Répondre</button>
       </div>
-      <button *ngIf="user.friendshipStatus === allFriendRequestStatus.PENDING" class="ml-auto button-add-friend-disable"
-              mat-menu-item> En Attente
+      <button (click)="cancelRequest()" *ngIf="user.friendshipStatus === allFriendRequestStatus.PENDING"
+              class="button-add-friend-disable"
+              mat-menu-item><span>Invitation envoyé</span>
       </button>
     </div>
   </mat-menu>

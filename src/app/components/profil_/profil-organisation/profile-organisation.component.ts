@@ -96,6 +96,6 @@ export class ProfileOrganisationComponent implements OnInit {
     this._organisationService.isOwner(this.organisation.id).toPromise().then(isOwner => this.organisation.isOwner = isOwner);
     this._organisationService.isAdmin(this.organisation.id).toPromise().then(isAdmin => this.organisation.isAdmin = isAdmin);
     this._organisationService.getOrganisationPosts(this.organisation.id).toPromise().then(posts => this.organisation.posts = posts);
-
+    this._organisationService.getInvitedOrganisation(this.organisation.id).toPromise().then(users => this.organisation.invitedUsers = users)
   }
 }
