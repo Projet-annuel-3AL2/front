@@ -8,15 +8,24 @@
           <mat-divider></mat-divider>
           <h3>Localisation</h3>
           <div class="localisation-filter">
-            <div class="button-maps">
-              <button (click)="showDialogMapsCollapse()" mat-flat-button>
-                <fa-icon [icon]="faMapMarked"></fa-icon>
-              </button>
+            <mat-form-field appearance="fill">
+            <mat-label>Adresse de l'événement</mat-label>
+            <div #origin="matAutocompleteOrigin" class="form-group" matAutocompleteOrigin>
+              <input (input)="searchAddress($event)" [(ngModel)]="searchEventProps.address" [matAutocompleteConnectedTo]="origin"
+                     [matAutocomplete]="auto" matInput
+                     name="postalAddress" placeholder="Adresse" required>
             </div>
-            <div class="localisation-text">
-              <p *ngIf="isLocated == false"> Vous n'êtes pas localisé</p>
-              <p *ngIf="isLocated == true">{{latitude}} / {{longitude}}</p>
-            </div>
+            <mat-autocomplete #auto="matAutocomplete" class="user-select-none">
+              <mat-option *ngFor="let option of addresses"
+                          [value]="formatAddress(option)">
+                <span *ngIf="option?.house_number">{{option?.house_number}} </span>
+                <span *ngIf="option?.road">{{option?.road}}, </span>
+                <span *ngIf="option?.town">{{option?.town}} </span>
+                <span *ngIf="option?.postcode">{{option?.postcode}}, </span>
+                <span *ngIf="option?.country">{{option?.country}}</span>
+              </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>
           </div>
         </div>
         <div class="row m-1">
@@ -28,11 +37,10 @@
             [displayWith]="formatLabel"
             aria-label="units"
             class="range-picker"
-            max="5000"
-            min="2"
+            max="500000"
             name="range"
             step="1"
-            thumbLabel tickInterval="10"></mat-slider>
+            thumbLabel tickInterval="1000"></mat-slider>
         </div>
         <div class="row m-2" style="padding-top: 15px">
           <mat-divider></mat-divider>

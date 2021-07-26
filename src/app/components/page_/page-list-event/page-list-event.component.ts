@@ -24,7 +24,6 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // TODO: en lien avec event-filter, faut réfléchir a la logique derriere
     this.getNotEndEvents();
   }
 

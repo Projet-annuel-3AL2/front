@@ -34,7 +34,6 @@ export class EventService {
     formData.append("longitude", longitude.toString());
     formData.append("participantsLimit", newEvent.value.participationLimit.toString());
     formData.append("category", newEvent.value.category);
-    console.log(newEvent.value.category)
     if (organisation) {
       formData.append("organisation", organisation.id);
     }
@@ -54,8 +53,9 @@ export class EventService {
     formData.append("latitude", event.value.latitude.toString());
     formData.append("longitude", event.value.longitude.toString());
     formData.append("participantsLimit", event.value.participantsLimit.toString());
-    formData.append("category", event.value.category);
-
+    if (event.value.category) {
+      formData.append("category", event.value.category.id);
+    }
 
     if (file) {
       formData.append("event_media", file);
@@ -103,10 +103,6 @@ export class EventService {
 
   getEventPosts(eventId: string): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.apiBaseUrl}/event/${eventId}/posts`);
-  }
-
-  searchEvents(rechercheEvent: Search_eventModel): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/event/`);
   }
 
   getSuggestion(): Observable<Event[]> {

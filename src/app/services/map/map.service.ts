@@ -20,7 +20,9 @@ export class MapService {
           country: address.address.country,
           postcode: address.address.postcode,
           town: address.address.town,
-          road: address.address.road
+          road: address.address.road,
+          latitude: parseFloat(address.lat),
+          longitude: parseFloat(address.lon)
         }
         return addr;
       })));
@@ -35,7 +37,9 @@ export class MapService {
           country: address.address.country,
           postcode: address.address.postcode,
           town: address.address.town,
-          road: address.address.road
+          road: address.address.road,
+          latitude: parseFloat(address.lat),
+          longitude: parseFloat(address.lon)
         }
         return addr;
       }));
@@ -50,8 +54,8 @@ export class MapService {
           postcode: undefined,
           town: undefined,
           road: undefined,
-          latitude: address[0].lat,
-          longitude: address[0].lon
+          latitude: parseFloat(address[0].lat),
+          longitude: parseFloat(address[0].lon)
         }
         return addr;
       }));
