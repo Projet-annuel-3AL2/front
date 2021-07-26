@@ -49,6 +49,7 @@ export class DialogCreateEventComponent implements OnInit {
       this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
         duration: 3000
       });
+      return;
     }
     if (this.newEventForm.valid){
       this._mapService.getAddressInfos(this.addressInput).toPromise().then(address => {
@@ -142,5 +143,9 @@ export class DialogCreateEventComponent implements OnInit {
       ]),
       picture: new FormControl('',[])
     })
+  }
+
+  formatAddress(option: Address):string {
+    return [[option.house_number, option.road].join(" "), [option.town, option.postcode].join(" "), option.country].join(", ");
   }
 }

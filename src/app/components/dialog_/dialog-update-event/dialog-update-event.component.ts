@@ -5,11 +5,11 @@ import {EventService} from "../../../services/event/event.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Event} from "../../../shared/models/event.model";
 import {CategoryService} from "../../../services/category/category.service";
-import {environment} from "../../../../environments/environment";
 import {AuthService} from "../../../services/auth/auth.service";
 import {MapService} from "../../../services/map/map.service";
 import {Category} from "../../../shared/models/category.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Address} from "../../../shared/models/address.model";
 
 @Component({
   selector: 'app-dialog-update-event',
@@ -18,14 +18,13 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class DialogUpdateEventComponent implements OnInit {
   categories: Category[];
-  addresses: unknown[];
+  addresses: Address[];
   addressSearchTimeOut: number;
   formData: FormGroup;
   limitParticipant = new FormControl(2, Validators.min(2));
-  postalAddress: any;
+  postalAddress: string;
   media: File;
   mediaURL: string;
-  env: any
 
   constructor(public dialogRef: MatDialogRef<DialogUpdateEventComponent>,
               public _eventService: EventService,
@@ -36,7 +35,6 @@ export class DialogUpdateEventComponent implements OnInit {
               private _mapService: MapService,
               private _snackBar: MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: { event: Event }) {
-    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -45,22 +43,22 @@ export class DialogUpdateEventComponent implements OnInit {
   }
 
   onClickSubmit() {
-    if (this.formData.value.startDate < this.formData.value.endDate) {
-      if (this.formData.valid) {
-        this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
-          this.formData.value.latitude = address.latitude;
-          this.formData.value.longitude = address.longitude;
-
-          this._eventService.updateEvent(this.data.event.id, this.formData, this.media)
-            .toPromise()
-            .then(() => this.dialogRef.close())
-        });
-      }
-    } else {
-      this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
+    if (this.formData.value.startDate > this.formData.value.endDate) {
+      this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
         duration: 3000
       });
+      return;
     }
+    if (this.formData.valid) {
+      this._mapService.getAddressInfos(this.postalAddress).toPromise().then(address => {
+        this.formData.value.latitude = address.latitude;
+        this.formData.value.longitude = address.longitude;
+
+        this._eventService.updateEvent(this.data.event.id, this.formData, this.media)
+          .toPromise()
+          .then(() => this.dialogRef.close())
+      });
+      }
   }
 
   onNoClick(): void {
@@ -101,13 +99,6 @@ export class DialogUpdateEventComponent implements OnInit {
   private async updateData(): Promise<void> {
     this.getAllCategories();
     this.getCategory();
-    this.postalAddress = null;
-    this.media = null;
-
-    this._mapService.getAddressFromLatLng(this.data.event.latitude, this.data.event.longitude).subscribe( addressT => {
-      const address: any = addressT;
-      this.postalAddress = `${address?.house_number} ${address?.road}, ${address?.town} ${address?.postcode}, ${address?.country} `
-    });
   }
 
   private getAllCategories() {
@@ -154,8 +145,11 @@ export class DialogUpdateEventComponent implements OnInit {
       participantsLimit: this.data.event.participantsLimit,
       category: this.data.event.category,
       startDate: this.data.event.startDate,
-      endDate: this.data.event.endDate,
-      postalAddress: this.postalAddress
+      endDate: this.data.event.endDate
     })
+  }
+
+  formatAddress(option: Address):string {
+    return [[option.house_number, option.road].join(" "), [option.town, option.postcode].join(" "), option.country].join(", ");
   }
 }

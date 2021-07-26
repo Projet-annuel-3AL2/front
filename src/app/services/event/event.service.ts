@@ -53,9 +53,11 @@ export class EventService {
     formData.append("latitude", event.value.latitude.toString());
     formData.append("longitude", event.value.longitude.toString());
     formData.append("participantsLimit", event.value.participantsLimit.toString());
-    formData.append("category", event.value.category.id);
+    if(event.value.category) {
+      formData.append("category", event.value.category.id);
+    }
 
-    if (file !== null) {
+    if (file) {
       formData.append("event_media", file);
     }
     return this.http.put<Event>(`${environment.apiBaseUrl}/event/${eventId}`, formData);
