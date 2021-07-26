@@ -35,27 +35,11 @@ export class ProfileOrganisationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params=>{
-      this.updateOrganisation(params['id']).then(()=>this.updateData());
-      });
+    this.route.params.subscribe(params => {
+      this.updateOrganisation(params['id']).then(() => this.updateData());
+    });
 
   }
-
-  private async updateOrganisation(organisationId:string){
-    this.organisation = await this._organisationService.getOrganisation(organisationId).toPromise();
-    this.updateData();
-  }
-
-  private updateData() {
-    this._organisationService.getMemberOrganisation(this.organisation.id).toPromise().then(members=>this.organisation.members=members);
-    this._organisationService.getEventCreated(this.organisation.id).toPromise().then(events=>this.organisation.events = events);
-    this._userService.isFollowingOrganisation(this.organisation.id).toPromise().then(isFollower => this.organisation.isFollower=isFollower);
-    this._organisationService.isOwner(this.organisation.id).toPromise().then(isOwner => this.organisation.isOwner=isOwner);
-    this._organisationService.isAdmin(this.organisation.id).toPromise().then(isAdmin => this.organisation.isAdmin=isAdmin);
-    this._organisationService.getOrganisationPosts(this.organisation.id).toPromise().then(posts => this.organisation.posts=posts);
-
-  }
-
 
   followOrganisation() {
     this._organisationService.followOrganisation(this.organisation.id)
@@ -98,5 +82,20 @@ export class ProfileOrganisationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(() => {
     })
+  }
+
+  private async updateOrganisation(organisationId: string) {
+    this.organisation = await this._organisationService.getOrganisation(organisationId).toPromise();
+    this.updateData();
+  }
+
+  private updateData() {
+    this._organisationService.getMemberOrganisation(this.organisation.id).toPromise().then(members => this.organisation.members = members);
+    this._organisationService.getEventCreated(this.organisation.id).toPromise().then(events => this.organisation.events = events);
+    this._userService.isFollowingOrganisation(this.organisation.id).toPromise().then(isFollower => this.organisation.isFollower = isFollower);
+    this._organisationService.isOwner(this.organisation.id).toPromise().then(isOwner => this.organisation.isOwner = isOwner);
+    this._organisationService.isAdmin(this.organisation.id).toPromise().then(isAdmin => this.organisation.isAdmin = isAdmin);
+    this._organisationService.getOrganisationPosts(this.organisation.id).toPromise().then(posts => this.organisation.posts = posts);
+
   }
 }

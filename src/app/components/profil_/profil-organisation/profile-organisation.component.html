@@ -1,51 +1,53 @@
-<div *ngIf="organisation != undefined" class="row m-0">
+<div *ngIf="organisation" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="orga-card-full">
-        <img [src]="organisation?.bannerPicture?.link | imageUrl:1360:906" alt=""
+        <img [src]="organisation.bannerPicture?.link | imageUrl:1360:906" alt=""
              class="rounded"
              height="300px"
              style="object-fit: cover" width="100%">
         <div class="orga-card-display">
           <div class="orga-card-div">
-            <div class="orga-card-img-profil">
-              <img [src]="organisation?.profilePicture?.link | imageUrl"
-                   alt=""
-                   class="rounded-circle"
-                   height="75" style="object-fit: cover" width="75">
-            </div>
-            <div class="orga-card-name">
-              <p>{{organisation?.name}}</p>
-            </div>
-            <div class="orga-card-certification">
-              <fa-icon [icon]="faCheckCircle"></fa-icon>
-            </div>
-            <div class="orga-card-empty"></div>
-            <div class="orga-card-button" *ngIf="!organisation.isAdmin || !organisation.isOwner">
-              <button (click)="this.followOrganisation()" *ngIf="!organisation.isFollower" class="ml-auto button-join-event"
-                      mat-raised-button>
-                <fa-icon [icon]="faUserPlus"></fa-icon>
-                Suivre
-              </button>
-              <button (click)="this.unfollowOrganisation()" *ngIf="organisation.isFollower" class="ml-auto mat-button-event"
-                      mat-raised-button>Ne plus suivre
-              </button>
-            </div>
-            <div class="orga-card-menu">
-              <div class="dropdown" dropdown>
-                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
-                        data-toggle="dropdown"
-                        dropdownToggle type="button">
-                  <fa-icon [icon]="faEllipsisH"></fa-icon>
-                </button>
-                <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
-                  <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
-                  <div *ngIf="organisation.isOwner || organisation.isAdmin">
-                    <button (click)="showDialogueUpdateOrganisation()" mat-menu-item>Modifier</button>
-                    <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
+            <div fxFlex fxLayoutAlign="row">
+              <div fxFlex fxLayoutAlign="row start center">
+                <div class="me-2">
+                  <img [src]="organisation.profilePicture?.link | imageUrl"
+                       alt=""
+                       class="rounded-circle"
+                       height="75" style="object-fit: cover" width="75">
+                </div>
+                <div class="orga-card-name">
+                  <p>{{organisation.name}}</p>
+                </div>
+              </div>
+              <div fxLayoutAlign="row center end">
+                <div *ngIf="!organisation.isAdmin || !organisation.isOwner" class="orga-card-button">
+                  <button (click)="this.followOrganisation()" *ngIf="!organisation.isFollower"
+                          class="ml-auto button-join-event"
+                          mat-raised-button>
+                    <fa-icon [icon]="faUserPlus"></fa-icon>
+                    Suivre
+                  </button>
+                  <button (click)="this.unfollowOrganisation()" *ngIf="organisation.isFollower"
+                          class="ml-auto mat-button-event"
+                          mat-raised-button>Ne plus suivre
+                  </button>
+                </div>
+                <div class="dropdown" dropdown>
+                  <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"
+                          data-toggle="dropdown"
+                          dropdownToggle type="button">
+                    <fa-icon [icon]="faEllipsisH"></fa-icon>
+                  </button>
+                  <div *dropdownMenu class="dropdown-menu-right dropdown-menu">
+                    <button (click)="showDialogueReport()" mat-menu-item>Signaler</button>
+                    <div *ngIf="organisation.isOwner || organisation.isAdmin">
+                      <button (click)="showDialogueUpdateOrganisation()" mat-menu-item>Modifier</button>
+                      <button (click)="showDialogueCreateEvent()" mat-menu-item>Créer un évènement</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -72,7 +74,7 @@
               <div *ngFor="let member of organisation.members;" class="display-list-user">
                 <app-card-user-manage-organisation [isOwner]="organisation.isOwner"
                                                    [organisation]="organisation"
-                                                    [user]="member"
+                                                   [user]="member"
                                                    class="m-0"></app-card-user-manage-organisation>
               </div>
             </div>
