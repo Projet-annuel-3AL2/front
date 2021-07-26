@@ -94,12 +94,14 @@
           </mat-tab>
           <div *ngIf="organisation.isAdmin && organisation.isOwner">
             <mat-tab label="Gestion">
-              <mat-list-item *ngFor="let user of organisation?.invitedUsers"
-                             style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
-                <app-user-join-organisation [organisationId]="organisation.id"
-                                            [user]="user"></app-user-join-organisation>
-              </mat-list-item>
-              <div *ngIf="organisation?.invitedUsers?.length === 0">
+              <div *ngIf="organisation?.invitedUsers !== null">
+                <mat-list-item *ngFor="let user of organisation?.invitedUsers"
+                               style="display: block; margin-left: auto; margin-right: auto; width: 90%;">
+                  <app-user-join-organisation [organisationId]="organisation.id"
+                                              [user]="user"></app-user-join-organisation>
+                </mat-list-item>
+              </div>
+              <div *ngIf="organisation?.invitedUsers === null">
                 <p style="text-align: center">Il n'y a pas de demande en cours</p>
               </div>
             </mat-tab>
