@@ -56,11 +56,11 @@ export class PageEventComponent implements OnInit {
   }
 
   joinEvent() {
-    this._eventService.joinEvent(this.event.id).toPromise().then();
+    this._eventService.joinEvent(this.event.id).toPromise().then(()=>this.event.isMember = true);
   }
 
   leaveEvent() {
-    this._eventService.leaveEvent(this.event.id).toPromise().then();
+    this._eventService.leaveEvent(this.event.id).toPromise().then(()=>this.event.isMember = false);
   }
 
   showDialogueReport() {
