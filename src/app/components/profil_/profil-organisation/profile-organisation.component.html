@@ -101,7 +101,7 @@
                                               [user]="user"></app-user-join-organisation>
                 </mat-list-item>
               </div>
-              <div *ngIf="organisation?.invitedUsers === null">
+              <div *ngIf="organisation?.invitedUsers.length === 0">
                 <p style="text-align: center">Il n'y a pas de demande en cours</p>
               </div>
             </mat-tab>
