@@ -2,6 +2,18 @@
   flex: 1 1 auto;
 }
 
+.button-add-friend-disable {
+  color: grey;
+
+}
+
+.button-add-friend-disable:hover span {
+  display: none
+}
+
+.button-add-friend-disable:hover:before {
+  content: "Annuler la demande"
+}
 .center {
   flex: 1 1 auto;
   text-align: center;
