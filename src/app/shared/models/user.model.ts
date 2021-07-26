@@ -34,6 +34,7 @@ export class User {
   eventsParticipation?: Event[];
   comments?: Comment[];
   organisations?: Organisation[];
+  administratedOrganisations?: Organisation[];
   organisationInvitations?: Organisation[];
   friendRequests: FriendRequest[];
   sentFriendRequests: FriendRequest[];

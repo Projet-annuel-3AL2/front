@@ -32,28 +32,31 @@
               </div>
               <div fxLayoutAlign="row center end">
                 <div *ngIf="user.username !== _authService.getCurrentUsername()">
-                  <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
+                  <button (click)="this.askFriend()" *ngIf="this.user.friendshipStatus === allFriendRequestStatus.NONE"
                           class="ml-auto button-add-friend" mat-raised-button>
-                    <fa-icon [icon]="faUserPlus" [style.color]="'white'"></fa-icon> Ajouter
+                    <fa-icon [icon]="faUserPlus" [style.color]="'white'"></fa-icon>
+                    Ajouter
                   </button>
-                  <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
+                  <button (click)="this.removeFriend()"
+                          *ngIf="this.user.friendshipStatus === allFriendRequestStatus.BEFRIENDED"
                           class="button-add-friend" mat-raised-button
                           matTooltip="Enlever de la liste des amis"
                           matTooltipPosition="above">
                     Retirer des amis
                   </button>
-                    <a (click)="this.delFriendshipRequest()" class=" button-reject-invitation"
-                       *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                       style=" padding-right: 10px" label="Rejeter l'invitation">
-                      <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
-                    </a>
-                    <button (click)="this.acceptFriendship()"
-                            *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                            class="button-add-friend" mat-raised-button
-                            matTooltip="Accepter la demande d'amis"
-                            matTooltipPosition="above"> accepter
-                    </button>
-                  <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+                  <a (click)="this.delFriendshipRequest()" *ngIf="this.user.friendshipStatus === allFriendRequestStatus.RECEIVED"
+                     class=" button-reject-invitation"
+                     label="Rejeter l'invitation" style=" padding-right: 10px">
+                    <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
+                  </a>
+                  <button (click)="this.acceptFriendship()"
+                          *ngIf="this.user.friendshipStatus === allFriendRequestStatus.RECEIVED"
+                          class="button-add-friend" mat-raised-button
+                          matTooltip="Accepter la demande d'amis"
+                          matTooltipPosition="above"> accepter
+                  </button>
+                  <button (click)="this.cancelRequest()"
+                          *ngIf="this.user.friendshipStatus === allFriendRequestStatus.PENDING"
                           class="ml-auto button-add-friend-disable"
                           mat-raised-button><span>Invitation envoyé</span>
                   </button>
@@ -81,7 +84,7 @@
                       *ngIf="user.username === _authService.getCurrentUsername() && user?.certification">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Créer une organisation</button>
                     </div>
-                    <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">
+                    <div *ngIf="user.administratedOrganisations?.length !== 0">
                       <button [matMenuTriggerFor]="organisationsWhereAdmin" mat-menu-item>Inviter</button>
                     </div>
                     <div *ngIf="user.username !== _authService.getCurrentUsername()">
@@ -95,7 +98,7 @@
                     </div>
                   </mat-menu>
                   <mat-menu #organisationsWhereAdmin="matMenu">
-                    <div *ngFor="let organisation of (_organisationService.organisationWhereAdmin|async)">
+                    <div *ngFor="let organisation of user.administratedOrganisations">
                       <button (click)="sendJoinOrganisation(organisation.id)"
                               mat-menu-item>{{organisation.name}}</button>
                     </div>
@@ -115,8 +118,8 @@
         <mat-tab-group mat-align-tabs="center" style="min-height: 100%">
           <mat-tab label="Post">
             <div #divContent style="height: 450px">
-              <virtual-scroller #scroll [enableUnequalChildrenSizes]="true"
-                                [items]="user.createdPosts" (vsEnd)="triggerGetMore($event)"
+              <virtual-scroller #scroll (vsEnd)="triggerGetMore($event)"
+                                [enableUnequalChildrenSizes]="true" [items]="user.createdPosts"
                                 [parentScroll]="divContent" childHeight="1" class="w-100 h-100">
                 <div *ngFor="let post of scroll.viewPortItems" class="mt-3">
                   <post (onDelete)="removePost($event)" [post]="post"></post>

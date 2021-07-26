@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from "../../../services/user/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {faCheckCircle, faEllipsisH, faUserPlus,faTimes} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faEllipsisH, faTimes, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {environment} from "../../../../environments/environment";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {EventService} from "../../../services/event/event.service";
@@ -33,7 +33,6 @@ export class ProfileUserComponent implements OnInit {
   limit: number = 10;
   user: User;
   faTimes = faTimes;
-  friendshipRequest: FriendRequestStatus = FriendRequestStatus.NONE;
   allFriendRequestStatus = FriendRequestStatus;
 
   constructor(public _userService: UserService,
@@ -63,11 +62,12 @@ export class ProfileUserComponent implements OnInit {
     this.user = await this._userService.getByUsername(username).toPromise();
     this.user.createdPosts = [];
     this.getMorePosts();
-    this.user.friends = await this._userService.getFriends(username).toPromise();
-    this.user.eventsParticipation = await this._userService.getParticipations(username).toPromise();
-    this.user.isBlocked = await this._userService.hasBlocked(username).toPromise();
-    this.user.friendshipStatus = await this._friendshipService.isFriendshipRequested(username).toPromise();
-    this.user.organisations = await this._organisationService.whereIsAdmin(username).toPromise();
+    await this._userService.getFriends(username).toPromise().then(friends =>this.user.friends=friends);
+    this.user.eventsParticipation = await this._userService.getParticipations(username).toPromise().then(eventParticipation =>this.user.eventsParticipation=eventParticipation);
+    this.user.isBlocked = await this._userService.hasBlocked(username).toPromise().then(isBlocked =>this.user.isBlocked=isBlocked);
+    this.user.friendshipStatus = await this._friendshipService.isFriendshipRequested(username).toPromise().then(friendshipStatus =>this.user.friendshipStatus=friendshipStatus);
+    this.user.organisations = await this._organisationService.whereIsAdmin(username).toPromise().then(organisations =>this.user.organisations=organisations);
+    this.user.administratedOrganisations = await this._organisationService.whereIsAdmin(username).toPromise().then(administratedOrganisations =>this.user.administratedOrganisations=administratedOrganisations);
   }
 
   showDialogueReport() {
@@ -121,92 +121,40 @@ export class ProfileUserComponent implements OnInit {
   }
 
   removeFriend() {
-    this._friendshipService.removeFriendship(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.removeFriendship(this.user.username).toPromise().then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 
   askFriend() {
-    this._friendshipService.sendFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.PENDING;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.sendFriendRequest(this.user.username).toPromise().then(() => this.user.friendshipStatus = FriendRequestStatus.PENDING);
   }
 
   cancelRequest() {
-    this._friendshipService.cancelFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    });
+    this._friendshipService.cancelFriendRequest(this.user.username).toPromise().then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
+
   delFriendshipRequest() {
-    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.NONE;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    })
+    this._friendshipService.rejectFriendRequest(this.user.username).toPromise().then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
+
   }
 
   acceptFriendship() {
-    this._friendshipService.acceptFriendship(this.user.username).subscribe({
-      next: () => {
-        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._friendshipService.acceptFriendship(this.user.username).toPromise().then(() => this.user.friendshipStatus = FriendRequestStatus.BEFRIENDED);
   }
 
   async sendJoinOrganisation(id: string) {
-    this._organisationService.postInvitation(id, this.user.id).subscribe({
-      next: () => {
-        this.updateUser(this.user.username).then()
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    })
+    this._organisationService.postInvitation(id, this.user.id).toPromise().then();
   }
 
   blockUser() {
     this._userService.block(this.user.username)
       .toPromise()
-      .then(()=>this.user.isBlocked = true);
+      .then(() => this.user.isBlocked = true);
   }
 
   unblockUser() {
     this._userService.unblock(this.user.username)
       .toPromise()
-      .then(()=>this.user.isBlocked = false);
+      .then(() => this.user.isBlocked = false);
   }
 
   removePost($event: Post) {
