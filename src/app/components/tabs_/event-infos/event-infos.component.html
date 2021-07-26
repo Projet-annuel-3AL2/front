@@ -4,11 +4,18 @@
       <div class="mb-3">
         <div class="px-4">
           <h2>Infos</h2>
-          <p><span><i class="fas fa-user-check"></i> {{event.participants?.length}} </span><span
-            *ngIf="event.participantsLimit>0"> / {{event.participantsLimit}}</span><span>participants</span></p>
-          <p><i class="fas fa-clock"></i> {{event.startDate | date:"dd/MM/YYYY HH:MM"}}</p>
-          <p><i class="fas fa-clock"></i> {{event.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
-          <p><i class="fas fa-tags"></i> {{event.category?.name}}</p>
+          <p><span><fa-icon [icon]="faUserCheck"></fa-icon>
+            {{event.participants?.length}} </span><span
+            *ngIf="event.participantsLimit>0"> / {{event.participantsLimit}}</span><span> participants</span></p>
+          <p>
+            <fa-icon [icon]="faClock"></fa-icon>
+            {{event.startDate | date:"dd/MM/YYYY HH:MM"}}</p>
+          <p>
+            <fa-icon [icon]="faClock"></fa-icon>
+            {{event.endDate | date:"dd/MM/YYYY HH:MM"}}</p>
+          <p>
+            <fa-icon [icon]="faTags"></fa-icon>
+            {{event.category?.name}}</p>
           <div *ngIf="event.organisation">
             <app-card-organisation [organisation]="event.organisation"></app-card-organisation>
           </div>
@@ -19,11 +26,14 @@
   <div class="grid-item item2">
     <div class="border rounded-3 d-flex flex-column p-2 event-infos-map">
       <div class="px-4 h-100 w-100">
-        <h2><i class="fas fa-map-marker-alt"></i> {{address?.address?.town}} ({{address?.address?.postcode}})</h2>
+        <h2>
+          <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+          {{event?.address?.town}} ({{event?.address?.postcode}})
+        </h2>
       </div>
       <div style="width: 100%;height:200px;">
-        <app-map [dragging]="true" [latitude]="event.latitude" [longitude]="event.longitude"
-                 [zoomControl]="true"></app-map>
+        <app-map [dragging]="false" [latitude]="event.latitude" [longitude]="event.longitude"
+                 [zoomControl]="false"></app-map>
       </div>
     </div>
   </div>

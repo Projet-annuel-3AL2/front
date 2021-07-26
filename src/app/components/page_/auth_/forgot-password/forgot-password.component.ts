@@ -28,7 +28,8 @@ export class ForgotPasswordComponent implements OnInit {
     this.submitted = true;
     const formValue = this.userForm.value;
     this._authService.forgotPassword(formValue.username)
-      .subscribe(() => {
+      .toPromise()
+      .then(() => {
         this.info = true;
       }, () => {
       });

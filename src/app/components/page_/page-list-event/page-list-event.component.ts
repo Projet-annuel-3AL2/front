@@ -13,8 +13,7 @@ import {Title} from "@angular/platform-browser";
   styleUrls: ['./page-list-event.component.css']
 })
 export class PageListEventComponent implements OnInit, AfterViewInit {
-
-  eventsFilter$: Event[] = undefined;
+  eventsFilter$: Event[];
   @ViewChild(EventFilterComponent) eventFilterComponent;
 
   constructor(public _eventService: EventService,
@@ -34,12 +33,8 @@ export class PageListEventComponent implements OnInit, AfterViewInit {
   }
 
   private getNotEndEvents() {
-    this._eventService.isEventFinished().subscribe({
-      error: error => {
-        if (!environment.production) {
-          console.error('Error: ', error);
-        }
-      }
-    })
+    this._eventService.isEventFinished()
+      .toPromise()
+      .then();
   }
 }

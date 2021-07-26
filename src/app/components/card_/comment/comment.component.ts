@@ -26,8 +26,7 @@ export class CommentComponent implements OnInit {
   }
 
   deleteComment() {
-    this._commentService.deleteComment(this.comment.id)
-      .subscribe();
+    this._commentService.deleteComment(this.comment.id).toPromise().then();
   }
 
   showDialogReport() {

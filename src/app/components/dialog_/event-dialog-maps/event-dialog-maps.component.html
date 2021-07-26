@@ -1,13 +1,7 @@
-<!-- TODO: Event-dialog-maps non dynamique -->
 <h1 mat-dialog-title>Choisissez votre localisation</h1>
 <div mat-dialog-content>
-  <img alt="" class="rounded" height="400px"
-       src="../../../../assets/images/img-maps.png"
-       style="object-fit: cover" width="auto">
-  <mat-form-field>
-    <input [(ngModel)]="data.longitude" matInput>
-    <input [(ngModel)]="data.latitude" matInput>
-  </mat-form-field>
+  <app-map-search [dragging]="true" [latitude]="0" [longitude]="0"
+           [zoomControl]="true"></app-map-search>
 </div>
 <div mat-dialog-actions>
   <button (click)="onNoClick()" mat-button>Quitter</button>

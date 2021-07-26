@@ -24,16 +24,9 @@ export class UserJoinOrganisationComponent implements OnInit {
   }
 
   cancelJoin() {
-    this._organisationService.cancelInvitation(this.organisationId, this.user.id).subscribe({
-      next: () => {
-        this._organisationService.getInvitedOrganisation(this.organisationId);
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err)
-        }
-      }
-    })
+    this._organisationService.cancelInvitation(this.organisationId, this.user.id)
+      .toPromise()
+      .then(() => this._organisationService.getInvitedOrganisation(this.organisationId));
   }
 
 }

@@ -3,12 +3,12 @@
     <div class="position-fixed">
       <app-return-button></app-return-button>
       <div class="event-list-filter mb-3 my-5">
-        <app-event-filter></app-event-filter>
+        <app-event-filter (events)="eventsFilter$ = $event"></app-event-filter>
       </div>
     </div>
   </div>
   <div class="col-md-5 my-5">
-    <div *ngFor="let event of (_eventService.events|async);">
+    <div *ngFor="let event of eventsFilter$">
       <div *ngIf="event != undefined" class="event-list-item m-2">
         <app-card-event [event]="event"></app-card-event>
       </div>

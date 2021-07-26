@@ -1,7 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Event} from "../../../shared/models/event.model";
-import {environment} from "../../../../environments/environment";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {EventService} from "../../../services/event/event.service";
 import {CategoryService} from "../../../services/category/category.service";
@@ -11,6 +9,7 @@ import {OrganisationService} from "../../../services/organisation/organisation.s
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MapService} from "../../../services/map/map.service";
 import {AuthService} from "../../../services/auth/auth.service";
+import {Address} from "../../../shared/models/address.model";
 
 @Component({
   selector: 'app-dialog-create-event',
@@ -18,15 +17,14 @@ import {AuthService} from "../../../services/auth/auth.service";
   styleUrls: ['./dialog-create-event.component.css']
 })
 export class DialogCreateEventComponent implements OnInit {
-
-  addresses: unknown[];
+  categories: Category[];
+  addresses: Address[];
   addressSearchTimeOut: number;
-  formData: FormGroup;
   limitParticipant = new FormControl(2, Validators.min(2));
-  newEvent: Event;
-  postalAddress: any;
   media: File;
   mediaURL: string;
+  newEventForm: FormGroup;
+  addressInput: string;
 
   constructor(public dialogRef: MatDialogRef<DialogCreateEventComponent>,
               private _eventService: EventService,
@@ -35,38 +33,34 @@ export class DialogCreateEventComponent implements OnInit {
               private _organisationService: OrganisationService,
               private _snackBar: MatSnackBar,
               private _mapService: MapService,
+              private _formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: { organisation: Organisation }) {
 
   }
 
   ngOnInit(): void {
-    this.newEvent = new Event();
-    this.newEvent.category = new Category();
     this.media = null;
     this.updateData();
+    this.initializeFormGroup();
   }
 
   onClickSubmit() {
-    if (this.newEvent.startDate < this.newEvent.endDate) {
-      this._mapService.getAddressInfos(this.postalAddress).subscribe(address => {
-        this.newEvent.latitude = 48.79643969643021;
-        this.newEvent.longitude = 2.128967056048809;
-        this._eventService.createEvent(this.newEvent, this.media).subscribe({
-          next: () => {
-            this.dialogRef.close()
-          },
-          error: err => {
-            if (!environment.production) {
-              console.log(err);
-            }
-          }
-        });
-      });
-    } else {
-      this._snackBar.open('Problème avec le choix des dates', 'Fermer', {
+    if (this.newEventForm.value.startDate > this.newEventForm.value.endDate) {
+      this._snackBar.open('La date de début doit précéder la date de fin prévue', 'Fermer', {
         duration: 3000
       });
+      return;
     }
+    if (this.newEventForm.valid){
+      this._mapService.getAddressInfos(this.addressInput).toPromise().then(address => {
+        this.newEventForm.value.latitude = address.latitude;
+        this.newEventForm.value.longitude = address.longitude;
+        this._eventService.createEvent(this.newEventForm, this.media, address.latitude, address.longitude, this.data?.organisation)
+          .toPromise()
+          .then(() => this.dialogRef.close());
+      });
+    }
+
   }
 
   onNoClick(): void {
@@ -80,12 +74,13 @@ export class DialogCreateEventComponent implements OnInit {
         this.addresses = undefined;
         return;
       }
-      this._mapService.searchAddresses($event.target.value).subscribe(addresses => this.addresses = addresses);
+      this._mapService.searchAddresses($event.target.value)
+        .toPromise()
+        .then(addresses => this.addresses = addresses,()=>{});
     }, 500);
   }
 
   onPictureSelected() {
-
     const inputNode: any = document.querySelector('#picture');
     if (typeof (FileReader) !== 'undefined') {
 
@@ -106,23 +101,51 @@ export class DialogCreateEventComponent implements OnInit {
   }
 
   private getAllCategories() {
-    this._categoryService.getAllCategory().subscribe({
-      next: () => {
-      },
-      error: err => {
-        if (!environment.production) {
-          console.log(err);
-        }
-      }
-    });
+    this._categoryService.getAllCategory()
+      .toPromise()
+      .then(categories => this.categories = categories);
   }
 
-  private async updateData(): Promise<void> {
+  private updateData(): void {
     this.getAllCategories();
-    this.postalAddress = null;
-    await this._authService.user.subscribe(user => {
-      this.newEvent.user = user;
-    });
-    this.newEvent.organisation = this.data.organisation != null ? this.data.organisation : null;
+    this._authService.user
+      .toPromise()
+      .then(user => {
+        this.newEventForm.value.user = user;
+      });
+  }
+
+  private initializeFormGroup() {
+    this.newEventForm = this._formBuilder.group({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(30)
+      ]),
+      description: new FormControl('', []),
+      participationLimit: new FormControl('', [
+        Validators.required,
+        Validators.min(2),
+        Validators.max(1000),
+        Validators.pattern('^[0-9]*$')
+      ]),
+      category: new FormControl('', [
+        Validators.required
+      ]),
+      postalAddress: new FormControl('', [
+        Validators.required
+      ]),
+      startDate: new FormControl('', [
+        Validators.required
+      ]),
+      endDate: new FormControl('', [
+        Validators.required
+      ]),
+      picture: new FormControl('',[])
+    })
+  }
+
+  formatAddress(option: Address):string {
+    return [[option.house_number, option.road].join(" "), [option.town, option.postcode].join(" "), option.country].join(", ");
   }
 }

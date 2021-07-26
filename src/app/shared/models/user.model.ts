@@ -4,6 +4,14 @@ import {Certification} from "./certification.model";
 import {Event} from "./event.model";
 import {Comment} from "./comment.model";
 import {Organisation} from "./organisation.model";
+import {FriendRequestStatus} from "../FriendshipRequestStatus.enum";
+import {FriendRequest} from "./FriendRequest";
+
+export enum UserType {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  SUPER_ADMIN = "SUPER_ADMIN"
+}
 
 export class User {
   id: string;
@@ -14,6 +22,8 @@ export class User {
   bio?: string;
   isBlocked: boolean;
   blocksCurrentUser: boolean;
+  userType: UserType;
+  friendshipStatus: FriendRequestStatus;
   friends?: User[];
   createdEvents?: Event[];
   createdPosts?: Post[];
@@ -24,5 +34,9 @@ export class User {
   eventsParticipation?: Event[];
   comments?: Comment[];
   organisations?: Organisation[];
+  administratedOrganisations?: Organisation[];
   organisationInvitations?: Organisation[];
+  friendRequests: FriendRequest[];
+  sentFriendRequests: FriendRequest[];
+  organisationWhereAdmin: Organisation[];
 }

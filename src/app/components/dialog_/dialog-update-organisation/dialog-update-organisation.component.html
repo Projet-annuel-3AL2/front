@@ -1,12 +1,12 @@
 <h1 class="dialog-title-update-orga" mat-dialog-title>Modification de l'Organisation</h1>
 <mat-divider></mat-divider>
-<form (ngSubmit)="onClickSubmit()">
+<form [formGroup]="formData" (ngSubmit)="onClickSubmit()">
   <div mat-dialog-content>
     <div class="update-organisation-grid">
       <div class="form-field-name-organisation">
         <mat-form-field appearance="fill">
           <mat-label>Nom de l'Organisation</mat-label>
-          <input [(ngModel)]="updateOrganisation.name" matInput name="name"
+          <input formControlName="name" matInput name="name"
                  placeholder="Nom de l'Organisation" required>
         </mat-form-field>
 
@@ -16,12 +16,11 @@
         <p> Photo de Profil</p>
         <div class="mr-2">
           <a (click)="profilePictureInput.click()">
-            <img *ngIf="updatedProfilePicture === null"
-                 [src]="updatedProfilePictureURL || (updateOrganisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
+            <img [src]="updatedProfilePictureURL || (data.organisation.profilePicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'"
                  alt="" class="rounded-circle"
                  height="150px"
                  style="object-fit: cover" width="150px">
-            <input #profilePictureInput (change)="onProfilePictureSelected()" hidden id="profilePicture" type="file">
+            <input #profilePictureInput (change)="onProfilePictureSelected()" formControlName="profilePicture" hidden id="profilePicture" type="file">
           </a>
 
         </div>
@@ -30,11 +29,11 @@
       <div class="form-field-update-bannerPicture">
         <p> Photo de Bannière</p>
         <a (click)="profileBannerInput.click()">
-          <img *ngIf="updatedBannerPicture === null" [src]="updatedBannerPictureURL|| (updateOrganisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
+          <img [src]="updatedBannerPictureURL|| (data.organisation.bannerPicture?.link | imageUrl:undefined:undefined:false) || '../../../../assets/images/no-image.png'" alt=""
                class="rounded"
                height="300px"
                style="object-fit: cover" width="100%">
-          <input #profileBannerInput (change)="onProfileBannerSelected()" hidden id="profileBanner" type="file">
+          <input #profileBannerInput (change)="onProfileBannerSelected()" formControlName="bannerPicture" hidden id="profileBanner" type="file">
         </a>
       </div>
     </div>
@@ -43,7 +42,7 @@
   <div class="dialog-actions-update-orga" mat-dialog-actions>
     <div class="button-grid-update-orga">
       <div class="button-cancel">
-        <button (click)="onNoClick()" mat-button>Annuler</button>
+        <button (click)="dialogRef.close()" mat-button type="button">Annuler</button>
       </div>
       <div class="button-send">
         <button class="button-send" mat-raised-button type="submit">Envoyer</button>

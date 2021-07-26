@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EventService} from "../../../services/event/event.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {faEllipsisH} from '@fortawesome/free-solid-svg-icons';
+import {faClock, faEllipsisH, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {AuthService} from "../../../services/auth/auth.service";
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {DialogReportComponent} from "../../dialog_/dialog-report/dialog-report.component";
@@ -11,6 +11,7 @@ import {DialogUpdateEventComponent} from "../../dialog_/dialog-update-event/dial
 import {Event} from "../../../shared/models/event.model";
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
+import {MapService} from "../../../services/map/map.service";
 
 @Component({
   selector: 'app-page-event',
@@ -19,11 +20,14 @@ import {environment} from "../../../../environments/environment";
   encapsulation: ViewEncapsulation.None
 })
 export class PageEventComponent implements OnInit {
-  eventId: string;
+  event: Event;
   faEllipsisH = faEllipsisH;
+  faUserPlus = faUserPlus;
+  faClock = faClock;
 
   constructor(private _activatedRoute: ActivatedRoute,
               private _router: Router,
+              private _mapService: MapService,
               public _eventService: EventService,
               public _authService: AuthService,
               private _organisationService: OrganisationService,
@@ -34,35 +38,35 @@ export class PageEventComponent implements OnInit {
 
   ngOnInit(): void {
     this._activatedRoute.params.subscribe(params => {
-      this.eventId = params["eventId"];
-      this.updateEvent().then();
+      this.updateEvent(params["eventId"]).then();
     });
   }
 
-  async updateEvent() {
-    const event = await this._eventService.getEventById(this.eventId).toPromise();
-    this._titleService.setTitle(event.name + " - " + environment.name);
-    await this._eventService.getEventPosts(this.eventId).toPromise();
-    await this._eventService.getParticipants(this.eventId).toPromise();
-    await this._eventService.getOwner(this.eventId).toPromise();
-    await this._eventService.getCategory(this.eventId).toPromise();
-    await this._eventService.getOrganisation(this.eventId).toPromise();
-    await this._eventService.isMember(this.eventId).toPromise();
-    await this._eventService.isOwner(this.eventId).toPromise();
+  async updateEvent(eventId: string) {
+    this.event = await this._eventService.getEventById(eventId).toPromise();
+    this._titleService.setTitle(this.event.name + " - " + environment.name);
+    this._eventService.getEventPosts(eventId).toPromise().then(posts => this.event.posts = posts);
+    this._eventService.getParticipants(eventId).toPromise().then(participants => this.event.participants = participants);
+    this._eventService.getOwner(eventId).toPromise().then(owner => this.event.user = owner);
+    this._eventService.getCategory(eventId).toPromise().then(category => this.event.category = category);
+    this._eventService.getOrganisation(eventId).toPromise().then(organisation => this.event.organisation = organisation);
+    this._eventService.isMember(eventId).toPromise().then(isMember => this.event.isMember = isMember);
+    this._eventService.isOwner(eventId).toPromise().then(isOwner => this.event.isOwner = isOwner);
+    this._mapService.getAddressFromLatLng(this.event.latitude, this.event.longitude).toPromise().then(address => this.event.address = address);
   }
 
   joinEvent() {
-    this._eventService.joinEvent(this.eventId).subscribe();
+    this._eventService.joinEvent(this.event.id).toPromise().then(()=>this.event.isMember = true);
   }
 
   leaveEvent() {
-    this._eventService.leaveEvent(this.eventId).subscribe();
+    this._eventService.leaveEvent(this.event.id).toPromise().then(()=>this.event.isMember = false);
   }
 
   showDialogueReport() {
     const dialogRef = this.dialogReport.open(DialogReportComponent, {
       width: '500px',
-      data: {id: this.eventId, reportType: ReportTypeEnum.EVENT}
+      data: {id: this.event.id, reportType: ReportTypeEnum.EVENT}
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -70,15 +74,15 @@ export class PageEventComponent implements OnInit {
   }
 
   showDialogueUpdateEvent() {
-    let event: Event;
-    this._eventService.event.subscribe(eventR => {
-      event = eventR
-    });
     const dialogRef = this.dialogUpdateEvent.open(DialogUpdateEventComponent, {
       width: '600px',
-      data: {event: event}
+      data: {event: this.event}
     });
     dialogRef.afterClosed().subscribe(() => {
     });
+  }
+
+  isEnd(): boolean {
+    return new Date(this.event?.endDate) < new Date(Date.now())
   }
 }

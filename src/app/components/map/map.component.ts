@@ -1,5 +1,6 @@
 import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
 import {latLng, Map, MapOptions, tileLayer} from "leaflet";
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map',
@@ -40,6 +41,10 @@ export class MapComponent implements OnInit, AfterViewChecked {
 
   onMapReady(map: Map): void {
     this.map = map;
+    const myIcon = L.icon({
+      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/images/marker-icon.png'
+    });
+    L.marker([this.latitude, this.longitude], {icon: myIcon}).addTo(this.map);
     setTimeout(() => {
       map.invalidateSize();
     }, 0);

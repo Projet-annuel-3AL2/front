@@ -3,11 +3,12 @@ import {Category} from "./category.model";
 import {Organisation} from "./organisation.model";
 import {Media} from "./media.model";
 import {Post} from "./post.model";
+import {Address} from "./address.model";
 
 export class Event {
   id: string;
-  name: String;
-  description: String;
+  name: string;
+  description: string;
   startDate: Date;
   endDate: Date;
   latitude: number;
@@ -21,5 +22,5 @@ export class Event {
   posts: Post[];
   isMember: boolean = false;
   isOwner: boolean = false;
-  address: any;
+  address: Address;
 }

@@ -1,14 +1,14 @@
-<div *ngIf="(_userService.user | async)?.blocksCurrentUser" fxLayoutAlign="center">
+<div *ngIf="user?.blocksCurrentUser" fxLayoutAlign="center">
   <h1 class="m-5">L'utilisateur vous a bloqué</h1>
 </div>
-<div *ngIf="(_userService.user | async) !== null && !(_userService.user | async)?.blocksCurrentUser" class="row m-0">
+<div *ngIf="user && !user?.blocksCurrentUser" class="row m-0">
   <div class="col-md-3 my-3">
     <app-return-button></app-return-button>
   </div>
   <div class="col-md-5 my-3">
     <div class="profil-user-scroll">
       <div class="user-card-full">
-        <img [src]="(_userService.user | async).bannerPicture?.link | imageUrl:1360:900" alt="" class="rounded"
+        <img [src]="user.bannerPicture?.link | imageUrl:1360:900" alt="" class="rounded"
              height="300px"
              style="object-fit: cover" width="100%">
         <div class="user-card-display">
@@ -16,7 +16,7 @@
             <div fxFlex fxLayoutAlign="row">
               <div fxFlex fxLayoutAlign="row start center">
                 <div class="me-2">
-                  <img [src]="(_userService.user | async).profilePicture?.link | imageUrl"
+                  <img [src]="user.profilePicture?.link | imageUrl"
                        alt=""
                        class="rounded-circle"
                        height="75"
@@ -24,31 +24,39 @@
                        width="75">
                 </div>
                 <div class="user-card-username">
-                  <p>{{(_userService.user | async).username}}</p>
+                  <p>{{user.username}}</p>
                 </div>
                 <div class="user-card-certification align-self-center ms-1">
-                  <fa-icon *ngIf="(_userService.user | async).certification" [icon]="faCheckCircle" size="2x"></fa-icon>
+                  <fa-icon *ngIf="user.certification" [icon]="faCheckCircle" size="2x"></fa-icon>
                 </div>
               </div>
               <div fxLayoutAlign="row center end">
-                <div *ngIf="(_userService.user | async).username !== _authService.getCurrentUsername()">
-                  <button (click)="this.askFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.NONE"
-                          class="ml-auto button-add-friend" mat-raised-button><i aria-hidden="true"
-                                                                                 class="fa fa-user-plus"></i>Ajouter
+                <div *ngIf="user.username !== _authService.getCurrentUsername()">
+                  <button (click)="this.askFriend()" *ngIf="this.user.friendshipStatus === allFriendRequestStatus.NONE"
+                          class="ml-auto button-add-friend" mat-raised-button>
+                    <fa-icon [icon]="faUserPlus" [style.color]="'white'"></fa-icon>
+                    Ajouter
                   </button>
-                  <button (click)="this.removeFriend()" *ngIf="friendshipRequest === allFriendRequestStatus.BEFRIENDED"
+                  <button (click)="this.removeFriend()"
+                          *ngIf="this.user.friendshipStatus === allFriendRequestStatus.BEFRIENDED"
                           class="button-add-friend" mat-raised-button
                           matTooltip="Enlever de la liste des amis"
                           matTooltipPosition="above">
                     Retirer des amis
                   </button>
-                  <button (click)="this.showDialogueRespondFriendRequest()"
-                          *ngIf="friendshipRequest === allFriendRequestStatus.RECEIVED"
-                          class="ml-auto button-add-friend" mat-raised-button
-                          matTooltip="Accepter ou Refuser la demande d'amis"
-                          matTooltipPosition="above">Répondre
+                  <a (click)="this.delFriendshipRequest()" *ngIf="this.user.friendshipStatus === allFriendRequestStatus.RECEIVED"
+                     class=" button-reject-invitation"
+                     label="Rejeter l'invitation" style=" padding-right: 10px">
+                    <fa-icon [icon]="faTimes" size="2x" style="color: red"></fa-icon>
+                  </a>
+                  <button (click)="this.acceptFriendship()"
+                          *ngIf="this.user.friendshipStatus === allFriendRequestStatus.RECEIVED"
+                          class="button-add-friend" mat-raised-button
+                          matTooltip="Accepter la demande d'amis"
+                          matTooltipPosition="above"> accepter
                   </button>
-                  <button (click)="this.cancelRequest()" *ngIf="friendshipRequest === allFriendRequestStatus.PENDING"
+                  <button (click)="this.cancelRequest()"
+                          *ngIf="this.user.friendshipStatus === allFriendRequestStatus.PENDING"
                           class="ml-auto button-add-friend-disable"
                           mat-raised-button><span>Invitation envoyé</span>
                   </button>
@@ -62,35 +70,35 @@
                   <mat-menu #menu="matMenu" xPosition="before">
                     <button
                       (click)="showDialogueCreateEvent()"
-                      *ngIf="(_userService.user | async).username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== undefined"
+                      *ngIf="user.username === _authService.getCurrentUsername() && (_authService.user | async)?.certification !== null"
                       mat-menu-item>Créer un évènement
                     </button>
-                    <div *ngIf="username === _authService.getCurrentUsername()">
+                    <div *ngIf="user.username === _authService.getCurrentUsername()">
                       <button (click)="showDialogUpdateUser()" mat-menu-item>Edition du profil</button>
                     </div>
                     <div
-                      *ngIf="username === _authService.getCurrentUsername() && !(_userService.user|async)?.certification">
+                      *ngIf="user.username === _authService.getCurrentUsername() && !user?.certification">
                       <button (click)="showDialogAskCertification()" mat-menu-item>Demander une certification</button>
                     </div>
                     <div
-                      *ngIf="username === _authService.getCurrentUsername() && (_userService.user|async)?.certification">
+                      *ngIf="user.username === _authService.getCurrentUsername() && user?.certification">
                       <button (click)="showDialogAskOrganisation()" mat-menu-item>Créer une organisation</button>
                     </div>
-                    <div *ngIf="(_organisationService.organisationWhereAdmin|async)?.length !== 0">
+                    <div *ngIf="user.administratedOrganisations?.length !== 0">
                       <button [matMenuTriggerFor]="organisationsWhereAdmin" mat-menu-item>Inviter</button>
                     </div>
-                    <div *ngIf="username !== _authService.getCurrentUsername()">
+                    <div *ngIf="user.username !== _authService.getCurrentUsername()">
                       <button (click)="showDialogueReport()" class="text-danger" mat-menu-item>Signaler</button>
-                      <button (click)="blockUser()" *ngIf="!(_userService.user|async)?.isBlocked" class="text-danger"
+                      <button (click)="blockUser()" *ngIf="!user?.isBlocked" class="text-danger"
                               mat-menu-item>Bloquer
                       </button>
-                      <button (click)="unblockUser()" *ngIf="(_userService.user|async)?.isBlocked" class="text-danger"
+                      <button (click)="unblockUser()" *ngIf="user?.isBlocked" class="text-danger"
                               mat-menu-item>Débloquer
                       </button>
                     </div>
                   </mat-menu>
                   <mat-menu #organisationsWhereAdmin="matMenu">
-                    <div *ngFor="let organisation of (_organisationService.organisationWhereAdmin|async)">
+                    <div *ngFor="let organisation of user.administratedOrganisations">
                       <button (click)="sendJoinOrganisation(organisation.id)"
                               mat-menu-item>{{organisation.name}}</button>
                     </div>
@@ -101,7 +109,7 @@
           </div>
           <div class="user-card-div-row-2">
             <div class="user-card-infos">
-              <p>{{(_userService.user | async).bio}}</p>
+              <p>{{user.bio}}</p>
             </div>
           </div>
         </div>
@@ -110,25 +118,25 @@
         <mat-tab-group mat-align-tabs="center" style="min-height: 100%">
           <mat-tab label="Post">
             <div #divContent style="height: 450px">
-              <virtual-scroller #scroll [enableUnequalChildrenSizes]="true"
-                                [items]="(_userService.user|async).createdPosts"
+              <virtual-scroller #scroll (vsEnd)="triggerGetMore($event)"
+                                [enableUnequalChildrenSizes]="true" [items]="user.createdPosts"
                                 [parentScroll]="divContent" childHeight="1" class="w-100 h-100">
-                <div *ngFor="let post of scroll.viewPortItems" class="mt-3 ">
-                  <post [post]="post"></post>
+                <div *ngFor="let post of scroll.viewPortItems" class="mt-3">
+                  <post (onDelete)="removePost($event)" [post]="post"></post>
                 </div>
               </virtual-scroller>
             </div>
           </mat-tab>
           <mat-tab label="Amis">
             <div class="my-3">
-              <div *ngFor="let user of (_userService.user|async).friends" class="display-list-user">
+              <div *ngFor="let user of user.friends" class="display-list-user">
                 <app-user-card [user]="user" class="m-0"></app-user-card>
               </div>
             </div>
           </mat-tab>
           <mat-tab label="Événements">
             <div class="my-3">
-              <div *ngFor="let event of (_userService.user | async).eventsParticipation">
+              <div *ngFor="let event of user.eventsParticipation">
                 <app-card-event [event]="event"></app-card-event>
               </div>
             </div>

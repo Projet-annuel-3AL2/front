@@ -3,12 +3,11 @@ import {User} from "../../../shared/models/user.model";
 import {FriendshipService} from "../../../services/friendship/friendship.service";
 import {AuthService} from "../../../services/auth/auth.service";
 import {UserService} from "../../../services/user/user.service";
-import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCheckCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {OrganisationService} from "../../../services/organisation/organisation.service";
 import {Organisation} from "../../../shared/models/organisation.model";
 import {environment} from "../../../../environments/environment";
 import {FriendRequestStatus} from "../../../shared/FriendshipRequestStatus.enum";
-import {DialogResFriendshipRequestComponent} from "../../dialog_/dialog-res-friendship-request/dialog-res-friendship-request.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -20,22 +19,19 @@ export class CardUserManageOrganisationComponent implements OnInit {
 
   @Input('user') user: User = new User();
   @Input('organisation') organisation: Organisation;
-  @Input('userSession') userSession: User;
   @Input('isOwner') isOwner: boolean;
   faCheckCircle = faCheckCircle;
-
+  faUserPlus = faUserPlus;
   friendshipRequest: FriendRequestStatus;
   userIsAdmin: boolean = false;
   allFriendRequestStatus = FriendRequestStatus;
   userIsOwner: Boolean = false;
-  env: any;
 
   constructor(private _friendshipService: FriendshipService,
               public _authService: AuthService,
               private _userService: UserService,
               private _organisationService: OrganisationService,
               public dialog: MatDialog) {
-    this.env = environment;
   }
 
   ngOnInit(): void {
@@ -74,17 +70,6 @@ export class CardUserManageOrganisationComponent implements OnInit {
           console.log(err)
         }
       }
-    })
-  }
-
-  showDialogueRespondFriendRequest() {
-    const dialogRef = this.dialog.open(DialogResFriendshipRequestComponent, {
-      width: '500px',
-      data: {userId: this.user.username}
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.canAddFriend()
     })
   }
 
@@ -149,5 +134,37 @@ export class CardUserManageOrganisationComponent implements OnInit {
         }
       })
     }
+  }
+
+  acceptFriendship() {
+    this._friendshipService.acceptFriendship(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.BEFRIENDED;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  delFriendshipRequest() {
+    this._friendshipService.rejectFriendRequest(this.user.username).subscribe({
+      next: () => {
+        this.friendshipRequest = FriendRequestStatus.NONE;
+      },
+      error: err => {
+        if (!environment.production) {
+          console.log(err);
+        }
+      }
+    })
+  }
+
+  cancelRequest() {
+    this._friendshipService.cancelFriendRequest(this.user.username)
+      .toPromise()
+      .then(() => this.user.friendshipStatus = FriendRequestStatus.NONE);
   }
 }

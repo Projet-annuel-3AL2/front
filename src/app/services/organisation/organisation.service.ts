@@ -2,100 +2,51 @@ import {Injectable} from '@angular/core';
 import {Organisation} from "../../shared/models/organisation.model";
 import {Post} from "../../shared/models/post.model";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {User} from "../../shared/models/user.model";
 import {Event} from "../../shared/models/event.model";
 import {Report} from "../../shared/models/report.model";
 import {OrganisationRequest} from "../../shared/models/organisation_request.model";
-import {map} from "rxjs/operators";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganisationService {
 
-  public organisation: Observable<Organisation>;
-  public organisationsSuggestion: Observable<Organisation[]>;
-  public members: Observable<User[]>;
-  public eventsCreated: Observable<Event[]>;
-  public posts: Observable<Post[]>;
-  public organisationWhereAdmin: Observable<Organisation[]>;
-
-  private organisationSubject: BehaviorSubject<Organisation>;
-  private organisationSuggestionSubject: BehaviorSubject<Organisation[]>;
-  private membersSubject: BehaviorSubject<User[]>;
-  private eventsCreatedSubject: BehaviorSubject<Event[]>
-  private postsSubject: BehaviorSubject<Post[]>;
-  private organisationWhereAdminSubject: BehaviorSubject<Organisation[]>;
-
   constructor(private http: HttpClient) {
-    this.membersSubject = new BehaviorSubject<User[]>(null);
-    this.organisationSubject = new BehaviorSubject<Organisation>(null);
-    this.organisationSuggestionSubject = new BehaviorSubject<Organisation[]>(null);
-    this.eventsCreatedSubject = new BehaviorSubject<Event[]>(null);
-    this.postsSubject = new BehaviorSubject<Post[]>(null);
-    this.organisationWhereAdminSubject = new BehaviorSubject<Organisation[]>(null);
-
-    this.members = this.membersSubject.asObservable();
-    this.organisation = this.organisationSubject.asObservable();
-    this.organisationsSuggestion = this.organisationSuggestionSubject.asObservable();
-    this.eventsCreated = this.eventsCreatedSubject.asObservable();
-    this.posts = this.postsSubject.asObservable();
-    this.organisationWhereAdmin = this.organisationWhereAdminSubject.asObservable();
   }
 
   getSuggestions(): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/`)
-      .pipe(map(organisations => {
-        this.organisationSuggestionSubject.next(organisations);
-        return organisations;
-      }));
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/`);
   }
 
   getOrganisation(organisationId: string): Observable<Organisation> {
-    return this.http.get<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}`)
-      .pipe(map(organisation => {
-        this.organisationSubject.next(organisation);
-        return organisation;
-      }));
+    return this.http.get<Organisation>(`${environment.apiBaseUrl}/organisation/${organisationId}`);
   }
 
   getOrganisationPosts(organisationId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/posts`)
-      .pipe(map(posts => {
-        this.postsSubject.next(posts);
-        return posts;
-      }));
+    return this.http.get<Post[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/posts`);
   }
 
   getMemberOrganisation(organisationId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/members`)
-      .pipe(map(users => {
-        this.membersSubject.next(users);
-        return users;
-      }));
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/members`);
   }
 
   getEventCreated(organisationId: string): Observable<Event[]> {
-    return this.http.get<Event[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/events`)
-      .pipe(map(events => {
-        this.eventsCreatedSubject.next(events);
-        return events;
-      }));
+    return this.http.get<Event[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/events`);
   }
 
   whereIsAdmin(username: string): Observable<Organisation[]> {
-    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/membership/where-admin/${username}`)
-      .pipe(map(organisations => {
-        this.organisationWhereAdminSubject.next(organisations)
-        return organisations;
-      }))
+    return this.http.get<Organisation[]>(`${environment.apiBaseUrl}/organisation/membership/where-admin/${username}`);
   }
 
-  putOrganisation(organisation: Organisation, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
+  putOrganisation(id: string, form: FormGroup, updatedProfilePicture: File, updatedBannerPicture: File): Observable<Organisation> {
     const formData = new FormData()
-    formData.append("name", organisation.name)
+    if (form.value.name != null){
+      formData.append("name", form.value.name)
+    }
     if (updatedProfilePicture !== null) {
       formData.append("profilePicture", updatedProfilePicture)
     }
@@ -103,22 +54,7 @@ export class OrganisationService {
 
       formData.append("bannerPicture", updatedBannerPicture)
     }
-    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${organisation.id}`, formData)
-      .pipe(map(organisation => {
-        this.organisationSubject.next(organisation);
-        return organisation;
-      }));
-  }
-
-  deleteOrganisation(organisationId: string) {
-    this.http.delete(`${environment.apiBaseUrl}/organisation/${organisationId}`).subscribe({
-        error: err => {
-          if (!environment.production) {
-            console.log(err);
-          }
-        }
-      }
-    )
+    return this.http.put<Organisation>(`${environment.apiBaseUrl}/organisation/${id}`, formData);
   }
 
   deleteOrganisationMembership(userId: string, organisationId: string) {
@@ -182,12 +118,10 @@ export class OrganisationService {
   }
 
   getInvitedOrganisation(organisationId: string): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/invited/user`)
-      .pipe(map(invitedUsers => {
-        let organisation = this.organisationSubject.getValue();
-        organisation.invitedUsers = invitedUsers;
-        this.organisationSubject.next(organisation);
-        return invitedUsers;
-      }))
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/organisation/${organisationId}/invited/user`);
+  }
+
+  leave(id: string): Observable<void> {
+    return this.http.delete<void>(`${environment.apiBaseUrl}/organisation/${id}/leave`);
   }
 }
