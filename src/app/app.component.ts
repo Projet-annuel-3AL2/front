@@ -19,20 +19,4 @@ export class AppComponent {
               private _titleService: Title) {
     this._titleService.setTitle(environment.name);
   }
-
-  // TODO: Je sais pas si on à la certif avec getById()
-  canCreateEvent() {
-    if (this.user != undefined) {
-      return this.user.certification !== undefined;
-    }
-    return false;
-  }
-
-  // TODO : Je sais pas si un user peut avoir ou pas plusieurs organisation
-  canCreateOrganisation() {
-    if (this.user != undefined) {
-      return this.user.certification !== undefined;
-    }
-    return false;
-  }
 }
